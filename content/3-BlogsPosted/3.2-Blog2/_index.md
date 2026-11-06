@@ -1,31 +1,50 @@
 ---
 title: "Blog 2"
-date: 2024-01-01
-weight: 1
+date: 2026-11-07
+weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# SESSION POLICIES IN AMAZON EKS POD IDENTITY
+# You Have a Valid Passport, But Do You Have the Right to Renovate Your Neighbor's House?
 
-Amazon EKS Pod Identity has recently added the session policies feature, allowing you to narrow IAM permissions flexibly and precisely for each pod without needing to create many separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+There is an intriguing security vulnerability in web application development that is easy to overlook. A user signs in successfully, provides a cryptographically valid token, and the API responds normally. But does that mean they have the right to edit every post in the system? Absolutely not.
 
-Key points to know:
+Consider this scenario:
 
-* A session policy is an inline IAM policy specified when creating or updating a Pod Identity association.
-* Effective permissions = intersection between the IAM role permissions and the session policy → the session policy can only narrow permissions, not expand them.
-* Helps avoid over-permissioning when reusing a single IAM role for multiple workloads with different needs.
-* Supports both same-account and cross-account (via IAM role chaining).
-* Significantly reduces the number of IAM roles that need to be managed, helping avoid hitting IAM quota limits in large clusters.
-* Easily configured through the AWS Management Console, AWS CLI, or AWS SDK when creating an association between a Kubernetes ServiceAccount and an IAM role.
+* User A logs in successfully.  
+* User B creates a post with ID `123`.  
+* User A issues a `PATCH /posts/123` request to update B's post.
 
-This feature is especially useful when you have many applications running on the same IAM role but need different permission restrictions (for example: one pod only reads a specific S3 bucket, another pod only calls certain APIs).
+If the backend only verifies that the JWT signature is valid, User A can alter User B's data at will (IDOR vulnerability).
 
-...Image...
+**Two Distinct Concepts**
 
-...Link...
+* **Authentication**: Who are you?  
+* **Authorization**: What are you permitted to do with this specific resource?
 
-...Guide...
+**How to Solve This?**
+
+An architectural pattern that handles this cleanly:
+
+1. Amazon Cognito manages user identities and issues signed JWTs.  
+2. API Gateway JWT Authorizer verifies token authenticity before the request ever reaches backend compute.  
+3. AWS Lambda extracts the caller's unique `sub` from the verified token claims, rather than trusting any `ownerId` sent in the request payload.  
+4. When updating the record, Lambda issues a DynamoDB `UpdateItem` guarded by a condition expression: `ownerId = :callerSub`.
+
+If the caller is not the owner, the condition fails atomically and the operation is rejected.
+
+Key takeaway: Hiding the Edit button on the frontend is NOT security. An attacker can always forge HTTP calls directly against the endpoint.
+
+**What Needs Verification?**
+
+Log in with User A's credentials, use A's valid token to attempt modifying User B's post. The expected result is successful authentication but strict authorization failure (403 Forbidden).
+
+Holding a valid passport doesn't mean you own every house in the city.
+
+*Note: This architecture and testing design is a proposed pattern.*
+
+
+#AWS #Cognito #APIGateway #DynamoDB #CyberSecurity #Authorization
+
+![](/images/report/image2.png)

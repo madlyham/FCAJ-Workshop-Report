@@ -1,57 +1,39 @@
 ---
 title: "Week 7 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-11-07
+weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
+# **Week 7 Work Log: S3 Secure Uploads, Rekognition Content Moderation & Lifecycle Rules**
 
-### Week 7 Objectives:
+## **1. Weekly Objectives**
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Build the private S3 image upload flow using temporary Presigned POST tickets (POST /uploads/presign).
+* Add Amazon Rekognition content moderation (DetectModerationLabels) to block NSFW/unsafe photos.
+* Configure S3 lifecycle rules so unattached uploads and old photos get deleted automatically.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Weekly Execution Schedule**
 
+| Day | Task Description | Start Date | Completion Date | Reference Material |
+| :--- | :--- | :--- | :--- | :--- |
+| **Day 2** | • Implement S3ImageStore (backend/src/storage/imageStore.ts): 300s presigned POST tickets (max 5MB, max 6 photos/listing) | 09/22/2025 | 09/22/2025 | AWS S3 SDK Docs |
+| **Day 3** | • Lock down user prefixes (listings/<userId>/) with assertOwnImageKeys() to prevent unauthorized photo attachments | 09/23/2025 | 09/23/2025 | imageStore.ts |
+| **Day 4** | • Implement RekognitionModerator calling DetectModerationLabels (MinConfidence: 70) | 09/24/2025 | 09/24/2025 | AWS Rekognition Docs |
+| **Day 5** | • Auto-delete rejected photos from S3, log ImagesRejected metric, return 422 IMAGE_REJECTED | 09/25/2025 | 09/25/2025 | moderateUpload() |
+| **Day 6** | • Configure S3 Lifecycle rules: purge unattached state=pending images after 1 day, listing images after 120 days | 09/26/2025 | 09/26/2025 | infra/*.tf |
 
-### Week 7 Achievements:
+## **3. Key Achievements & Outcomes**
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Theoretical Foundation**
 
-* Successfully created and configured an AWS Free Tier account.
+* Saw how tagging S3 objects (state=pending -> moderation=passed -> state=attached) allows S3 Lifecycle rules to clean up abandoned uploads for free without custom cron jobs.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+### **Environment Setup & Configuration**
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Wired IMAGE_BUCKET=reloop-device-images into backend config with DisabledImageStore fallback for offline tests.
 
-* Used AWS CLI to perform basic operations such as:
+### **Practical Skills & Operations**
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Tested uploading valid hardware photos vs disallowed test images and verified assertModerated() blocks anyone bypassing moderation.

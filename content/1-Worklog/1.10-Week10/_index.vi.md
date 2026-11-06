@@ -1,59 +1,39 @@
 ---
-title: "Worklog Tuần 10"
-date: 2024-01-01
-weight: 2
+title: "Worklog tuần 10"
+date: 2026-11-07
+weight: 10
 chapter: false
 pre: " <b> 1.10. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+# **Nhật ký tuần 10: Đánh giá thiết bị phần cứng thực tế, từ điển điện tử tiếng Việt và hạn ngạch AI**
 
-### Mục tiêu tuần 10:
+## **1. Mục tiêu trong tuần**
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Đánh giá hiệu năng Nova Pro trên ảnh thiết bị phần cứng thực tế (mạch ESP32 IoT, chuột không dây Logitech M650 L) và khắc phục lỗi chính tả tiếng Việt.
+* Bổ sung từ điển thuật ngữ điện tử tiếng Việt vào prompt, xử lý regex dọn dẹp và xây dựng fallback adapter sang Google AI Studio (Gemini Flash).
+* Triển khai giới hạn hạn ngạch AI theo ngày cho người dùng (AIQUOTA) và cơ chế lưu trữ tập dữ liệu gán nhãn do người dùng hiệu chỉnh (AILABEL#<month>).
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Kế hoạch thực hiện trong tuần**
 
+| Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ngày 2** | • Kiểm thử các bài đăng thực tế trên môi trường dev và ghi nhận các lỗi chính tả tiếng Việt của Nova Pro | 10/13/2025 | 10/13/2025 | Kiểm tra Dev Feed |
+| **Ngày 3** | • Bổ sung trường observedTextAndLabels và identifiedComponents vào tool schema để AI liệt kê linh kiện con trước khi suy đoán danh mục | 10/14/2025 | 10/14/2025 | analyzer.ts |
+| **Ngày 4** | • Đưa danh sách thuật ngữ điện tử tiếng Việt UTF-8 chuẩn vào system prompt kết hợp dọn dẹp regex trong hàm validateResult() | 10/15/2025 | 10/15/2025 | analyzer.ts |
+| **Ngày 5** | • Xây dựng GeminiAnalyzer + FallbackAnalyzer sử dụng Google AI Studio (gemini-2.5-flash) với cơ chế tự động chuyển vùng về Bedrock | 10/16/2025 | 10/16/2025 | analyzer.ts & app.ts |
+| **Ngày 6** | • Thiết lập giới hạn AI_DAILY_LIMIT = 20 lượt/ngày (AIQUOTA#<day>) và lưu cặp dữ liệu { aiSuggested, userFinal } vào AILABEL#<YYYY-MM> | 10/17/2025 | 10/17/2025 | aiService.ts & keys.ts |
 
-### Kết quả đạt được tuần 10:
+## **3. Kết quả đạt được**
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Nền tảng lý thuyết**
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Nhận diện bản chất vấn đề: thị giác của Nova Pro rất tốt (đọc được chữ dập nổi nhỏ trên đáy chuột), nhưng khả năng xuất tiếng Việt trong JSON mode bị méo dấu nếu không được nạp sẵn từ vựng chuyên ngành trong prompt.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+### **Thiết lập & cấu hình môi trường**
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Cập nhật prompt, các quy tắc chuẩn hóa văn bản và tích hợp biến GEMINI_API_KEY tùy chọn, tương thích 100% với bộ test Vitest.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+### **Kỹ năng thực hành & vận hành hệ thống**
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Biến mỗi thao tác chỉnh sửa thông tin của người dùng thành một dòng dữ liệu huấn luyện (AILABEL#<month>) phục vụ xuất định dạng JSONL sau này.

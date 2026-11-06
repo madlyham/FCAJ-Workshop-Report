@@ -1,57 +1,39 @@
 ---
 title: "Week 11 Worklog"
-date: 2024-01-01
-weight: 2
+date: 2026-11-07
+weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
+# **Week 11 Work Log: Infrastructure as Code with Terraform, CloudFront SPA & Live Smoke Tests**
 
-### Week 11 Objectives:
+## **1. Weekly Objectives**
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Sync the whole infrastructure with Terraform (infra/*.tf) on branch feature/doi-tac-2-cap.
+* Deploy production React app to S3 + CloudFront (https://d1cjl1tvcp0r6q.cloudfront.net) and retire standalone test resources.
+* Verify EventBridge 15-minute background job, CloudWatch dashboard, and 25-step live AWS smoke test.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Weekly Execution Schedule**
 
+| Day | Task Description | Start Date | Completion Date | Reference Material |
+| :--- | :--- | :--- | :--- | :--- |
+| **Day 2** | • Walk through Terraform state (s3://reloop-tfstate-926583575243/dev/terraform.tfstate) and resource definitions in infra/*.tf | 10/20/2025 | 10/20/2025 | infra/*.tf |
+| **Day 3** | • Migrate from standalone user pool to Terraform-managed reloop-dev-user-pool and single reloop-dev-api Lambda | 10/21/2025 | 10/21/2025 | infra/ & Task O3 |
+| **Day 4** | • Test EventBridge rate(15 minutes) sweep job (LISTING_EXPIRE, TX_REMIND, TX_AUTO_COMPLETE, 10k VND fee invoices) | 10/22/2025 | 10/22/2025 | modules/jobs & billing |
+| **Day 5** | • Check reloop-dev-overview CloudWatch Dashboard and 8 alarms (UnhandledErrors, AiFailures, ImagesTextFlagged, p95 latency) | 10/23/2025 | 10/23/2025 | infra/monitoring.tf |
+| **Day 6** | • Run AWS_PROFILE=reloop python scripts/smoke-aws.py against live AWS; all 25 steps pass (ALL PASS) | 10/24/2025 | 10/24/2025 | scripts/smoke-aws.py |
 
-### Week 11 Achievements:
+## **3. Key Achievements & Outcomes**
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Theoretical Foundation**
 
-* Successfully created and configured an AWS Free Tier account.
+* Saw how putting everything into Terraform (deploy.sh) prevents deployment discrepancies—one script builds TypeScript, zips for arm64 Lambda, applies Terraform, and syncs Vite build to CloudFront.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+### **Environment Setup & Configuration**
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Configured CloudFront Origin Access Control (OAC SigV4) so web S3 bucket stays 100% private while serving React SPA over HTTPS.
 
-* Used AWS CLI to perform basic operations such as:
+### **Practical Skills & Operations**
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Passed all 107 local Vitest unit tests (billing.test.ts, state machines, AI, auth) and 25/25 live AWS smoke tests.

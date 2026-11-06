@@ -1,59 +1,40 @@
 ---
-title: "Worklog Tuần 9"
-date: 2024-01-01
-weight: 1
+title: "Worklog tuần 9"
+date: 2026-11-07
+weight: 9
 chapter: false
 pre: " <b> 1.9. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+# **Nhật ký tuần 9: Phòng thủ tấn công Visual Prompt Injection với Rekognition OCR và Bedrock Guardrails**
 
-### Mục tiêu tuần 9:
+## **1. Mục tiêu trong tuần**
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Phòng chống tấn công Visual Prompt Injection (kẻ tấn công dán giấy ghi chú vào ảnh nhằm lừa mô hình AI phân loại sai thiết bị).
+* Xây dựng pipeline kiểm tra văn bản kết hợp OCR và Bedrock Guardrail trong backend/src/storage/textScreener.ts.
+* Giữ các bài đăng có ảnh bị gắn cờ ở trạng thái PENDING_REVIEW để Quản trị viên duyệt thủ công trước khi xuất bản.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Kế hoạch thực hiện trong tuần**
 
+| Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ngày 2** | • Thiết kế bộ lọc 2 bước: Rekognition DetectText đọc chữ trong ảnh -> Bedrock Guardrail kiểm tra tấn công prompt | 10/06/2025 | 10/06/2025 | AWS Rekognition & Bedrock |
+| **Ngày 3** | • Cấu hình aws_bedrock_guardrail.ai với bộ lọc PROMPT_ATTACK = HIGH trong file infra/ai.tf | 10/07/2025 | 10/07/2025 | infra/ai.tf |
+| **Ngày 4** | • Viết RekognitionGuardrailScreener (bỏ qua Guardrail nếu độ dài chữ < 12 ký tự để logo nhãn hiệu đi qua bình thường) | 10/08/2025 | 10/08/2025 | textScreener.ts |
+| **Ngày 5** | • Lưu bản ghi IMGFLAG#<imageKey> vào DynamoDB khi phát hiện nghi vấn và chuyển bài đăng vào hàng đợi REVIEWQ#LISTING | 10/09/2025 | 10/09/2025 | listingService.ts |
+| **Ngày 6** | • Kiểm thử tấn công thử nghiệm: chặn thành công câu lệnh tiếng Anh; phát hiện điểm mù khi Rekognition đọc sai dấu tiếng Việt in trên giấy | 10/10/2025 | 10/10/2025 | Kiểm thử AWS Dev |
 
-### Kết quả đạt được tuần 9:
+## **3. Kết quả đạt được**
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Nền tảng lý thuyết**
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Phát hiện lỗ hổng bảo mật thực tế: Rekognition.DetectText nhận diện dấu tiếng Việt chưa chuẩn xác, làm biến dạng câu lệnh tấn công thành chuỗi ký tự ASCII lạ vượt qua Bedrock Guardrail.
+* Bổ sung cơ chế quét từ khóa tiếng Việt không dấu (bo qua huong dan, system prompt, ignore previous) để vá lỗ hổng nhận diện OCR này.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+### **Thiết lập & cấu hình môi trường**
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Kích hoạt biến môi trường AI_GUARDRAIL_ID, AI_GUARDRAIL_VERSION cho hàm Lambda và tạo metric filter ImagesTextFlagged trên CloudWatch.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+### **Kỹ năng thực hành & vận hành hệ thống**
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Xác minh toàn diện: tải ảnh có kèm câu lệnh tấn công in trên giấy bị phát hiện ngay lập tức, bài đăng tự động chuyển sang PENDING_REVIEW và hiển thị văn bản OCR cho Admin thẩm định.

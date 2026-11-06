@@ -1,59 +1,39 @@
 ---
-title: "Worklog Tuần 11"
-date: 2024-01-01
-weight: 2
+title: "Worklog tuần 11"
+date: 2026-11-07
+weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+# **Nhật ký tuần 11: Tự động hóa hạ tầng với Terraform, CloudFront SPA và kiểm thử Live Smoke Test**
 
-### Mục tiêu tuần 11:
+## **1. Mục tiêu trong tuần**
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Đồng bộ toàn bộ hạ tầng bằng mã nguồn Terraform (infra/*.tf) trên nhánh feature/doi-tac-2-cap.
+* Triển khai ứng dụng React lên S3 + CloudFront (https://d1cjl1tvcp0r6q.cloudfront.net) và dọn dẹp các tài nguyên thử nghiệm cũ.
+* Xác thực tác vụ định kỳ 15 phút qua EventBridge, bảng điều khiển CloudWatch và bộ kiểm thử tự động 25 bước (live AWS smoke test).
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Kế hoạch thực hiện trong tuần**
 
+| Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ngày 2** | • Rà soát trạng thái Terraform state trên S3 và định nghĩa tài nguyên trong thư mục infra/*.tf | 10/20/2025 | 10/20/2025 | infra/*.tf |
+| **Ngày 3** | • Di chuyển từ User Pool thủ công sang reloop-dev-user-pool do Terraform quản lý và thống nhất hàm Lambda reloop-dev-api | 10/21/2025 | 10/21/2025 | infra/ & Task O3 |
+| **Ngày 4** | • Kiểm thử tác vụ quét nền EventBridge rate(15 minutes) xử lý hết hạn tin, nhắc nhở giao dịch và tạo hóa đơn phí 10.000 VNĐ | 10/22/2025 | 10/22/2025 | modules/jobs & billing |
+| **Ngày 5** | • Kiểm tra Dashboard reloop-dev-overview trên CloudWatch và 8 cảnh báo giám sát hệ thống | 10/23/2025 | 10/23/2025 | infra/monitoring.tf |
+| **Ngày 6** | • Chạy script kiểm thử scripts/smoke-aws.py trên môi trường AWS thực tế; toàn bộ 25 bước kiểm thử đều vượt qua (ALL PASS) | 10/24/2025 | 10/24/2025 | scripts/smoke-aws.py |
 
-### Kết quả đạt được tuần 11:
+## **3. Kết quả đạt được**
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Nền tảng lý thuyết**
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Hiểu rõ sức mạnh của Hạ tầng dưới dạng mã (Terraform): một kịch bản deploy.sh duy nhất tự động build TypeScript, nén arm64 Lambda, áp dụng Terraform và đồng bộ frontend lên CloudFront.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+### **Thiết lập & cấu hình môi trường**
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Cấu hình CloudFront Origin Access Control (OAC SigV4) đảm bảo bucket S3 chứa mã nguồn web được bảo mật 100% private.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+### **Kỹ năng thực hành & vận hành hệ thống**
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Vượt qua toàn bộ 107 bài unit test Vitest cục bộ (billing, state machines, AI, auth) và 25/25 kịch bản kiểm thử trực tiếp trên AWS thực tế.

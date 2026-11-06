@@ -1,57 +1,40 @@
 ---
 title: "Week 9 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-11-07
+weight: 9
 chapter: false
 pre: " <b> 1.9. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
+# **Week 9 Work Log: Visual Prompt Injection Defense with OCR & Bedrock Guardrails**
 
-### Week 9 Objectives:
+## **1. Weekly Objectives**
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Stop visual prompt injection attacks (users putting sticky notes in photos instructing AI to misclassify items).
+* Build the OCR + Guardrail screening pipeline in backend/src/storage/textScreener.ts.
+* Hold listings with flagged images in PENDING_REVIEW so an Admin approves them first.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Weekly Execution Schedule**
 
+| Day | Task Description | Start Date | Completion Date | Reference Material |
+| :--- | :--- | :--- | :--- | :--- |
+| **Day 2** | • Design 2-step text screener: Rekognition DetectText reads image text -> Bedrock Guardrail checks for prompt attacks | 10/06/2025 | 10/06/2025 | AWS Rekognition & Bedrock |
+| **Day 3** | • Configure aws_bedrock_guardrail.ai (PROMPT_ATTACK = HIGH) in infra/ai.tf | 10/07/2025 | 10/07/2025 | infra/ai.tf |
+| **Day 4** | • Write RekognitionGuardrailScreener (skip Guardrail if text < 12 characters to let brand logos pass) | 10/08/2025 | 10/08/2025 | textScreener.ts |
+| **Day 5** | • Save IMGFLAG#<imageKey> in DynamoDB when flagged and route listing to REVIEWQ#LISTING (PENDING_REVIEW) | 10/09/2025 | 10/09/2025 | listingService.ts |
+| **Day 6** | • Red-team live deployment: caught English attacks; identified bug where Rekognition misreads Vietnamese diacritics | 10/10/2025 | 10/10/2025 | Live AWS Dev Test |
 
-### Week 9 Achievements:
+## **3. Key Achievements & Outcomes**
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Theoretical Foundation**
 
-* Successfully created and configured an AWS Free Tier account.
+* Discovered a real security edge case: Rekognition.DetectText struggles with Vietnamese diacritics, turning accented attack sentences into broken ASCII that slipped past Bedrock Guardrails.
+* Designed an unaccented Vietnamese keyword check (bo qua huong dan, system prompt, ignore previous) to patch that OCR blindspot.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+### **Environment Setup & Configuration**
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Enabled AI_GUARDRAIL_ID and AI_GUARDRAIL_VERSION on Lambda and added ImagesTextFlagged CloudWatch metric.
 
-* Used AWS CLI to perform basic operations such as:
+### **Practical Skills & Operations**
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Verified end-to-end that uploading an image with printed attack instructions flags the upload, routes to PENDING_REVIEW, and presents extracted OCR text to Admin.

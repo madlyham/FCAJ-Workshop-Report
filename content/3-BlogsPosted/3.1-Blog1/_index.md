@@ -1,31 +1,42 @@
 ---
 title: "Blog 1"
-date: 2024-01-01
+date: 2026-11-07
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# SESSION POLICIES IN AMAZON EKS POD IDENTITY
+# One Chair, Two People, and an Unforgiving Database
 
-Amazon EKS Pod Identity has recently added the session policies feature, allowing you to narrow IAM permissions flexibly and precisely for each pod without needing to create many separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+Imagine a platform connecting customers with service partners, where each job can only be accepted by one person. Partner A and Partner B see the same listing, and both click "Accept Job" almost simultaneously.
 
-Key points to know:
+If the backend handles it naively:
 
-* A session policy is an inline IAM policy specified when creating or updating a Pod Identity association.
-* Effective permissions = intersection between the IAM role permissions and the session policy → the session policy can only narrow permissions, not expand them.
-* Helps avoid over-permissioning when reusing a single IAM role for multiple workloads with different needs.
-* Supports both same-account and cross-account (via IAM role chaining).
-* Significantly reduces the number of IAM roles that need to be managed, helping avoid hitting IAM quota limits in large clusters.
-* Easily configured through the AWS Management Console, AWS CLI, or AWS SDK when creating an association between a Kubernetes ServiceAccount and an IAM role.
+1. Check if the job is still available.  
+2. If available, update the assignee.
 
-This feature is especially useful when you have many applications running on the same IAM role but need different permission restrictions (for example: one pod only reads a specific S3 bucket, another pod only calls certain APIs).
+Congratulations, you've just assigned two owners to a single job. One chair, two people trying to sit at once.
 
-...Image...
+**How to Solve This?**
 
-...Link...
+Instead of having two sides negotiate with each other, we appoint Amazon DynamoDB as the strict gatekeeper:
 
-...Guide...
+* AWS Lambda receives the request and builds a transaction using `TransactWriteItems`.  
+* DynamoDB executes two atomic operations in the same transaction: it updates the job status only if its current state is `OPEN`, and simultaneously persists an Idempotency Key to guard against duplicate processing.  
+* Only one transaction wins the job. The competing transaction receives a conditional check failure/conflict error.  
+* If the winner resends the request due to a network timeout, the backend reads the stored idempotency result rather than re-executing side effects.
+
+The elegance here is that we don't need to guess who clicked a few milliseconds faster. The database decides deterministically based on real-time state at the exact moment of write.
+
+**What Needs Verification?**
+
+Fire two concurrent requests from different users targeting the same job record. The expected outcome is that exactly one user claims the job. Then, replay the winner's request and verify that no duplicate side effects are triggered.
+
+One transaction, one winner, no human referee required.
+
+*Note: This architecture and testing design is a proposed pattern.*
+
+
+#AWS #DynamoDB #Serverless #RaceCondition #Engineering
+
+![](/images/report/image1.png)

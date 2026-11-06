@@ -1,31 +1,42 @@
 ---
 title: "Blog 1"
-date: 2024-01-01
+date: 2026-11-07
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-# SESSION POLICIES TRONG AMAZON EKS POD IDENTITY
+# Một cái ghế, hai người, và một database không biết nhường nhịn
 
-Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+Hãy tưởng tượng một nền tảng kết nối khách hàng với đối tác, nơi mỗi công việc chỉ được một người nhận. Partner A và Partner B cùng thấy một công việc, và cả hai cùng bấm “Nhận việc” gần như cùng lúc.
 
-Các điểm chính cần nắm:
+Nếu backend xử lý theo kiểu:
 
-* Session policy là một IAM policy inline được chỉ định khi tạo hoặc cập nhật Pod Identity association.
-* Quyền hiệu quả = intersection (giao) giữa permissions của IAM role và session policy → session policy chỉ có thể thu hẹp, không thể mở rộng quyền.
-* Giúp tránh tình trạng over-permissioning khi reuse chung một IAM role cho nhiều workloads có nhu cầu khác nhau.
-* Hỗ trợ cả same-account và cross-account (qua IAM role chaining).
-* Giảm đáng kể số lượng IAM roles cần quản lý, tránh chạm giới hạn quota IAM trong cluster lớn.
-* Cấu hình dễ dàng qua AWS Management Console, AWS CLI hoặc AWS SDK khi tạo association giữa Kubernetes ServiceAccount và IAM role.
+1. Kiểm tra xem công việc còn trống không.  
+2. Nếu còn thì cập nhật người nhận.
 
-Tính năng này đặc biệt hữu ích khi bạn có nhiều ứng dụng chạy trên cùng một IAM role nhưng cần giới hạn quyền khác nhau (ví dụ: một pod chỉ đọc S3 bucket cụ thể, pod khác chỉ gọi một số API nhất định).
+thì chúc mừng, bạn vừa tạo ra một công việc có hai chủ. Một cái ghế mà hai người cùng ngồi.
 
-...Hình ảnh...
+**Giải quyết thế nào?**
 
-...Link...
+Thay vì để hai bên tự “thương lượng” với nhau, ta giao việc đó cho Amazon DynamoDB làm người gác cửa. Cách làm như sau:
 
-...Hướng dẫn...
+* AWS Lambda nhận request và tạo một transaction bằng `TransactWriteItems`.  
+* DynamoDB thực hiện hai thao tác nguyên tử trong cùng một transaction: cập nhật công việc chỉ khi trạng thái vẫn là `OPEN`, đồng thời ghi lại Idempotency Key để chống xử lý trùng.  
+* Chỉ một transaction giành được công việc. Người còn lại nhận về kết quả xung đột.  
+* Nếu người thắng gửi lại request vì bị timeout, backend sẽ đọc kết quả idempotency đã lưu thay vì chạy lại các side effect.
+
+Cái hay ở đây là mình không cần đoán xem ai bấm nhanh hơn vài mili giây. Database sẽ quyết định dựa trên trạng thái thực tế ngay tại thời điểm ghi.
+
+**Cần kiểm chứng điều gì?**
+
+Bắn hai request từ hai người khác nhau vào cùng một công việc, gần như đồng thời. Kết quả đúng phải là chỉ một người nhận được việc. Sau đó replay request của người thắng và kiểm tra xem có phát sinh tác dụng phụ trùng lặp nào không.
+
+Một transaction, một người thắng, không cần trọng tài.
+
+*Lưu ý: đây là kiến trúc và thiết kế kiểm thử đề xuất, chưa phải kết quả triển khai thực tế.*
+
+
+#AWS #DynamoDB #Serverless #RaceCondition #Engineering
+
+![](/images/report/image1.png)

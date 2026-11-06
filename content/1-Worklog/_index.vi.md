@@ -1,40 +1,24 @@
 ---
 title: "Nhật ký công việc"
-date: 2024-01-01
+date: 2026-11-07
 weight: 1
 chapter: false
 pre: " <b> 1. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+Trong suốt 12 tuần thực tập tại Amazon Web Services Việt Nam (Workforce Bootcamp - First Cloud AI Journey), tôi đã hoàn thành quá trình đào tạo chuyên sâu về điện toán đám mây AWS, thực hành lab thực tế và tham gia thiết kế, phát triển dự án capstone **ReLoop** - nền tảng kinh tế tuần hoàn cho thiết bị điện tử cũ.
 
-**Trong trang này** bạn sẽ cần giới thiệu worklog của bạn **như thế nào**? Bạn hoàn thành chương trình trong vòng **bao nhiêu tuần**? Bạn **đã làm gì** trong các tuần đó?
+### Tổng quan nhật ký công việc 12 tuần
 
-
-Thông thường và cũng là tiêu chuẩn, một worklog được thực hiện trong khoảng 3 tháng (trong suốt thời gian thực tập) với nội dung các tuần như sau:
-
-**Tuần 1:** [Làm quen với AWS và các dịch vụ cơ bản trong AWS](1.1-week1/)
-
-**Tuần 2:** [Làm công việc A...](1.2-week2/)
-
-**Tuần 3:** [Làm công việc B...](1.3-week3/)
-
-**Tuần 4:** [Làm công việc C...](1.4-week4/)
-
-**Tuần 5:** [Làm công việc D...](1.5-week5/)
-
-**Tuần 6:** [Làm công việc E...](1.6-week6/)
-
-**Tuần 7:** [Làm công việc G...](1.7-week7/)
-
-**Tuần 8:** [Làm công việc H...](1.8-week8/)
-
-**Tuần 9:** [Làm công việc I...](1.9-week9/)
-
-**Tuần 10:** [Làm công việc L...](1.10-week10/)
-
-**Tuần 11:** [Làm công việc M...](1.11-week11/)
-
-**Tuần 12:** [Làm công việc N...](1.12-week12/)
+* **Tuần 1:** [Làm quen dịch vụ AWS cơ bản, Management Console và AWS CLI](1.1-Week1/)
+* **Tuần 2:** [Quản trị phân quyền IAM, kiến trúc mạng cô lập VPC và Security Groups](1.2-Week2/)
+* **Tuần 3:** [Lưu trữ đám mây S3, thiết kế DynamoDB Single-Table và tải ảnh Presigned URLs](1.3-Week3/)
+* **Tuần 4:** [Điện toán Serverless với AWS Lambda, API Gateway và giám sát CloudWatch](1.4-Week4/)
+* **Tuần 5:** [Khởi động dự án ReLoop, kiến trúc hệ thống và thiết kế bảng dữ liệu](1.5-Week5/)
+* **Tuần 6:** [Xác thực người dùng qua Amazon Cognito và tích hợp giao diện React Amplify](1.6-Week6/)
+* **Tuần 7:** [Quy trình upload ảnh S3 an toàn, kiểm duyệt bằng Rekognition và vòng đời dữ liệu](1.7-Week7/)
+* **Tuần 8:** [Đánh giá mô hình AI đa phương thức Amazon Nova Pro qua Bedrock Converse API](1.8-Week8/)
+* **Tuần 9:** [Phòng thủ tấn công Visual Prompt Injection với Rekognition OCR và Bedrock Guardrails](1.9-Week9/)
+* **Tuần 10:** [Đánh giá thiết bị phần cứng thực tế, từ điển điện tử tiếng Việt và hạn ngạch AI](1.10-Week10/)
+* **Tuần 11:** [Tự động hóa hạ tầng với Terraform, CloudFront SPA và kiểm thử Live Smoke Test](1.11-Week11/)
+* **Tuần 12:** [Cẩm nang kỹ thuật cho lập trình viên, kiểm thử tải đồng thời và tổng duyệt Demo](1.12-Week12/)

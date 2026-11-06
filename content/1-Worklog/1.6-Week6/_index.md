@@ -1,57 +1,40 @@
 ---
 title: "Week 6 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-11-07
+weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
+# **Week 6 Work Log: Authentication with Amazon Cognito & React/Amplify UI Integration**
 
-### Week 6 Objectives:
+## **1. Weekly Objectives**
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Set up user login and registration using Amazon Cognito (ReLoop-user-pool).
+* Wire the Post-Confirmation Lambda trigger so verified signups automatically create a profile in DynamoDB.
+* Build and style the local React + Vite login portal using Amplify UI.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Weekly Execution Schedule**
 
+| Day | Task Description | Start Date | Completion Date | Reference Material |
+| :--- | :--- | :--- | :--- | :--- |
+| **Day 2** | • Configure Cognito User Pool and Web/Mobile App Clients (no client secret for browser safety) | 09/15/2025 | 09/15/2025 | AWS Cognito Docs |
+| **Day 3** | • Hook up the reloop-auth-post-confirmation Lambda trigger to write USER#<sub\> / PROFILE into DynamoDB | 09/16/2025 | 09/16/2025 | AWS Lambda + Cognito |
+| **Day 4** | • Fix Windows PowerShell execution policy, scaffold reloop-ui with Vite + React + ESLint, install aws-amplify | 09/17/2025 | 09/17/2025 | Vite & Amplify Docs |
+| **Day 5** | • Add required schema fields (address, phone_number, email) into the Amplify <Authenticator\> sign-up form | 09/18/2025 | 09/18/2025 | @aws-amplify/ui-react |
+| **Day 6** | • Style login UI with emerald green ThemeProvider and switch Cognito from SMS codes to free Email verification | 09/19/2025 | 09/19/2025 | Cognito Console & App.jsx |
 
-### Week 6 Achievements:
+## **3. Key Achievements & Outcomes**
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Theoretical Foundation**
 
-* Successfully created and configured an AWS Free Tier account.
+* Learned two major Cognito rules: 1) Required attributes are permanently locked once the pool is created, and 2) if passing both phone and email, Cognito defaults to SMS unless configured explicitly for Email verification.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+### **Environment Setup & Configuration**
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Local Vite dev server running at http://localhost:5173 connected to our Singapore Cognito pool.
+* Kept required address and phone fields in signup form as needed for hardware pickup/handover.
 
-* Used AWS CLI to perform basic operations such as:
+### **Practical Skills & Operations**
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Completed full test registration on ReLoop UI, verified email OTP code, and confirmed profile record appeared in reloop-core-table.

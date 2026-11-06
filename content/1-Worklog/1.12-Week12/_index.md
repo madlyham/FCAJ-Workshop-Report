@@ -1,57 +1,39 @@
 ---
 title: "Week 12 Worklog"
-date: 2024-01-01
-weight: 2
+date: 2026-11-07
+weight: 12
 chapter: false
 pre: " <b> 1.12. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
+# **Week 12 Work Log: Developer Technical Reference, Concurrency & Load Testing, Final Demo Rehearsals**
 
-### Week 12 Objectives:
+## **1. Weekly Objectives**
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Clean up project management docs and write a proper English Developer Technical Reference (Man-Page) for the team.
+* Run load tests (scripts/loadtest.mjs) and concurrency checks for final evaluation.
+* Write D2 AI architecture report section and rehearse the end-to-end live demo.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Weekly Execution Schedule**
 
+| Day | Task Description | Start Date | Completion Date | Reference Material |
+| :--- | :--- | :--- | :--- | :--- |
+| **Day 2** | • Extract live AWS configs, Terraform variables, and env vars into standalone RELOOP_TECHNICAL_REFERENCE man-page | 10/27/2025 | 10/27/2025 | RELOOP_TECHNICAL_REFERENCE |
+| **Day 3** | • Document all 30+ DynamoDB key patterns (keys.ts), state transitions, AppError codes, and 45+ HTTP API endpoints | 10/28/2025 | 10/28/2025 | Backend Source Code |
+| **Day 4** | • Run scripts/loadtest.mjs (50 users, 20 req/s); verify putVersioned + withOptimisticRetry stops double-selected offers | 10/29/2025 | 10/29/2025 | scripts/loadtest.mjs |
+| **Day 5** | • Write Final Report Section D2: Nova Pro FinOps rationale, real photo accuracy stats, OCR + Guardrail injection defense | 10/30/2025 | 10/30/2025 | Final Report (D2) |
+| **Day 6** | • Run 2 full dress rehearsals of live demo (Partner Tier 1/2 flow, AI tagging, 5km matching, invoice, flagged attack image) | 10/31/2025 | 10/31/2025 | Demo Script |
 
-### Week 12 Achievements:
+## **3. Key Achievements & Outcomes**
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Theoretical Foundation**
 
-* Successfully created and configured an AWS Free Tier account.
+* Tied everything together from basic Week 1 EC2/CLI commands to a full production serverless system with multimodal AI, computer vision security guardrails, optimistic concurrency control, and Infrastructure as Code.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+### **Environment Setup & Configuration**
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Delivered complete English Developer Reference manual so any developer on the team can look up S3 CORS, Cognito pools, DynamoDB keys, and helper signatures in seconds.
 
-* Used AWS CLI to perform basic operations such as:
+### **Practical Skills & Operations**
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Confirmed p95 read/write latencies stay well under target during load tests and completed final ReLoop demo rehearsals smoothly.

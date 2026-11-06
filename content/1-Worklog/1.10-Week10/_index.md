@@ -1,57 +1,39 @@
 ---
 title: "Week 10 Worklog"
-date: 2024-01-01
-weight: 2
+date: 2026-11-07
+weight: 10
 chapter: false
 pre: " <b> 1.10. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
+# **Week 10 Work Log: Hardware Benchmarking, Vietnamese Electronics Glossary & AI Quota**
 
-### Week 10 Objectives:
+## **1. Weekly Objectives**
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Evaluate Nova Pro on our own real hardware photos (ESP32 IoT rig, Logitech M650 L mouse) and fix broken Vietnamese outputs.
+* Add a Vietnamese hardware glossary to prompt, regex cleanup, and Google AI Studio (Gemini Flash) fallback adapter.
+* Implement daily user AI quota (AIQUOTA) and human-corrected training dataset logger (AILABEL#<month>).
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Weekly Execution Schedule**
 
+| Day | Task Description | Start Date | Completion Date | Reference Material |
+| :--- | :--- | :--- | :--- | :--- |
+| **Day 2** | • Test real unedited posts on dev and document Nova Pro's broken Vietnamese terminology | 10/13/2025 | 10/13/2025 | Dev Feed Inspection |
+| **Day 3** | • Add observedTextAndLabels and identifiedComponents to tool schema so AI lists parts before guessing full category | 10/14/2025 | 10/14/2025 | analyzer.ts |
+| **Day 4** | • Inject UTF-8 Vietnamese electronics vocabulary into system prompt + add regex cleanup in validateResult() | 10/15/2025 | 10/15/2025 | analyzer.ts |
+| **Day 5** | • Build GeminiAnalyzer + FallbackAnalyzer using free Google AI Studio (gemini-2.5-flash) with Bedrock fallback | 10/16/2025 | 10/16/2025 | analyzer.ts & app.ts |
+| **Day 6** | • Enforce AI_DAILY_LIMIT = 20 per user/day (AIQUOTA#<day>) and save { aiSuggested, userFinal } under AILABEL#<YYYY-MM> | 10/17/2025 | 10/17/2025 | aiService.ts & keys.ts |
 
-### Week 10 Achievements:
+## **3. Key Achievements & Outcomes**
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Theoretical Foundation**
 
-* Successfully created and configured an AWS Free Tier account.
+* Found that Nova Pro's vision was sharp (reading tiny embossed text on mouse bottoms), but its Vietnamese spelling inside JSON mode broke unless standard hardware terms were placed directly into the prompt.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+### **Environment Setup & Configuration**
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Updated analyzer prompt, sanitizer rules, and optional GEMINI_API_KEY environment variable with 100% Vitest suite compatibility.
 
-* Used AWS CLI to perform basic operations such as:
+### **Practical Skills & Operations**
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Turned every user edit on the Create Listing page into a labeled training row (AILABEL#<month>) for future JSONL fine-tuning export.

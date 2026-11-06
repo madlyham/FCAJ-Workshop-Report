@@ -1,59 +1,41 @@
 ---
-title: "Worklog Tuần 5"
-date: 2024-01-01
-weight: 1
+title: "Worklog tuần 5"
+date: 2026-11-07
+weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+# **Nhật ký tuần 5: Khởi động dự án ReLoop, kiến trúc hệ thống và thiết kế bảng dữ liệu**
 
-### Mục tiêu tuần 5:
+## **1. Mục tiêu trong tuần**
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Khởi động dự án capstone nhóm: ReLoop (nền tảng kinh tế tuần hoàn thu gom, tái chế thiết bị điện tử).
+* Thống nhất kiến trúc hệ thống, phân quyền người dùng và hạ tầng AWS dùng chung tại ap-southeast-1.
+* Khởi tạo bảng reloop-core-table trên DynamoDB và bucket reloop-device-images trên Amazon S3.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Kế hoạch thực hiện trong tuần**
 
+| Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ngày 2** | • Họp nhóm 5 thành viên rà soát đặc tả ReLoop ban đầu và liệt kê 58 điểm thiếu sót (baton.txt) | 09/08/2025 | 09/08/2025 | Tài liệu đặc tả & Ghi chú nhóm |
+| **Ngày 3** | • Chốt quy tắc nghiệp vụ (quyetdinh.txt): Viewer, Partner Cấp 1 (bán), Partner Cấp 2 (thu gom trong 5km) và Admin | 09/09/2025 | 09/09/2025 | plan/quyetdinh.txt |
+| **Ngày 4** | • Thiết kế cấu trúc khóa Single-Table (keys.ts) cho Users, Partners, Listings, Quotes, Transactions và AI Labels | 09/10/2025 | 09/10/2025 | backend/src/store/keys.ts |
+| **Ngày 5** | • Khởi tạo bảng reloop-core-table (On-Demand) và bucket S3 reloop-device-images tại Singapore | 09/11/2025 | 09/11/2025 | AWS Console / CLI |
+| **Ngày 6** | • Phân chia khối lượng công việc 12 tuần cho 5 thành viên, đảm nhận nhánh #3 Backend AI & Technical Docs | 09/12/2025 | 09/12/2025 | Kế hoạch nhóm |
 
-### Kết quả đạt được tuần 5:
+## **3. Kết quả đạt được**
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Nền tảng lý thuyết**
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Xây dựng luồng vận hành đầu-cuối của ReLoop: người bán đăng ảnh -> AI nhận diện phân loại -> ghép đối tác thu gom trong bán kính 5km qua geohash -> bàn giao trực tiếp -> hóa đơn phí duy trì 10.000 VNĐ/tháng.
+* Thiết kế máy trạng thái (assertTransition) và khóa phiên bản (putVersioned) ngăn chặn xung đột trạng thái giao dịch.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+### **Thiết lập & cấu hình môi trường**
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Tạo bảng reloop-core-table với cấu trúc PK/SK kết hợp GSI1 (GSI1PK/GSI1SK) và trường TTL tự động dọn dẹp.
+* Cấu hình bucket reloop-device-images với quyền truy cập private và tiêu đề CORS đầy đủ.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+### **Kỹ năng thực hành & vận hành hệ thống**
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Đóng góp xây dựng quy chuẩn lập trình của nhóm: cấm dùng lệnh Scan trên DynamoDB, bọc mọi lệnh gọi AWS qua Adapter và bắt buộc Idempotency-Key cho các API tạo mới.

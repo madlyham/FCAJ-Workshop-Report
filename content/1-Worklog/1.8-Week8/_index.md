@@ -1,57 +1,40 @@
 ---
 title: "Week 8 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-11-07
+weight: 8
 chapter: false
 pre: " <b> 1.8. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
+# **Week 8 Work Log: Multimodal AI Evaluation with Amazon Nova Pro & Bedrock Converse API**
 
-### Week 8 Objectives:
+## **1. Weekly Objectives**
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Compare AI model options (SageMaker, Rekognition Custom Labels, Claude Haiku, Amazon Nova Pro) to see what works with our AWS Credits.
+* Build the async device classification adapter (BedrockAnalyzer) using Amazon Nova Pro.
+* Force the LLM to output strict JSON tags using the Bedrock Converse API tool schema instead of free-text paragraphs.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Weekly Execution Schedule**
 
+| Day | Task Description | Start Date | Completion Date | Reference Material |
+| :--- | :--- | :--- | :--- | :--- |
+| **Day 2** | • Check Billing and Cost Management -> Credits -> Applicable products to verify AI coverage | 09/29/2025 | 09/29/2025 | AWS Billing Console |
+| **Day 3** | • Drop SageMaker and Custom Labels—both charge hourly and require extensive training data | 09/30/2025 | 09/30/2025 | Team AI Review |
+| **Day 4** | • Switch to Amazon Nova Pro (apac.amazon.nova-pro-v1:0): Amazon 1st-party model covered by credits, billed per token | 10/01/2025 | 10/01/2025 | Amazon Bedrock Docs |
+| **Day 5** | • Implement BedrockAnalyzer using Converse API with forced toolChoice: 'record_device_analysis' | 10/02/2025 | 10/02/2025 | analyzer.ts |
+| **Day 6** | • Wire async background execution (InvocationType=Event self-invoke) and test on real laptop photos | 10/03/2025 | 10/03/2025 | aiService.ts |
 
-### Week 8 Achievements:
+## **3. Key Achievements & Outcomes**
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Theoretical Foundation**
 
-* Successfully created and configured an AWS Free Tier account.
+* Learned why 3rd-party models like Claude Haiku bill through Marketplace (bypassing promotional credits), while Amazon Nova Pro deducts cleanly from AWS credits and costs $0 when idle.
+* Used Converse API Tool Use to lock AI responses into our exact TypeScript AiResult schema.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+### **Environment Setup & Configuration**
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Configured AI_MODEL_ID=apac.amazon.nova-pro-v1:0 with temperature: 0 and maxTokens: 2048.
 
-* Used AWS CLI to perform basic operations such as:
+### **Practical Skills & Operations**
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Tested Nova Pro on a Dell Latitude 5490 sticker photo and confirmed it extracted valid JSON matching our schema on the first try.

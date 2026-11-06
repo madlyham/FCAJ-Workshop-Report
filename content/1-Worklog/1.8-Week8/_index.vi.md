@@ -1,59 +1,40 @@
 ---
-title: "Worklog Tuần 8"
-date: 2024-01-01
-weight: 1
+title: "Worklog tuần 8"
+date: 2026-11-07
+weight: 8
 chapter: false
 pre: " <b> 1.8. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+# **Nhật ký tuần 8: Đánh giá mô hình AI đa phương thức Amazon Nova Pro qua Bedrock Converse API**
 
-### Mục tiêu tuần 8:
+## **1. Mục tiêu trong tuần**
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* So sánh và đánh giá các phương án mô hình AI (SageMaker, Rekognition Custom Labels, Claude Haiku, Amazon Nova Pro) tối ưu cho ngân sách AWS Credits.
+* Xây dựng adapter phân loại thiết bị bất đồng bộ (BedrockAnalyzer) sử dụng mô hình Amazon Nova Pro.
+* Ép buộc LLM trả về cấu trúc JSON chuẩn thông qua tool schema của Bedrock Converse API thay vì văn bản tự do.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Kế hoạch thực hiện trong tuần**
 
+| Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ngày 2** | • Kiểm tra phần Billing & Cost Management -> Credits -> Sản phẩm áp dụng để xác định dịch vụ AI được tài trợ | 09/29/2025 | 09/29/2025 | AWS Billing Console |
+| **Ngày 3** | • Loại bỏ SageMaker và Rekognition Custom Labels do tính phí máy chủ theo giờ và đòi hỏi tập dữ liệu huấn luyện quá lớn | 09/30/2025 | 09/30/2025 | Đánh giá AI nhóm |
+| **Ngày 4** | • Chuyển sang Amazon Nova Pro (apac.amazon.nova-pro-v1:0): mô hình chính chủ của Amazon được trừ cước trực tiếp từ AWS credits | 10/01/2025 | 10/01/2025 | Tài liệu Amazon Bedrock |
+| **Ngày 5** | • Lập trình BedrockAnalyzer qua Converse API với tùy chọn bắt buộc toolChoice: 'record_device_analysis' | 10/02/2025 | 10/02/2025 | analyzer.ts |
+| **Ngày 6** | • Cấu hình thực thi bất đồng bộ ngầm (InvocationType=Event self-invoke trên Lambda) và kiểm thử với ảnh chụp nhãn laptop thực tế | 10/03/2025 | 10/03/2025 | aiService.ts |
 
-### Kết quả đạt được tuần 8:
+## **3. Kết quả đạt được**
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Nền tảng lý thuyết**
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Hiểu rõ việc các mô hình bên thứ ba như Claude Haiku tính cước qua AWS Marketplace (không trừ promotional credits), trong khi Nova Pro của Amazon được trừ thẳng vào credits và có chi phí $0 khi nhàn rỗi.
+* Sử dụng kỹ thuật Tool Use của Converse API để khóa chặt định dạng đầu ra của AI vào đúng cấu trúc interface TypeScript AiResult.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+### **Thiết lập & cấu hình môi trường**
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Cấu hình AI_MODEL_ID=apac.amazon.nova-pro-v1:0 với nhiệt độ temperature: 0 và giới hạn maxTokens: 2048.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+### **Kỹ năng thực hành & vận hành hệ thống**
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Kiểm thử Nova Pro trên ảnh chụp tem máy Dell Latitude 5490; mô hình trích xuất chính xác thông tin cấu hình và trả về JSON chuẩn ngay lần thử đầu tiên.

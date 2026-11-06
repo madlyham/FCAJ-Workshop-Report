@@ -1,57 +1,41 @@
 ---
 title: "Week 5 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-11-07
+weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
+# **Week 5 Work Log: ReLoop Capstone Kickoff, System Architecture & Single-Table Keys**
 
-### Week 5 Objectives:
+## **1. Weekly Objectives**
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Kick off our team capstone project: ReLoop (a circular marketplace for old/broken electronics).
+* Lock in the system architecture, user roles, and shared AWS resources in ap-southeast-1.
+* Set up reloop-core-table in DynamoDB and reloop-device-images in S3.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Weekly Execution Schedule**
 
+| Day | Task Description | Start Date | Completion Date | Reference Material |
+| :--- | :--- | :--- | :--- | :--- |
+| **Day 2** | • Review original ReLoop spec with 5-person team and list out 58 spec gaps (baton.txt) | 09/08/2025 | 09/08/2025 | ReLoop Spec & Team Notes |
+| **Day 3** | • Lock in business rules (quyetdinh.txt): Viewer, Partner Tier 1 (sellers), Partner Tier 2 (buyers within 5km), and Admin | 09/09/2025 | 09/09/2025 | plan/quyetdinh.txt |
+| **Day 4** | • Design single-table key structure (keys.ts) for Users, Partners, Listings, Quotes, Transactions, and AI Labels | 09/10/2025 | 09/10/2025 | backend/src/store/keys.ts |
+| **Day 5** | • Provision reloop-core-table (On-Demand) and reloop-device-images S3 bucket in Singapore | 09/11/2025 | 09/11/2025 | AWS Console / CLI |
+| **Day 6** | • Split 12-week workload across 5 team members and take charge of the #3 BE-AI & Technical Docs track | 09/12/2025 | 09/12/2025 | Team Work Plan |
 
-### Week 5 Achievements:
+## **3. Key Achievements & Outcomes**
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Theoretical Foundation**
 
-* Successfully created and configured an AWS Free Tier account.
+* Mapped out how ReLoop works end-to-end: seller uploads photos -> AI suggests tags -> system matches recycling partners within 5km using geohash -> offline handover -> 10,000 VND monthly fee invoice.
+* Planned state machines (assertTransition) and version locks (putVersioned) so users cannot glitch transaction states.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+### **Environment Setup & Configuration**
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Initialized reloop-core-table with PK/SK + GSI1 (GSI1PK/GSI1SK) and ttl auto-expiry.
+* Configured reloop-device-images with private access and CORS headers (PUT, POST, GET).
 
-* Used AWS CLI to perform basic operations such as:
+### **Practical Skills & Operations**
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Helped set team coding rules: no Scan in DynamoDB, all AWS calls wrapped inside adapters (ImageStore, Analyzer), and mandatory Idempotency-Key on create routes.

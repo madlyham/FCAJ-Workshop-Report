@@ -1,59 +1,41 @@
 ---
-title: "Worklog Tuần 4"
-date: 2024-01-01
-weight: 1
+title: "Worklog tuần 4"
+date: 2026-11-07
+weight: 4
 chapter: false
 pre: " <b> 1.4. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+# **Nhật ký tuần 4: Điện toán Serverless với AWS Lambda, API Gateway và CloudWatch**
 
-### Mục tiêu tuần 4:
+## **1. Mục tiêu trong tuần**
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Chuyển đổi từ máy chủ EC2 truyền thống sang mô hình điện toán Serverless (AWS Lambda + API Gateway).
+* Hiểu cơ chế hàm khởi động theo sự kiện kích hoạt, thực thi mã nguồn và tự động tắt không phát sinh chi phí nhàn rỗi.
+* Thiết lập nhật ký CloudWatch và cảnh báo chi phí AWS Budgets để kiểm soát sử dụng AWS credits.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Kế hoạch thực hiện trong tuần**
 
+| Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ngày 2** | • Tìm hiểu AWS Lambda: Event triggers, hiện tượng cold start, giới hạn timeout và biến môi trường | 09/01/2025 | 09/01/2025 | AWS Cloud Journey |
+| **Ngày 3** | • Tìm hiểu API Gateway (HTTP API): Cổng định tuyến nhận request từ web và chuyển tiếp tới hàm Lambda | 09/02/2025 | 09/02/2025 | AWS Cloud Journey |
+| **Ngày 4** | • Thực hành: Viết hàm Lambda đọc/ghi DynamoDB; Gán IAM execution role để Lambda có quyền thao tác bảng | 09/03/2025 | 09/03/2025 | AWS Cloud Journey |
+| **Ngày 5** | • Định tuyến API Gateway (GET, POST) tới hàm Lambda và kiểm thử preflight request CORS OPTIONS | 09/04/2025 | 09/04/2025 | AWS Cloud Journey |
+| **Ngày 6** | • Thực hành: Kiểm tra log hàm trong CloudWatch; Cấu hình cảnh báo email AWS Budgets tại các mốc 50%, 80%, 100% của $20 | 09/05/2025 | 09/05/2025 | AWS Cloud Journey |
 
-### Kết quả đạt được tuần 4:
+## **3. Kết quả đạt được**
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Nền tảng lý thuyết**
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Nắm vững mô hình kiến trúc API Gateway + Lambda + DynamoDB tạo nên backend hoàn chỉnh mà không cần trả phí duy trì máy chủ 24/7.
+* Hiểu cách CloudWatch thu thập log console từ Lambda và kích hoạt cảnh báo khi tỷ lệ lỗi tăng cao.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+### **Thiết lập & cấu hình môi trường**
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Triển khai thành công HTTP API Gateway kết nối trực tiếp với hàm Lambda viết bằng Node.js.
+* Thiết lập cảnh báo ngân sách AWS Budgets ở các ngưỡng 50%, 80% và 100% gửi email thông báo tự động.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+### **Kỹ năng thực hành & vận hành hệ thống**
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Khắc phục lỗi quyền hạn của Lambda bằng cách tra cứu CloudWatch log streams và bổ sung quyền dynamodb:PutItem vào IAM Role.

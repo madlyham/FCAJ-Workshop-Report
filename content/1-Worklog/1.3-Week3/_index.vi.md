@@ -1,59 +1,42 @@
 ---
-title: "Worklog Tuần 3"
-date: 2024-01-01
-weight: 1
+title: "Worklog tuần 3"
+date: 2026-11-07
+weight: 3
 chapter: false
 pre: " <b> 1.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+# **Nhật ký tuần 3: Lưu trữ đám mây S3 và thiết kế NoSQL DynamoDB Single-Table**
 
-### Mục tiêu tuần 3:
+## **1. Mục tiêu trong tuần**
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Tìm hiểu lưu trữ tệp tin đám mây (S3) và cơ sở dữ liệu NoSQL Serverless (DynamoDB).
+* Nắm vững giải pháp khóa hoàn toàn truy cập public vào S3 bucket nhưng vẫn cho phép tải ảnh an toàn qua Presigned URLs.
+* Thực hành thiết kế khóa bảng đơn (Partition Key - PK và Sort Key - SK) trong DynamoDB.
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Kế hoạch thực hiện trong tuần**
 
+| Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ngày 2** | • Tìm hiểu Amazon S3: Buckets, object keys và cơ chế 'Block all public access' | 08/25/2025 | 08/25/2025 | AWS Cloud Journey |
+| **Ngày 3** | • Tìm hiểu quy tắc S3 Lifecycle (tự động xóa dữ liệu cũ) và cấu hình CORS | 08/26/2025 | 08/26/2025 | AWS Cloud Journey |
+| **Ngày 4** | • Tìm hiểu nền tảng DynamoDB: Partition Key (PK), Sort Key (SK), so sánh thao tác Query tối ưu và Scan | 08/27/2025 | 08/27/2025 | AWS Cloud Journey |
+| **Ngày 5** | • So sánh hai chế độ tính cước DynamoDB: On-Demand (theo lượt dùng) và Provisioned (dung lượng cấp phát) | 08/28/2025 | 08/28/2025 | AWS Cloud Journey |
+| **Ngày 6** | • Thực hành: Tạo S3 bucket private và kiểm thử Presigned URLs; Tạo bảng DynamoDB và chạy lệnh put-item, query qua CLI | 08/29/2025 | 08/29/2025 | AWS Cloud Journey |
 
-### Kết quả đạt được tuần 3:
+## **3. Kết quả đạt được**
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Nền tảng lý thuyết**
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Hiểu rõ lý do giữ S3 bucket riêng tư 100% và để backend cấp Presigned URL có hạn giờ giúp client tải ảnh trực tiếp lên S3 an toàn.
+* Nắm vững tư duy Single-Table Design trên DynamoDB: gom nhiều thực thể vào một bảng duy nhất nhờ tiền tố khóa như USER# hoặc LISTING#.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+### **Thiết lập & cấu hình môi trường**
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Tạo bucket S3 private thử nghiệm kèm cấu hình tiêu đề CORS và quy tắc vòng đời tự động dọn dẹp.
+* Khởi tạo bảng DynamoDB chế độ On-Demand tại vùng Singapore (ap-southeast-1) giúp tiết kiệm $0 khi không có tải.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+### **Kỹ năng thực hành & vận hành hệ thống**
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Kiểm thử tải ảnh thành công qua Presigned URL và xác minh truy cập trực tiếp bằng URL public bị chặn hoàn toàn.
+* Thêm mới và truy vấn dữ liệu JSON trong DynamoDB bằng khóa chính và chỉ mục phụ toàn cục (GSI1).

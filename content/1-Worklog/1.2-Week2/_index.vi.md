@@ -1,59 +1,42 @@
 ---
-title: "Worklog Tuần 2"
-date: 2024-01-01
-weight: 1
+title: "Worklog tuần 2"
+date: 2026-11-07
+weight: 2
 chapter: false
 pre: " <b> 1.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+# **Nhật ký tuần 2: Quản lý quyền IAM và xây dựng hạ tầng mạng VPC**
 
-### Mục tiêu tuần 2:
+## **1. Mục tiêu trong tuần**
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Hiểu cách AWS quản lý quy tắc phân quyền (IAM) và mạng ảo riêng (VPC).
+* Ngừng sử dụng tài khoản root cho công việc hàng ngày, thiết lập người dùng IAM và vai trò (Roles) đúng chuẩn.
+* Xây dựng mạng ảo cô lập với các phân vùng public/private và quy tắc tường lửa cổng (Security Groups/NACLs).
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+## **2. Kế hoạch thực hiện trong tuần**
 
+| Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ngày 2** | • Học kiến thức IAM cơ bản: Users, Groups, Roles và JSON policies | 08/18/2025 | 08/18/2025 | AWS Cloud Journey |
+| **Ngày 3** | • Thực hành: Tạo IAM Admin user & kích hoạt MFA; Kiểm thử quy tắc role tùy chỉnh theo nguyên tắc đặc quyền tối thiểu | 08/19/2025 | 08/19/2025 | AWS Cloud Journey |
+| **Ngày 4** | • Tìm hiểu nền tảng VPC: Public subnet, Private subnet, Internet Gateway và Route Tables | 08/20/2025 | 08/20/2025 | AWS Cloud Journey |
+| **Ngày 5** | • Phân biệt Security Groups (tường lửa cấp instance có trạng thái) và NACLs (tường lửa cấp subnet không trạng thái) | 08/21/2025 | 08/21/2025 | AWS Cloud Journey |
+| **Ngày 6** | • Thực hành: Xây dựng VPC tùy chỉnh với public & private subnets; Cấu hình Security Group chỉ mở cổng 22 (SSH) và 80 (HTTP) | 08/22/2025 | 08/22/2025 | AWS Cloud Journey |
 
-### Kết quả đạt được tuần 2:
+## **3. Kết quả đạt được**
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### **Nền tảng lý thuyết**
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Nắm vững nguyên lý IAM: thay vì lưu mã khóa trực tiếp trong code, gán IAM Role với chính sách quyền hạn nghiêm ngặt cho dịch vụ.
+* Hiểu cách VPC phân tách tài nguyên đám mây an toàn, chia ranh giới rõ ràng giữa ứng dụng public và cơ sở dữ liệu private.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+### **Thiết lập & cấu hình môi trường**
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Tạo IAM User Group bật xác thực MFA và chuyển cấu hình AWS CLI cục bộ sang tài khoản có quyền hạn phù hợp thay vì root.
+* Xây dựng thành công VPC tùy chỉnh với bảng định tuyến Route Tables và Internet Gateway.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+### **Kỹ năng thực hành & vận hành hệ thống**
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Cấu hình các quy tắc Security Group chặn lưu lượng lạ, chỉ cho phép cổng SSH (22) và HTTP (80).
+* Khắc phục thành công các lỗi AccessDenied bằng cách phân tích và điều chỉnh chính sách JSON trong IAM.

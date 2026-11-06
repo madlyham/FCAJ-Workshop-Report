@@ -1,58 +1,39 @@
 ---
-title: "Worklog Tuần 12"
-date: 2024-01-01
-weight: 2
+title: "Worklog tuần 12"
+date: 2026-11-07
+weight: 12
 chapter: false
-pre: " <b> 1.12 </b> "
+pre: " <b> 1.12. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-### Mục tiêu tuần 12:
+# **Nhật ký tuần 12: Cẩm nang kỹ thuật cho lập trình viên, kiểm thử tải đồng thời và tổng duyệt Demo**
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+## **1. Mục tiêu trong tuần**
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+* Chuẩn hóa tài liệu dự án và biên soạn Cẩm nang kỹ thuật cho lập trình viên (Developer Technical Reference - Man-Page).
+* Thực hiện kiểm thử tải (scripts/loadtest.mjs) và kiểm tra xử lý đồng thời để chuẩn bị cho buổi bảo vệ cuối kỳ.
+* Hoàn thiện phần báo cáo kiến trúc AI (D2) và tổng duyệt kịch bản demo trực tiếp toàn bộ hệ thống.
 
+## **2. Kế hoạch thực hiện trong tuần**
 
-### Kết quả đạt được tuần 12:
+| Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ngày 2** | • Tổng hợp toàn bộ cấu hình AWS, biến môi trường và biến Terraform thành tài liệu RELOOP_TECHNICAL_REFERENCE chuẩn | 10/27/2025 | 10/27/2025 | RELOOP_TECHNICAL_REFERENCE |
+| **Ngày 3** | • Tài liệu hóa hơn 30 mẫu khóa DynamoDB, các chuyển trạng thái giao dịch, mã lỗi AppError và hơn 45 API endpoints | 10/28/2025 | 10/28/2025 | Mã nguồn Backend |
+| **Ngày 4** | • Chạy kiểm thử tải (50 người dùng giả lập, 20 req/giây); xác nhận putVersioned kết hợp thử lại lạc quan ngăn chặn nhận trùng báo giá | 10/29/2025 | 10/29/2025 | scripts/loadtest.mjs |
+| **Ngày 5** | • Biên soạn Mục D2 Báo cáo cuối kỳ: phân tích FinOps mô hình Nova Pro, độ chính xác nhận diện ảnh thực tế và phòng thủ Prompt Injection | 10/30/2025 | 10/30/2025 | Báo cáo cuối kỳ (D2) |
+| **Ngày 6** | • Tổng duyệt 2 lần kịch bản demo trực tiếp (luồng đối tác cấp 1/2, AI nhận diện, ghép nối 5km, xuất hóa đơn, gắn cờ ảnh tấn công) | 10/31/2025 | 10/31/2025 | Kịch bản Demo |
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+## **3. Kết quả đạt được**
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+### **Nền tảng lý thuyết**
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+* Kết nối toàn diện kiến thức từ các lệnh EC2/CLI cơ bản tuần 1 đến hệ thống Serverless hoàn chỉnh: tích hợp AI đa phương thức, hàng rào bảo mật Computer Vision, kiểm soát đồng thời lạc quan và Hạ tầng dưới dạng mã.
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+### **Thiết lập & cấu hình môi trường**
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+* Bàn giao tài liệu cẩm nang kỹ thuật chi tiết giúp các thành viên tra cứu cấu hình S3 CORS, Cognito User Pool, mẫu khóa DynamoDB trong vài giây.
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
+### **Kỹ năng thực hành & vận hành hệ thống**
 
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Xác nhận độ trễ p95 đọc/ghi duy trì dưới ngưỡng mục tiêu trong suốt quá trình test tải và hoàn thành xuất sắc các buổi tổng duyệt demo ReLoop.
