@@ -1,41 +1,42 @@
 ---
-title: "Worklog tuần 5"
+title: "Nhật ký công việc Tuần 5"
 date: 2026-11-07
 weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
 
-# **Nhật ký tuần 5: Khởi động dự án ReLoop, kiến trúc hệ thống và thiết kế bảng dữ liệu**
+# **Nhật ký công việc Tuần 5: Khởi động Đồ án ReLoop, Kiến trúc Hệ thống & Thiết kế Khóa Single-Table**
 
-## **1. Mục tiêu trong tuần**
+## **1. Mục tiêu tuần**
 
-* Khởi động dự án capstone nhóm: ReLoop (nền tảng kinh tế tuần hoàn thu gom, tái chế thiết bị điện tử).
-* Thống nhất kiến trúc hệ thống, phân quyền người dùng và hạ tầng AWS dùng chung tại ap-southeast-1.
-* Khởi tạo bảng reloop-core-table trên DynamoDB và bucket reloop-device-images trên Amazon S3.
+* Chính thức khởi động đồ án tốt nghiệp nền tảng tuần hoàn đồ điện tử ReLoop cùng nhóm 5 thành viên.
+* Rà soát tài liệu đặc tả, làm rõ các điểm thiếu sót và phân định vai trò nghiệp vụ rõ ràng.
+* Thiết kế cấu trúc khóa Single-table DynamoDB đáp ứng toàn bộ luồng người dùng, bài đăng, báo giá và giao dịch.
 
-## **2. Kế hoạch thực hiện trong tuần**
+## **2. Lịch trình thực hiện**
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ngày 2** | • Họp nhóm 5 thành viên rà soát đặc tả ReLoop ban đầu và liệt kê 58 điểm thiếu sót (baton.txt) | 09/08/2025 | 09/08/2025 | Tài liệu đặc tả & Ghi chú nhóm |
-| **Ngày 3** | • Chốt quy tắc nghiệp vụ (quyetdinh.txt): Viewer, Partner Cấp 1 (bán), Partner Cấp 2 (thu gom trong 5km) và Admin | 09/09/2025 | 09/09/2025 | plan/quyetdinh.txt |
-| **Ngày 4** | • Thiết kế cấu trúc khóa Single-Table (keys.ts) cho Users, Partners, Listings, Quotes, Transactions và AI Labels | 09/10/2025 | 09/10/2025 | backend/src/store/keys.ts |
-| **Ngày 5** | • Khởi tạo bảng reloop-core-table (On-Demand) và bucket S3 reloop-device-images tại Singapore | 09/11/2025 | 09/11/2025 | AWS Console / CLI |
-| **Ngày 6** | • Phân chia khối lượng công việc 12 tuần cho 5 thành viên, đảm nhận nhánh #3 Backend AI & Technical Docs | 09/12/2025 | 09/12/2025 | Kế hoạch nhóm |
+| **Ngày 2** | • Họp nhóm 5 thành viên rà soát đặc tả ReLoop ban đầu và liệt kê 58 điểm thiếu sót (baton.txt) | 09/07/2026 | 09/07/2026 | Tài liệu đặc tả & Ghi chú nhóm |
+| **Ngày 3** | • Chốt quy tắc nghiệp vụ: Viewer, Partner Cấp 1 (bán), Partner Cấp 2 (thu gom trong 5km) và Admin | 09/08/2026 | 09/08/2026 | plan/quyetdinh.txt |
+| **Ngày 4** | • Thiết kế cấu trúc khóa Single-table (keys.ts) cho Users, Partners, Listings, Quotes, Transactions và AI Labels | 09/09/2026 | 09/09/2026 | backend/src/store/keys.ts |
+| **Ngày 5** | • Khởi tạo bảng reloop-core-table (On-Demand) và S3 bucket reloop-device-images tại vùng Singapore | 09/10/2026 | 09/10/2026 | AWS Console / CLI |
+| **Ngày 6** | • Phân chia khối lượng công việc cho 5 thành viên; đảm nhận vị trí Lead Backend-AI & Tài liệu kỹ thuật | 09/11/2026 | 09/11/2026 | Kế hoạch phân công nhóm |
 
 ## **3. Kết quả đạt được**
 
-### **Nền tảng lý thuyết**
+### **Cơ sở lý thuyết**
 
-* Xây dựng luồng vận hành đầu-cuối của ReLoop: người bán đăng ảnh -> AI nhận diện phân loại -> ghép đối tác thu gom trong bán kính 5km qua geohash -> bàn giao trực tiếp -> hóa đơn phí duy trì 10.000 VNĐ/tháng.
-* Thiết kế máy trạng thái (assertTransition) và khóa phiên bản (putVersioned) ngăn chặn xung đột trạng thái giao dịch.
+* Chuyển dịch tư duy từ CSDL quan hệ nhiều bảng sang kiến trúc Single-table DynamoDB sử dụng kỹ thuật nạp chồng khóa.
+* Xây dựng máy trạng thái hữu hạn (State Machine) quản lý chặt chẽ vòng đời giao dịch thu hồi thiết bị.
 
-### **Thiết lập & cấu hình môi trường**
+### **Cài đặt & Thiết lập môi trường**
 
-* Tạo bảng reloop-core-table với cấu trúc PK/SK kết hợp GSI1 (GSI1PK/GSI1SK) và trường TTL tự động dọn dẹp.
-* Cấu hình bucket reloop-device-images với quyền truy cập private và tiêu đề CORS đầy đủ.
+* Khởi tạo bảng DynamoDB reloop-core-table và S3 bucket lưu trữ ảnh tại khu vực ap-southeast-1 (Singapore).
+* Thiết lập cấu trúc repository Git và quy chuẩn phân nhánh cho cả nhóm.
 
-### **Kỹ năng thực hành & vận hành hệ thống**
+### **Kỹ năng thực hành & Vận hành**
 
-* Đóng góp xây dựng quy chuẩn lập trình của nhóm: cấm dùng lệnh Scan trên DynamoDB, bọc mọi lệnh gọi AWS qua Adapter và bắt buộc Idempotency-Key cho các API tạo mới.
+* Tài liệu hóa hơn 30 mẫu khóa PK/SK trong file keys.ts.
+* Kiểm thử khả năng truy vấn theo phân vùng khóa bằng dữ liệu mẫu giả định.

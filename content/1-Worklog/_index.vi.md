@@ -6,19 +6,25 @@ chapter: false
 pre: " <b> 1. </b> "
 ---
 
-Trong suốt 12 tuần thực tập tại Amazon Web Services Việt Nam (Workforce Bootcamp - First Cloud AI Journey), tôi đã hoàn thành quá trình đào tạo chuyên sâu về điện toán đám mây AWS, thực hành lab thực tế và tham gia thiết kế, phát triển dự án capstone **ReLoop** - nền tảng kinh tế tuần hoàn cho thiết bị điện tử cũ.
+Trong suốt 12 tuần thực tập tại Công ty TNHH Amazon Web Services Việt Nam (chương trình Workforce Bootcamp - First Cloud AI Journey, từ ngày 14/08/2026 đến ngày 12/11/2026), tôi đã hoàn thành toàn diện khóa đào tạo kiến trúc đám mây, các bài thực hành chuyên sâu về Serverless và toàn bộ vòng đời phát triển dự án đồ án tốt nghiệp **ReLoop** (sàn thương mại điện tử tuần hoàn linh kiện phần cứng).
+
+Song song với lịch trình kỹ thuật hàng tuần, tôi cũng đại diện cho nhóm tích cực tham gia **5 sự kiện công nghệ, hội nghị quy mô lớn và hoạt động thiện nguyện xã hội** do AWS Việt Nam cùng các đối tác công nghệ tổ chức (được đối chiếu xuyên suốt trong lịch trình thực hiện và trình bày chi tiết tại mục [Các events đã tham gia](../4-eventparticipated/)).
 
 ### Tổng quan nhật ký công việc 12 tuần
 
-* **Tuần 1:** [Làm quen dịch vụ AWS cơ bản, Management Console và AWS CLI](1.1-Week1/)
-* **Tuần 2:** [Quản trị phân quyền IAM, kiến trúc mạng cô lập VPC và Security Groups](1.2-Week2/)
-* **Tuần 3:** [Lưu trữ đám mây S3, thiết kế DynamoDB Single-Table và tải ảnh Presigned URLs](1.3-Week3/)
-* **Tuần 4:** [Điện toán Serverless với AWS Lambda, API Gateway và giám sát CloudWatch](1.4-Week4/)
-* **Tuần 5:** [Khởi động dự án ReLoop, kiến trúc hệ thống và thiết kế bảng dữ liệu](1.5-Week5/)
-* **Tuần 6:** [Xác thực người dùng qua Amazon Cognito và tích hợp giao diện React Amplify](1.6-Week6/)
-* **Tuần 7:** [Quy trình upload ảnh S3 an toàn, kiểm duyệt bằng Rekognition và vòng đời dữ liệu](1.7-Week7/)
-* **Tuần 8:** [Đánh giá mô hình AI đa phương thức Amazon Nova Pro qua Bedrock Converse API](1.8-Week8/)
-* **Tuần 9:** [Phòng thủ tấn công Visual Prompt Injection với Rekognition OCR và Bedrock Guardrails](1.9-Week9/)
-* **Tuần 10:** [Đánh giá thiết bị phần cứng thực tế, từ điển điện tử tiếng Việt và hạn ngạch AI](1.10-Week10/)
-* **Tuần 11:** [Tự động hóa hạ tầng với Terraform, CloudFront SPA và kiểm thử Live Smoke Test](1.11-Week11/)
-* **Tuần 12:** [Cẩm nang kỹ thuật cho lập trình viên, kiểm thử tải đồng thời và tổng duyệt Demo](1.12-Week12/)
+* **Tuần 1:** [Làm quen với dịch vụ AWS cơ bản, Console và AWS CLI](1.1-Week1/)
+* **Tuần 2:** [Bảo mật IAM, Kiến trúc VPC và Phân lập mạng](1.2-Week2/)
+* **Tuần 3:** [Lưu trữ đám mây S3, Thiết kế Single-Table DynamoDB & Presigned URLs](1.3-Week3/)
+* **Tuần 4:** [Điện toán Serverless với AWS Lambda, API Gateway và CloudWatch](1.4-Week4/)
+* **Tuần 5:** [Khởi động Đồ án ReLoop, Kiến trúc Hệ thống & Thiết kế Khóa Single-Table](1.5-Week5/)
+* **Tuần 6:** [Xác thực với Amazon Cognito & Tích hợp Giao diện React/Amplify](1.6-Week6/)
+* **Tuần 7:** [Tải ảnh an toàn S3, Kiểm duyệt Rekognition & Khởi động Buildrathon](1.7-Week7/)  
+  *(Đối chiếu: [Sự kiện 1: Khởi động Buildrathon – Code the Future cùng CMC Global](../4-eventparticipated/4.1-event1/) ngày 26/09/2026)*
+* **Tuần 8:** [AI đa phương thức (Nova Pro), Watch Party AI Day & Tọa đàm Dr. Werner](1.8-Week8/)  
+  *(Đối chiếu: [Sự kiện 2: Watch Party AWS Cloud and AI Day Hanoi](../4-eventparticipated/4.2-event2/) ngày 29/09/2026 & [Sự kiện 3: Tọa đàm Fireside Chat cùng Tiến sĩ Werner Vogels](../4-eventparticipated/4.3-event3/) ngày 02/10/2026)*
+* **Tuần 9:** [Phòng thủ Tấn công Prompt Injection bằng OCR & Bedrock Guardrails](1.9-Week9/)
+* **Tuần 10:** [Đánh giá Phần cứng, Từ điển Linh kiện Tiếng Việt & Giới hạn Quota AI](1.10-Week10/)
+* **Tuần 11:** [Hạ tầng Dưới dạng Mã (IaC), Kiểm thử Live AWS & Cloud & AI Meetup](1.11-Week11/)  
+  *(Đối chiếu: [Sự kiện 4: Cloud & AI Infrastructure Meetup](../4-eventparticipated/4.4-event4/) ngày 24/10/2026)*
+* **Tuần 12:** [Tài liệu Kỹ thuật, Gấu bông Thông minh & Tổng duyệt Dự án](1.12-Week12/)  
+  *(Đối chiếu: [Sự kiện 5: Gấu bông thông minh cho trẻ em – Hợp tác cùng Operation Smile Việt Nam](../4-eventparticipated/4.5-event5/) ngày 26/10/2026)*

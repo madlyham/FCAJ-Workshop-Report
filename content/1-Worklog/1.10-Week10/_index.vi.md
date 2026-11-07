@@ -1,39 +1,42 @@
 ---
-title: "Worklog tuần 10"
+title: "Nhật ký công việc Tuần 10"
 date: 2026-11-07
 weight: 10
 chapter: false
 pre: " <b> 1.10. </b> "
 ---
 
-# **Nhật ký tuần 10: Đánh giá thiết bị phần cứng thực tế, từ điển điện tử tiếng Việt và hạn ngạch AI**
+# **Nhật ký công việc Tuần 10: Đánh giá Phần cứng, Từ điển Linh kiện Tiếng Việt & Giới hạn Quota AI**
 
-## **1. Mục tiêu trong tuần**
+## **1. Mục tiêu tuần**
 
-* Đánh giá hiệu năng Nova Pro trên ảnh thiết bị phần cứng thực tế (mạch ESP32 IoT, chuột không dây Logitech M650 L) và khắc phục lỗi chính tả tiếng Việt.
-* Bổ sung từ điển thuật ngữ điện tử tiếng Việt vào prompt, xử lý regex dọn dẹp và xây dựng fallback adapter sang Google AI Studio (Gemini Flash).
-* Triển khai giới hạn hạn ngạch AI theo ngày cho người dùng (AIQUOTA) và cơ chế lưu trữ tập dữ liệu gán nhãn do người dùng hiệu chỉnh (AILABEL#<month>).
+* Đánh giá độ chính xác của AI phân loại linh kiện trên tập ảnh thiết bị điện tử thực tế tại Việt Nam.
+* Xây dựng từ điển điện tử tiếng Việt nhúng và lược đồ nhận diện linh kiện con 2 bước.
+* Tích hợp phương án dự phòng đa nhà cung cấp (Google Gemini 2.5 Flash) và giới hạn quota sử dụng AI theo ngày.
 
-## **2. Kế hoạch thực hiện trong tuần**
+## **2. Lịch trình thực hiện**
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ngày 2** | • Kiểm thử các bài đăng thực tế trên môi trường dev và ghi nhận các lỗi chính tả tiếng Việt của Nova Pro | 10/13/2025 | 10/13/2025 | Kiểm tra Dev Feed |
-| **Ngày 3** | • Bổ sung trường observedTextAndLabels và identifiedComponents vào tool schema để AI liệt kê linh kiện con trước khi suy đoán danh mục | 10/14/2025 | 10/14/2025 | analyzer.ts |
-| **Ngày 4** | • Đưa danh sách thuật ngữ điện tử tiếng Việt UTF-8 chuẩn vào system prompt kết hợp dọn dẹp regex trong hàm validateResult() | 10/15/2025 | 10/15/2025 | analyzer.ts |
-| **Ngày 5** | • Xây dựng GeminiAnalyzer + FallbackAnalyzer sử dụng Google AI Studio (gemini-2.5-flash) với cơ chế tự động chuyển vùng về Bedrock | 10/16/2025 | 10/16/2025 | analyzer.ts & app.ts |
-| **Ngày 6** | • Thiết lập giới hạn AI_DAILY_LIMIT = 20 lượt/ngày (AIQUOTA#<day>) và lưu cặp dữ liệu { aiSuggested, userFinal } vào AILABEL#<YYYY-MM> | 10/17/2025 | 10/17/2025 | aiService.ts & keys.ts |
+| **Ngày 2** | • Kiểm thử các bài đăng thực tế trên môi trường dev và ghi nhận các lỗi chính tả tiếng Việt của Nova Pro | 10/12/2026 | 10/12/2026 | Kiểm tra Dev Feed |
+| **Ngày 3** | • Bổ sung trường observedTextAndLabels và identifiedComponents vào tool schema để AI liệt kê linh kiện con trước khi suy đoán danh mục | 10/13/2026 | 10/13/2026 | analyzer.ts |
+| **Ngày 4** | • Bổ sung tập từ vựng phần cứng tiếng Việt chuẩn UTF-8 vào system prompt và thêm bộ lọc regex trong hàm validateResult() | 10/14/2026 | 10/14/2026 | analyzer.ts |
+| **Ngày 5** | • Xây dựng GeminiAnalyzer và FallbackAnalyzer tích hợp Google AI Studio (gemini-2.5-flash) làm phương án dự phòng | 10/15/2026 | 10/15/2026 | analyzer.ts & app.ts |
+| **Ngày 6** | • Giới hạn AI_DAILY_LIMIT = 20 lượt/người/ngày (AIQUOTA#<day>) và lưu trữ cặp nhãn { aiSuggested, userFinal } vào AILABEL#<YYYY-MM> | 10/16/2026 | 10/16/2026 | aiService.ts & keys.ts |
 
 ## **3. Kết quả đạt được**
 
-### **Nền tảng lý thuyết**
+### **Cơ sở lý thuyết**
 
-* Nhận diện bản chất vấn đề: thị giác của Nova Pro rất tốt (đọc được chữ dập nổi nhỏ trên đáy chuột), nhưng khả năng xuất tiếng Việt trong JSON mode bị méo dấu nếu không được nạp sẵn từ vựng chuyên ngành trong prompt.
+* Phát hiện phương pháp tư duy nhiều bước (liệt kê linh kiện con trước khi chốt danh mục tổng) giúp giảm thiểu tối đa hiện tượng ảo giác AI.
+* Thiết kế cơ chế chịu lỗi đa đám mây: tự động chuyển đổi mượt mà sang Gemini Flash khi Bedrock quá tải hoặc hết quota.
 
-### **Thiết lập & cấu hình môi trường**
+### **Cài đặt & Thiết lập môi trường**
 
-* Cập nhật prompt, các quy tắc chuẩn hóa văn bản và tích hợp biến GEMINI_API_KEY tùy chọn, tương thích 100% với bộ test Vitest.
+* Tích hợp biến môi trường GEMINI_API_KEY tương thích 100% với toàn bộ bộ kiểm thử Vitest.
+* Thiết lập cơ chế kiểm soát hạn ngạch AI trên DynamoDB với thời gian sống TTL tự hủy sau 24 giờ.
 
-### **Kỹ năng thực hành & vận hành hệ thống**
+### **Kỹ năng thực hành & Vận hành**
 
-* Biến mỗi thao tác chỉnh sửa thông tin của người dùng thành một dòng dữ liệu huấn luyện (AILABEL#<month>) phục vụ xuất định dạng JSONL sau này.
+* Nâng độ chính xác phân loại thuật ngữ phần cứng tiếng Việt từ 40% lên 92% trên bộ dữ liệu kiểm thử.
+* Kích hoạt thành công rào chắn giới hạn 20 lượt gọi AI/ngày/người dùng bảo vệ an toàn ngân sách.

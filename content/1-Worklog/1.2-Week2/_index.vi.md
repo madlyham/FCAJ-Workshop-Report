@@ -1,42 +1,42 @@
 ---
-title: "Worklog tuần 2"
+title: "Nhật ký công việc Tuần 2"
 date: 2026-11-07
 weight: 2
 chapter: false
 pre: " <b> 1.2. </b> "
 ---
 
-# **Nhật ký tuần 2: Quản lý quyền IAM và xây dựng hạ tầng mạng VPC**
+# **Nhật ký công việc Tuần 2: Bảo mật IAM, Kiến trúc VPC và Phân lập mạng**
 
-## **1. Mục tiêu trong tuần**
+## **1. Mục tiêu tuần**
 
-* Hiểu cách AWS quản lý quy tắc phân quyền (IAM) và mạng ảo riêng (VPC).
-* Ngừng sử dụng tài khoản root cho công việc hàng ngày, thiết lập người dùng IAM và vai trò (Roles) đúng chuẩn.
-* Xây dựng mạng ảo cô lập với các phân vùng public/private và quy tắc tường lửa cổng (Security Groups/NACLs).
+* Hiểu sâu về cơ chế phân quyền bảo mật (IAM) và mạng ảo biệt lập (VPC) trên AWS.
+* Chấm dứt việc dùng tài khoản Root cho công việc hàng ngày, thiết lập chuẩn Users, Groups, Roles và MFA.
+* Xây dựng kiến trúc mạng phân lớp an toàn với Public Subnet và Private Subnet.
 
-## **2. Kế hoạch thực hiện trong tuần**
+## **2. Lịch trình thực hiện**
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ngày 2** | • Học kiến thức IAM cơ bản: Users, Groups, Roles và JSON policies | 08/18/2025 | 08/18/2025 | AWS Cloud Journey |
-| **Ngày 3** | • Thực hành: Tạo IAM Admin user & kích hoạt MFA; Kiểm thử quy tắc role tùy chỉnh theo nguyên tắc đặc quyền tối thiểu | 08/19/2025 | 08/19/2025 | AWS Cloud Journey |
-| **Ngày 4** | • Tìm hiểu nền tảng VPC: Public subnet, Private subnet, Internet Gateway và Route Tables | 08/20/2025 | 08/20/2025 | AWS Cloud Journey |
-| **Ngày 5** | • Phân biệt Security Groups (tường lửa cấp instance có trạng thái) và NACLs (tường lửa cấp subnet không trạng thái) | 08/21/2025 | 08/21/2025 | AWS Cloud Journey |
-| **Ngày 6** | • Thực hành: Xây dựng VPC tùy chỉnh với public & private subnets; Cấu hình Security Group chỉ mở cổng 22 (SSH) và 80 (HTTP) | 08/22/2025 | 08/22/2025 | AWS Cloud Journey |
+| **Ngày 2** | • Học kiến thức IAM cơ bản: Users, Groups, Roles và JSON policies | 08/17/2026 | 08/17/2026 | AWS Cloud Journey |
+| **Ngày 3** | • Thực hành: Tạo IAM Admin user & kích hoạt MFA; Kiểm thử quy tắc role tùy chỉnh theo nguyên tắc đặc quyền tối thiểu | 08/18/2026 | 08/18/2026 | AWS Cloud Journey |
+| **Ngày 4** | • Tìm hiểu kiến thức VPC: Public Subnet, Private Subnet, Internet Gateway và bảng định tuyến Route Table | 08/19/2026 | 08/19/2026 | AWS Cloud Journey |
+| **Ngày 5** | • Phân biệt Security Groups (tường lửa cấp máy ảo) và Network ACLs (tường lửa cấp subnet) | 08/20/2026 | 08/20/2026 | AWS Cloud Journey |
+| **Ngày 6** | • Thực hành: Xây dựng VPC tùy chỉnh với 2 public subnets và 2 private subnets; Giới hạn cổng truy cập Security Group | 08/21/2026 | 08/21/2026 | AWS Cloud Journey |
 
 ## **3. Kết quả đạt được**
 
-### **Nền tảng lý thuyết**
+### **Cơ sở lý thuyết**
 
-* Nắm vững nguyên lý IAM: thay vì lưu mã khóa trực tiếp trong code, gán IAM Role với chính sách quyền hạn nghiêm ngặt cho dịch vụ.
-* Hiểu cách VPC phân tách tài nguyên đám mây an toàn, chia ranh giới rõ ràng giữa ứng dụng public và cơ sở dữ liệu private.
+* Nắm vững nguyên tắc đặc quyền tối thiểu (Least Privilege): chỉ cấp đúng quyền cần thiết để vận hành.
+* Hiểu rõ tại sao Private Subnet bảo vệ cơ sở dữ liệu và máy chủ nội bộ khỏi các cuộc tấn công quét mạng trực tiếp từ Internet.
 
-### **Thiết lập & cấu hình môi trường**
+### **Cài đặt & Thiết lập môi trường**
 
-* Tạo IAM User Group bật xác thực MFA và chuyển cấu hình AWS CLI cục bộ sang tài khoản có quyền hạn phù hợp thay vì root.
-* Xây dựng thành công VPC tùy chỉnh với bảng định tuyến Route Tables và Internet Gateway.
+* Khởi tạo IAM Admin riêng biệt kèm xác thực 2 lớp (MFA), cất giữ an toàn thông tin tài khoản Root.
+* Thiết lập dải mạng VPC tùy chỉnh (10.0.0.0/16) phân bố qua nhiều Availability Zones.
 
-### **Kỹ năng thực hành & vận hành hệ thống**
+### **Kỹ năng thực hành & Vận hành**
 
-* Cấu hình các quy tắc Security Group chặn lưu lượng lạ, chỉ cho phép cổng SSH (22) và HTTP (80).
-* Khắc phục thành công các lỗi AccessDenied bằng cách phân tích và điều chỉnh chính sách JSON trong IAM.
+* Viết và kiểm tra chính sách IAM định dạng JSON, chỉ cho phép các hành động đọc/ghi cần thiết.
+* Kiểm tra phân lập mạng: máy chủ ở Public Subnet truy cập được Internet qua IGW trong khi máy chủ Private Subnet hoàn toàn không nhận inbound từ ngoài.

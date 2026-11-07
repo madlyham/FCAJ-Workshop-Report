@@ -10,31 +10,33 @@ pre: " <b> 1.6. </b> "
 
 ## **1. Weekly Objectives**
 
-* Set up user login and registration using Amazon Cognito (ReLoop-user-pool).
-* Wire the Post-Confirmation Lambda trigger so verified signups automatically create a profile in DynamoDB.
-* Build and style the local React + Vite login portal using Amplify UI.
+* Set up Amazon Cognito User Pool for secure customer and partner authentication.
+* Connect Post-Confirmation Lambda trigger to automatically create user profile records in DynamoDB.
+* Scaffold React web client with AWS Amplify UI and brand-aligned theming.
 
 ## **2. Weekly Execution Schedule**
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Day 2** | • Configure Cognito User Pool and Web/Mobile App Clients (no client secret for browser safety) | 09/15/2025 | 09/15/2025 | AWS Cognito Docs |
-| **Day 3** | • Hook up the reloop-auth-post-confirmation Lambda trigger to write USER#<sub\> / PROFILE into DynamoDB | 09/16/2025 | 09/16/2025 | AWS Lambda + Cognito |
-| **Day 4** | • Fix Windows PowerShell execution policy, scaffold reloop-ui with Vite + React + ESLint, install aws-amplify | 09/17/2025 | 09/17/2025 | Vite & Amplify Docs |
-| **Day 5** | • Add required schema fields (address, phone_number, email) into the Amplify <Authenticator\> sign-up form | 09/18/2025 | 09/18/2025 | @aws-amplify/ui-react |
-| **Day 6** | • Style login UI with emerald green ThemeProvider and switch Cognito from SMS codes to free Email verification | 09/19/2025 | 09/19/2025 | Cognito Console & App.jsx |
+| **Day 2** | • Configure Cognito User Pool and Web/Mobile App Clients (no client secret for browser safety) | 09/14/2026 | 09/14/2026 | AWS Cognito Docs |
+| **Day 3** | • Hook up the reloop-auth-post-confirmation Lambda trigger to write USER#<sub\> / PROFILE into DynamoDB | 09/15/2026 | 09/15/2026 | AWS Lambda + Cognito |
+| **Day 4** | • Fix Windows PowerShell execution policy, scaffold reloop-ui with Vite + React + ESLint, install aws-amplify | 09/16/2026 | 09/16/2026 | Vite & Amplify Docs |
+| **Day 5** | • Add required schema fields (address, phone_number, email) into the Amplify <Authenticator> sign-up form | 09/17/2026 | 09/17/2026 | @aws-amplify/ui-react |
+| **Day 6** | • Style login UI with emerald green ThemeProvider and switch Cognito from SMS codes to free Email verification | 09/18/2026 | 09/18/2026 | Cognito Console & App.jsx |
 
 ## **3. Key Achievements & Outcomes**
 
 ### **Theoretical Foundation**
 
-* Learned two major Cognito rules: 1) Required attributes are permanently locked once the pool is created, and 2) if passing both phone and email, Cognito defaults to SMS unless configured explicitly for Email verification.
+* Understood JWT token architecture: ID Token for identity claims, Access Token for API authorization, Refresh Token for silent session renewal.
+* Learned why Post-Confirmation Lambda hooks ensure strong consistency between Cognito IDs and DynamoDB profiles.
 
 ### **Environment Setup & Configuration**
 
-* Local Vite dev server running at http://localhost:5173 connected to our Singapore Cognito pool.
-* Kept required address and phone fields in signup form as needed for hardware pickup/handover.
+* Configured Cognito User Pool with email verification and custom attributes.
+* Integrated @aws-amplify/ui-react into the Vite React client.
 
 ### **Practical Skills & Operations**
 
-* Completed full test registration on ReLoop UI, verified email OTP code, and confirmed profile record appeared in reloop-core-table.
+* Successfully tested end-to-end registration flow: sign up -> verify code via email -> trigger auto-populates DynamoDB profile.
+* Secured API Gateway endpoints with Cognito JWT authorizer.

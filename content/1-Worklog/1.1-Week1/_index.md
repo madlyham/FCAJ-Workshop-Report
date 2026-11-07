@@ -18,11 +18,11 @@ pre: " <b> 1.1. </b> "
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Day 2** | • Get acquainted with FCAJ members • Review and document internship unit rules and regulations | 08/11/2025 | 08/11/2025 | Internal Guidelines |
-| **Day 3** | • Research AWS infrastructure and core service categories: Compute, Storage, Networking, Database | 08/12/2025 | 08/12/2025 | AWS Cloud Journey |
-| **Day 4** | • Create and activate AWS Free Tier account • Overview of AWS Console & AWS CLI • Hands-on practice: Install & configure AWS CLI, basic verification | 08/13/2025 | 08/13/2025 | AWS Cloud Journey |
-| **Day 5** | • Learn Amazon EC2 fundamentals: Instance types, AMIs, and EBS • SSH connection methods and key pair management • Elastic IPs | 08/14/2025 | 08/15/2025 | AWS Cloud Journey |
-| **Day 6** | • Hands-on practice: Launch an EC2 instance, Connect via SSH client, Attach and mount an EBS volume | 08/15/2025 | 08/15/2025 | AWS Cloud Journey |
+| **Day 2** | • Get acquainted with FCAJ members • Review and document internship unit rules and regulations | 08/11/2026 | 08/11/2026 | Internal Guidelines |
+| **Day 3** | • Research AWS infrastructure and core service categories: Compute, Storage, Networking, Database | 08/12/2026 | 08/12/2026 | AWS Cloud Journey |
+| **Day 4** | • Create and activate AWS Free Tier account • Overview of AWS Console & AWS CLI • Hands-on practice: Install & configure AWS CLI, basic verification | 08/13/2026 | 08/13/2026 | AWS Cloud Journey |
+| **Day 5** | • Learn Amazon EC2 fundamentals: Instance types, AMIs, and EBS • SSH connection methods and key pair management • Elastic IPs (Official Internship Commencement) | 08/14/2026 | 08/14/2026 | AWS Cloud Journey |
+| **Day 6** | • Hands-on practice: Launch an EC2 instance, Connect via SSH client, Attach and mount an EBS volume | 08/15/2026 | 08/15/2026 | AWS Cloud Journey |
 
 ## **3. Key Achievements & Outcomes**
 

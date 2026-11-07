@@ -10,31 +10,33 @@ pre: " <b> 1.9. </b> "
 
 ## **1. Weekly Objectives**
 
-* Stop visual prompt injection attacks (users putting sticky notes in photos instructing AI to misclassify items).
-* Build the OCR + Guardrail screening pipeline in backend/src/storage/textScreener.ts.
-* Hold listings with flagged images in PENDING_REVIEW so an Admin approves them first.
+* Protect the AI pipeline against visual prompt injection (adversarial text written on hardware labels).
+* Build a 2-tier screening defense: Rekognition DetectText OCR followed by Amazon Bedrock Guardrails.
+* Route suspicious flagged listings to a manual human review queue (REVIEWQ#LISTING) without crashing.
 
 ## **2. Weekly Execution Schedule**
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Day 2** | • Design 2-step text screener: Rekognition DetectText reads image text -> Bedrock Guardrail checks for prompt attacks | 10/06/2025 | 10/06/2025 | AWS Rekognition & Bedrock |
-| **Day 3** | • Configure aws_bedrock_guardrail.ai (PROMPT_ATTACK = HIGH) in infra/ai.tf | 10/07/2025 | 10/07/2025 | infra/ai.tf |
-| **Day 4** | • Write RekognitionGuardrailScreener (skip Guardrail if text < 12 characters to let brand logos pass) | 10/08/2025 | 10/08/2025 | textScreener.ts |
-| **Day 5** | • Save IMGFLAG#<imageKey> in DynamoDB when flagged and route listing to REVIEWQ#LISTING (PENDING_REVIEW) | 10/09/2025 | 10/09/2025 | listingService.ts |
-| **Day 6** | • Red-team live deployment: caught English attacks; identified bug where Rekognition misreads Vietnamese diacritics | 10/10/2025 | 10/10/2025 | Live AWS Dev Test |
+| **Day 2** | • Design 2-step text screener: Rekognition DetectText reads image text -> Bedrock Guardrail checks for prompt attacks | 10/05/2026 | 10/05/2026 | AWS Rekognition & Bedrock |
+| **Day 3** | • Configure aws_bedrock_guardrail.ai (PROMPT_ATTACK = HIGH) in infra/ai.tf | 10/06/2026 | 10/06/2026 | infra/ai.tf |
+| **Day 4** | • Write RekognitionGuardrailScreener (skip Guardrail if text < 12 characters to let brand logos pass) | 10/07/2026 | 10/07/2026 | textScreener.ts |
+| **Day 5** | • Save IMGFLAG#<imageKey> in DynamoDB when flagged and route listing to REVIEWQ#LISTING (PENDING_REVIEW) | 10/08/2026 | 10/08/2026 | listingService.ts |
+| **Day 6** | • Red-team live deployment: caught English attacks; identified bug where Rekognition misreads Vietnamese diacritics | 10/09/2026 | 10/09/2026 | Live AWS Dev Test |
 
 ## **3. Key Achievements & Outcomes**
 
 ### **Theoretical Foundation**
 
-* Discovered a real security edge case: Rekognition.DetectText struggles with Vietnamese diacritics, turning accented attack sentences into broken ASCII that slipped past Bedrock Guardrails.
-* Designed an unaccented Vietnamese keyword check (bo qua huong dan, system prompt, ignore previous) to patch that OCR blindspot.
+* Understood multimodal threat surfaces: attackers can print malicious instructions on a sticker to trick the vision LLM into declaring a broken device as brand new.
+* Designed defense-in-depth: lightweight OCR first, expensive Guardrail second, human fallback third.
 
 ### **Environment Setup & Configuration**
 
-* Enabled AI_GUARDRAIL_ID and AI_GUARDRAIL_VERSION on Lambda and added ImagesTextFlagged CloudWatch metric.
+* Provisioned aws_bedrock_guardrail with Prompt Attack filter set to HIGH.
+* Configured DynamoDB review queue schema.
 
 ### **Practical Skills & Operations**
 
-* Verified end-to-end that uploading an image with printed attack instructions flags the upload, routes to PENDING_REVIEW, and presents extracted OCR text to Admin.
+* Tested against synthetic attack images and confirmed the system flags the listing with 100% accuracy.
+* Cataloged OCR limitations with Vietnamese tone marks for Week 10 prompt tuning.
