@@ -1,6 +1,6 @@
 baseURL = "https://madlyham.github.io/FCAJ-Workshop-Report/"
 relativeURLs = false
-canonifyURLs = false
+canonifyURLs = true
 defaultContentLanguage = "en"
 buildFuture = true
 buildDrafts = true
