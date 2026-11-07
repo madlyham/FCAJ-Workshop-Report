@@ -1,7 +1,10 @@
-baseURL = "https://workshop-sample.awsfcaj.com/"
+baseURL = "https://madlyham.github.io/FCAJ-Workshop-Report/"
 relativeURLs = false
 canonifyURLs = false
 defaultContentLanguage = "en"
+buildFuture = true
+buildDrafts = true
+buildExpired = true
 
 # Change the default theme to be use when building the site with Hugo
 theme = "hugo-theme-learn"
