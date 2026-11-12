@@ -1,106 +1,207 @@
 ---
-title: "Bản đề xuất"
-date: 2024-01-01
+title: "Proposal"
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-}
 
-Tại phần này, bạn cần tóm tắt các nội dung trong workshop mà bạn **dự tính** sẽ làm.
+# RELOOP
+## Chợ đồ điện tử cũ, hỏng có AI hỗ trợ, xây dựng serverless trên AWS
 
-# IoT Weather Platform for Lab Research  
-## Giải pháp AWS Serverless hợp nhất cho giám sát thời tiết thời gian thực  
+### 1. Tóm tắt điều hành
+ReLoop là chợ trên web, nơi người dùng tại Việt Nam bán thiết bị điện tử cũ hoặc hỏng (điện thoại, laptop, màn hình, linh kiện) cho tiệm sửa chữa, người thu mua và đơn vị tái chế gần mình. Dự án do nhóm 5 người xây dựng trong 12 tuần thực tập AWS [CẦN BỔ SUNG: tên nhóm / tổ chức và thành phố]. Người bán tải ảnh lên, Amazon Bedrock tự điền sẵn thông tin tin đăng. Sau đó tin được gửi tới mọi đơn vị thu mua đã được duyệt có vùng phục vụ của chi nhánh (1–15 km) bao phủ vị trí người bán. Giao dịch chốt bằng báo giá của đơn vị thu mua hoặc bằng giá hai bên thỏa thuận trong chat. Ngày 08/11/2026, môi trường dev có 14 tài khoản, 12 tin đang mở của 7 người bán và khoảng 31.000 request API trong tháng đầu. Thiết kế serverless mở rộng được mà không phải làm lại kiến trúc: giới hạn Lambda chạy song song đã được duyệt tới 1.000. Các dịch vụ chính gồm CloudFront, AWS WAF, API Gateway, Lambda, DynamoDB, S3, Cognito, Rekognition, Bedrock, EventBridge, CloudWatch và SNS. Khách xem Chợ không cần tài khoản. Người đã đăng nhập được chat và mua. Chỉ đối tác được Admin duyệt mới được bán, và chỉ Admin cùng Admin tài chính được kiểm duyệt nội dung và xử lý hóa đơn.
 
-### 1. Tóm tắt điều hành  
-IoT Weather Platform được thiết kế dành cho nhóm *ITea Lab* tại TP. Hồ Chí Minh nhằm nâng cao khả năng thu thập và phân tích dữ liệu thời tiết. Nền tảng hỗ trợ tối đa 5 trạm thời tiết, có khả năng mở rộng lên 10–15 trạm, sử dụng thiết bị biên Raspberry Pi kết hợp cảm biến ESP32 để truyền dữ liệu qua MQTT. Nền tảng tận dụng các dịch vụ AWS Serverless để cung cấp giám sát thời gian thực, phân tích dự đoán và tiết kiệm chi phí, với quyền truy cập giới hạn cho 5 thành viên phòng lab thông qua Amazon Cognito.  
+### 2. Tuyên bố vấn đề
+#### Vấn đề hiện tại
+Theo Global E-waste Monitor 2024 (UNITAR/ITU), năm 2022 thế giới thải ra 62 triệu tấn rác điện tử, nhưng chỉ 22,3% được thu gom và tái chế chính thức [CẦN BỔ SUNG: số liệu riêng cho Việt Nam, nếu có]. Người có thiết bị cũ hoặc hỏng thường không biết ai nhận và thiết bị đáng giá bao nhiêu. Hiện họ đăng lên các trang rao vặt chung hoặc nhóm mạng xã hội, tự mô tả thiết bị, gọi từng tiệm, và nhiều khi không ai trả lời. Các chợ chung như Chợ Tốt hay Facebook Marketplace làm cho mọi loại hàng, nên không có:
+- ghép tin với những tiệm có vùng phục vụ bao phủ người bán,
+- giá dự kiến tính theo bảng giá của chính bên mua,
+- hồ sơ uy tín ghi nhận bên mua giữ đúng báo giá.
 
-### 2. Tuyên bố vấn đề  
-*Vấn đề hiện tại*  
-Các trạm thời tiết hiện tại yêu cầu thu thập dữ liệu thủ công, khó quản lý khi có nhiều trạm. Không có hệ thống tập trung cho dữ liệu hoặc phân tích thời gian thực, và các nền tảng bên thứ ba thường tốn kém và quá phức tạp.  
+Tiệm sửa chữa nhỏ gặp khoảng trống tương tự từ phía bên kia: không có kênh rẻ để nhận đúng loại thiết bị mình thu mua ở gần.
 
-*Giải pháp*  
-Nền tảng sử dụng AWS IoT Core để tiếp nhận dữ liệu MQTT, AWS Lambda và API Gateway để xử lý, Amazon S3 để lưu trữ (bao gồm data lake), và AWS Glue Crawlers cùng các tác vụ ETL để trích xuất, chuyển đổi, tải dữ liệu từ S3 data lake sang một S3 bucket khác để phân tích. AWS Amplify với Next.js cung cấp giao diện web, và Amazon Cognito đảm bảo quyền truy cập an toàn. Tương tự như Thingsboard và CoreIoT, người dùng có thể đăng ký thiết bị mới và quản lý kết nối, nhưng nền tảng này hoạt động ở quy mô nhỏ hơn và phục vụ mục đích sử dụng nội bộ. Các tính năng chính bao gồm bảng điều khiển thời gian thực, phân tích xu hướng và chi phí vận hành thấp.  
+#### Giải pháp
+ReLoop chạy toàn bộ luồng trên dịch vụ AWS được quản lý, không có máy chủ nào phải vận hành.
+- **Nhận dữ liệu (ingest):** trình duyệt tải tối đa 6 ảnh mỗi tin (JPEG/PNG/WebP, tối đa 5 MB mỗi ảnh) thẳng lên Amazon S3 bằng presigned POST URL. Amazon Rekognition kiểm mọi ảnh xem có nội dung nhạy cảm không và đọc chữ trong ảnh. Chữ đó được đưa qua Amazon Bedrock Guardrails, nên các câu cố tình điều khiển AI (prompt injection) bị gắn cờ để Admin duyệt.
+- **Xử lý:** một hàm AWS Lambda (Node.js 22, arm64) phục vụ 111 route API phía sau Amazon API Gateway. Hàm còn tự gọi chính nó kiểu bất đồng bộ cho các việc chậm:
+  - AI phân tích ảnh bằng Kimi K3 trên Bedrock, khoảng 35 giây mỗi lần;
+  - ghép tin với chi nhánh bên mua bằng geohash + Haversine.
 
-*Lợi ích và hoàn vốn đầu tư (ROI)*  
-Giải pháp tạo nền tảng cơ bản để các thành viên phòng lab phát triển một nền tảng IoT lớn hơn, đồng thời cung cấp nguồn dữ liệu cho những người nghiên cứu AI phục vụ huấn luyện mô hình hoặc phân tích. Nền tảng giảm bớt báo cáo thủ công cho từng trạm thông qua hệ thống tập trung, đơn giản hóa quản lý và bảo trì, đồng thời cải thiện độ tin cậy dữ liệu. Chi phí hàng tháng ước tính 0,66 USD (theo AWS Pricing Calculator), tổng cộng 7,92 USD cho 12 tháng. Tất cả thiết bị IoT đã được trang bị từ hệ thống trạm thời tiết hiện tại, không phát sinh chi phí phát triển thêm. Thời gian hoàn vốn 6–12 tháng nhờ tiết kiệm đáng kể thời gian thao tác thủ công.  
+  Amazon EventBridge gọi cùng hàm đó mỗi 15 phút để cho tin hết hạn, tự hoàn tất giao dịch sau 48 giờ, gửi nhắc việc và lập hóa đơn tháng.
+- **Lưu trữ:** một bảng Amazon DynamoDB (PK/SK + 1 GSI) chứa mọi loại dữ liệu: người dùng, đối tác, chi nhánh, quy tắc giá, tin đăng, báo giá, giao dịch, chat, đánh giá, hóa đơn và nhật ký Admin. Mọi lệnh ghi đều có điều kiện, và các API liên quan tới tiền bắt buộc có `Idempotency-Key`. Quy tắc S3 lifecycle xóa ảnh chưa dùng sau 1 ngày và xóa mọi ảnh sau 90 ngày.
+- **Giao diện:** ứng dụng React một trang, phục vụ từ bucket S3 riêng tư qua Amazon CloudFront. Gồm Chợ công khai, cổng đối tác (2 cấp) và cổng Admin.
+- **Bảo mật:** Amazon Cognito lo đăng nhập, có group Admins / FinanceAdmins. API Gateway kiểm JWT trên mọi route riêng tư. Hai AWS WAF web ACL bảo vệ web: một trên CloudFront (bộ luật có sẵn + giới hạn tốc độ), một trên user pool Cognito (giới hạn số lần đăng nhập). Web áp Content-Security-Policy chặt, và mỗi quyền IAM chỉ cấp đúng phần code cần.
 
-### 3. Kiến trúc giải pháp  
-Nền tảng áp dụng kiến trúc AWS Serverless để quản lý dữ liệu từ 5 trạm dựa trên Raspberry Pi, có thể mở rộng lên 15 trạm. Dữ liệu được tiếp nhận qua AWS IoT Core, lưu trữ trong S3 data lake và xử lý bởi AWS Glue Crawlers và ETL jobs để chuyển đổi và tải vào một S3 bucket khác cho mục đích phân tích. Lambda và API Gateway xử lý bổ sung, trong khi Amplify với Next.js cung cấp bảng điều khiển được bảo mật bởi Cognito.  
+So với trang rao vặt chung, ReLoop có thêm: AI điền tin, ghép theo vùng phục vụ, giá dự kiến theo quy tắc, hoàn tất 2 bước (người bán xác nhận giá cuối, bên mua chấp nhận) và đánh giá hai chiều. ReLoop không xử lý thanh toán: hai bên trả tiền trực tiếp khi bàn giao.
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+#### Lợi ích và hoàn vốn đầu tư (ROI)
+- **Bớt nhập tay:** AI gợi ý tiêu đề, loại, hãng, model và tình trạng từ tối đa 3 ảnh. Người bán chỉ cần xác nhận hoặc sửa [CẦN BỔ SUNG: thời gian đăng một tin có và không có AI, đo thực tế].
+- **Ít tin bị bỏ ngỏ:** mỗi tin mới được tự ghép với mọi chi nhánh bên mua trong bán kính, tin trong 5 km được xếp trước.
+- **Tin cậy:** state machine, ghi có điều kiện và việc nền idempotent giữ tin đăng, báo giá và giao dịch luôn nhất quán. Có 182 test tự động và một smoke test chạy trọn luồng trên AWS.
+- **Giá trị học tập:** nhóm thực hành thiết kế DynamoDB một bảng, Lambda hướng sự kiện, Bedrock trả JSON có cấu trúc, IaC bằng Terraform, tinh chỉnh WAF và pentest tự động.
+- **Chi phí:** khoảng **18,70 USD/tháng (224,40 USD/năm)** ở quy mô hiện tại (mục 6). Trong đó 17,00 USD là AWS WAF, nên nếu không dùng WAF thì nền tảng chỉ tốn khoảng 1,70 USD/tháng. Đến 28/02/2027, chi phí được trừ vào credit còn lại của tài khoản (197,14 USD ngày 08/11/2026).
+- **Hoàn vốn:** doanh thu là 10.000đ mỗi giao dịch hoàn tất, người bán trả. Giả định 1 USD ≈ 26.000đ [CẦN BỔ SUNG: xác nhận tỷ giá], 18,70 USD ≈ 486.200đ. Vậy nền tảng hòa vốn ở **49 giao dịch hoàn tất mỗi tháng**, hoặc 5 giao dịch mỗi tháng nếu không dùng WAF.
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+### 3. Kiến trúc giải pháp
+ReLoop hoàn toàn serverless, nằm trong một region (ap-southeast-1):
+- Mọi truy cập từ trình duyệt đi qua AWS WAF và CloudFront. File tĩnh lấy từ bucket S3 riêng tư, còn `/api/*` được chuyển tới HTTP API kèm một header bí mật, nên gọi thẳng API Gateway sẽ bị từ chối.
+- Một hàm Lambda chứa toàn bộ nghiệp vụ. Hàm gọi DynamoDB, S3, Rekognition và Bedrock qua các adapter nhỏ, nên cùng một code chạy được cả trên máy cá nhân bằng Node.js với bộ nhớ tạm.
+- Đăng ký và đăng nhập đi thẳng từ trình duyệt tới Cognito, có WAF thứ hai bảo vệ.
+- Log và số liệu nghiệp vụ đổ về CloudWatch; khi có cảnh báo, SNS gửi email cho Admin.
+- Toàn bộ hạ tầng viết bằng Terraform, state lưu trong bucket S3 có versioning.
 
-*Dịch vụ AWS sử dụng*  
-- *AWS IoT Core*: Tiếp nhận dữ liệu MQTT từ 5 trạm, mở rộng lên 15.  
-- *AWS Lambda*: Xử lý dữ liệu và kích hoạt Glue jobs (2 hàm).  
-- *Amazon API Gateway*: Giao tiếp với ứng dụng web.  
-- *Amazon S3*: Lưu trữ dữ liệu thô (data lake) và dữ liệu đã xử lý (2 bucket).  
-- *AWS Glue*: Crawlers lập chỉ mục dữ liệu, ETL jobs chuyển đổi và tải dữ liệu.  
-- *AWS Amplify*: Lưu trữ giao diện web Next.js.  
-- *Amazon Cognito*: Quản lý quyền truy cập cho người dùng phòng lab.  
+![Kiến trúc ReLoop](/images/2-Proposal/reloop-architecture.png)
 
-*Thiết kế thành phần*  
-- *Thiết bị biên*: Raspberry Pi thu thập và lọc dữ liệu cảm biến, gửi tới IoT Core.  
-- *Tiếp nhận dữ liệu*: AWS IoT Core nhận tin nhắn MQTT từ thiết bị biên.  
-- *Lưu trữ dữ liệu*: Dữ liệu thô lưu trong S3 data lake; dữ liệu đã xử lý lưu ở một S3 bucket khác.  
-- *Xử lý dữ liệu*: AWS Glue Crawlers lập chỉ mục dữ liệu; ETL jobs chuyển đổi để phân tích.  
-- *Giao diện web*: AWS Amplify lưu trữ ứng dụng Next.js cho bảng điều khiển và phân tích thời gian thực.  
-- *Quản lý người dùng*: Amazon Cognito giới hạn 5 tài khoản hoạt động.  
+*File gốc sơ đồ: `static/images/2-Proposal/reloop-architecture.drawio` (sinh bằng `diagram/make_architecture.py`).*
 
-### 4. Triển khai kỹ thuật  
-*Các giai đoạn triển khai*  
-Dự án gồm 2 phần — thiết lập trạm thời tiết biên và xây dựng nền tảng thời tiết — mỗi phần trải qua 4 giai đoạn:  
-1. *Nghiên cứu và vẽ kiến trúc*: Nghiên cứu Raspberry Pi với cảm biến ESP32 và thiết kế kiến trúc AWS Serverless (1 tháng trước kỳ thực tập).  
-2. *Tính toán chi phí và kiểm tra tính khả thi*: Sử dụng AWS Pricing Calculator để ước tính và điều chỉnh (Tháng 1).  
-3. *Điều chỉnh kiến trúc để tối ưu chi phí/giải pháp*: Tinh chỉnh (ví dụ tối ưu Lambda với Next.js) để đảm bảo hiệu quả (Tháng 2).  
-4. *Phát triển, kiểm thử, triển khai*: Lập trình Raspberry Pi, AWS services với CDK/SDK và ứng dụng Next.js, sau đó kiểm thử và đưa vào vận hành (Tháng 2–3).  
+#### Dịch vụ AWS sử dụng
+- **Amazon CloudFront:** phục vụ web và chuyển `/api/*` tới API Gateway. Gắn header CSP, HSTS, X-Frame-Options và trả 404 thật khi thiếu file tĩnh.
+- **AWS WAF:** 2 web ACL.
+  - `reloop-dev-web` trên CloudFront: 3 bộ luật AWS managed + 2 giới hạn tốc độ trả 429. Giới hạn là 100 request/phút mỗi IP cho API công khai và 1.000 request/phút mỗi IP cho toàn bộ.
+  - `reloop-dev-auth` trên Cognito: 300 lần đăng nhập / 5 phút mỗi IP, kèm chặn IP có tiếng xấu.
+- **Amazon S3:** 3 bucket — bản build web (riêng tư, OAC), ảnh thiết bị (presigned POST/GET, lifecycle theo tag) và Terraform state (có versioning).
+- **Amazon API Gateway (HTTP API):** kiểm JWT trên mọi route riêng tư; giới hạn 20 request/giây, burst 50.
+- **AWS Lambda:** `reloop-dev-api`, Node.js 22 trên arm64 (Graviton), 512 MB. Chạy API, worker AI/ghép tin bất đồng bộ, job định kỳ và trigger pre sign-up của Cognito. Thời gian chạy trung bình 144 ms; giới hạn chạy song song 1.000.
+- **Amazon DynamoDB:** một bảng on-demand với PK/SK và GSI1, bật PITR và TTL (thông báo tự xóa sau 90 ngày). Hiện có khoảng 5.600 bản ghi (2,4 MB).
+- **Amazon Cognito:** user pool xác minh qua email, có group Admins, FinanceAdmins, Partners, Owners. Hiện có 14 người dùng.
+- **Amazon Rekognition:** gắn nhãn kiểm duyệt cho mọi ảnh (từ chối ảnh nhạy cảm, ca nghi ngờ chuyển Admin) và đọc chữ trong ảnh.
+- **Amazon Bedrock:** Kimi K3 qua Converse API có tool choice, trả JSON có cấu trúc. Guardrail (tier Standard) lọc đầu vào/đầu ra của AI và chữ đọc được trong ảnh. Mỗi người dùng tối đa 20 lượt phân tích/ngày.
+- **Amazon EventBridge:** 1 rule chạy mỗi 15 phút để gọi job quét nền.
+- **Amazon CloudWatch:** log giữ 7 ngày, số liệu nghiệp vụ tự định nghĩa, 1 dashboard và 10 alarm (Lambda lỗi/throttle, API 5xx, p95 > 2 giây, lỗi AI/job, chữ lạ trong ảnh, có khiếu nại mới).
+- **Amazon SNS:** gửi email cảnh báo cho Admin.
+- **AWS IAM:** một execution role chỉ có quyền trên bảng chính, prefix ảnh, đúng model Bedrock và Guardrail, Rekognition, tự gọi chính hàm và ghi log.
+- **AWS Security Agent:** pentest hộp đen tự động trên web dev (3,63 task-hour ngày 08/11/2026).
 
-*Yêu cầu kỹ thuật*  
-- *Trạm thời tiết biên*: Cảm biến (nhiệt độ, độ ẩm, lượng mưa, tốc độ gió), vi điều khiển ESP32, Raspberry Pi làm thiết bị biên. Raspberry Pi chạy Raspbian, sử dụng Docker để lọc dữ liệu và gửi 1 MB/ngày/trạm qua MQTT qua Wi-Fi.  
-- *Nền tảng thời tiết*: Kiến thức thực tế về AWS Amplify (lưu trữ Next.js), Lambda (giảm thiểu do Next.js xử lý), AWS Glue (ETL), S3 (2 bucket), IoT Core (gateway và rules), và Cognito (5 người dùng). Sử dụng AWS CDK/SDK để lập trình (ví dụ IoT Core rules tới S3). Next.js giúp giảm tải Lambda cho ứng dụng web fullstack.  
+#### Thiết kế thành phần
+- **Phía người dùng (Edge / Client):** ứng dụng một trang React 18 + TypeScript (Vite), dùng Leaflet + OpenStreetMap để chọn vị trí. Khách xem Chợ. Sau khi đăng nhập, người dùng vào cổng đối tác (cấp 1: người bán lẻ, tối đa 3 tin đang mở; cấp 2: doanh nghiệp có chi nhánh, quy tắc giá và báo giá, tối đa 10 tin) hoặc cổng Admin.
+- **Nhận dữ liệu (Ingestion):**
+  1. `POST /uploads/presign` trả presigned POST hạn 5 phút, trình duyệt tải ảnh thẳng lên S3.
+  2. `POST /uploads/moderate` chạy Rekognition và gắn tag `moderation=passed` cho ảnh.
+  3. Khi tạo tin, ảnh được gắn tag `state=attached`, nên lifecycle giữ lại.
+- **Xử lý (Processing):** router HTTP lo JWT claims, idempotency key và kiểm dữ liệu đầu vào. State machine cho Listing, Quote, Transaction chỉ cho phép chuyển trạng thái hợp lệ (ví dụ hủy giao dịch có hiệu lực sau 5 phút, hoàn tất tự chấp nhận sau 48 giờ). AI và ghép tin chạy bằng tự gọi bất đồng bộ. Bộ chạy job xếp việc theo "ngăn giờ" nên tìm việc đến hạn mà không phải quét bảng.
+- **Lưu trữ (Storage):** mọi cách truy vấn được khai báo trong `backend/src/store/keys.ts`; code không bao giờ quét bảng. Bảng tin Chợ chia theo tháng, phân trang bằng cursor có kiểm định dạng. Tiền lưu bằng số nguyên VND.
+- **Giao diện web (Web Interface):** Chợ công khai, chat theo từng tin (cập nhật mỗi 5 giây) có ra giá, khung giao dịch (hẹn bàn giao, chỉnh giá, xác nhận, khiếu nại) và đánh giá.
+- **Quản lý người dùng (User Management):** đăng ký Cognito có xác minh email. Trigger pre sign-up chặn một hộp thư mở nhiều tài khoản bằng email bí danh (`ten+1@…`, Gmail có dấu chấm). Admin duyệt hồ sơ đối tác; Admin tài chính lập và xác nhận hóa đơn tháng. Hóa đơn quá hạn hơn 3 ngày thì người bán không đăng tin mới được; quá 7 ngày thì tài khoản bị khóa.
+- **Giám sát (Monitoring):** log JSON có cấu trúc, metric filter cho sự kiện nghiệp vụ, dashboard `reloop-dev-overview`, alarm gửi qua SNS email, log WAF đổ về CloudWatch Logs đã che header authorization và cookie.
 
-### 5. Lộ trình & Mốc triển khai  
-- *Trước thực tập (Tháng 0)*: 1 tháng lên kế hoạch và đánh giá trạm cũ.  
-- *Thực tập (Tháng 1–3)*:  
-    - Tháng 1: Học AWS và nâng cấp phần cứng.  
-    - Tháng 2: Thiết kế và điều chỉnh kiến trúc.  
-    - Tháng 3: Triển khai, kiểm thử, đưa vào sử dụng.  
-- *Sau triển khai*: Nghiên cứu thêm trong vòng 1 năm.  
+### 4. Triển khai kỹ thuật
+#### Các giai đoạn triển khai
+1. **Nghiên cứu & kiến trúc (10/10–16/10/2026):** chuyển bản đặc tả v1.0 (1.189 đoạn) thành 45 quyết định nghiệp vụ (QĐ-01 → QĐ-45), liệt kê cách truy vấn DynamoDB, chọn một Lambda sau HTTP API, viết Terraform đầu tiên (Cognito, API Gateway, Lambda, S3/CloudFront).
+2. **Ước tính chi phí & tính khả thi (12/10–18/10/2026):**
+   - bỏ nạp/rút tiền qua ngân hàng (chưa có API ngân hàng), chuyển sang trả tiền trực tiếp khi bàn giao;
+   - chọn DynamoDB on-demand và Lambda arm64;
+   - đặt mọi lời gọi AWS sau interface để cả nhóm code trên máy cá nhân mà không tốn tiền AWS.
+3. **Phát triển & deploy lần đầu (12/10–22/10/2026):** hoàn thành luồng Chợ đầy đủ trên AWS (18/10), mô hình đối tác 2 cấp, báo giá, ra giá trong chat, giao dịch, đánh giá, thu phí, kiểm duyệt và smoke test trọn luồng `smoke-aws.py`.
+4. **Tinh chỉnh kiến trúc (23/10–06/11/2026):**
+   - làm lại toàn bộ giao diện theo thiết kế của PO và thêm cổng Admin mới;
+   - chuyển AI sang Kimi K3 trên Bedrock (28/10);
+   - chạy 5 đợt QA (146 mục, 03/11);
+   - nâng giới hạn Lambda chạy song song từ 10 lên 1.000;
+   - gắn AWS WAF cho CloudFront và Cognito (06/11).
+5. **Kiểm thử, gia cố & bàn giao (07/11/2026–01/01/2027):**
+   - pentest và sửa lỗi (08/11);
+   - bật CSP chặn thật;
+   - một đường deploy CI/CD duy nhất, IAM user riêng cho từng thành viên;
+   - SES cho email, AWS Budgets, load test, môi trường production;
+   - tài liệu cuối kỳ và demo.
 
-### 6. Ước tính ngân sách  
-Có thể xem chi phí trên [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01)  
-Hoặc tải [tệp ước tính ngân sách](../attachments/budget_estimation.pdf).  
+#### Yêu cầu kỹ thuật
+- **Phần mềm:** Node.js 22, TypeScript 5, React 18 + Vite 5, Leaflet, amazon-cognito-identity-js, AWS SDK v3, esbuild, Vitest; Python 3 cho smoke test trên AWS.
+- **Infrastructure as Code:** Terraform ≥ 1.10 (AWS provider 6.x), state lưu trên S3; `infra/deploy.sh` (build → `terraform apply` → upload web → xóa cache CloudFront); AWS CLI ≥ 2.32.
+- **CI:** GitHub Actions chạy typecheck, 182 test và build web cho mỗi pull request.
+- **Phần cứng:** chỉ cần laptop của thành viên, không có thiết bị tại chỗ.
+- **Kỹ năng:** mô hình DynamoDB một bảng, IAM quyền tối thiểu, thiết kế prompt và Guardrail cho Bedrock, tinh chỉnh luật WAF, React, viết test có bản giả (fake) cho dịch vụ AWS.
 
-*Chi phí hạ tầng*  
-- AWS Lambda: 0,00 USD/tháng (1.000 request, 512 MB lưu trữ).  
-- S3 Standard: 0,15 USD/tháng (6 GB, 2.100 request, 1 GB quét).  
-- Truyền dữ liệu: 0,02 USD/tháng (1 GB vào, 1 GB ra).  
-- AWS Amplify: 0,35 USD/tháng (256 MB, request 500 ms).  
-- Amazon API Gateway: 0,01 USD/tháng (2.000 request).  
-- AWS Glue ETL Jobs: 0,02 USD/tháng (2 DPU).  
-- AWS Glue Crawlers: 0,07 USD/tháng (1 crawler).  
-- MQTT (IoT Core): 0,08 USD/tháng (5 thiết bị, 45.000 tin nhắn).  
+### 5. Lộ trình & Mốc triển khai
 
-*Tổng*: 0,7 USD/tháng, 8,40 USD/12 tháng  
-- *Phần cứng*: 265 USD một lần (Raspberry Pi 5 và cảm biến).  
+| Giai đoạn | Thời gian | Kết quả bàn giao |
+|---|---|---|
+| Trước thực tập | trước 10/10/2026 | Bản đặc tả v1.0 (quy trình nghiệp vụ + thiết kế hệ thống) [CẦN BỔ SUNG: ngày bắt đầu] |
+| Tuần 1–2 | 10/10–23/10 | 45 quyết định nghiệp vụ; repo + CI; môi trường dev bằng Terraform; luồng Chợ đầy đủ chạy trên AWS (18/10); deploy, smoke test đạt (22/10) |
+| Tuần 3–4 | 24/10–06/11 | Giao diện mới theo thiết kế PO (web công khai, cổng đối tác, cổng Admin); AI chạy Kimi K3; ghép tin chạy nền; 5 đợt QA; WAF cho CloudFront + Cognito |
+| Tuần 5 | 07/11–13/11 | Pentest bằng AWS Security Agent (7 phát hiện, không có mức cao); deploy bản sửa; bật CSP chặn thật; kiểm ngân sách |
+| Tuần 6–8 | 14/11–04/12 | Một đường deploy CI/CD; IAM user cho từng thành viên; gộp vào `main`; SES cho email; cảnh báo AWS Budgets |
+| Tuần 9–11 | 05/12–25/12 | Load test sau khi sửa throttling; môi trường production; sửa lỗi cuối |
+| Tuần 12 | 26/12/2026–01/01/2027 | Báo cáo cuối kỳ, demo, tài liệu bàn giao |
+| Sau ra mắt | 01/2027–02/2027 | Chạy dev/prod trong thời hạn credit (đến 28/02/2027); thu số liệu dùng thật cho AI và ghép tin |
 
-### 7. Đánh giá rủi ro  
-*Ma trận rủi ro*  
-- Mất mạng: Ảnh hưởng trung bình, xác suất trung bình.  
-- Hỏng cảm biến: Ảnh hưởng cao, xác suất thấp.  
-- Vượt ngân sách: Ảnh hưởng trung bình, xác suất thấp.  
+### 6. Ước tính ngân sách
+Ước tính trên AWS Pricing Calculator: [CẦN BỔ SUNG: link AWS Pricing Calculator]. Bảng tính chi tiết từng dòng nằm ở [reloop-cost-estimate.csv](/files/2-proposal/reloop-cost-estimate.csv).
 
-*Chiến lược giảm thiểu*  
-- Mạng: Lưu trữ cục bộ trên Raspberry Pi với Docker.  
-- Cảm biến: Kiểm tra định kỳ, dự phòng linh kiện.  
-- Chi phí: Cảnh báo ngân sách AWS, tối ưu dịch vụ.  
+#### Chi phí hạ tầng
+Region ap-southeast-1 (Singapore). Số liệu lấy từ Cost Explorer và CloudWatch thực tế từ 10/10 đến 08/11/2026: khoảng 31.000 request API và 14 người dùng.
 
-*Kế hoạch dự phòng*  
-- Quay lại thu thập thủ công nếu AWS gặp sự cố.  
-- Sử dụng CloudFormation để khôi phục cấu hình liên quan đến chi phí.  
+| Dịch vụ | USD / tháng | Giả định |
+|---|---|---|
+| AWS WAF – web ACL CloudFront | 10,00 | 1 web ACL (5,00) + 5 rule (5 × 1,00) + 0,60 mỗi 1 triệu request |
+| AWS WAF – web ACL Cognito | 7,00 | 1 web ACL (5,00) + 2 rule (2 × 1,00) |
+| Amazon Bedrock (Kimi K3 + Guardrails) | 1,00 | Mức dùng tháng 10 (0,87 USD), tối đa 20 lượt/người/ngày |
+| Amazon Rekognition | 0,30 | Kiểm duyệt + đọc chữ cho khoảng 70–100 ảnh/tháng |
+| Amazon DynamoDB (on-demand) | 0,10 | Khoảng 5.600 bản ghi, 2,4 MB, bật PITR |
+| Amazon API Gateway (HTTP API) | 0,10 | Khoảng 31.000 request/tháng |
+| Amazon S3 | 0,05 | Bản build web + ảnh (lifecycle 1/90 ngày) + Terraform state |
+| Khác (truyền dữ liệu, mục lẻ) | 0,15 | Dự phòng cho các mục nhỏ thấy trong tháng 10 |
+| AWS Lambda | 0,00 | Khoảng 2.250 GB-s/tháng — Free Tier (1 triệu request + 400.000 GB-s) |
+| Amazon CloudFront | 0,00 | Free Tier (1 TB + 10 triệu request/tháng) |
+| Amazon Cognito | 0,00 | 14 người dùng — Free Tier tới 10.000 MAU |
+| Amazon CloudWatch + SNS + EventBridge | 0,00 | 10 alarm, 1 dashboard, log 7 ngày, email cảnh báo, 1 lịch chạy — Free Tier |
+| AWS Security Agent | 0,00 | Dùng thử miễn phí (400 task-hour/tháng); đã dùng 3,63 task-hour |
+| **Tổng mỗi tháng** | **18,70** | |
+| **Tổng 12 tháng** | **224,40** | |
 
-### 8. Kết quả kỳ vọng  
-*Cải tiến kỹ thuật*: Dữ liệu và phân tích thời gian thực thay thế quy trình thủ công. Có thể mở rộng tới 10–15 trạm.  
-*Giá trị dài hạn*: Nền tảng dữ liệu 1 năm cho nghiên cứu AI, có thể tái sử dụng cho các dự án tương lai.
+- **Phần cứng một lần:** 0 USD.
+- **Credit:** tài khoản đang ở gói AWS Free, còn 197,14 USD credit, hạn 28/02/2027. Số này đủ trả cho khoảng 3,7 tháng còn lại tới hạn (≈ 69 USD) mà không tốn tiền mặt.
+- **Tùy chọn tiết kiệm:** tắt cả 2 WAF web ACL (`waf_enabled`, `cognito_waf_enabled`) thì chi phí còn khoảng 1,70 USD/tháng, nhưng mất giới hạn tốc độ và bộ luật có sẵn.
+- *Giá tham khảo theo bảng giá AWS region ap-southeast-1 tháng 11/2026, có thể thay đổi. Các dòng tính theo mức dùng sẽ tăng theo lượng truy cập.*
+
+### 7. Đánh giá rủi ro
+#### Ma trận rủi ro
+
+| Rủi ro | Mức ảnh hưởng | Xác suất |
+|---|---|---|
+| R1. Hai máy deploy code khác nhau lên cùng một Lambda (đã xảy ra ngày 28/10/2026) | Cao | Trung bình |
+| R2. Hết credit hoặc phát sinh phí bất ngờ (tài khoản gói Free bị đóng khi dùng hết credit) | Cao | Thấp |
+| R3. Lambda/API bị throttle khi tải tăng đột biến (load test: 80 request song song → 26% lỗi 5xx khi giới hạn là 10) | Trung bình | Trung bình |
+| R4. AI nhận sai thiết bị hoặc bị chữ độc hại trong ảnh điều khiển | Trung bình | Trung bình |
+| R5. Lỗ hổng bảo mật ở web hoặc API công khai | Cao | Thấp |
+| R6. Hai bên chốt ngoài nền tảng để né phí | Trung bình | Cao |
+| R7. Giới hạn email mặc định của Cognito (~50 email/ngày) chặn đăng ký giữa buổi demo | Trung bình | Trung bình |
+
+#### Chiến lược giảm thiểu
+- **R1:** chỉ một đường deploy (`deploy.sh` từ bản đã commit, chuyển dần sang CI), IAM user riêng cho từng thành viên, không dùng access key của root. Trước mỗi lần deploy, kiểm `LastModified` của Lambda đang chạy và CloudTrail.
+- **R2:** mỗi tính năng tốn tiền được so với số credit còn lại trước khi bật, kèm giới hạn cứng (AI 20 lượt/ngày/người, pentest dừng ở 3,5 task-hour). Thêm cảnh báo AWS Budgets ở mức 50% / 80%.
+- **R3:** đã nâng giới hạn Lambda song song lên 1.000; giới hạn của API Gateway (20/giây, burst 50) và luật tốc độ của WAF trả 429 kèm Retry-After thay vì báo lỗi.
+- **R4:** AI chỉ gợi ý, người bán xác nhận từng trường; hệ thống lưu gợi ý của AI cạnh giá trị người bán chốt. Guardrails và Rekognition gắn cờ chữ đáng ngờ trong ảnh, và tin bị gắn cờ phải chờ Admin duyệt.
+- **R5:** bộ luật WAF có sẵn, CSP chặt, JWT trên mọi route riêng tư, kiểm quyền sở hữu key ảnh, và pentest mỗi lần phát hành (lần gần nhất: 7 phát hiện, không có mức cao, bản sửa đã lên ngày 08/11/2026).
+- **R6:** tính phí khi gỡ tin trong 72 giờ sau một giao dịch bị hủy, khiếu nại phí do Admin tài chính xử lý, và người vi phạm nhiều lần bị gắn cờ.
+- **R7:** chuyển email của Cognito sang Amazon SES trước khi mở cho người dùng thử.
+
+#### Kế hoạch dự phòng
+- **Deploy hỏng:** deploy lại commit tốt gần nhất bằng `deploy.sh`. Terraform giữ nguyên phần còn lại, và `terraform plan` cho thấy đúng phần thay đổi trước khi áp.
+- **Chi phí tăng vọt:** đặt `waf_enabled=false` / `cognito_waf_enabled=false` và hạ giới hạn AI mỗi ngày. Dừng job Security Agent bằng `stop-pentest-job`.
+- **Bedrock không dùng được:** AI là tùy chọn, người bán tự điền form và tin vẫn đăng được.
+- **WAF hoặc CSP chặn nhầm người dùng thật:** sửa luật/ngưỡng hoặc CSP trong `infra/waf.tf` / `infra/web.tf` rồi apply. Chỉ cần một lần cập nhật CloudFront, không phải phát hành code mới.
+- **Sự cố dữ liệu:** khôi phục DynamoDB bằng PITR (tối đa 35 ngày). Người bán có thể tải lại ảnh.
+
+### 8. Kết quả kỳ vọng
+#### Cải tiến kỹ thuật
+- Một chợ hoàn chỉnh, chạy được trên AWS: 111 route API, 3 cổng giao diện, 182 test tự động, smoke test trọn luồng đạt trên AWS.
+- Hạ tầng dựng lại được hoàn toàn từ Terraform bằng một lệnh, khoảng 18,70 USD/tháng. Phần thay đổi theo lượng dùng (Lambda, DynamoDB, API Gateway, S3) dưới 1 USD/tháng ở lượng truy cập hiện tại.
+- Mức bảo mật đo được: WAF ở cả 2 cửa vào, CSP chặt, pentest 7 phát hiện, không có mức cao, mọi mục sửa được đều đã sửa.
+- Thời gian phản hồi: Lambda chạy trung bình 144 ms, có alarm khi p95 vượt 2 giây.
+
+#### Giá trị lâu dài
+- Mỗi tin đăng lưu gợi ý của AI cạnh giá trị người bán chốt. Dần dần đây là dữ liệu có nhãn để đánh giá hoặc tinh chỉnh khả năng nhận diện thiết bị.
+- Thiết kế adapter (Table, ImageStore, Analyzer, AuthProvider) cho phép đổi hoặc thêm dịch vụ, như email SES, chat WebSocket hay API thanh toán ngân hàng, mà không đụng tới nghiệp vụ.
+- Cùng bộ Terraform và script deploy có thể dựng môi trường production hoặc cho một thành phố khác. Cách ghép tin bằng geohash dùng được ở mọi nơi.
+- Tiệm sửa chữa và đơn vị tái chế có thêm kênh nhận thiết bị cũ ổn định ở gần. Nhờ vậy nhiều thiết bị được dùng lại hoặc tái chế chính thức hơn, thay vì nằm trong nhà.
+
+---
+
+**Mục cần bổ sung ([CẦN BỔ SUNG]) và câu hỏi:**
+1. Tên nhóm / tổ chức, thành phố, và tên 5 thành viên.
+2. Ngày bắt đầu, kết thúc thực tập chính xác, và lúc bắt đầu viết bản đặc tả (trước thực tập).
+3. Link AWS Pricing Calculator — có muốn dựng từ bảng ở mục 6 không?
+4. Tỷ giá cho phần ROI (đang giả định 26.000đ/USD).
+5. Số liệu rác điện tử riêng của Việt Nam, nếu muốn trích.
+6. Thời gian đăng một tin có và không có AI, đo thực tế. Chưa có số liệu thì có muốn thử nhanh với 5–10 người không?
