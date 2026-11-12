@@ -6,38 +6,37 @@ chapter: false
 pre: " <b> 1.12. </b> "
 ---
 
-# **Week 12 Work Log: Developer Reference, Smart Plushies Community & Final Rehearsals**
+# **Week 12 Work Log: Workshop Documentation, Final Report, Demo & Hand-over**
 
 ## **1. Weekly Objectives**
 
-* Participate in Event 5 (Smart Plushies for Children with Operation Smile Vietnam) applying embedded IoT and engineering skills toward social impact.
-* Clean up project documentation and author a comprehensive English Developer Technical Reference (Man-Page) for the team.
-* Run load tests (scripts/loadtest.mjs) and verify optimistic concurrency controls (putVersioned + withOptimisticRetry) under heavy race conditions.
-* Write Final Report Section D2 and conduct full dress rehearsals of the end-to-end live demo.
+* Finish the workshop documentation and the final internship report.
+* Rehearse and give the final demo.
+* Hand over the project so it can keep running within the credit window.
 
 ## **2. Weekly Execution Schedule**
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Day 2** | • Participate in [Event 5: Smart Plushies for Children – In Collaboration with Operation Smile Vietnam](../../4-eventparticipated/4.5-event5/) (01:30 PM – 03:30 PM at AWS Vietnam Office, EC2 Level 36 Bitexco). Hands-on assembly and programming of interactive IoT plushies for pediatric patients. Extract live AWS configs into standalone RELOOP_TECHNICAL_REFERENCE. | 10/26/2026 | 10/26/2026 | Event 5 / Operation Smile & AWS, RELOOP_TECHNICAL_REFERENCE |
-| **Day 3** | • Document all 30+ DynamoDB key patterns (keys.ts), state transitions, AppError codes, and 45+ HTTP API endpoints | 10/27/2026 | 10/27/2026 | Backend Source Code |
-| **Day 4** | • Run scripts/loadtest.mjs (50 users, 20 req/s); verify putVersioned + withOptimisticRetry stops double-selected offers | 10/28/2026 | 10/28/2026 | scripts/loadtest.mjs |
-| **Day 5** | • Write Final Report Section D2: Nova Pro FinOps rationale, real photo accuracy stats, OCR + Guardrail injection defense | 10/29/2026 | 10/29/2026 | Final Report (D2) |
-| **Day 6** | • Run full dress rehearsals of live demo (Partner Tier 1/2 flow, AI tagging, 5km matching, invoice, flagged attack image) and finalize presentation materials | 10/30/2026 | 10/31/2026 | Demo Script |
+| **Day 2** | • Write the workshop guide (architecture, deploy steps, clean-up) from RELOOP_TECHNICAL_REFERENCE | 11/30/2026 | 11/30/2026 | RELOOP_TECHNICAL_REFERENCE |
+| **Day 3** | • Draft the final report: results, costs, security, lessons learned | 12/01/2026 | 12/01/2026 | Final report |
+| **Day 4** | • Dress rehearsal of the demo on production with real test accounts | 12/02/2026 | 12/02/2026 | Demo script |
+| **Day 5** | • Final demo to mentors; collect feedback | 12/03/2026 | 12/03/2026 | Demo |
+| **Day 6** | • Hand-over: documentation, Terraform, runbook, cost and credit status; close the internship | 12/04/2026 | 12/04/2026 | Hand-over pack |
 
 ## **3. Key Achievements & Outcomes**
 
 ### **Theoretical Foundation**
 
-* Tied everything together from basic Week 1 EC2/CLI commands to a full production serverless system with multimodal AI, computer vision security guardrails, optimistic concurrency control, and Infrastructure as Code.
-* Experienced technology channeled toward empathetic, human-centric solutions during the Smart Plushies workshop, complementing our technical cloud architecture deliverables.
+* Learned that good documentation is part of the product: it lets others run and change the system without us.
+* Reflected on the full cloud journey, from first EC2 instance to a secured, serverless product on AWS.
 
 ### **Environment Setup & Configuration**
 
-* Delivered complete English Developer Reference manual so any developer on the team can look up S3 CORS, Cognito pools, DynamoDB keys, and helper signatures in seconds.
-* Packaged demo seed data scripts for instant reproducible live presentations.
+* Workshop guide and hand-over pack stored with the repository.
+* Dev and production stacks left running within the credit window (until 28/02/2027).
 
 ### **Practical Skills & Operations**
 
-* Confirmed p95 read/write latencies stay well under target during load tests and completed final ReLoop demo rehearsals smoothly.
-* Proudly represented AWS FCAJ during the Operation Smile Vietnam social impact initiative.
+* Presented the live demo end to end: AI listing, matching, quote, transaction and review.
+* Answered mentor questions on architecture, cost and security trade-offs.

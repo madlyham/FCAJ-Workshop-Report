@@ -9,11 +9,21 @@ pre: " <b> 2. </b> "
 ## Chợ đồ điện tử cũ, hỏng có AI hỗ trợ, xây dựng serverless trên AWS
 
 ### 1. Tóm tắt điều hành
-ReLoop là chợ trên web, nơi người dùng tại Việt Nam bán thiết bị điện tử cũ hoặc hỏng (điện thoại, laptop, màn hình, linh kiện) cho tiệm sửa chữa, người thu mua và đơn vị tái chế gần mình. Dự án do nhóm 5 người xây dựng trong 12 tuần thực tập AWS [CẦN BỔ SUNG: tên nhóm / tổ chức và thành phố]. Người bán tải ảnh lên, Amazon Bedrock tự điền sẵn thông tin tin đăng. Sau đó tin được gửi tới mọi đơn vị thu mua đã được duyệt có vùng phục vụ của chi nhánh (1–15 km) bao phủ vị trí người bán. Giao dịch chốt bằng báo giá của đơn vị thu mua hoặc bằng giá hai bên thỏa thuận trong chat. Ngày 08/11/2026, môi trường dev có 14 tài khoản, 12 tin đang mở của 7 người bán và khoảng 31.000 request API trong tháng đầu. Thiết kế serverless mở rộng được mà không phải làm lại kiến trúc: giới hạn Lambda chạy song song đã được duyệt tới 1.000. Các dịch vụ chính gồm CloudFront, AWS WAF, API Gateway, Lambda, DynamoDB, S3, Cognito, Rekognition, Bedrock, EventBridge, CloudWatch và SNS. Khách xem Chợ không cần tài khoản. Người đã đăng nhập được chat và mua. Chỉ đối tác được Admin duyệt mới được bán, và chỉ Admin cùng Admin tài chính được kiểm duyệt nội dung và xử lý hóa đơn.
+ReLoop là chợ trên web, nơi người dùng tại Việt Nam bán thiết bị điện tử cũ hoặc hỏng (điện thoại, laptop, màn hình, linh kiện) cho tiệm sửa chữa, người thu mua và đơn vị tái chế gần mình. Dự án do **AWSS3nt1n4L**, nhóm 5 người thuộc chương trình AWS First Cloud Journey (FCAJ) tại TP. Hồ Chí Minh, xây dựng trong 12 tuần thực tập (14/09–04/12/2026). Người bán tải ảnh lên, Amazon Bedrock tự điền sẵn thông tin tin đăng. Sau đó tin được gửi tới mọi đơn vị thu mua đã được duyệt có vùng phục vụ của chi nhánh (1–15 km) bao phủ vị trí người bán. Giao dịch chốt bằng báo giá của đơn vị thu mua hoặc bằng giá hai bên thỏa thuận trong chat. Ngày 08/11/2026, môi trường dev có 14 tài khoản, 12 tin đang mở của 7 người bán và khoảng 31.000 request API trong tháng đầu. Thiết kế serverless mở rộng được mà không phải làm lại kiến trúc: giới hạn Lambda chạy song song đã được duyệt tới 1.000. Các dịch vụ chính gồm CloudFront, AWS WAF, API Gateway, Lambda, DynamoDB, S3, Cognito, Rekognition, Bedrock, EventBridge, CloudWatch và SNS. Khách xem Chợ không cần tài khoản. Người đã đăng nhập được chat và mua. Chỉ đối tác được Admin duyệt mới được bán, và chỉ Admin cùng Admin tài chính được kiểm duyệt nội dung và xử lý hóa đơn.
+
+#### Thành viên nhóm
+
+| Thành viên | Vai trò |
+|---|---|
+| Kung Cẩm Thành | Trưởng nhóm (Team Lead) |
+| Hoàng Quốc Việt | Trưởng kỹ thuật (Tech Lead) |
+| Trần Hoàng Quốc Trung | Kỹ sư Backend |
+| Nguyễn Duy Quang | Kỹ sư Frontend |
+| Nguyễn Anh Kỳ | An ninh mạng / Tài liệu |
 
 ### 2. Tuyên bố vấn đề
 #### Vấn đề hiện tại
-Theo Global E-waste Monitor 2024 (UNITAR/ITU), năm 2022 thế giới thải ra 62 triệu tấn rác điện tử, nhưng chỉ 22,3% được thu gom và tái chế chính thức [CẦN BỔ SUNG: số liệu riêng cho Việt Nam, nếu có]. Người có thiết bị cũ hoặc hỏng thường không biết ai nhận và thiết bị đáng giá bao nhiêu. Hiện họ đăng lên các trang rao vặt chung hoặc nhóm mạng xã hội, tự mô tả thiết bị, gọi từng tiệm, và nhiều khi không ai trả lời. Các chợ chung như Chợ Tốt hay Facebook Marketplace làm cho mọi loại hàng, nên không có:
+Theo Global E-waste Monitor 2024 (UNITAR/ITU), năm 2022 thế giới thải ra 62 triệu tấn rác điện tử, nhưng chỉ 22,3% được thu gom và tái chế chính thức. Cũng theo báo cáo này, Việt Nam thải ra khoảng 516.000 tấn (≈5,3 kg mỗi người) năm 2022. Người có thiết bị cũ hoặc hỏng thường không biết ai nhận và thiết bị đáng giá bao nhiêu. Hiện họ đăng lên các trang rao vặt chung hoặc nhóm mạng xã hội, tự mô tả thiết bị, gọi từng tiệm, và nhiều khi không ai trả lời. Các chợ chung như Chợ Tốt hay Facebook Marketplace làm cho mọi loại hàng, nên không có:
 - ghép tin với những tiệm có vùng phục vụ bao phủ người bán,
 - giá dự kiến tính theo bảng giá của chính bên mua,
 - hồ sơ uy tín ghi nhận bên mua giữ đúng báo giá.
@@ -35,12 +45,12 @@ ReLoop chạy toàn bộ luồng trên dịch vụ AWS được quản lý, khô
 So với trang rao vặt chung, ReLoop có thêm: AI điền tin, ghép theo vùng phục vụ, giá dự kiến theo quy tắc, hoàn tất 2 bước (người bán xác nhận giá cuối, bên mua chấp nhận) và đánh giá hai chiều. ReLoop không xử lý thanh toán: hai bên trả tiền trực tiếp khi bàn giao.
 
 #### Lợi ích và hoàn vốn đầu tư (ROI)
-- **Bớt nhập tay:** AI gợi ý tiêu đề, loại, hãng, model và tình trạng từ tối đa 3 ảnh. Người bán chỉ cần xác nhận hoặc sửa [CẦN BỔ SUNG: thời gian đăng một tin có và không có AI, đo thực tế].
+- **Bớt nhập tay:** AI gợi ý tiêu đề, loại, hãng, model và tình trạng từ tối đa 3 ảnh. Người bán chỉ cần xác nhận hoặc sửa. Đăng một tin mất khoảng 5 phút nếu nhập tay, dưới 1 phút nếu có AI (nhóm ước tính).
 - **Ít tin bị bỏ ngỏ:** mỗi tin mới được tự ghép với mọi chi nhánh bên mua trong bán kính, tin trong 5 km được xếp trước.
 - **Tin cậy:** state machine, ghi có điều kiện và việc nền idempotent giữ tin đăng, báo giá và giao dịch luôn nhất quán. Có 182 test tự động và một smoke test chạy trọn luồng trên AWS.
 - **Giá trị học tập:** nhóm thực hành thiết kế DynamoDB một bảng, Lambda hướng sự kiện, Bedrock trả JSON có cấu trúc, IaC bằng Terraform, tinh chỉnh WAF và pentest tự động.
 - **Chi phí:** khoảng **18,70 USD/tháng (224,40 USD/năm)** ở quy mô hiện tại (mục 6). Trong đó 17,00 USD là AWS WAF, nên nếu không dùng WAF thì nền tảng chỉ tốn khoảng 1,70 USD/tháng. Đến 28/02/2027, chi phí được trừ vào credit còn lại của tài khoản (197,14 USD ngày 08/11/2026).
-- **Hoàn vốn:** doanh thu là 10.000đ mỗi giao dịch hoàn tất, người bán trả. Giả định 1 USD ≈ 26.000đ [CẦN BỔ SUNG: xác nhận tỷ giá], 18,70 USD ≈ 486.200đ. Vậy nền tảng hòa vốn ở **49 giao dịch hoàn tất mỗi tháng**, hoặc 5 giao dịch mỗi tháng nếu không dùng WAF.
+- **Hoàn vốn:** doanh thu là 10.000đ mỗi giao dịch hoàn tất, người bán trả. Giả định 1 USD ≈ 26.000đ (tỷ giá xấp xỉ, tháng 11/2026), 18,70 USD ≈ 486.200đ. Vậy nền tảng hòa vốn ở **49 giao dịch hoàn tất mỗi tháng**, hoặc 5 giao dịch mỗi tháng nếu không dùng WAF.
 
 ### 3. Kiến trúc giải pháp
 ReLoop hoàn toàn serverless, nằm trong một region (ap-southeast-1):
@@ -86,20 +96,20 @@ ReLoop hoàn toàn serverless, nằm trong một region (ap-southeast-1):
 
 ### 4. Triển khai kỹ thuật
 #### Các giai đoạn triển khai
-1. **Nghiên cứu & kiến trúc (10/10–16/10/2026):** chuyển bản đặc tả v1.0 (1.189 đoạn) thành 45 quyết định nghiệp vụ (QĐ-01 → QĐ-45), liệt kê cách truy vấn DynamoDB, chọn một Lambda sau HTTP API, viết Terraform đầu tiên (Cognito, API Gateway, Lambda, S3/CloudFront).
-2. **Ước tính chi phí & tính khả thi (12/10–18/10/2026):**
+1. **Nghiên cứu & kiến trúc (28/09–09/10/2026):** chuyển bản đặc tả v1.0 (1.189 đoạn) thành 45 quyết định nghiệp vụ (QĐ-01 → QĐ-45), liệt kê cách truy vấn DynamoDB, chọn một Lambda sau HTTP API, viết Terraform đầu tiên (Cognito, API Gateway, Lambda, S3/CloudFront).
+2. **Ước tính chi phí & tính khả thi (05/10–09/10/2026):**
    - bỏ nạp/rút tiền qua ngân hàng (chưa có API ngân hàng), chuyển sang trả tiền trực tiếp khi bàn giao;
    - chọn DynamoDB on-demand và Lambda arm64;
    - đặt mọi lời gọi AWS sau interface để cả nhóm code trên máy cá nhân mà không tốn tiền AWS.
-3. **Phát triển & deploy lần đầu (12/10–22/10/2026):** hoàn thành luồng Chợ đầy đủ trên AWS (18/10), mô hình đối tác 2 cấp, báo giá, ra giá trong chat, giao dịch, đánh giá, thu phí, kiểm duyệt và smoke test trọn luồng `smoke-aws.py`.
-4. **Tinh chỉnh kiến trúc (23/10–06/11/2026):**
+3. **Phát triển & deploy lần đầu (05/10–23/10/2026):** hoàn thành luồng Chợ đầy đủ trên AWS (19/10), mô hình đối tác 2 cấp, báo giá, ra giá trong chat, giao dịch, đánh giá, thu phí, kiểm duyệt và smoke test trọn luồng `smoke-aws.py` (đạt ngày 22/10).
+4. **Tinh chỉnh kiến trúc (26/10–06/11/2026):**
    - làm lại toàn bộ giao diện theo thiết kế của PO và thêm cổng Admin mới;
    - chuyển AI sang Kimi K3 trên Bedrock (28/10);
    - chạy 5 đợt QA (146 mục, 03/11);
    - nâng giới hạn Lambda chạy song song từ 10 lên 1.000;
    - gắn AWS WAF cho CloudFront và Cognito (06/11).
-5. **Kiểm thử, gia cố & bàn giao (07/11/2026–01/01/2027):**
-   - pentest và sửa lỗi (08/11);
+5. **Kiểm thử, gia cố & bàn giao (09/11–04/12/2026):**
+   - pentest và sửa lỗi (tuần 09/11);
    - bật CSP chặn thật;
    - một đường deploy CI/CD duy nhất, IAM user riêng cho từng thành viên;
    - SES cho email, AWS Budgets, load test, môi trường production;
@@ -114,22 +124,27 @@ ReLoop hoàn toàn serverless, nằm trong một region (ap-southeast-1):
 
 ### 5. Lộ trình & Mốc triển khai
 
-| Giai đoạn | Thời gian | Kết quả bàn giao |
+| Tuần | Thời gian | Kết quả bàn giao |
 |---|---|---|
-| Trước thực tập | trước 10/10/2026 | Bản đặc tả v1.0 (quy trình nghiệp vụ + thiết kế hệ thống) [CẦN BỔ SUNG: ngày bắt đầu] |
-| Tuần 1–2 | 10/10–23/10 | 45 quyết định nghiệp vụ; repo + CI; môi trường dev bằng Terraform; luồng Chợ đầy đủ chạy trên AWS (18/10); deploy, smoke test đạt (22/10) |
-| Tuần 3–4 | 24/10–06/11 | Giao diện mới theo thiết kế PO (web công khai, cổng đối tác, cổng Admin); AI chạy Kimi K3; ghép tin chạy nền; 5 đợt QA; WAF cho CloudFront + Cognito |
-| Tuần 5 | 07/11–13/11 | Pentest bằng AWS Security Agent (7 phát hiện, không có mức cao); deploy bản sửa; bật CSP chặn thật; kiểm ngân sách |
-| Tuần 6–8 | 14/11–04/12 | Một đường deploy CI/CD; IAM user cho từng thành viên; gộp vào `main`; SES cho email; cảnh báo AWS Budgets |
-| Tuần 9–11 | 05/12–25/12 | Load test sau khi sửa throttling; môi trường production; sửa lỗi cuối |
-| Tuần 12 | 26/12/2026–01/01/2027 | Báo cáo cuối kỳ, demo, tài liệu bàn giao |
-| Sau ra mắt | 01/2027–02/2027 | Chạy dev/prod trong thời hạn credit (đến 28/02/2027); thu số liệu dùng thật cho AI và ghép tin |
+| Tuần 1 | 14/09–18/09 | Nền tảng AWS: bảo mật tài khoản, IAM, VPC, EC2; làm quen nhóm |
+| Tuần 2 | 21/09–26/09 | Kiến thức serverless (S3, DynamoDB, Lambda, API Gateway); Buildrathon khai mạc, chọn dự án ReLoop (26/09) |
+| Tuần 3 | 28/09–02/10 | Chuyển bản đặc tả v1.0 thành 45 quyết định nghiệp vụ (QĐ-01 → QĐ-45) và 58 điểm còn thiếu; repo + CI; chia việc trong nhóm |
+| Tuần 4 | 05/10–09/10 | Kiến trúc và cách truy vấn DynamoDB (`keys.ts`); đăng nhập Cognito + ứng dụng React; chốt chi phí và tính khả thi |
+| Tuần 5 | 12/10–16/10 | Tải ảnh lên S3, kiểm duyệt bằng Rekognition, AI phân tích tin đầu tiên (Amazon Nova Pro) |
+| Tuần 6 | 19/10–24/10 | Môi trường dev bằng Terraform; luồng Chợ đầy đủ chạy trên AWS (19/10); smoke test đạt (22/10); job EventBridge; dashboard |
+| Tuần 7 | 26/10–30/10 | Giao diện mới theo thiết kế PO (web công khai, cổng đối tác, cổng Admin); đọc chữ trong ảnh + Guardrails; AI chuyển sang Kimi K3 (28/10) |
+| Tuần 8 | 02/11–06/11 | Ghép tin chạy nền; 5 đợt QA (146 mục, 03/11); load test → Lambda song song 1.000; AI tối đa 20 lượt/ngày; WAF cho CloudFront + Cognito (06/11) |
+| Tuần 9 | 09/11–13/11 | Pentest bằng AWS Security Agent (7 phát hiện, không có mức cao); deploy bản sửa; bật CSP chặn thật; SES cho email; cảnh báo AWS Budgets 50% / 80% |
+| Tuần 10 | 16/11–20/11 | Chạy lại load test sau khi sửa throttling (20/giây, burst 50); một đường deploy CI/CD; IAM user cho từng thành viên; môi trường production |
+| Tuần 11 | 23/11–27/11 | Chuyển Terraform state; dọn tài nguyên thừa; rà soát chi phí |
+| Tuần 12 | 30/11–04/12 | Báo cáo cuối kỳ, demo, tài liệu bàn giao |
+| Sau ra mắt | 12/2026–02/2027 | Chạy dev/prod trong thời hạn credit (đến 28/02/2027); thu số liệu dùng thật cho AI và ghép tin |
 
 ### 6. Ước tính ngân sách
-Ước tính trên AWS Pricing Calculator: [CẦN BỔ SUNG: link AWS Pricing Calculator]. Bảng tính chi tiết từng dòng nằm ở [reloop-cost-estimate.csv](/files/2-proposal/reloop-cost-estimate.csv).
+Ước tính dựa trên bảng giá công khai của AWS cho ap-southeast-1 (dùng [AWS Pricing Calculator](https://calculator.aws/) để tính lại). Bảng tính chi tiết từng dòng nằm ở [reloop-cost-estimate.csv](/files/2-proposal/reloop-cost-estimate.csv).
 
 #### Chi phí hạ tầng
-Region ap-southeast-1 (Singapore). Số liệu lấy từ Cost Explorer và CloudWatch thực tế từ 10/10 đến 08/11/2026: khoảng 31.000 request API và 14 người dùng.
+Region ap-southeast-1 (Singapore). Số liệu lấy từ Cost Explorer và CloudWatch thực tế từ 26/09 đến 08/11/2026: khoảng 31.000 request API và 14 người dùng.
 
 | Dịch vụ | USD / tháng | Giả định |
 |---|---|---|
@@ -195,13 +210,3 @@ Region ap-southeast-1 (Singapore). Số liệu lấy từ Cost Explorer và Clou
 - Thiết kế adapter (Table, ImageStore, Analyzer, AuthProvider) cho phép đổi hoặc thêm dịch vụ, như email SES, chat WebSocket hay API thanh toán ngân hàng, mà không đụng tới nghiệp vụ.
 - Cùng bộ Terraform và script deploy có thể dựng môi trường production hoặc cho một thành phố khác. Cách ghép tin bằng geohash dùng được ở mọi nơi.
 - Tiệm sửa chữa và đơn vị tái chế có thêm kênh nhận thiết bị cũ ổn định ở gần. Nhờ vậy nhiều thiết bị được dùng lại hoặc tái chế chính thức hơn, thay vì nằm trong nhà.
-
----
-
-**Mục cần bổ sung ([CẦN BỔ SUNG]) và câu hỏi:**
-1. Tên nhóm / tổ chức, thành phố, và tên 5 thành viên.
-2. Ngày bắt đầu, kết thúc thực tập chính xác, và lúc bắt đầu viết bản đặc tả (trước thực tập).
-3. Link AWS Pricing Calculator — có muốn dựng từ bảng ở mục 6 không?
-4. Tỷ giá cho phần ROI (đang giả định 26.000đ/USD).
-5. Số liệu rác điện tử riêng của Việt Nam, nếu muốn trích.
-6. Thời gian đăng một tin có và không có AI, đo thực tế. Chưa có số liệu thì có muốn thử nhanh với 5–10 người không?

@@ -8,7 +8,7 @@ pre: " <b> 6. </b> "
 
 # Self-Evaluation Report
 
-During my internship at **Amazon Web Services Viet Nam Company Limited (Workforce Bootcamp - First Cloud AI Journey)** from **14/08/2026 to 12/11/2026**, I had the opportunity to learn, practice, and apply my cybersecurity and cloud computing knowledge acquired at FPT University to a production-grade working environment.
+During my internship at **Amazon Web Services Viet Nam Company Limited (Workforce Bootcamp - First Cloud AI Journey)** from **14/09/2026 to 04/12/2026**, I had the opportunity to learn, practice, and apply my cybersecurity and cloud computing knowledge acquired at FPT University to a production-grade working environment.
 
 I actively participated as the backend AI and infrastructure engineer for the **ReLoop** circular marketplace platform, responsible for architecting an automated device classification and content moderation pipeline using Amazon Bedrock (Amazon Nova Pro), Amazon Rekognition, DynamoDB single-table design, and Bedrock Guardrails to defend against visual prompt injection attacks. Through this project, I significantly strengthened my technical skills in serverless cloud architecture, multimodal AI tool integration, DevSecOps, and Infrastructure as Code (Terraform), while sharpening my abilities in technical documentation, code reviews, and cross-functional Agile collaboration.
 

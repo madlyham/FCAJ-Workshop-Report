@@ -6,39 +6,37 @@ chapter: false
 pre: " <b> 1.7. </b> "
 ---
 
-# **Week 7 Work Log: S3 Secure Uploads, Rekognition Moderation & Buildrathon Kickoff**
+# **Week 7 Work Log: New UI, Prompt-Injection Defence, Switch to Kimi K3 & Smart Plushies Community**
 
 ## **1. Weekly Objectives**
 
-* Build the private S3 image upload flow using temporary Presigned POST tickets (POST /uploads/presign).
-* Add Amazon Rekognition content moderation (DetectModerationLabels) to block NSFW/unsafe photos.
-* Configure S3 lifecycle rules so unattached uploads and old photos get deleted automatically.
-* Participate in Event 1: Buildrathon Kickoff (CMC Global) at Bitexco Financial Tower to connect serverless backends with multimodal AI agent reasoning.
+* Rebuild the UI from the product owner's designs: public market, partner portal and Admin portal.
+* Stop malicious text inside photos from steering the AI (prompt injection).
+* Fix poor Vietnamese output from the AI; attend Event 5 (Smart Plushies with Operation Smile Vietnam).
 
 ## **2. Weekly Execution Schedule**
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Day 2** | • Implement S3ImageStore (backend/src/storage/imageStore.ts): 300s presigned POST tickets (max 5MB, max 6 photos/listing) | 09/21/2026 | 09/21/2026 | AWS S3 SDK Docs |
-| **Day 3** | • Lock down user prefixes (listings/<userId>/) with assertOwnImageKeys() to prevent unauthorized photo attachments | 09/22/2026 | 09/22/2026 | imageStore.ts |
-| **Day 4** | • Implement RekognitionModerator calling DetectModerationLabels (MinConfidence: 70) | 09/23/2026 | 09/23/2026 | AWS Rekognition Docs |
-| **Day 5** | • Auto-delete rejected photos from S3, log ImagesRejected metric, return 422 IMAGE_REJECTED | 09/24/2026 | 09/24/2026 | moderateUpload() |
-| **Day 6** | • Configure S3 Lifecycle rules: purge unattached state=pending images after 1 day, listing images after 120 days | 09/25/2026 | 09/25/2026 | infra/*.tf |
-| **Day 7** | • Participate in [Event 1: Buildrathon – Kickoff: Code the Future with CMC Global](../../4-eventparticipated/4.1-event1/) (10:30 AM – 12:00 PM at Bitexco Financial Tower). Explore Generative AI, agentic tool workflows, and RAG architectures. | 09/26/2026 | 09/26/2026 | Event 1 / CMC Global & AWS |
+| **Day 2** | • Participate in [Event 5: Smart Plushies for Children – In Collaboration with Operation Smile Vietnam](../../4-eventparticipated/4.5-event5/) (01:30 PM – 03:30 PM at AWS Vietnam Office, EC2 Level 36 Bitexco). Hands-on assembly and programming of interactive IoT plushies for pediatric patients. Start the new UI from the product owner's designs. | 10/26/2026 | 10/26/2026 | Event 5 / Operation Smile & AWS |
+| **Day 3** | • Rekognition DetectText reads text in photos; Bedrock Guardrail (PROMPT_ATTACK, HIGH) screens it; textScreener (12-character threshold) flags listings to IMGFLAG / REVIEWQ#LISTING for Admin review | 10/27/2026 | 10/27/2026 | Bedrock Guardrails Docs |
+| **Day 4** | • Benchmark on real device photos: Nova Pro's Vietnamese output is poor; switch AI to Kimi K3 on Bedrock (28/10). Same day, two machines deployed different code to the same Lambda, which showed why one deploy path is needed | 10/28/2026 | 10/28/2026 | AI benchmark sheet |
+| **Day 5** | • Vietnamese electronics glossary; split AI output into observedTextAndLabels and identifiedComponents; fix the Vietnamese diacritics bug found in red-team testing | 10/29/2026 | 10/29/2026 | Glossary, analyzer.ts |
+| **Day 6** | • Ship the new UI (public market, two-tier partner portal, Admin portal); re-run the AI benchmark: accuracy on our test set rose from about 40% to 92% | 10/30/2026 | 10/30/2026 | reloop-ui, AI benchmark |
 
 ## **3. Key Achievements & Outcomes**
 
 ### **Theoretical Foundation**
 
-* Saw how tagging S3 objects (state=pending -> moderation=passed -> state=attached) allows S3 Lifecycle rules to clean up abandoned uploads for free without custom cron jobs.
-* Connected AWS serverless backends with multimodal AI agent reasoning and RAG patterns inspired by the Buildrathon kickoff session at Bitexco.
+* Learned that text inside an image is also user input and can carry prompt-injection attacks.
+* Learned to choose a model by measured results on our own data, not by brand.
 
 ### **Environment Setup & Configuration**
 
-* Wired IMAGE_BUCKET=reloop-device-images into backend config with DisabledImageStore fallback for offline tests.
-* Configured S3 CORS and bucket policies strictly authorizing client presigned uploads.
+* Guardrail (PROMPT_ATTACK HIGH) applied to AI input/output and to text found in photos.
+* AI model switched to Kimi K3 on Bedrock, still using Converse with forced tool choice.
 
 ### **Practical Skills & Operations**
 
-* Tested uploading valid hardware photos vs disallowed test images and verified assertModerated() blocks anyone bypassing moderation.
-* Attended Event 1 (Buildrathon Kickoff) and networked with cloud builders and solution architects.
+* Red-teamed the AI with photos containing hidden instructions; flagged listings now wait for Admin review.
+* Volunteered at the Smart Plushies event, assembling IoT plushies for children with Operation Smile Vietnam.

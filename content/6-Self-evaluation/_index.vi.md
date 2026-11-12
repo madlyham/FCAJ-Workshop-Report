@@ -8,7 +8,7 @@ pre: " <b> 6. </b> "
 
 # Báo cáo tự đánh giá kết quả thực tập
 
-Trong suốt thời gian thực tập tại **Công ty TNHH Amazon Web Services Việt Nam (Workforce Bootcamp - First Cloud AI Journey)** từ **14/08/2026 đến 12/11/2026**, tôi đã có cơ hội quý báu để học hỏi, thực hành và áp dụng các kiến thức chuyên ngành An toàn thông tin và Điện toán đám mây tích lũy tại Đại học FPT vào môi trường sản xuất thực tế.
+Trong suốt thời gian thực tập tại **Công ty TNHH Amazon Web Services Việt Nam (Workforce Bootcamp - First Cloud AI Journey)** từ **14/09/2026 đến 04/12/2026**, tôi đã có cơ hội quý báu để học hỏi, thực hành và áp dụng các kiến thức chuyên ngành An toàn thông tin và Điện toán đám mây tích lũy tại Đại học FPT vào môi trường sản xuất thực tế.
 
 Tôi đã tích cực tham gia với vai trò kỹ sư Backend AI và Hạ tầng đám mây cho dự án nền tảng kinh tế tuần hoàn **ReLoop**, chịu trách nhiệm thiết kế pipeline nhận diện thiết bị và kiểm duyệt nội dung tự động sử dụng Amazon Bedrock (Amazon Nova Pro), Amazon Rekognition, cấu trúc bảng đơn DynamoDB và Bedrock Guardrails phòng thủ tấn công visual prompt injection. Qua dự án này, tôi đã nâng cao rõ rệt năng lực chuyên môn về kiến trúc Serverless, tích hợp công cụ AI đa phương thức, DevSecOps, Hạ tầng dưới dạng mã (Terraform), đồng thời rèn luyện kỹ năng viết tài liệu kỹ thuật, rà soát mã nguồn (code review) và cộng tác nhóm linh hoạt theo mô hình Agile.
 

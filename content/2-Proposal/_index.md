@@ -9,11 +9,21 @@ pre: " <b> 2. </b> "
 ## An AI-assisted marketplace for used and broken electronics, built serverless on AWS
 
 ### 1. Executive Summary
-ReLoop is a web marketplace where people in Vietnam sell used or broken electronics (phones, laptops, monitors, components) to nearby repair shops, buyers and recyclers. It was built by a 5-person team during a 12-week AWS internship [TO BE ADDED: team / organisation name and city]. A seller uploads photos, and Amazon Bedrock pre-fills the listing. The listing then goes to every approved buyer whose branch service area (1–15 km) covers it, and the deal closes through a buyer quote or a price agreed in chat. On 08/11/2026 the dev environment had 14 registered accounts, 12 active listings from 7 sellers and about 31,000 API requests over the first month. The serverless design scales without re-architecture: Lambda concurrency is approved up to 1,000. The core services are CloudFront, AWS WAF, API Gateway, Lambda, DynamoDB, S3, Cognito, Rekognition, Bedrock, EventBridge, CloudWatch and SNS. Guests can browse the market without an account. Signed-in users can chat and buy. Only Admin-approved partners can sell, and only Admin and Finance Admin can moderate content and handle invoices.
+ReLoop is a web marketplace where people in Vietnam sell used or broken electronics (phones, laptops, monitors, components) to nearby repair shops, buyers and recyclers. It was built by **AWSS3nt1n4L**, a 5-person team in the AWS First Cloud Journey (FCAJ) program in Ho Chi Minh City, during a 12-week internship (14/09–04/12/2026). A seller uploads photos, and Amazon Bedrock pre-fills the listing. The listing then goes to every approved buyer whose branch service area (1–15 km) covers it, and the deal closes through a buyer quote or a price agreed in chat. On 08/11/2026 the dev environment had 14 registered accounts, 12 active listings from 7 sellers and about 31,000 API requests over the first month. The serverless design scales without re-architecture: Lambda concurrency is approved up to 1,000. The core services are CloudFront, AWS WAF, API Gateway, Lambda, DynamoDB, S3, Cognito, Rekognition, Bedrock, EventBridge, CloudWatch and SNS. Guests can browse the market without an account. Signed-in users can chat and buy. Only Admin-approved partners can sell, and only Admin and Finance Admin can moderate content and handle invoices.
+
+#### Team
+
+| Member | Role |
+|---|---|
+| Kung Cẩm Thành | Team Lead |
+| Hoàng Quốc Việt | Tech Lead |
+| Trần Hoàng Quốc Trung | Backend Engineer |
+| Nguyễn Duy Quang | Frontend Engineer |
+| Nguyễn Anh Kỳ | Cyber-security / Documentation |
 
 ### 2. Problem Statement
 #### What's the Problem?
-The Global E-waste Monitor 2024 (UNITAR/ITU) reports that the world generated 62 million tonnes of e-waste in 2022, and only 22.3% was formally collected and recycled [TO BE ADDED: Vietnam-specific figure, if available]. Owners of an old or broken device rarely know who will take it or what it is worth. Today they post on general classifieds sites or social groups, describe the device by hand, call shops one by one, and often get no answer. General marketplaces such as Chợ Tốt or Facebook Marketplace are built for any kind of goods. They do not:
+The Global E-waste Monitor 2024 (UNITAR/ITU) reports that the world generated 62 million tonnes of e-waste in 2022, and only 22.3% was formally collected and recycled. The same report estimates that Vietnam generated about 516,000 tonnes (≈5.3 kg per person) in 2022. Owners of an old or broken device rarely know who will take it or what it is worth. Today they post on general classifieds sites or social groups, describe the device by hand, call shops one by one, and often get no answer. General marketplaces such as Chợ Tốt or Facebook Marketplace are built for any kind of goods. They do not:
 - match a listing to the shops whose service area covers the seller,
 - show a price estimate from the buyer's own pricing rules,
 - keep a reputation record that rewards buyers who honour their quotes.
@@ -35,12 +45,12 @@ ReLoop runs the whole flow on managed AWS services. There are no servers to run.
 Compared with general classifieds, ReLoop adds AI-filled listings, service-area matching, rule-based price estimates, a two-step completion (seller confirms the final price, buyer accepts) and two-way reviews. ReLoop does not handle payment: buyer and seller pay each other in person at hand-over.
 
 #### Benefits and Return on Investment
-- **Less manual input:** AI suggests title, category, brand, model and condition from up to 3 photos. The seller only confirms or edits [TO BE ADDED: measured time per listing with and without AI].
+- **Less manual input:** AI suggests title, category, brand, model and condition from up to 3 photos. The seller only confirms or edits. A listing takes about 5 minutes by hand versus under 1 minute with AI (team estimate).
 - **Fewer unanswered listings:** every new listing is matched automatically to all buyer branches in range, and listings within 5 km are ranked first.
 - **Reliability:** state machines, conditional writes and idempotent background jobs keep listings, quotes and transactions consistent. 182 automated tests and an end-to-end smoke test run against AWS.
 - **Learning value:** the team practised single-table DynamoDB design, event-driven Lambda, Bedrock structured output, Terraform IaC, WAF tuning and an automated pentest.
 - **Cost:** about **18.70 USD/month (224.40 USD/year)** at the current scale (section 6). 17.00 USD of that is AWS WAF, so without WAF the platform costs about 1.70 USD/month. Until 28/02/2027 the cost is covered by the account's remaining credits (197.14 USD on 08/11/2026).
-- **Payback:** revenue is 10,000 VND per completed transaction, paid by the seller. At an assumed rate of 1 USD ≈ 26,000 VND [TO BE ADDED: confirm exchange rate], 18.70 USD ≈ 486,200 VND. The platform therefore breaks even at **49 completed transactions per month**, or 5 per month without WAF.
+- **Payback:** revenue is 10,000 VND per completed transaction, paid by the seller. At an assumed rate of 1 USD ≈ 26,000 VND (approximate rate, November 2026), 18.70 USD ≈ 486,200 VND. The platform therefore breaks even at **49 completed transactions per month**, or 5 per month without WAF.
 
 ### 3. Solution Architecture
 ReLoop is fully serverless in one region (ap-southeast-1):
@@ -86,20 +96,20 @@ ReLoop is fully serverless in one region (ap-southeast-1):
 
 ### 4. Technical Implementation
 #### Implementation Phases
-1. **Research & Architecture (10/10–16/10/2026):** turned the 1,189-paragraph specification v1.0 into 45 written business decisions (QĐ-01 → QĐ-45), listed the DynamoDB access patterns, chose one Lambda behind an HTTP API, and wrote the first Terraform (Cognito, API Gateway, Lambda, S3/CloudFront).
-2. **Cost Estimation & Feasibility (12/10–18/10/2026):**
+1. **Research & Architecture (28/09–09/10/2026):** turned the 1,189-paragraph specification v1.0 into 45 written business decisions (QĐ-01 → QĐ-45), listed the DynamoDB access patterns, chose one Lambda behind an HTTP API, and wrote the first Terraform (Cognito, API Gateway, Lambda, S3/CloudFront).
+2. **Cost Estimation & Feasibility (05/10–09/10/2026):**
    - dropped bank top-up/withdrawal (no bank API available) in favour of direct payment at hand-over;
    - chose on-demand DynamoDB and arm64 Lambda;
    - kept every AWS call behind interfaces so the team can develop locally without an AWS bill.
-3. **Develop & First Deploy (12/10–22/10/2026):** completed the full market flow on AWS (18/10), the two-tier partner model, quotes, chat offers, transactions, reviews, billing, moderation, and the `smoke-aws.py` end-to-end test.
-4. **Architecture Refinement (23/10–06/11/2026):**
+3. **Develop & First Deploy (05/10–23/10/2026):** completed the full market flow on AWS (19/10), the two-tier partner model, quotes, chat offers, transactions, reviews, billing, moderation, and the `smoke-aws.py` end-to-end test (passing 22/10).
+4. **Architecture Refinement (26/10–06/11/2026):**
    - rebuilt the whole UI from the product owner's designs and added a new Admin portal;
    - moved AI to Kimi K3 on Bedrock (28/10);
    - ran 5 QA rounds (146 findings, 03/11);
    - raised Lambda concurrency from 10 to 1,000;
    - put AWS WAF on CloudFront and Cognito (06/11).
-5. **Test, Harden & Hand Over (07/11/2026–01/01/2027):**
-   - pentest and fixes (08/11);
+5. **Test, Harden & Hand Over (09/11–04/12/2026):**
+   - pentest and fixes (week of 09/11);
    - CSP enforcement;
    - a single CI/CD deploy path with per-member IAM users;
    - SES for email, AWS Budgets, load test, production environment;
@@ -114,22 +124,27 @@ ReLoop is fully serverless in one region (ap-southeast-1):
 
 ### 5. Timeline & Milestones
 
-| Period | Dates | Deliverables |
+| Week | Dates | Deliverables |
 |---|---|---|
-| Pre-internship | before 10/10/2026 | Specification v1.0 (business workflow + system design) [TO BE ADDED: date started] |
-| Weeks 1–2 | 10/10–23/10 | 45 business decisions; repo + CI; Terraform dev environment; full market flow live on AWS (18/10); deployed with smoke test passing (22/10) |
-| Weeks 3–4 | 24/10–06/11 | New UI from PO designs (public site, partner portal, Admin portal); AI on Kimi K3; background matching; 5 QA rounds; WAF on CloudFront + Cognito |
-| Week 5 | 07/11–13/11 | AWS Security Agent pentest (7 findings, none high); fixes deployed; CSP enforced; budget check |
-| Weeks 6–8 | 14/11–04/12 | Single CI/CD deploy path; IAM user per member; merge to `main`; SES for email; AWS Budgets alerts |
-| Weeks 9–11 | 05/12–25/12 | Load test after throttling fix; production environment; final bug fixing |
-| Week 12 | 26/12/2026–01/01/2027 | Final report, demo, hand-over documentation |
-| Post-launch | 01/2027–02/2027 | Run on the dev/prod environment within the credit window (until 28/02/2027); collect real usage data for the AI and matching |
+| Week 1 | 14/09–18/09 | AWS foundations: account security, IAM, VPC, EC2; team onboarding |
+| Week 2 | 21/09–26/09 | Serverless basics (S3, DynamoDB, Lambda, API Gateway); Buildrathon kickoff, ReLoop chosen (26/09) |
+| Week 3 | 28/09–02/10 | Specification v1.0 turned into 45 business decisions (QĐ-01 → QĐ-45) and 58 open gaps; repo + CI; work split across the team |
+| Week 4 | 05/10–09/10 | Architecture and DynamoDB access patterns (`keys.ts`); Cognito sign-in + React app; cost and feasibility choices |
+| Week 5 | 12/10–16/10 | Photo upload to S3, Rekognition moderation, first AI listing analysis (Amazon Nova Pro) |
+| Week 6 | 19/10–24/10 | Terraform dev environment; full market flow live on AWS (19/10); smoke test passing (22/10); EventBridge jobs; dashboard |
+| Week 7 | 26/10–30/10 | New UI from PO designs (public site, partner portal, Admin portal); photo text + Guardrails; AI moved to Kimi K3 (28/10) |
+| Week 8 | 02/11–06/11 | Background matching; 5 QA rounds (146 findings, 03/11); load test → Lambda concurrency 1,000; AI limit 20/day; WAF on CloudFront + Cognito (06/11) |
+| Week 9 | 09/11–13/11 | AWS Security Agent pentest (7 findings, none high); fixes deployed; CSP enforced; SES for email; AWS Budgets alerts 50% / 80% |
+| Week 10 | 16/11–20/11 | Load test re-run after throttling fix (20/s, burst 50); single CI/CD deploy path; IAM user per member; production environment |
+| Week 11 | 23/11–27/11 | Terraform state migration; clean-up of unused resources; cost review |
+| Week 12 | 30/11–04/12 | Final report, demo, hand-over documentation |
+| Post-launch | 12/2026–02/2027 | Run on the dev/prod environment within the credit window (until 28/02/2027); collect real usage data for the AI and matching |
 
 ### 6. Budget Estimation
-Estimate on AWS Pricing Calculator: [TO BE ADDED: AWS Pricing Calculator link]. The line-by-line estimate is in [reloop-cost-estimate.csv](/files/2-proposal/reloop-cost-estimate.csv).
+The estimate is built from AWS public list prices for ap-southeast-1 (see [AWS Pricing Calculator](https://calculator.aws/) to reproduce it). The line-by-line estimate is in [reloop-cost-estimate.csv](/files/2-proposal/reloop-cost-estimate.csv).
 
 #### Infrastructure Costs
-Region ap-southeast-1 (Singapore). The figures are based on real Cost Explorer and CloudWatch data from 10/10 to 08/11/2026: about 31,000 API requests and 14 users.
+Region ap-southeast-1 (Singapore). The figures are based on real Cost Explorer and CloudWatch data from 26/09 to 08/11/2026: about 31,000 API requests and 14 users.
 
 | Service | USD / month | Assumption |
 |---|---|---|
@@ -195,13 +210,3 @@ Region ap-southeast-1 (Singapore). The figures are based on real Cost Explorer a
 - The adapter design (Table, ImageStore, Analyzer, AuthProvider) lets the team swap or add services, such as SES email, WebSocket chat or a bank payment API, without touching the business logic.
 - The same Terraform and deploy script can create a production stack or a stack for another city. The geohash matching works anywhere.
 - Shops and recyclers gain a steady, local channel for used devices. That moves more devices into reuse and formal recycling instead of household storage.
-
----
-
-**Items to complete ([TO BE ADDED]) and questions:**
-1. Team / organisation name and city, and the 5 members' names.
-2. Exact internship start and end dates, and when work on the specification started (pre-internship).
-3. AWS Pricing Calculator link — should we build it from the table in section 6?
-4. Exchange rate for the ROI calculation (26,000 VND/USD is assumed).
-5. Any Vietnam-specific e-waste figure you want to cite.
-6. Measured time to create a listing with and without AI. If there is no data yet, should we run a small test with 5–10 users?

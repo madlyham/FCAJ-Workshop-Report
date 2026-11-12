@@ -6,37 +6,37 @@ chapter: false
 pre: " <b> 1.10. </b> "
 ---
 
-# **Week 10 Work Log: Hardware Benchmarking, Vietnamese Electronics Glossary & AI Quota**
+# **Week 10 Work Log: Load Test, Throttling Fix, Single Deploy Path & Production Environment**
 
 ## **1. Weekly Objectives**
 
-* Benchmark AI classification accuracy on real unedited Vietnamese hardware photos.
-* Build an embedded Vietnamese electronics dictionary and two-pass component identification schema.
-* Implement multi-provider fallback (Google Gemini 2.5 Flash) and per-user daily AI quota limits.
+* Prove the system handles bursts gracefully after the concurrency raise.
+* Move all deploys to one CI/CD path with one IAM user per member.
+* Create the production environment from the same Terraform code.
 
 ## **2. Weekly Execution Schedule**
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Day 2** | • Test real unedited posts on dev and document Nova Pro's broken Vietnamese terminology | 10/12/2026 | 10/12/2026 | Dev Feed Inspection |
-| **Day 3** | • Add observedTextAndLabels and identifiedComponents to tool schema so AI lists parts before guessing full category | 10/13/2026 | 10/13/2026 | analyzer.ts |
-| **Day 4** | • Inject UTF-8 Vietnamese electronics vocabulary into system prompt + add regex cleanup in validateResult() | 10/14/2026 | 10/14/2026 | analyzer.ts |
-| **Day 5** | • Build GeminiAnalyzer + FallbackAnalyzer using free Google AI Studio (gemini-2.5-flash) with Bedrock fallback | 10/15/2026 | 10/15/2026 | analyzer.ts & app.ts |
-| **Day 6** | • Enforce AI_DAILY_LIMIT = 20 per user/day (AIQUOTA#<day>) and save { aiSuggested, userFinal } under AILABEL#<YYYY-MM> | 10/16/2026 | 10/16/2026 | aiService.ts & keys.ts |
+| **Day 2** | • Re-run loadtest.mjs (80 parallel requests) against the earlier baseline of 26% 5xx; with concurrency 1,000 the 5xx errors are gone | 11/16/2026 | 11/16/2026 | loadtest.mjs |
+| **Day 3** | • Throttling fix: API Gateway throttle 20 requests/s with burst 50; WAF rate limits and API return 429 with Retry-After instead of failing | 11/17/2026 | 11/17/2026 | API Gateway Docs |
+| **Day 4** | • Single CI/CD deploy path in GitHub Actions from a committed revision; one IAM user per team member; plan removal of root access keys | 11/18/2026 | 11/18/2026 | GitHub Actions, IAM |
+| **Day 5** | • Create the production stack from the same Terraform modules with separate variables | 11/19/2026 | 11/19/2026 | infra/*.tf |
+| **Day 6** | • Run the smoke test on production and fix the last environment-specific issues | 11/20/2026 | 11/20/2026 | smoke-aws.py |
 
 ## **3. Key Achievements & Outcomes**
 
 ### **Theoretical Foundation**
 
-* Learned that multi-step CoT reasoning (listing components first before predicting top-level category) drastically reduces classification hallucinations.
-* Designed multi-cloud resilience: if AWS Bedrock throttles, gracefully fall back to Gemini Flash without user disruption.
+* Learned the difference between failing under load (5xx) and pushing back politely (429 + Retry-After).
+* Understood why one deploy path from a committed revision prevents two machines from overwriting each other.
 
 ### **Environment Setup & Configuration**
 
-* Integrated optional GEMINI_API_KEY environment variable with 100% Vitest suite compatibility.
-* Created DynamoDB AI quota tracking item with 24-hour TTL.
+* API Gateway throttle 20/s, burst 50; WAF rate limits returning 429.
+* Production stack built from the same Terraform modules as dev.
 
 ### **Practical Skills & Operations**
 
-* Boosted Vietnamese electronics classification accuracy from 40% to 92% across test fixtures.
-* Enforced 20 request/user/day hard cap to protect AWS credit limits.
+* Compared load-test results before and after the fix and recorded them for the final report.
+* Deployed through CI only, with no manual deploys from laptops.

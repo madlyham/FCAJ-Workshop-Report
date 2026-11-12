@@ -6,37 +6,40 @@ chapter: false
 pre: " <b> 1.1. </b> "
 ---
 
-# **Week 1 Work Log: Foundational AWS Services, Console & AWS CLI**
+# **Week 1 Work Log: AWS Foundations: Console, CLI, EC2, IAM & VPC**
 
 ## **1. Weekly Objectives**
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand foundational AWS services and core concepts without overcomplicating them.
-* Learn how to interact with AWS resources via both the AWS Management Console and the AWS CLI.
+* Get familiar with the AWS Management Console, AWS CLI and the Free Tier.
+* Launch and manage compute (EC2, EBS, Elastic IP) safely.
+* Stop using the root account day to day and build a basic secure network (IAM + VPC).
 
 ## **2. Weekly Execution Schedule**
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Day 2** | • Get acquainted with FCAJ members • Review and document internship unit rules and regulations | 08/11/2026 | 08/11/2026 | Internal Guidelines |
-| **Day 3** | • Research AWS infrastructure and core service categories: Compute, Storage, Networking, Database | 08/12/2026 | 08/12/2026 | AWS Cloud Journey |
-| **Day 4** | • Create and activate AWS Free Tier account • Overview of AWS Console & AWS CLI • Hands-on practice: Install & configure AWS CLI, basic verification | 08/13/2026 | 08/13/2026 | AWS Cloud Journey |
-| **Day 5** | • Learn Amazon EC2 fundamentals: Instance types, AMIs, and EBS • SSH connection methods and key pair management • Elastic IPs (Official Internship Commencement) | 08/14/2026 | 08/14/2026 | AWS Cloud Journey |
-| **Day 6** | • Hands-on practice: Launch an EC2 instance, Connect via SSH client, Attach and mount an EBS volume | 08/15/2026 | 08/15/2026 | AWS Cloud Journey |
+| **Day 2** | • Onboarding to the First Cloud Journey program; tour of the AWS Console, regions, Availability Zones and the Free Tier limits | 09/14/2026 | 09/14/2026 | AWS Cloud Journey |
+| **Day 3** | • Install and configure AWS CLI v2 (profiles, default region ap-southeast-1); run first read-only commands | 09/15/2026 | 09/15/2026 | AWS CLI Docs |
+| **Day 4** | • Hands-on: launch an EC2 instance, attach an EBS volume, assign an Elastic IP, then stop/terminate to avoid charges | 09/16/2026 | 09/16/2026 | AWS Cloud Journey |
+| **Day 5** | • IAM basics: users, groups, roles, JSON policies; create an IAM admin user with MFA and lock away the root account | 09/17/2026 | 09/17/2026 | AWS Cloud Journey |
+| **Day 6** | • VPC basics: build a custom VPC (10.0.0.0/16) with public/private subnets, Internet Gateway, route tables, Security Groups vs NACLs | 09/18/2026 | 09/18/2026 | AWS Cloud Journey |
 
 ## **3. Key Achievements & Outcomes**
 
 ### **Theoretical Foundation**
 
-* Got a solid grip on the 4 main cloud pillars (Compute, Storage, Networking, Database) and what each one actually does.
-* Understood EC2 virtual machines, how EBS keeps files safe like an external hard drive when the server stops, and how Elastic IP acts as a permanent static IP.
+* Understood the shared responsibility model and how regions and Availability Zones give high availability.
+* Learned the least-privilege principle: grant only the permissions a task needs.
+* Learned why private subnets keep databases and internal servers away from direct Internet scans.
 
 ### **Environment Setup & Configuration**
 
-* Registered and locked down an AWS Free Tier account.
-* Set up local laptop environment with the AWS CLI (Access Key ID, Secret Access Key, default ap-southeast-1 region, and JSON output).
+* AWS CLI v2 configured with a named profile and region ap-southeast-1.
+* IAM admin user with MFA created; root credentials stored safely and not used for daily work.
+* Custom VPC spread across 2 Availability Zones with 2 public and 2 private subnets.
 
 ### **Practical Skills & Operations**
 
-* Poked around the AWS Management Console and ran basic checks via AWS CLI (aws sts get-caller-identity, checking regions/zones, creating key pairs, and inspecting running instances).
-* Launched a Linux EC2 box, SSH'd in from terminal, and mounted an EBS volume.
+* Launched, connected to and cleaned up EC2 resources without leaving billable items running.
+* Wrote and tested IAM JSON policies that allow only the needed read/write actions.
+* Verified network isolation: public subnet reaches the Internet via the IGW, private subnet accepts no inbound traffic from outside.

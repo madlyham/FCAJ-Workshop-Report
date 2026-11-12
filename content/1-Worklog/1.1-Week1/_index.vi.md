@@ -6,37 +6,40 @@ chapter: false
 pre: " <b> 1.1. </b> "
 ---
 
-# **Nhật ký công việc Tuần 1: Làm quen với dịch vụ AWS cơ bản, Console và AWS CLI**
+# **Nhật ký công việc Tuần 1: Nền tảng AWS: Console, CLI, EC2, IAM và VPC**
 
 ## **1. Mục tiêu tuần**
 
-* Làm quen và kết nối với các thành viên trong chương trình First Cloud AI Journey (FCAJ).
-* Nắm vững các dịch vụ AWS nền tảng và các khái niệm cốt lõi một cách trực quan, thực tế.
-* Học cách tương tác và quản lý tài nguyên AWS thông qua cả AWS Management Console và AWS CLI.
+* Làm quen với AWS Management Console, AWS CLI và Free Tier.
+* Khởi tạo và quản lý tài nguyên tính toán (EC2, EBS, Elastic IP) an toàn.
+* Ngừng dùng tài khoản root hằng ngày và dựng mạng cơ bản an toàn (IAM + VPC).
 
 ## **2. Lịch trình thực hiện**
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ngày 2** | • Làm quen với các thành viên FCAJ • Đọc và ghi chép nội quy, quy định của đơn vị thực tập | 08/11/2026 | 08/11/2026 | Hướng dẫn nội bộ |
-| **Ngày 3** | • Tìm hiểu hạ tầng toàn cầu AWS và các nhóm dịch vụ cốt lõi: Compute, Storage, Networking, Database | 08/12/2026 | 08/12/2026 | AWS Cloud Journey |
-| **Ngày 4** | • Đăng ký và kích hoạt tài khoản AWS Free Tier • Tổng quan AWS Console & AWS CLI • Thực hành: Cài đặt & cấu hình AWS CLI, kiểm tra thông tin | 08/13/2026 | 08/13/2026 | AWS Cloud Journey |
-| **Ngày 5** | • Học kiến thức nền tảng Amazon EC2: Instance types, AMIs và EBS • Phương thức kết nối SSH và quản lý Key Pair • Tìm hiểu Elastic IP (Chính thức bắt đầu kỳ thực tập) | 08/14/2026 | 08/14/2026 | AWS Cloud Journey |
-| **Ngày 6** | • Thực hành: Khởi tạo EC2 instance, kết nối SSH qua terminal, gắn và mount EBS volume | 08/15/2026 | 08/15/2026 | AWS Cloud Journey |
+| **Ngày 2** | • Nhập môn chương trình First Cloud Journey; làm quen AWS Console, region, Availability Zone và giới hạn Free Tier | 09/14/2026 | 09/14/2026 | AWS Cloud Journey |
+| **Ngày 3** | • Cài đặt và cấu hình AWS CLI v2 (profile, region mặc định ap-southeast-1); chạy các lệnh chỉ đọc đầu tiên | 09/15/2026 | 09/15/2026 | Tài liệu AWS CLI |
+| **Ngày 4** | • Thực hành: tạo EC2, gắn ổ EBS, gán Elastic IP, sau đó dừng/xóa để tránh phát sinh phí | 09/16/2026 | 09/16/2026 | AWS Cloud Journey |
+| **Ngày 5** | • IAM cơ bản: user, group, role, policy JSON; tạo IAM admin có MFA và cất giữ tài khoản root | 09/17/2026 | 09/17/2026 | AWS Cloud Journey |
+| **Ngày 6** | • VPC cơ bản: dựng VPC tùy chỉnh (10.0.0.0/16) với subnet public/private, Internet Gateway, route table, so sánh Security Group và NACL | 09/18/2026 | 09/18/2026 | AWS Cloud Journey |
 
 ## **3. Kết quả đạt được**
 
 ### **Cơ sở lý thuyết**
 
-* Nắm vững 4 trụ cột điện toán đám mây cốt lõi (Compute, Storage, Networking, Database) và vai trò thực tế của từng nhóm.
-* Hiểu rõ cơ chế máy ảo EC2, cách ổ đĩa EBS bảo toàn dữ liệu độc lập khi máy chủ dừng hoạt động và cách Elastic IP cung cấp địa chỉ IP tĩnh cố định.
+* Hiểu mô hình trách nhiệm chia sẻ và cách region, Availability Zone mang lại tính sẵn sàng cao.
+* Nắm nguyên tắc quyền tối thiểu: chỉ cấp đúng quyền công việc cần.
+* Hiểu vì sao subnet private giúp cơ sở dữ liệu và máy chủ nội bộ tránh bị quét trực tiếp từ Internet.
 
 ### **Cài đặt & Thiết lập môi trường**
 
-* Đăng ký thành công và thiết lập bảo mật ban đầu cho tài khoản AWS Free Tier.
-* Cấu hình môi trường máy trạm với AWS CLI (Access Key ID, Secret Access Key, vùng mặc định ap-southeast-1 và định dạng output JSON).
+* Cấu hình AWS CLI v2 với profile riêng và region ap-southeast-1.
+* Tạo IAM admin có MFA; thông tin root được cất an toàn, không dùng hằng ngày.
+* VPC tùy chỉnh trải trên 2 Availability Zone với 2 subnet public và 2 subnet private.
 
 ### **Kỹ năng thực hành & Vận hành**
 
-* Thao tác thuần thục trên giao diện AWS Management Console và kiểm tra thông tin định danh bằng AWS CLI (aws sts get-caller-identity, tra cứu Availability Zones, tạo key pair).
-* Khởi tạo thành công máy ảo Linux EC2, kết nối an toàn qua SSH và gắn kết/mount ổ đĩa EBS vào hệ điều hành.
+* Tạo, kết nối và dọn dẹp tài nguyên EC2 mà không để sót mục tính phí.
+* Viết và kiểm thử policy IAM JSON chỉ cho phép đúng các thao tác đọc/ghi cần thiết.
+* Kiểm tra phân lập mạng: subnet public ra Internet qua IGW, subnet private không nhận kết nối từ ngoài vào.

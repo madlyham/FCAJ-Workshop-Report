@@ -6,37 +6,37 @@ chapter: false
 pre: " <b> 1.5. </b> "
 ---
 
-# **Nhật ký công việc Tuần 5: Khởi động Đồ án ReLoop, Kiến trúc Hệ thống & Thiết kế Khóa Single-Table**
+# **Nhật ký công việc Tuần 5: Tải ảnh an toàn lên S3, Kiểm duyệt Rekognition và AI điền tin với Bedrock Nova Pro**
 
 ## **1. Mục tiêu tuần**
 
-* Chính thức khởi động đồ án tốt nghiệp nền tảng tuần hoàn đồ điện tử ReLoop cùng nhóm 5 thành viên.
-* Rà soát tài liệu đặc tả, làm rõ các điểm thiếu sót và phân định vai trò nghiệp vụ rõ ràng.
-* Thiết kế cấu trúc khóa Single-table DynamoDB đáp ứng toàn bộ luồng người dùng, bài đăng, báo giá và giao dịch.
+* Cho người bán tải ảnh thẳng lên S3 an toàn, có kiểm kích thước, định dạng và quyền sở hữu.
+* Tự động chặn ảnh không phù hợp bằng Amazon Rekognition.
+* Chọn model AI được credit AWS chi trả và xây trợ lý AI điền tin đầu tiên.
 
 ## **2. Lịch trình thực hiện**
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ngày 2** | • Họp nhóm 5 thành viên rà soát đặc tả ReLoop ban đầu và liệt kê 58 điểm thiếu sót (baton.txt) | 09/07/2026 | 09/07/2026 | Tài liệu đặc tả & Ghi chú nhóm |
-| **Ngày 3** | • Chốt quy tắc nghiệp vụ: Viewer, Partner Cấp 1 (bán), Partner Cấp 2 (thu gom trong 5km) và Admin | 09/08/2026 | 09/08/2026 | plan/quyetdinh.txt |
-| **Ngày 4** | • Thiết kế cấu trúc khóa Single-table (keys.ts) cho Users, Partners, Listings, Quotes, Transactions và AI Labels | 09/09/2026 | 09/09/2026 | backend/src/store/keys.ts |
-| **Ngày 5** | • Khởi tạo bảng reloop-core-table (On-Demand) và S3 bucket reloop-device-images tại vùng Singapore | 09/10/2026 | 09/10/2026 | AWS Console / CLI |
-| **Ngày 6** | • Phân chia khối lượng công việc cho 5 thành viên; đảm nhận vị trí Lead Backend-AI & Tài liệu kỹ thuật | 09/11/2026 | 09/11/2026 | Kế hoạch phân công nhóm |
+| **Ngày 2** | • S3ImageStore: presigned POST (300 giây, tối đa 5 MB, JPEG/PNG/WebP, tối đa 6 ảnh mỗi tin); assertOwnImageKeys để người dùng chỉ gắn được ảnh của chính mình | 10/12/2026 | 10/12/2026 | imageStore.ts |
+| **Ngày 3** | • Rekognition DetectModerationLabels (MinConfidence 70); ảnh không phù hợp trả 422 IMAGE_REJECTED; lifecycle xóa ảnh chưa gắn sau 1 ngày và mọi ảnh sau 90 ngày | 10/13/2026 | 10/13/2026 | Tài liệu Amazon Rekognition |
+| **Ngày 4** | • Kiểm Billing → Credits → dịch vụ áp dụng; bỏ SageMaker và Rekognition Custom Labels (tính phí theo giờ, cần dữ liệu huấn luyện); chọn Amazon Nova Pro (apac.amazon.nova-pro-v1:0), tính theo token và được credit chi trả | 10/14/2026 | 10/14/2026 | AWS Billing Console, Tài liệu Bedrock |
+| **Ngày 5** | • Viết BedrockAnalyzer bằng Converse API với toolChoice bắt buộc để model phải trả JSON đúng schema AiResult (temperature 0, maxTokens 2048) | 10/15/2026 | 10/15/2026 | analyzer.ts |
+| **Ngày 6** | • Chạy phân tích AI ở nền (Lambda tự gọi, InvocationType=Event) và thử trên ảnh laptop, linh kiện thật | 10/16/2026 | 10/16/2026 | aiService.ts |
 
 ## **3. Kết quả đạt được**
 
 ### **Cơ sở lý thuyết**
 
-* Chuyển dịch tư duy từ CSDL quan hệ nhiều bảng sang kiến trúc Single-table DynamoDB sử dụng kỹ thuật nạp chồng khóa.
-* Xây dựng máy trạng thái hữu hạn (State Machine) quản lý chặt chẽ vòng đời giao dịch thu hồi thiết bị.
+* Hiểu vì sao model bên thứ ba bán qua AWS Marketplace có thể không dùng được credit khuyến mãi, còn model Nova của Amazon thì dùng được và không tốn tiền khi không chạy.
+* Hiểu cách policy của presigned POST ép kích thước và định dạng file ngay phía S3, không chỉ ở trình duyệt.
 
 ### **Cài đặt & Thiết lập môi trường**
 
-* Khởi tạo bảng DynamoDB reloop-core-table và S3 bucket lưu trữ ảnh tại khu vực ap-southeast-1 (Singapore).
-* Thiết lập cấu trúc repository Git và quy chuẩn phân nhánh cho cả nhóm.
+* Luồng ảnh: presign → tải thẳng → kiểm duyệt → gắn tag; lifecycle 1 ngày (chưa gắn) / 90 ngày (tất cả).
+* AI_MODEL_ID=apac.amazon.nova-pro-v1:0, dùng Converse tool use khóa theo schema AiResult.
 
 ### **Kỹ năng thực hành & Vận hành**
 
-* Tài liệu hóa hơn 30 mẫu khóa PK/SK trong file keys.ts.
-* Kiểm thử khả năng truy vấn theo phân vùng khóa bằng dữ liệu mẫu giả định.
+* Thử Nova Pro với ảnh tem máy Dell Latitude 5490; model trả JSON hợp lệ đúng schema ngay lần đầu.
+* Kiểm tra người dùng không thể gắn key ảnh của người khác vào tin đăng.

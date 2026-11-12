@@ -6,37 +6,38 @@ chapter: false
 pre: " <b> 1.3. </b> "
 ---
 
-# **Nhật ký công việc Tuần 3: Lưu trữ đám mây S3, Thiết kế Single-Table DynamoDB & Presigned URLs**
+# **Nhật ký công việc Tuần 3: Đặc tả ReLoop, 45 Quyết định Nghiệp vụ, Watch Party AI Day và Tọa đàm Dr. Werner**
 
 ## **1. Mục tiêu tuần**
 
-* Tìm hiểu lưu trữ đối tượng đám mây (Amazon S3) và cơ sở dữ liệu NoSQL serverless (DynamoDB).
-* Cấu hình S3 hoàn toàn riêng tư nhưng vẫn cho phép tải ảnh an toàn qua Presigned URLs.
-* Hiểu rõ thiết kế Partition Key / Sort Key để tối ưu chi phí và tránh quét toàn bảng (Scan).
+* Chuyển bản đặc tả ReLoop v1.0 thành các quyết định nghiệp vụ rõ ràng, có văn bản.
+* Dựng repository, CI và cách làm việc của nhóm (vai trò, quy tắc deploy, quyền truy cập AWS).
+* Tham dự Sự kiện 2 (Watch Party AWS Cloud and AI Day Hanoi) và Sự kiện 3 (Tọa đàm cùng Tiến sĩ Werner Vogels).
 
 ## **2. Lịch trình thực hiện**
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ngày 2** | • Tìm hiểu Amazon S3: Buckets, object keys và cơ chế 'Block all public access' | 08/24/2026 | 08/24/2026 | AWS Cloud Journey |
-| **Ngày 3** | • Tìm hiểu quy tắc S3 Lifecycle (tự động xóa dữ liệu cũ) và cấu hình CORS | 08/25/2026 | 08/25/2026 | AWS Cloud Journey |
-| **Ngày 4** | • Tìm hiểu DynamoDB: Khóa phân vùng (PK), Khóa sắp xếp (SK) và thiết kế Single-table | 08/26/2026 | 08/26/2026 | AWS Cloud Journey |
-| **Ngày 5** | • So sánh chế độ dung lượng DynamoDB On-Demand (trả theo lượng dùng) và Provisioned | 08/27/2026 | 08/27/2026 | AWS Cloud Journey |
-| **Ngày 6** | • Thực hành: Tạo S3 bucket bảo mật, tạo Presigned URL upload file, tạo bảng DynamoDB và chạy truy vấn Query | 08/28/2026 | 08/28/2026 | AWS Cloud Journey |
+| **Ngày 2** | • Đọc trọn bản đặc tả v1.0 (1.189 đoạn); liệt kê 58 chỗ còn thiếu và câu hỏi mở | 09/28/2026 | 09/28/2026 | Đặc tả ReLoop v1.0 |
+| **Ngày 3** | • Tham dự [Sự kiện 2: Watch Party AWS Cloud and AI Day Hanoi](../../4-eventparticipated/4.2-event2/) (08:00 – 17:00 tại Văn phòng AWS Việt Nam, Bitexco Tầng 26). Tìm hiểu sâu về AI Agent doanh nghiệp, kỹ nghệ nền tảng và tối ưu chi phí FinOps. | 09/29/2026 | 09/29/2026 | Sự kiện 2 / Văn phòng AWS Việt Nam |
+| **Ngày 4** | • Xác định vai trò người dùng (Khách, Đối tác cấp 1, Đối tác cấp 2, Admin, Admin tài chính) và cùng nhóm xử lý các chỗ thiếu trong đặc tả | 09/30/2026 | 09/30/2026 | Họp nhóm |
+| **Ngày 5** | • Viết 45 quyết định nghiệp vụ (QĐ-01 → QĐ-45); tạo Git repository và CI GitHub Actions (typecheck + test cho mỗi pull request) | 10/01/2026 | 10/01/2026 | Nhật ký quyết định, GitHub Actions |
+| **Ngày 6** | • Tham dự [Sự kiện 3: Tọa đàm Fireside Chat cùng Tiến sĩ Werner Vogels](../../4-eventparticipated/4.3-event3/) (10:30 – 12:00 tại Bitexco Financial Tower; Keynote bởi CTO Amazon). Thống nhất phân công 5 người (phần của tôi: backend AI, hạ tầng và tài liệu kỹ thuật) và quy tắc deploy: một đường deploy duy nhất, mỗi thành viên một IAM user. | 10/02/2026 | 10/02/2026 | Sự kiện 3 / Keynote Amazon |
 
 ## **3. Kết quả đạt được**
 
 ### **Cơ sở lý thuyết**
 
-* Hiểu bản chất lưu trữ đối tượng của S3 và lý do Presigned URL giúp tiết kiệm băng thông máy chủ backend.
-* Nắm vững kỹ thuật mô hình hóa dữ liệu Single-table trong DynamoDB theo tiền tố PK/SK để tránh thao tác Scan tốn kém.
+* Hiểu rằng ghi quyết định thành văn bản (có mã như QĐ-07) giúp tránh tranh luận lặp lại và review code nhanh hơn.
+* Thấm câu của Tiến sĩ Werner Vogels 'Mọi thứ đều có thể hỏng, mọi lúc', định hướng lựa chọn job bất đồng bộ, idempotency và ghi có điều kiện.
+* Áp dụng thông điệp FinOps từ AI Day: chọn đúng kiến trúc và khung chi phí trước khi chọn công cụ mới nhất.
 
 ### **Cài đặt & Thiết lập môi trường**
 
-* Khởi tạo S3 bucket với chính sách 'Block all public access' tuyệt đối.
-* Tạo bảng DynamoDB ở chế độ On-Demand linh hoạt.
+* Git repository có bảo vệ nhánh và workflow GitHub Actions chạy typecheck, test.
+* Nhật ký quyết định chung (QĐ-01 → QĐ-45) và danh sách 58 chỗ thiếu đã xử lý hoặc tạm hoãn.
 
 ### **Kỹ năng thực hành & Vận hành**
 
-* Tạo Presigned URL thời hạn 300 giây cho phép trình duyệt tải ảnh trực tiếp lên S3.
-* Thực hiện truy vấn Query chính xác dựa trên Key Condition bằng AWS CLI.
+* Cùng nhóm rà soát đặc tả và biến câu hỏi mở thành quyết định trong một tuần.
+* Tham dự trọn ngày Watch Party AI Day và buổi keynote của Tiến sĩ Werner tại Bitexco Financial Tower.

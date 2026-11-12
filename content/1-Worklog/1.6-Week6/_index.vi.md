@@ -6,37 +6,38 @@ chapter: false
 pre: " <b> 1.6. </b> "
 ---
 
-# **Nhật ký công việc Tuần 6: Xác thực với Amazon Cognito & Tích hợp Giao diện React/Amplify**
+# **Nhật ký công việc Tuần 6: Môi trường Dev bằng Terraform, Luồng Chợ đầy đủ trên AWS và Cloud & AI Meetup**
 
 ## **1. Mục tiêu tuần**
 
-* Cấu hình Amazon Cognito User Pool quản lý đăng ký, đăng nhập an toàn cho khách hàng và đối tác.
-* Kết nối trigger Lambda Post-Confirmation tự động khởi tạo hồ sơ người dùng trong DynamoDB.
-* Xây dựng khung ứng dụng web React với AWS Amplify UI và tùy biến giao diện theo nhận diện thương hiệu ReLoop.
+* Đưa toàn bộ môi trường dev vào Terraform để dựng lại được bằng một lệnh.
+* Chạy luồng Chợ đầy đủ trên AWS và chứng minh bằng smoke test trọn luồng.
+* Thêm job chạy nền và giám sát; tham dự Sự kiện 4 (Cloud & AI Infrastructure Meetup).
 
 ## **2. Lịch trình thực hiện**
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ngày 2** | • Cấu hình Cognito User Pool và App Client (không dùng client secret để an toàn cho ứng dụng web) | 09/14/2026 | 09/14/2026 | Tài liệu AWS Cognito |
-| **Ngày 3** | • Thiết lập trigger Lambda reloop-auth-post-confirmation ghi bản ghi USER#<sub\> / PROFILE vào DynamoDB | 09/15/2026 | 09/15/2026 | AWS Lambda + Cognito |
-| **Ngày 4** | • Xử lý lỗi RemoteSigned trên PowerShell, khởi tạo dự án reloop-ui với Vite + React, cài đặt thư viện aws-amplify | 09/16/2026 | 09/16/2026 | Vite & Amplify Docs |
-| **Ngày 5** | • Tùy biến form đăng ký Amplify <Authenticator> với các trường bắt buộc (địa chỉ, số điện thoại, email) | 09/17/2026 | 09/17/2026 | @aws-amplify/ui-react |
-| **Ngày 6** | • Tùy biến ThemeProvider với tông màu xanh ngọc ReLoop; chuyển cơ chế gửi mã từ SMS sang Email miễn phí | 09/18/2026 | 09/18/2026 | Cognito Console & App.jsx |
+| **Ngày 2** | • Xác nhận luồng Chợ đầy đủ chạy trên AWS trước ngày 19/10 (đăng tin → ghép → báo giá → ra giá trong chat → giao dịch → đánh giá); lưu Terraform state trong bucket S3 có versioning | 10/19/2026 | 10/19/2026 | Tài liệu Terraform |
+| **Ngày 3** | • Dựng lại stack dev bằng Terraform: reloop-dev-user-pool, reloop-dev-api, CloudFront với Origin Access Control (OAC) cho bucket web | 10/20/2026 | 10/20/2026 | infra/*.tf |
+| **Ngày 4** | • Rule EventBridge mỗi 15 phút: cho tin hết hạn, tự hoàn tất giao dịch sau 48 giờ, gửi nhắc việc, lập hóa đơn tháng | 10/21/2026 | 10/21/2026 | Tài liệu Amazon EventBridge |
+| **Ngày 5** | • Deploy và chạy smoke-aws.py trên stack dev thật: đạt 25/25 bước kiểm tra | 10/22/2026 | 10/22/2026 | smoke-aws.py |
+| **Ngày 6** | • Dashboard CloudWatch reloop-dev-overview và alarm (Lambda lỗi/throttle, API 5xx, p95 > 2 giây) gửi email cho Admin qua SNS | 10/23/2026 | 10/23/2026 | Tài liệu Amazon CloudWatch |
+| **Ngày 7** | • Tham dự [Sự kiện 4: Cloud & AI Infrastructure Meetup](../../4-eventparticipated/4.4-event4/) (10:30 – 12:00 tại Bitexco Financial Tower). Tìm hiểu sâu về lưu trữ đối tượng cho AI (chuẩn S3 API ở quy mô lớn), tối ưu cụm GPU phục vụ LLM và kiến trúc bộ nhớ router. | 10/24/2026 | 10/24/2026 | Sự kiện 4 / OMZ, Viettel & AWS |
 
 ## **3. Kết quả đạt được**
 
 ### **Cơ sở lý thuyết**
 
-* Hiểu rõ kiến trúc JWT token: ID Token chứa thông tin định danh, Access Token dùng ủy quyền API, Refresh Token duy trì phiên làm việc.
-* Nắm vững cơ chế Post-Confirmation hook đảm bảo tính nhất quán dữ liệu giữa tài khoản Cognito và CSDL DynamoDB.
+* Hiểu vì sao Terraform state lưu từ xa, có versioning lại quan trọng khi nhiều người cùng deploy một stack.
+* Hiểu cách khóa job theo 'ngăn giờ' giúp job định kỳ tìm việc đến hạn mà không phải quét bảng.
 
 ### **Cài đặt & Thiết lập môi trường**
 
-* Cấu hình Cognito User Pool với thuộc tính tùy chỉnh và xác thực qua email.
-* Tích hợp thành công bộ thư viện giao diện @aws-amplify/ui-react vào ứng dụng Vite.
+* Stack dev do Terraform quản lý: Cognito, HTTP API, Lambda, DynamoDB, S3, CloudFront (OAC), EventBridge, CloudWatch, SNS.
+* Dashboard reloop-dev-overview có alarm gửi qua SNS email.
 
 ### **Kỹ năng thực hành & Vận hành**
 
-* Kiểm thử thông suốt luồng: Đăng ký -> Nhận mã OTP qua email -> Kích hoạt tài khoản -> Tự động sinh bản ghi trong DynamoDB.
-* Bảo vệ an toàn các endpoint API Gateway bằng bộ xác thực Cognito JWT Authorizer.
+* Smoke test trọn luồng đạt 25/25 trên stack dev đã deploy.
+* Tham dự Cloud & AI Infrastructure Meetup và ghi lại ý tưởng về lưu trữ cho bài toán AI.

@@ -6,37 +6,37 @@ chapter: false
 pre: " <b> 1.9. </b> "
 ---
 
-# **Nhật ký công việc Tuần 9: Phòng thủ Tấn công Prompt Injection bằng OCR & Bedrock Guardrails**
+# **Nhật ký công việc Tuần 9: Pentest bằng AWS Security Agent, Sửa lỗi, CSP, Email SES và Budgets**
 
 ## **1. Mục tiêu tuần**
 
-* Bảo vệ luồng xử lý AI khỏi các cuộc tấn công thị giác Visual Prompt Injection (văn bản độc hại dán trên linh kiện).
-* Xây dựng lá chắn phòng thủ 2 lớp: OCR bằng Rekognition DetectText kết hợp Bedrock Guardrails.
-* Tự động cách ly và chuyển các bài đăng đáng ngờ vào hàng đợi kiểm duyệt thủ công (REVIEWQ#LISTING).
+* Xem kết quả pentest tự động và sửa mọi mục sửa được.
+* Bật Content-Security-Policy chặt cho ứng dụng web.
+* Gỡ giới hạn email của Cognito bằng Amazon SES và thêm cảnh báo ngân sách.
 
 ## **2. Lịch trình thực hiện**
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ngày 2** | • Thiết kế bộ lọc 2 bước: Rekognition DetectText đọc chữ trong ảnh -> Bedrock Guardrail kiểm tra tấn công prompt | 10/05/2026 | 10/05/2026 | AWS Rekognition & Bedrock |
-| **Ngày 3** | • Cấu hình aws_bedrock_guardrail.ai với bộ lọc PROMPT_ATTACK = HIGH trong file infra/ai.tf | 10/06/2026 | 10/06/2026 | infra/ai.tf |
-| **Ngày 4** | • Hiện thực RekognitionGuardrailScreener (bỏ qua nếu độ dài chữ < 12 ký tự để tránh nghẽn logo nhãn hàng) | 10/07/2026 | 10/07/2026 | textScreener.ts |
-| **Ngày 5** | • Lưu bản ghi IMGFLAG#<imageKey> trong DynamoDB khi phát hiện nghi vấn và chuyển bài đăng sang REVIEWQ#LISTING | 10/08/2026 | 10/08/2026 | listingService.ts |
-| **Ngày 6** | • Đóng vai Red-team tấn công thử nghiệm: chặn thành công mẫu injection tiếng Anh; phát hiện lỗi đọc dấu tiếng Việt | 10/09/2026 | 10/09/2026 | Kiểm thử AWS Dev |
+| **Ngày 2** | • Xem kết quả pentest hộp đen bằng AWS Security Agent trên web dev (chạy tuần 09/11; 3,63 task-hour): 7 phát hiện, không có mức cao | 11/09/2026 | 11/09/2026 | Báo cáo AWS Security Agent |
+| **Ngày 3** | • Sửa và deploy các phát hiện (header bảo mật, thông báo lỗi, kiểm dữ liệu đầu vào); chạy lại smoke test | 11/10/2026 | 11/10/2026 | PR sửa lỗi, smoke-aws.py |
+| **Ngày 4** | • Chuyển Content-Security-Policy từ chế độ chỉ báo cáo sang chặn thật trên CloudFront; kiểm mọi trang xem có tài nguyên bị chặn | 11/11/2026 | 11/11/2026 | infra/web.tf |
+| **Ngày 5** | • Chuyển email của Cognito sang Amazon SES để đăng ký không bị chặn bởi giới hạn mặc định (~50 email/ngày) | 11/12/2026 | 11/12/2026 | Tài liệu Amazon SES |
+| **Ngày 6** | • Cảnh báo AWS Budgets ở mức 50% / 80% số credit còn lại; rà soát số dư credit và chi phí từng dịch vụ | 11/13/2026 | 11/13/2026 | AWS Billing Console |
 
 ## **3. Kết quả đạt được**
 
 ### **Cơ sở lý thuyết**
 
-* Nắm vững các bề mặt tấn công đa phương thức: kẻ gian có thể in lệnh độc hại lên tem nhãn để lừa mô hình thị giác đánh giá thiết bị hỏng thành đồ mới.
-* Thiết kế cơ chế phòng thủ chiều sâu: OCR nhẹ kiểm tra trước, Guardrail chuyên sâu đánh giá sau, con người can thiệp bước cuối.
+* Hiểu cách pentest hộp đen tự động tìm lỗi từ bên ngoài, giống cách kẻ tấn công nhìn hệ thống.
+* Hiểu vì sao CSP nên chạy chế độ chỉ báo cáo trước, rồi mới bật chặn khi không trang nào bị lỗi.
 
 ### **Cài đặt & Thiết lập môi trường**
 
-* Khởi tạo tài nguyên aws_bedrock_guardrail trên Terraform với bộ lọc Prompt Attack mức HIGH.
-* Cấu hình lược đồ lưu trữ hàng đợi kiểm duyệt trên DynamoDB.
+* Header CSP chặt, HSTS và X-Frame-Options được áp trên CloudFront.
+* Cognito gửi email qua Amazon SES; cảnh báo AWS Budgets ở mức 50% / 80%.
 
 ### **Kỹ năng thực hành & Vận hành**
 
-* Kiểm thử thành công với các hình ảnh tấn công giả lập; hệ thống tự động gắn cờ cảnh báo chính xác 100%.
-* Tổng hợp các điểm hạn chế khi OCR đọc tiếng Việt có dấu để chuẩn bị tinh chỉnh prompt ở Tuần 10.
+* Đóng mọi phát hiện pentest sửa được và xác nhận bằng kiểm thử lại.
+* Giữ pentest trong ngân sách bằng cách dừng ở khoảng 3,5 task-hour.

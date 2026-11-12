@@ -6,37 +6,37 @@ chapter: false
 pre: " <b> 1.10. </b> "
 ---
 
-# **Nhật ký công việc Tuần 10: Đánh giá Phần cứng, Từ điển Linh kiện Tiếng Việt & Giới hạn Quota AI**
+# **Nhật ký công việc Tuần 10: Load Test, Sửa Throttling, Một Đường Deploy và Môi trường Production**
 
 ## **1. Mục tiêu tuần**
 
-* Đánh giá độ chính xác của AI phân loại linh kiện trên tập ảnh thiết bị điện tử thực tế tại Việt Nam.
-* Xây dựng từ điển điện tử tiếng Việt nhúng và lược đồ nhận diện linh kiện con 2 bước.
-* Tích hợp phương án dự phòng đa nhà cung cấp (Google Gemini 2.5 Flash) và giới hạn quota sử dụng AI theo ngày.
+* Chứng minh hệ thống chịu được tải tăng đột biến sau khi nâng giới hạn song song.
+* Đưa mọi lần deploy về một đường CI/CD, mỗi thành viên một IAM user.
+* Dựng môi trường production từ cùng bộ Terraform.
 
 ## **2. Lịch trình thực hiện**
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ngày 2** | • Kiểm thử các bài đăng thực tế trên môi trường dev và ghi nhận các lỗi chính tả tiếng Việt của Nova Pro | 10/12/2026 | 10/12/2026 | Kiểm tra Dev Feed |
-| **Ngày 3** | • Bổ sung trường observedTextAndLabels và identifiedComponents vào tool schema để AI liệt kê linh kiện con trước khi suy đoán danh mục | 10/13/2026 | 10/13/2026 | analyzer.ts |
-| **Ngày 4** | • Bổ sung tập từ vựng phần cứng tiếng Việt chuẩn UTF-8 vào system prompt và thêm bộ lọc regex trong hàm validateResult() | 10/14/2026 | 10/14/2026 | analyzer.ts |
-| **Ngày 5** | • Xây dựng GeminiAnalyzer và FallbackAnalyzer tích hợp Google AI Studio (gemini-2.5-flash) làm phương án dự phòng | 10/15/2026 | 10/15/2026 | analyzer.ts & app.ts |
-| **Ngày 6** | • Giới hạn AI_DAILY_LIMIT = 20 lượt/người/ngày (AIQUOTA#<day>) và lưu trữ cặp nhãn { aiSuggested, userFinal } vào AILABEL#<YYYY-MM> | 10/16/2026 | 10/16/2026 | aiService.ts & keys.ts |
+| **Ngày 2** | • Chạy lại loadtest.mjs (80 request song song) so với mốc cũ 26% lỗi 5xx; với giới hạn song song 1.000, lỗi 5xx không còn | 11/16/2026 | 11/16/2026 | loadtest.mjs |
+| **Ngày 3** | • Sửa throttling: API Gateway giới hạn 20 request/giây, burst 50; luật tốc độ WAF và API trả 429 kèm Retry-After thay vì báo lỗi | 11/17/2026 | 11/17/2026 | Tài liệu API Gateway |
+| **Ngày 4** | • Một đường deploy CI/CD duy nhất trên GitHub Actions từ bản đã commit; mỗi thành viên một IAM user; lên kế hoạch gỡ access key của root | 11/18/2026 | 11/18/2026 | GitHub Actions, IAM |
+| **Ngày 5** | • Dựng stack production từ cùng các module Terraform với bộ biến riêng | 11/19/2026 | 11/19/2026 | infra/*.tf |
+| **Ngày 6** | • Chạy smoke test trên production và sửa các lỗi riêng của môi trường còn lại | 11/20/2026 | 11/20/2026 | smoke-aws.py |
 
 ## **3. Kết quả đạt được**
 
 ### **Cơ sở lý thuyết**
 
-* Phát hiện phương pháp tư duy nhiều bước (liệt kê linh kiện con trước khi chốt danh mục tổng) giúp giảm thiểu tối đa hiện tượng ảo giác AI.
-* Thiết kế cơ chế chịu lỗi đa đám mây: tự động chuyển đổi mượt mà sang Gemini Flash khi Bedrock quá tải hoặc hết quota.
+* Hiểu khác biệt giữa sập khi tải cao (5xx) và từ chối lịch sự (429 + Retry-After).
+* Hiểu vì sao một đường deploy từ bản đã commit giúp hai máy không ghi đè lên nhau.
 
 ### **Cài đặt & Thiết lập môi trường**
 
-* Tích hợp biến môi trường GEMINI_API_KEY tương thích 100% với toàn bộ bộ kiểm thử Vitest.
-* Thiết lập cơ chế kiểm soát hạn ngạch AI trên DynamoDB với thời gian sống TTL tự hủy sau 24 giờ.
+* API Gateway giới hạn 20/giây, burst 50; luật tốc độ WAF trả 429.
+* Stack production dựng từ cùng module Terraform với dev.
 
 ### **Kỹ năng thực hành & Vận hành**
 
-* Nâng độ chính xác phân loại thuật ngữ phần cứng tiếng Việt từ 40% lên 92% trên bộ dữ liệu kiểm thử.
-* Kích hoạt thành công rào chắn giới hạn 20 lượt gọi AI/ngày/người dùng bảo vệ an toàn ngân sách.
+* So sánh kết quả load test trước và sau khi sửa, ghi lại cho báo cáo cuối kỳ.
+* Chỉ deploy qua CI, không deploy tay từ laptop.
