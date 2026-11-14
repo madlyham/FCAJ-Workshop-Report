@@ -1,0 +1,24 @@
+# Copy to terraform.tfvars and fill in local values before running terraform plan/apply.
+# Never commit terraform.tfvars or *.tfstate files.
+
+aws_region     = "ap-southeast-1"
+project_prefix = "reloop"
+bucket_suffix  = "your-4char"
+
+alert_email          = "alerts@example.com"
+origin_verify_secret = "replace-with-64-hex-chars-from-openssl-rand-hex-32"
+
+ai_model_id     = "global.moonshotai.kimi-k3"
+budget_limit_usd = "5.0"
+
+# Set "" on personal accounts that do not enforce a team IAM permissions boundary
+role_permissions_boundary_name = ""
+
+api_zip_path               = "./zips/reloop-api.zip"
+post_confirmation_zip_path = "./zips/reloop-post-confirmation.zip"
+
+common_tags = {
+  Owner   = "team"
+  Project = "reloop"
+  Purpose = "workshop"
+}
