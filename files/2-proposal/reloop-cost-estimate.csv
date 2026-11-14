@@ -1,0 +1,18 @@
+service,usd_per_month,free_tier,assumption,source
+AWS WAF - CloudFront web ACL (reloop-dev-web),10.00,no,"1 web ACL (5 USD) + 5 rules (1 USD each) + 0.60 USD per 1M requests (~0.03M requests/month)",Cost Explorer 06-08/11/2026 usage types Global-WebACLV2 / Global-RuleV2
+AWS WAF - Cognito web ACL (reloop-dev-auth),7.00,no,"1 web ACL (5 USD) + 2 rules (1 USD each)",Cost Explorer 06-08/11/2026 usage types APS1-WebACLV2 / APS1-RuleV2
+Amazon Bedrock (Kimi K3 + Guardrails),1.00,no,"AI photo analysis at the October usage level; capped at 20 analyses per user per day",Cost Explorer October 2026: 0.87 USD
+Amazon Rekognition,0.30,no,"Image moderation + text detection on every uploaded photo (~70-100 photos/month)",Cost Explorer October 2026: 0.15 USD; 01-08/11: 0.10 USD
+Amazon DynamoDB (on-demand),0.10,partly,"~5,600 items / 2.4 MB; PITR on; ~31k API calls/month",Cost Explorer October 2026: 0.03 USD
+Amazon API Gateway (HTTP API),0.10,no,"~31,000 requests/month",Cost Explorer October 2026: 0.01 USD; 01-08/11: 0.02 USD
+Amazon S3 (web bundle + photos + Terraform state),0.05,partly,"~2.4 MB photos, ~1 MB web bundle, lifecycle deletes photos after 1 / 90 days",Cost Explorer October 2026: 0.01 USD
+Miscellaneous (data transfer / other line items),0.15,no,"Buffer for small line items (October showed 0.10 USD 'EC2 - Other')",Cost Explorer October 2026
+AWS Lambda (arm64 512 MB),0.00,yes,"~31,000 invocations x 144 ms avg = ~2,250 GB-s/month (Always Free: 1M requests + 400,000 GB-s)",CloudWatch 10/10-08/11/2026
+Amazon CloudFront,0.00,yes,"Well below Always Free 1 TB transfer + 10M requests per month",CloudWatch
+Amazon Cognito,0.00,yes,"14 registered users (free up to 10,000 MAU)",Cognito describe-user-pool 08/11/2026
+Amazon CloudWatch,0.00,yes,"10 alarms, 1 dashboard, logs kept 7 days (free tier: 10 alarms, 3 dashboards, 5 GB logs)",infra/monitoring.tf
+Amazon SNS (email),0.00,yes,"Alarm emails to Admin (first 1,000 emails free)",infra/monitoring.tf
+Amazon EventBridge,0.00,yes,"1 scheduled rule every 15 minutes",infra/api.tf
+AWS Security Agent (pentest),0.00,yes (trial),"3.63 task-hours used on 08/11/2026 of 400 free task-hours/month",Cost Explorer + securityagent list-pentest-job-tasks
+TOTAL PER MONTH,18.70,,,
+TOTAL 12 MONTHS,224.40,,,
