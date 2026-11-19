@@ -80,7 +80,7 @@ ReLoop hoàn toàn serverless, nằm trong một region (ap-southeast-1):
 - **Amazon CloudWatch:** log giữ 7 ngày, số liệu nghiệp vụ tự định nghĩa, 1 dashboard và 10 alarm (Lambda lỗi/throttle, API 5xx, p95 > 2 giây, lỗi AI/job, chữ lạ trong ảnh, có khiếu nại mới).
 - **Amazon SNS:** gửi email cảnh báo cho Admin.
 - **AWS IAM:** một execution role chỉ có quyền trên bảng chính, prefix ảnh, đúng model Bedrock và Guardrail, Rekognition, tự gọi chính hàm và ghi log.
-- **AWS Security Agent:** pentest hộp đen tự động trên web dev (3,63 task-hour ngày 08/11/2026).
+- **AWS Security Agent:** pentest hộp đen tự động trên web dev (3,63 task-hour ngày 08/11/2026; bản sửa lên ngày 10/11/2026).
 
 #### Thiết kế thành phần
 - **Phía người dùng (Edge / Client):** ứng dụng một trang React 18 + TypeScript (Vite), dùng Leaflet + OpenStreetMap để chọn vị trí. Khách xem Chợ. Sau khi đăng nhập, người dùng vào cổng đối tác (cấp 1: người bán lẻ, tối đa 3 tin đang mở; cấp 2: doanh nghiệp có chi nhánh, quy tắc giá và báo giá, tối đa 10 tin) hoặc cổng Admin.
@@ -96,12 +96,12 @@ ReLoop hoàn toàn serverless, nằm trong một region (ap-southeast-1):
 
 ### 4. Triển khai kỹ thuật
 #### Các giai đoạn triển khai
-1. **Nghiên cứu & kiến trúc (28/09–09/10/2026):** chuyển bản đặc tả v1.0 (1.189 đoạn) thành 45 quyết định nghiệp vụ (QĐ-01 → QĐ-45), liệt kê cách truy vấn DynamoDB, chọn một Lambda sau HTTP API, viết Terraform đầu tiên (Cognito, API Gateway, Lambda, S3/CloudFront).
-2. **Ước tính chi phí & tính khả thi (05/10–09/10/2026):**
+1. **Nghiên cứu & kiến trúc (28/09–08/10/2026):** chuyển bản đặc tả v1.0 (1.189 đoạn) thành 45 quyết định nghiệp vụ (QĐ-01 → QĐ-45), liệt kê cách truy vấn DynamoDB và chọn một Lambda sau HTTP API. Giai đoạn này chưa viết code ứng dụng.
+2. **Ước tính chi phí & tính khả thi (05/10–08/10/2026), kết thúc bằng Đề xuất Phần 1 (nộp ngày 08/10/2026):**
    - bỏ nạp/rút tiền qua ngân hàng (chưa có API ngân hàng), chuyển sang trả tiền trực tiếp khi bàn giao;
    - chọn DynamoDB on-demand và Lambda arm64;
    - đặt mọi lời gọi AWS sau interface để cả nhóm code trên máy cá nhân mà không tốn tiền AWS.
-3. **Phát triển & deploy lần đầu (05/10–23/10/2026):** hoàn thành luồng Chợ đầy đủ trên AWS (19/10), mô hình đối tác 2 cấp, báo giá, ra giá trong chat, giao dịch, đánh giá, thu phí, kiểm duyệt và smoke test trọn luồng `smoke-aws.py` (đạt ngày 22/10).
+3. **Phát triển & deploy lần đầu (09/10–23/10/2026):** bắt đầu phát triển ngày 09/10 (bảng chính, bucket ảnh, đăng nhập Cognito, ứng dụng React); viết Terraform đầu tiên (Cognito, API Gateway, Lambda, S3/CloudFront); hoàn thành luồng Chợ đầy đủ trên AWS (19/10), mô hình đối tác 2 cấp, báo giá, ra giá trong chat, giao dịch, đánh giá, thu phí, kiểm duyệt và smoke test trọn luồng `smoke-aws.py` (đạt ngày 22/10).
 4. **Tinh chỉnh kiến trúc (26/10–06/11/2026):**
    - làm lại toàn bộ giao diện theo thiết kế của PO và thêm cổng Admin mới;
    - chuyển AI sang Kimi K3 trên Bedrock (28/10);
@@ -113,6 +113,7 @@ ReLoop hoàn toàn serverless, nằm trong một region (ap-southeast-1):
    - bật CSP chặn thật;
    - một đường deploy CI/CD duy nhất, IAM user riêng cho từng thành viên;
    - SES cho email, AWS Budgets, load test, môi trường production;
+   - Đề xuất Phần 2 với chi phí thật và kết quả bảo mật (nộp ngày 13/11/2026);
    - tài liệu cuối kỳ và demo.
 
 #### Yêu cầu kỹ thuật
@@ -129,12 +130,12 @@ ReLoop hoàn toàn serverless, nằm trong một region (ap-southeast-1):
 | Tuần 1 | 14/09–18/09 | Nền tảng AWS: bảo mật tài khoản, IAM, VPC, EC2; làm quen nhóm |
 | Tuần 2 | 21/09–26/09 | Kiến thức serverless (S3, DynamoDB, Lambda, API Gateway); Buildrathon khai mạc, chọn dự án ReLoop (26/09) |
 | Tuần 3 | 28/09–02/10 | Chuyển bản đặc tả v1.0 thành 45 quyết định nghiệp vụ (QĐ-01 → QĐ-45) và 58 điểm còn thiếu; repo + CI; chia việc trong nhóm |
-| Tuần 4 | 05/10–09/10 | Kiến trúc và cách truy vấn DynamoDB (`keys.ts`); đăng nhập Cognito + ứng dụng React; chốt chi phí và tính khả thi |
+| Tuần 4 | 05/10–09/10 | Kiến trúc và cách truy vấn DynamoDB; chốt chi phí và tính khả thi; nộp Đề xuất Phần 1 (08/10); bắt đầu phát triển (09/10): `keys.ts`, bảng chính, đăng nhập Cognito + ứng dụng React |
 | Tuần 5 | 12/10–16/10 | Tải ảnh lên S3, kiểm duyệt bằng Rekognition, AI phân tích tin đầu tiên (Amazon Nova Pro) |
 | Tuần 6 | 19/10–24/10 | Môi trường dev bằng Terraform; luồng Chợ đầy đủ chạy trên AWS (19/10); smoke test đạt (22/10); job EventBridge; dashboard |
 | Tuần 7 | 26/10–30/10 | Giao diện mới theo thiết kế PO (web công khai, cổng đối tác, cổng Admin); đọc chữ trong ảnh + Guardrails; AI chuyển sang Kimi K3 (28/10) |
 | Tuần 8 | 02/11–06/11 | Ghép tin chạy nền; 5 đợt QA (146 mục, 03/11); load test → Lambda song song 1.000; AI tối đa 20 lượt/ngày; WAF cho CloudFront + Cognito (06/11) |
-| Tuần 9 | 09/11–13/11 | Pentest bằng AWS Security Agent (7 phát hiện, không có mức cao); deploy bản sửa; bật CSP chặn thật; SES cho email; cảnh báo AWS Budgets 50% / 80% |
+| Tuần 9 | 09/11–13/11 | Pentest bằng AWS Security Agent (7 phát hiện, không có mức cao); deploy bản sửa; bật CSP chặn thật; SES cho email; cảnh báo AWS Budgets 50% / 80%; nộp Đề xuất Phần 2 (13/11) |
 | Tuần 10 | 16/11–20/11 | Chạy lại load test sau khi sửa throttling (20/giây, burst 50); một đường deploy CI/CD; IAM user cho từng thành viên; môi trường production |
 | Tuần 11 | 23/11–27/11 | Chuyển Terraform state; dọn tài nguyên thừa; rà soát chi phí |
 | Tuần 12 | 30/11–04/12 | Báo cáo cuối kỳ, demo, tài liệu bàn giao |
@@ -187,7 +188,7 @@ Region ap-southeast-1 (Singapore). Số liệu lấy từ Cost Explorer và Clou
 - **R2:** mỗi tính năng tốn tiền được so với số credit còn lại trước khi bật, kèm giới hạn cứng (AI 20 lượt/ngày/người, pentest dừng ở 3,5 task-hour). Thêm cảnh báo AWS Budgets ở mức 50% / 80%.
 - **R3:** đã nâng giới hạn Lambda song song lên 1.000; giới hạn của API Gateway (20/giây, burst 50) và luật tốc độ của WAF trả 429 kèm Retry-After thay vì báo lỗi.
 - **R4:** AI chỉ gợi ý, người bán xác nhận từng trường; hệ thống lưu gợi ý của AI cạnh giá trị người bán chốt. Guardrails và Rekognition gắn cờ chữ đáng ngờ trong ảnh, và tin bị gắn cờ phải chờ Admin duyệt.
-- **R5:** bộ luật WAF có sẵn, CSP chặt, JWT trên mọi route riêng tư, kiểm quyền sở hữu key ảnh, và pentest mỗi lần phát hành (lần gần nhất: 7 phát hiện, không có mức cao, bản sửa đã lên ngày 08/11/2026).
+- **R5:** bộ luật WAF có sẵn, CSP chặt, JWT trên mọi route riêng tư, kiểm quyền sở hữu key ảnh, và pentest mỗi lần phát hành (lần gần nhất: 7 phát hiện, không có mức cao, bản sửa đã lên ngày 10/11/2026).
 - **R6:** tính phí khi gỡ tin trong 72 giờ sau một giao dịch bị hủy, khiếu nại phí do Admin tài chính xử lý, và người vi phạm nhiều lần bị gắn cờ.
 - **R7:** chuyển email của Cognito sang Amazon SES trước khi mở cho người dùng thử.
 

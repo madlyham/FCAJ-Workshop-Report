@@ -12,7 +12,7 @@ pre: " <b> 1.2. </b> "
 
 * Learn the core serverless building blocks: S3, DynamoDB, Lambda and API Gateway.
 * Set up monitoring and cost guard-rails (CloudWatch, AWS Budgets) from day one.
-* Attend Event 1 (Buildrathon Kickoff), which marks the start of our capstone project ReLoop.
+* Attend Event 1 (Buildrathon Kickoff), where our team chose ReLoop as the capstone project (development starts in Week 4).
 
 ## **2. Weekly Execution Schedule**
 
@@ -23,7 +23,7 @@ pre: " <b> 1.2. </b> "
 | **Day 4** | • Amazon DynamoDB: partition key / sort key (PK/SK), On-Demand capacity, single-table design ideas | 09/23/2026 | 09/23/2026 | AWS Cloud Journey |
 | **Day 5** | • AWS Lambda + API Gateway HTTP API: first function, routes, CORS, logs in CloudWatch | 09/24/2026 | 09/24/2026 | AWS Cloud Journey |
 | **Day 6** | • Create AWS Budgets alerts at 50% / 80% / 100% and review CloudWatch metrics and alarms | 09/25/2026 | 09/25/2026 | AWS Billing Console |
-| **Day 7** | • Participate in [Event 1: Buildrathon – Kickoff: Code the Future with CMC Global](../../4-eventparticipated/4.1-event1/) (10:30 AM – 12:00 PM at Bitexco Financial Tower). Explore Generative AI, agentic tool workflows, and RAG architectures. Our team starts the ReLoop capstone project here. | 09/26/2026 | 09/26/2026 | Event 1 / CMC Global & AWS |
+| **Day 7** | • Participate in [Event 1: Buildrathon – Kickoff: Code the Future with CMC Global](../../4-eventparticipated/4.1-event1/) (10:30 AM – 12:00 PM at Bitexco Financial Tower). Explore Generative AI, agentic tool workflows, and RAG architectures. Our team picks ReLoop as the capstone topic here; spec and design follow in Weeks 3–4, coding starts 10/09/2026. | 09/26/2026 | 09/26/2026 | Event 1 / CMC Global & AWS |
 
 ## **3. Key Achievements & Outcomes**
 

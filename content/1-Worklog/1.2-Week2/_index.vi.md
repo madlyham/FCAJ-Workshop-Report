@@ -12,7 +12,7 @@ pre: " <b> 1.2. </b> "
 
 * Học các khối serverless chính: S3, DynamoDB, Lambda và API Gateway.
 * Thiết lập giám sát và hàng rào chi phí (CloudWatch, AWS Budgets) ngay từ đầu.
-* Tham dự Sự kiện 1 (Khởi động Buildrathon), đánh dấu điểm bắt đầu đồ án ReLoop.
+* Tham dự Sự kiện 1 (Khởi động Buildrathon), nơi nhóm chọn ReLoop làm đồ án (bắt đầu phát triển từ Tuần 4).
 
 ## **2. Lịch trình thực hiện**
 
@@ -23,7 +23,7 @@ pre: " <b> 1.2. </b> "
 | **Ngày 4** | • Amazon DynamoDB: partition key / sort key (PK/SK), chế độ On-Demand, ý tưởng thiết kế một bảng | 09/23/2026 | 09/23/2026 | AWS Cloud Journey |
 | **Ngày 5** | • AWS Lambda + API Gateway HTTP API: hàm đầu tiên, route, CORS, log trên CloudWatch | 09/24/2026 | 09/24/2026 | AWS Cloud Journey |
 | **Ngày 6** | • Tạo cảnh báo AWS Budgets ở mức 50% / 80% / 100% và tìm hiểu metric, alarm của CloudWatch | 09/25/2026 | 09/25/2026 | AWS Billing Console |
-| **Ngày 7** | • Tham gia [Sự kiện 1: Khởi động Buildrathon – Code the Future cùng CMC Global](../../4-eventparticipated/4.1-event1/) (10:30 – 12:00 tại Bitexco Financial Tower). Khám phá Generative AI, quy trình Agentic AI và kiến trúc RAG. Nhóm chính thức bắt đầu đồ án ReLoop từ đây. | 09/26/2026 | 09/26/2026 | Sự kiện 1 / CMC Global & AWS |
+| **Ngày 7** | • Tham gia [Sự kiện 1: Khởi động Buildrathon – Code the Future cùng CMC Global](../../4-eventparticipated/4.1-event1/) (10:30 – 12:00 tại Bitexco Financial Tower). Khám phá Generative AI, quy trình Agentic AI và kiến trúc RAG. Nhóm chọn ReLoop làm đề tài đồ án tại đây; đặc tả và thiết kế ở Tuần 3–4, bắt đầu code từ 10/09/2026. | 09/26/2026 | 09/26/2026 | Sự kiện 1 / CMC Global & AWS |
 
 ## **3. Kết quả đạt được**
 

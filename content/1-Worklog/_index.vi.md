@@ -17,14 +17,14 @@ Song song với lịch trình kỹ thuật hàng tuần, tôi cũng đại diệ
   *(Đối chiếu: [Sự kiện 1: Khởi động Buildrathon – Code the Future cùng CMC Global](../4-eventparticipated/4.1-event1/) ngày 26/09/2026)*
 * **Tuần 3:** [Đặc tả ReLoop, 45 Quyết định Nghiệp vụ, Watch Party AI Day và Tọa đàm Dr. Werner](1.3-Week3/)  
   *(Đối chiếu: [Sự kiện 2: Watch Party AWS Cloud and AI Day Hanoi](../4-eventparticipated/4.2-event2/) ngày 29/09/2026 & [Sự kiện 3: Tọa đàm Fireside Chat cùng Tiến sĩ Werner Vogels](../4-eventparticipated/4.3-event3/) ngày 02/10/2026)*
-* **Tuần 4:** [Kiến trúc ReLoop, Khóa Single-Table và Đăng nhập Cognito với React/Amplify](1.4-Week4/)
+* **Tuần 4:** [Kiến trúc ReLoop, Đề xuất Phần 1 và Bắt đầu phát triển](1.4-Week4/)
 * **Tuần 5:** [Tải ảnh an toàn lên S3, Kiểm duyệt Rekognition và AI điền tin với Bedrock Nova Pro](1.5-Week5/)
 * **Tuần 6:** [Môi trường Dev bằng Terraform, Luồng Chợ đầy đủ trên AWS và Cloud & AI Meetup](1.6-Week6/)  
   *(Đối chiếu: [Sự kiện 4: Cloud & AI Infrastructure Meetup](../4-eventparticipated/4.4-event4/) ngày 24/10/2026)*
 * **Tuần 7:** [Giao diện mới, Phòng thủ Prompt Injection, Chuyển sang Kimi K3 và Gấu bông Thông minh](1.7-Week7/)  
   *(Đối chiếu: [Sự kiện 5: Gấu bông thông minh cho trẻ em – Hợp tác cùng Operation Smile Việt Nam](../4-eventparticipated/4.5-event5/) ngày 26/10/2026)*
 * **Tuần 8:** [Ghép tin chạy nền, Các đợt QA, WAF và Tài liệu cho Lập trình viên](1.8-Week8/)
-* **Tuần 9:** [Pentest bằng AWS Security Agent, Sửa lỗi, CSP, Email SES và Budgets](1.9-Week9/)
+* **Tuần 9:** [Pentest bằng AWS Security Agent, Sửa lỗi, CSP, Email SES, Budgets và Đề xuất Phần 2](1.9-Week9/)
 * **Tuần 10:** [Load Test, Sửa Throttling, Một Đường Deploy và Môi trường Production](1.10-Week10/)
 * **Tuần 11:** [Chuyển Terraform State, Dọn dẹp Tài nguyên và Rà soát Chi phí](1.11-Week11/)
 * **Tuần 12:** [Tài liệu Workshop, Báo cáo Cuối kỳ, Demo và Bàn giao](1.12-Week12/)

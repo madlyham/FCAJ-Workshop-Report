@@ -80,7 +80,7 @@ ReLoop is fully serverless in one region (ap-southeast-1):
 - **Amazon CloudWatch:** logs kept 7 days, custom business metrics, 1 dashboard and 10 alarms (Lambda errors/throttles, API 5xx, p95 > 2 s, AI/job failures, unusual photo text, new disputes).
 - **Amazon SNS:** sends alarm emails to Admin.
 - **AWS IAM:** one execution role scoped to the core table, the photo prefix, the specific Bedrock model and Guardrail, Rekognition, self-invoke and logs.
-- **AWS Security Agent:** automated black-box pentest of the dev site (3.63 task-hours on 08/11/2026).
+- **AWS Security Agent:** automated black-box pentest of the dev site (3.63 task-hours on 08/11/2026; fixes live on 10/11/2026).
 
 #### Component Design
 - **Edge / Client:** a React 18 + TypeScript SPA (Vite) with Leaflet + OpenStreetMap for picking locations. Guests see the market. After sign-in, users see the partner portal (tier 1: individual sellers, max 3 open listings; tier 2: businesses with branches, pricing rules and quotes, max 10) or the Admin portal.
@@ -96,12 +96,12 @@ ReLoop is fully serverless in one region (ap-southeast-1):
 
 ### 4. Technical Implementation
 #### Implementation Phases
-1. **Research & Architecture (28/09–09/10/2026):** turned the 1,189-paragraph specification v1.0 into 45 written business decisions (QĐ-01 → QĐ-45), listed the DynamoDB access patterns, chose one Lambda behind an HTTP API, and wrote the first Terraform (Cognito, API Gateway, Lambda, S3/CloudFront).
-2. **Cost Estimation & Feasibility (05/10–09/10/2026):**
+1. **Research & Architecture (28/09–08/10/2026):** turned the 1,189-paragraph specification v1.0 into 45 written business decisions (QĐ-01 → QĐ-45), listed the DynamoDB access patterns and chose one Lambda behind an HTTP API. No application code was written in this phase.
+2. **Cost Estimation & Feasibility (05/10–08/10/2026), ending with Proposal Part 1 (submitted 08/10/2026):**
    - dropped bank top-up/withdrawal (no bank API available) in favour of direct payment at hand-over;
    - chose on-demand DynamoDB and arm64 Lambda;
    - kept every AWS call behind interfaces so the team can develop locally without an AWS bill.
-3. **Develop & First Deploy (05/10–23/10/2026):** completed the full market flow on AWS (19/10), the two-tier partner model, quotes, chat offers, transactions, reviews, billing, moderation, and the `smoke-aws.py` end-to-end test (passing 22/10).
+3. **Develop & First Deploy (09/10–23/10/2026):** development started on 09/10 (core table, photo bucket, Cognito sign-in, React app); wrote the first Terraform (Cognito, API Gateway, Lambda, S3/CloudFront); completed the full market flow on AWS (19/10), the two-tier partner model, quotes, chat offers, transactions, reviews, billing, moderation, and the `smoke-aws.py` end-to-end test (passing 22/10).
 4. **Architecture Refinement (26/10–06/11/2026):**
    - rebuilt the whole UI from the product owner's designs and added a new Admin portal;
    - moved AI to Kimi K3 on Bedrock (28/10);
@@ -113,6 +113,7 @@ ReLoop is fully serverless in one region (ap-southeast-1):
    - CSP enforcement;
    - a single CI/CD deploy path with per-member IAM users;
    - SES for email, AWS Budgets, load test, production environment;
+   - Proposal Part 2 with real costs and security results (submitted 13/11/2026);
    - final documentation and demo.
 
 #### Technical Requirements
@@ -129,12 +130,12 @@ ReLoop is fully serverless in one region (ap-southeast-1):
 | Week 1 | 14/09–18/09 | AWS foundations: account security, IAM, VPC, EC2; team onboarding |
 | Week 2 | 21/09–26/09 | Serverless basics (S3, DynamoDB, Lambda, API Gateway); Buildrathon kickoff, ReLoop chosen (26/09) |
 | Week 3 | 28/09–02/10 | Specification v1.0 turned into 45 business decisions (QĐ-01 → QĐ-45) and 58 open gaps; repo + CI; work split across the team |
-| Week 4 | 05/10–09/10 | Architecture and DynamoDB access patterns (`keys.ts`); Cognito sign-in + React app; cost and feasibility choices |
+| Week 4 | 05/10–09/10 | Architecture and DynamoDB access patterns; cost and feasibility choices; Proposal Part 1 submitted (08/10); development starts (09/10): `keys.ts`, core table, Cognito sign-in + React app |
 | Week 5 | 12/10–16/10 | Photo upload to S3, Rekognition moderation, first AI listing analysis (Amazon Nova Pro) |
 | Week 6 | 19/10–24/10 | Terraform dev environment; full market flow live on AWS (19/10); smoke test passing (22/10); EventBridge jobs; dashboard |
 | Week 7 | 26/10–30/10 | New UI from PO designs (public site, partner portal, Admin portal); photo text + Guardrails; AI moved to Kimi K3 (28/10) |
 | Week 8 | 02/11–06/11 | Background matching; 5 QA rounds (146 findings, 03/11); load test → Lambda concurrency 1,000; AI limit 20/day; WAF on CloudFront + Cognito (06/11) |
-| Week 9 | 09/11–13/11 | AWS Security Agent pentest (7 findings, none high); fixes deployed; CSP enforced; SES for email; AWS Budgets alerts 50% / 80% |
+| Week 9 | 09/11–13/11 | AWS Security Agent pentest (7 findings, none high); fixes deployed; CSP enforced; SES for email; AWS Budgets alerts 50% / 80%; Proposal Part 2 submitted (13/11) |
 | Week 10 | 16/11–20/11 | Load test re-run after throttling fix (20/s, burst 50); single CI/CD deploy path; IAM user per member; production environment |
 | Week 11 | 23/11–27/11 | Terraform state migration; clean-up of unused resources; cost review |
 | Week 12 | 30/11–04/12 | Final report, demo, hand-over documentation |
@@ -187,7 +188,7 @@ Region ap-southeast-1 (Singapore). The figures are based on real Cost Explorer a
 - **R2:** every paid feature is sized against the remaining credits before it is turned on, with hard caps (AI 20/day/user, pentest stopped at 3.5 task-hours). Add AWS Budgets alerts at 50% / 80%.
 - **R3:** Lambda concurrency raised to 1,000; API Gateway throttle (20/s, burst 50) and WAF rate limits return 429 with Retry-After instead of failing.
 - **R4:** AI only suggests and the seller confirms every field; the system stores the AI suggestion and the seller's final value side by side. Guardrails and Rekognition flag suspicious photo text, and flagged listings wait for Admin review.
-- **R5:** WAF managed rules, strict CSP, JWT on every private route, ownership checks on photo keys, and a pentest each release (latest: 7 findings, none high, fixes live on 08/11/2026).
+- **R5:** WAF managed rules, strict CSP, JWT on every private route, ownership checks on photo keys, and a pentest each release (latest: 7 findings, none high, fixes live on 10/11/2026).
 - **R6:** a fee is charged when a listing is removed within 72 hours after a cancelled transaction, fee appeals go to Finance Admin, and repeat offenders are flagged.
 - **R7:** move Cognito email to Amazon SES before public testing.
 
