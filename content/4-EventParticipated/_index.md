@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 4. </b> "
 ---
 
-During my 12-week internship, I actively participated in 5 major technology conferences, executive roundtables, engineering meetups, and community initiatives hosted by AWS Vietnam and industry partners.
+During my 12-week internship, I actively participated in 6 major technology conferences, executive roundtables, engineering meetups, and community initiatives hosted by AWS Vietnam and industry partners.
 
 ### Events Overview
 
@@ -24,3 +24,6 @@ During my 12-week internship, I actively participated in 5 major technology conf
 
 5. **[Event 5: Smart Plushies for Children – In Collaboration with Operation Smile Vietnam](4.5-Event5/)**  
    *October 26, 2026 | AWS Vietnam Office, Bitexco Level 36 | Role: Participant (Social Impact)*
+
+6. **[Event 6: Cloud Mastery – Cloud Sharing Session for Students](4.6-Event6/)**  
+   *November 14, 2026 | AWS Vietnam Office, Bitexco Financial Tower | Role: Attendee*

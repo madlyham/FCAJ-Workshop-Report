@@ -14,6 +14,7 @@ pre: " <b> 1.9. </b> "
 * Bật Content-Security-Policy chặt cho ứng dụng web.
 * Gỡ giới hạn email của Cognito bằng Amazon SES và thêm cảnh báo ngân sách.
 * Nộp Đề xuất (Phần 2) với chi phí thật và kết quả bảo mật.
+* Tham dự Sự kiện 6 (Cloud Mastery) tại văn phòng AWS.
 
 ## **2. Lịch trình thực hiện**
 
@@ -24,6 +25,7 @@ pre: " <b> 1.9. </b> "
 | **Ngày 4** | • Chuyển Content-Security-Policy từ chế độ chỉ báo cáo sang chặn thật trên CloudFront; kiểm mọi trang xem có tài nguyên bị chặn | 11/11/2026 | 11/11/2026 | infra/web.tf |
 | **Ngày 5** | • Chuyển email của Cognito sang Amazon SES để đăng ký không bị chặn bởi giới hạn mặc định (~50 email/ngày) | 11/12/2026 | 11/12/2026 | Tài liệu Amazon SES |
 | **Ngày 6** | • Cảnh báo AWS Budgets ở mức 50% / 80% số credit còn lại; rà soát số dư credit và chi phí từng dịch vụ<br>• **Nộp Đề xuất (Phần 2)**: bản đề xuất cập nhật với chi phí thật từ Cost Explorer, kết quả pentest và phần gia cố | 11/13/2026 | 11/13/2026 | AWS Billing Console, [Đề xuất](../../2-proposal/) |
+| **Ngày 7** | • Tham dự [Sự kiện 6: Cloud Mastery](../../4-eventparticipated/4.6-event6/) (buổi sáng, Văn phòng AWS Việt Nam). Hỏi đáp kéo dài với sinh viên về định hướng và chuyên môn Cloud, sau đó chơi Quiz.com trực tiếp | 11/14/2026 | 11/14/2026 | [Sự kiện 6](../../4-eventparticipated/4.6-event6/) |
 
 ## **3. Kết quả đạt được**
 

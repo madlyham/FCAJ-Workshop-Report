@@ -8,7 +8,7 @@ pre: " <b> 1. </b> "
 
 Trong suốt 12 tuần thực tập tại Công ty TNHH Amazon Web Services Việt Nam (chương trình Workforce Bootcamp - First Cloud AI Journey, từ ngày 14/09/2026 đến ngày 04/12/2026), tôi đã hoàn thành toàn diện khóa đào tạo kiến trúc đám mây, các bài thực hành chuyên sâu về Serverless và toàn bộ vòng đời phát triển dự án đồ án tốt nghiệp **ReLoop** (sàn thương mại điện tử tuần hoàn linh kiện phần cứng).
 
-Song song với lịch trình kỹ thuật hàng tuần, tôi cũng đại diện cho nhóm tích cực tham gia **5 sự kiện công nghệ, hội nghị quy mô lớn và hoạt động thiện nguyện xã hội** do AWS Việt Nam cùng các đối tác công nghệ tổ chức (được đối chiếu xuyên suốt trong lịch trình thực hiện và trình bày chi tiết tại mục [Các events đã tham gia](../4-eventparticipated/)).
+Song song với lịch trình kỹ thuật hàng tuần, tôi cũng đại diện cho nhóm tích cực tham gia **6 sự kiện công nghệ, hội nghị quy mô lớn và hoạt động thiện nguyện xã hội** do AWS Việt Nam cùng các đối tác công nghệ tổ chức (được đối chiếu xuyên suốt trong lịch trình thực hiện và trình bày chi tiết tại mục [Các events đã tham gia](../4-eventparticipated/)).
 
 ### Tổng quan nhật ký công việc 12 tuần
 

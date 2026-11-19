@@ -14,6 +14,7 @@ pre: " <b> 1.9. </b> "
 * Enforce a strict Content-Security-Policy on the web app.
 * Remove the Cognito email limit with Amazon SES and add budget alerts.
 * Submit Proposal Part 2 with real costs and security results.
+* Attend Event 6 (Cloud Mastery) at the AWS office.
 
 ## **2. Weekly Execution Schedule**
 
@@ -24,6 +25,7 @@ pre: " <b> 1.9. </b> "
 | **Day 4** | • Move the Content-Security-Policy from report-only to enforced on CloudFront; check every page for blocked resources | 11/11/2026 | 11/11/2026 | infra/web.tf |
 | **Day 5** | • Switch Cognito email to Amazon SES so sign-ups are not blocked by the default limit (~50 emails/day) | 11/12/2026 | 11/12/2026 | Amazon SES Docs |
 | **Day 6** | • AWS Budgets alerts at 50% / 80% of the remaining credits; review credit balance and cost per service<br>• Submit **Proposal Part 2**: updated proposal with real Cost Explorer costs, pentest results and the hardening work | 11/13/2026 | 11/13/2026 | AWS Billing Console, [Proposal](../../2-proposal/) |
+| **Day 7** | • Attend [Event 6: Cloud Mastery](../../4-eventparticipated/4.6-event6/) (morning, AWS Vietnam Office). Long open Q&A with students on cloud careers and skills, then a live Quiz.com game | 11/14/2026 | 11/14/2026 | [Event 6](../../4-eventparticipated/4.6-event6/) |
 
 ## **3. Key Achievements & Outcomes**
 
