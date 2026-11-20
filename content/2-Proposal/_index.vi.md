@@ -59,10 +59,15 @@ ReLoop hoàn toàn serverless, nằm trong một region (ap-southeast-1):
 - Đăng ký và đăng nhập đi thẳng từ trình duyệt tới Cognito, có WAF thứ hai bảo vệ.
 - Log và số liệu nghiệp vụ đổ về CloudWatch; khi có cảnh báo, SNS gửi email cho Admin.
 - Toàn bộ hạ tầng viết bằng Terraform, state lưu trong bucket S3 có versioning.
+- Code đẩy lên GitHub (① push / pull request), GitHub Actions chạy typecheck, test và build web (②). CI không có quyền AWS. Việc deploy chạy `infra/deploy.sh` từ máy của developer (③: `terraform apply`, sau đó upload web).
+
+![Tổng quan kiến trúc ReLoop](/images/2-Proposal/reloop-architecture-simple.png)
+
+**Sơ đồ chi tiết** (thông số, giới hạn và luồng cụ thể):
 
 ![Kiến trúc ReLoop](/images/2-Proposal/reloop-architecture.png)
 
-*File gốc sơ đồ: `static/images/2-Proposal/reloop-architecture.drawio` (sinh bằng `diagram/make_architecture.py`).*
+*File gốc sơ đồ: `static/images/2-Proposal/reloop-architecture-simple.drawio` và `reloop-architecture.drawio` (cả hai sinh bằng `diagram/make_architecture.py`; bản tổng quan thêm `--simple`: cùng bố cục, ít chữ).*
 
 #### Dịch vụ AWS sử dụng
 - **Amazon CloudFront:** phục vụ web và chuyển `/api/*` tới API Gateway. Gắn header CSP, HSTS, X-Frame-Options và trả 404 thật khi thiếu file tĩnh.
@@ -73,9 +78,9 @@ ReLoop hoàn toàn serverless, nằm trong một region (ap-southeast-1):
 - **Amazon API Gateway (HTTP API):** kiểm JWT trên mọi route riêng tư; giới hạn 20 request/giây, burst 50.
 - **AWS Lambda:** `reloop-dev-api`, Node.js 22 trên arm64 (Graviton), 512 MB. Chạy API, worker AI/ghép tin bất đồng bộ, job định kỳ và trigger pre sign-up của Cognito. Thời gian chạy trung bình 144 ms; giới hạn chạy song song 1.000.
 - **Amazon DynamoDB:** một bảng on-demand với PK/SK và GSI1, bật PITR và TTL (thông báo tự xóa sau 90 ngày). Hiện có khoảng 5.600 bản ghi (2,4 MB).
-- **Amazon Cognito:** user pool xác minh qua email, có group Admins, FinanceAdmins, Partners, Owners. Hiện có 14 người dùng.
+- **Amazon Cognito:** user pool xác minh qua email, có group Admins, FinanceAdmins, Partners, Owners. Trigger pre sign-up gọi `reloop-dev-api`; trigger post-confirmation gọi Lambda `reloop-auth-post-confirmation` để tạo hồ sơ người dùng trong DynamoDB. Trình duyệt gọi thẳng Cognito, không qua CloudFront hay API Gateway; API Gateway chỉ kiểm chữ ký JWT bằng khóa công khai (JWKS) của user pool. Hiện có 14 người dùng.
 - **Amazon Rekognition:** gắn nhãn kiểm duyệt cho mọi ảnh (từ chối ảnh nhạy cảm, ca nghi ngờ chuyển Admin) và đọc chữ trong ảnh.
-- **Amazon Bedrock:** Kimi K3 qua Converse API có tool choice, trả JSON có cấu trúc. Guardrail (tier Standard) lọc đầu vào/đầu ra của AI và chữ đọc được trong ảnh. Mỗi người dùng tối đa 20 lượt phân tích/ngày.
+- **Amazon Bedrock:** Kimi K3 qua Converse API có tool choice, trả JSON có cấu trúc. Guardrail (tier Standard) lọc chữ mà Rekognition đọc được trong ảnh (ApplyGuardrail). Lượt gọi Kimi không đi kèm Guardrail vì Kimi không hỗ trợ, nên kết quả được kiểm bằng schema JSON bắt buộc và bước validate ở backend. Mỗi người dùng tối đa 20 lượt phân tích/ngày.
 - **Amazon EventBridge:** 1 rule chạy mỗi 15 phút để gọi job quét nền.
 - **Amazon CloudWatch:** log giữ 7 ngày, số liệu nghiệp vụ tự định nghĩa, 1 dashboard và 10 alarm (Lambda lỗi/throttle, API 5xx, p95 > 2 giây, lỗi AI/job, chữ lạ trong ảnh, có khiếu nại mới).
 - **Amazon SNS:** gửi email cảnh báo cho Admin.
