@@ -6,7 +6,6 @@ chapter: false
 pre: " <b> 7. </b> "
 ---
 
-}
 
 > Here, you can freely share your personal opinions about your experience participating in the First Cloud AI Journey program. This will help the FCAJ team improve any shortcomings based on the following aspects:
 
@@ -33,13 +32,29 @@ The company provides an internship allowance and offers flexible working hours w
 ---
 
 ### Additional Questions
-- What did you find **most satisfying** during your internship?  
-- What do you think the company **should improve** for future interns?  
-- If recommending to a friend, would you **suggest they intern here**? Why or why not?  
+
+**What did you find most satisfying during your internship?**  
+Taking ReLoop from an idea to a live system on real AWS services in 12 weeks. The best moment was watching a real photo upload go through the whole AI pipeline (Rekognition + Bedrock) end to end, and then seeing our own pentest come back with no high-severity findings after the fixes. The events at the AWS office, especially the "never-ending" Q&A at Cloud Mastery, were a close second.
+
+**What do you think the company should improve for future interns?**  
+- Share the limits of the lab accounts (service quotas, budget caps) in week 1, so teams do not discover them mid-sprint.  
+- Short, regular mentor check-ins during the build phase (weeks 4–11), not only around proposal deadlines.  
+- One clear checklist with deadlines for the worklog, proposal and final report, published at the start.
+
+**If recommending to a friend, would you suggest they intern here? Why or why not?**  
+Yes, for anyone willing to learn on their own. You get hands-on work with real AWS services, real events and a real team product. It is not a lecture course: if you wait to be told what to do, you will fall behind.
 
 ---
 
 ### Suggestions & Expectations
-- Do you have any suggestions to improve the internship experience?  
-- Would you like to continue this program in the future?  
-- Any other comments (free sharing):
+
+**Do you have any suggestions to improve the internship experience?**  
+- A mid-program demo day where teams show progress and get mentor feedback before the final presentation.  
+- A shared "lessons learned" page with common problems from past cohorts (IAM permissions, CORS, quotas, cost alarms).  
+- Cross-team architecture reviews, so interns learn from other teams' designs.
+
+**Would you like to continue this program in the future?**  
+Yes. I want to keep improving ReLoop, stay active in the FCAJ community and work toward an AWS certification.
+
+**Any other comments (free sharing):**  
+Thank you to the mentors, the FCAJ admin team and my teammates in AWSS3nt1n4L. Twelve weeks went by fast, and I leave with far more practical cloud and security experience than I started with.
