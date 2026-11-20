@@ -11,23 +11,22 @@ pre: " <b> 7. </b> "
 ### Đánh giá chung
 
 **1. Môi trường làm việc**  
-Môi trường làm việc rất thân thiện và cởi mở. Các thành viên trong FCAJ luôn sẵn sàng hỗ trợ khi mình gặp khó khăn, kể cả ngoài giờ làm việc. Không gian làm việc gọn gàng, thoải mái, giúp mình tập trung tốt hơn. Tuy nhiên, mình nghĩ có thể bổ sung thêm một số buổi giao lưu hoặc team bonding để mọi người hiểu nhau hơn.
+Cởi mở và thực tế. Phần lớn việc học diễn ra qua kênh trao đổi của nhóm và tại văn phòng AWS Việt Nam (tầng 26, Bitexco), nơi các sự kiện giúp mình gặp trực tiếp mentor, kỹ sư AWS và các bạn thực tập khác. Mọi câu hỏi đều được chào đón, nên mình dễ dàng thừa nhận những gì mình chưa biết.
 
 **2. Sự hỗ trợ của mentor / team admin**  
-Mentor hướng dẫn rất chi tiết, giải thích rõ ràng khi mình chưa hiểu và luôn khuyến khích mình đặt câu hỏi. Team admin hỗ trợ các thủ tục, tài liệu và tạo điều kiện để mình làm việc thuận lợi. Mình đánh giá cao việc mentor cho phép mình thử và tự xử lý vấn đề thay vì chỉ đưa đáp án.
+Mentor định hướng thay vì đưa sẵn đáp án: góp ý kiến trúc, proposal và đặt nhiều câu hỏi khó về chi phí và bảo mật. Team admin sắp xếp sự kiện, hạn nộp và mẫu báo cáo rõ ràng. Nếu có thêm các buổi check-in ngắn trong giai đoạn phát triển, nhóm sẽ phát hiện vấn đề sớm hơn.
 
 **3. Sự phù hợp giữa công việc và chuyên ngành học**  
-Công việc mình được giao phù hợp với kiến thức mình đã học ở trường, đồng thời mở rộng thêm những mảng mới mà mình chưa từng được tiếp cận. Nhờ vậy, mình vừa củng cố kiến thức nền tảng, vừa học thêm kỹ năng thực tế.
+Rất phù hợp. Mình học an toàn thông tin, và ReLoop cho mình áp dụng vào hệ thống thật: AWS WAF, đăng nhập Cognito, IAM quyền tối thiểu, chống tấn công visual prompt injection cho pipeline AI và một đợt pentest kèm sửa lỗi. Mình cũng được làm thêm nhiều mảng ngoài chuyên ngành: backend serverless, thiết kế DynamoDB và Terraform.
 
 **4. Cơ hội học hỏi & phát triển kỹ năng**  
-Trong quá trình thực tập, mình học được nhiều kỹ năng mới như sử dụng công cụ quản lý dự án, kỹ năng làm việc nhóm, và cả cách giao tiếp chuyên nghiệp trong môi trường công ty. Mentor cũng chia sẻ nhiều kinh nghiệm thực tế giúp mình định hướng tốt hơn cho sự nghiệp.
+Mình tiến bộ nhiều nhất nhờ học qua làm: Lambda, API Gateway, DynamoDB, Rekognition, Bedrock, Terraform và GitHub Actions trên một dự án chạy thật. Kỹ năng mềm cũng tốt lên: viết proposal, ghi worklog hằng tuần, review code của đồng đội và giải thích các lựa chọn thiết kế với mentor. Sáu sự kiện đã tham gia cho mình thêm góc nhìn thực tế từ ngành.
 
 **5. Văn hóa & tinh thần đồng đội**  
-Văn hóa công ty rất tích cực: mọi người tôn trọng lẫn nhau, làm việc nghiêm túc nhưng vẫn vui vẻ. Khi có dự án gấp, mọi người cùng nhau cố gắng, hỗ trợ không phân biệt vị trí. Điều này giúp mình cảm thấy mình là một phần của tập thể, dù chỉ là thực tập sinh.
+Nhóm AWSS3nt1n4L chia việc theo thế mạnh (frontend, backend, AI, hạ tầng) và luôn hỗ trợ nhau khi có người bị kẹt. Tại các sự kiện, cộng đồng FCAJ rất thân thiện và ham học hỏi; phần hỏi đáp thường kéo dài vì mọi người hỏi mãi không dứt.
 
 **6. Chính sách / phúc lợi cho thực tập sinh**  
-Công ty có hỗ trợ phụ cấp thực tập và tạo điều kiện về thời gian linh hoạt khi cần thiết. Ngoài ra, việc được tham gia các buổi đào tạo nội bộ là một điểm cộng lớn.
-
+Phúc lợi chính là credit AWS để xây dựng trên dịch vụ thật, được tham gia miễn phí các sự kiện và workshop của AWS, và làm việc từ xa linh hoạt giữa các buổi lên văn phòng. Nếu giới hạn của tài khoản lab (quota, ngân sách) được nói rõ từ đầu thì việc lập kế hoạch sẽ dễ hơn.
 
 ### Một số câu hỏi khác
 

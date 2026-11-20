@@ -12,22 +12,22 @@ pre: " <b> 7. </b> "
 ### Overall Evaluation
 
 **1. Working Environment**  
-The working environment is very friendly and open. FCAJ members are always willing to help whenever I encounter difficulties, even outside working hours. The workspace is tidy and comfortable, helping me focus better. However, I think it would be nice to have more social gatherings or team bonding activities to strengthen relationships.
+Open and hands-on. Most of my learning happened in our team channel and at the AWS Vietnam office (26th floor, Bitexco), where the events gave me a chance to meet mentors, AWS engineers and other interns in person. Questions were welcome at any level, which made it easy to admit what I did not know yet.
 
 **2. Support from Mentor / Team Admin**  
-The mentor provides very detailed guidance, explains clearly when I don’t understand, and always encourages me to ask questions. The admin team supports administrative tasks, provides necessary documents, and creates favorable conditions for me to work effectively. I especially appreciate that the mentor allows me to try and solve problems myself instead of just giving the answer.
+Mentors pointed us in the right direction instead of handing over answers: they reviewed our architecture and proposal, and asked hard questions about cost and security. The admin team kept events, deadlines and report templates organised. More frequent short check-ins during the build weeks would have helped us catch problems earlier.
 
 **3. Relevance of Work to Academic Major**  
-The tasks I was assigned align well with the knowledge I learned at university, while also introducing me to new areas I had never encountered before. This allowed me to both strengthen my foundational knowledge and gain practical skills.
+Very relevant. I study cybersecurity, and ReLoop let me apply it on a real system: AWS WAF, Cognito sign-in, least-privilege IAM, defending the AI pipeline against visual prompt injection, and a full pentest with fixes. I also worked well outside my major: serverless backend, DynamoDB design and Terraform.
 
 **4. Learning & Skill Development Opportunities**  
-During the internship, I learned many new skills such as using project management tools, teamwork skills, and professional communication in a corporate environment. The mentor also shared valuable real-world experiences that helped me better plan my career path.
+The biggest growth was learning by building: Lambda, API Gateway, DynamoDB, Rekognition, Bedrock, Terraform and GitHub Actions on a live project. Soft skills grew too: writing a proposal, keeping a weekly worklog, reviewing teammates' code and explaining trade-offs to mentors. The six events added industry context I would not get from the code alone.
 
 **5. Company Culture & Team Spirit**  
-The company culture is very positive: everyone respects each other, works seriously but still keeps things enjoyable. When there are urgent projects, everyone works together and supports one another regardless of their position. This made me feel like a real part of the team, even as an intern.
+Our team AWSS3nt1n4L split work by strength (frontend, backend, AI, infrastructure) and helped each other whenever someone was blocked. At events the FCAJ community felt friendly and curious; the Q&A sessions often ran over time because everyone kept asking questions.
 
 **6. Internship Policies / Benefits**  
-The company provides an internship allowance and offers flexible working hours when needed. In addition, having the opportunity to join internal training sessions is a big plus.
+The main benefits were AWS credits to build on real services, free access to AWS events and workshops, and flexible remote work between office sessions. Clearer limits on lab accounts (quotas, budget caps) at the start would make planning easier.
 
 ---
 
