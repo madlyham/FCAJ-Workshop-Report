@@ -10,7 +10,7 @@ pre: " <b> 4.6. </b> "
 
 **Date:** Saturday, November 14, 2026  
 **Time:** Morning (GMT+7)  
-**Location:** AWS Vietnam Office, Bitexco Financial Tower, Ho Chi Minh City, Vietnam.  
+**Location:** AWS Vietnam Office, 26th Floor, Bitexco Financial Tower, Ho Chi Minh City, Vietnam.  
 **Role:** Attendee  
 
 ### **Event Objectives**

@@ -10,7 +10,7 @@ pre: " <b> 4.3. </b> "
 
 **Ngày:** Thứ Sáu, ngày 02 tháng 10 năm 2026  
 **Thời gian:** 10:30 AM – 12:00 PM (GMT+7)  
-**Địa điểm:** Tòa nhà Bitexco Financial Tower, số 02 Hải Triều, TP. Hồ Chí Minh, Việt Nam.  
+**Địa điểm:** Văn phòng AWS Việt Nam, Tầng 26, Tòa nhà Bitexco Financial Tower, số 02 Hải Triều, TP. Hồ Chí Minh, Việt Nam.  
 **Vai trò:** Người tham dự  
 
 ### **Mục tiêu sự kiện**

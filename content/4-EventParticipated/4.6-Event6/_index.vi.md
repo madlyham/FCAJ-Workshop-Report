@@ -10,7 +10,7 @@ pre: " <b> 4.6. </b> "
 
 **Ngày:** Thứ Bảy, ngày 14 tháng 11 năm 2026  
 **Thời gian:** Buổi sáng (GMT+7)  
-**Địa điểm:** Văn phòng AWS Việt Nam, Bitexco Financial Tower, TP. Hồ Chí Minh.  
+**Địa điểm:** Văn phòng AWS Việt Nam, Tầng 26, Bitexco Financial Tower, TP. Hồ Chí Minh.  
 **Vai trò:** Người tham dự  
 
 ### **Mục tiêu sự kiện**

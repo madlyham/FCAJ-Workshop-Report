@@ -10,7 +10,7 @@ pre: " <b> 4.3. </b> "
 
 **Date:** Friday, October 2, 2026  
 **Time:** 10:30 AM – 12:00 PM (GMT+7)  
-**Location:** Bitexco Financial Tower, 02 Hai Trieu Street, Ho Chi Minh City, Vietnam.  
+**Location:** Amazon Web Services Vietnam Office, 26th Floor, Bitexco Financial Tower, 02 Hai Trieu Street, Ho Chi Minh City, Vietnam.  
 **Role:** Attendee  
 
 ### **Event Objectives**
