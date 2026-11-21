@@ -32,6 +32,8 @@ $scope = [ordered]@{
 # 3) labels_front.py: copy with every arrow label on a white box in front of the lines.
 #    Written to a temp folder only; overview.drawio and focus-*.drawio stay clean for editing.
 $front = Join-Path $root 'diagram\labels_front.py'
+# 1b) fade_groups.py: also fade a coloured section box when every icon inside it is faded.
+$fadeGroups = Join-Path $root 'diagram\fade_groups.py'
 $tmp = Join-Path $env:TEMP 'reloop-diagrams'
 New-Item -ItemType Directory -Force $tmp | Out-Null
 function Export-Front($drawio, $png) {
@@ -47,5 +49,7 @@ foreach ($k in $scope.Keys) {
   $f = Join-Path $dia "focus-$k.drawio"
   python -B $focus (Join-Path $dia 'overview.drawio') $f @($scope[$k] -split ' ')
   if ($LASTEXITCODE) { throw "focus $k failed" }
+  python -B $fadeGroups $f $f
+  if ($LASTEXITCODE) { throw "fade_groups $k failed" }
   Export-Front $f (Join-Path $img "$k\architecture.png")
 }
