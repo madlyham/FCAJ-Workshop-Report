@@ -8,9 +8,6 @@ chapter: false
 # Báo cáo thực tập
 
 ### Thông tin sinh viên:
-
-![Ảnh đại diện](/images/avatar.png?width=240px)
-
 &emsp; **Họ và tên:** Kung Cẩm Thành
 
 &emsp; **Số điện thoại:** 0908122927
@@ -28,6 +25,8 @@ chapter: false
 &emsp; **Vị trí thực tập:** Workforce Bootcamp - First Cloud AI Journey
 
 &emsp; **Thời gian thực tập:** Từ ngày 14/09/2026 đến ngày 04/12/2026
+
+![Ảnh đại diện](/images/avatar.png?width=240px)
 
 ### Nội dung báo cáo
 
