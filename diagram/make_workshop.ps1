@@ -1,7 +1,7 @@
-﻿# Redraw every Workshop diagram from ONE source: the frame picture ('frame for workshop.jpg') rebuilt as draw.io XML.
-# 1) make_frame.py → docs/diagrams/overview.drawio (stable ids)
-# 2) focus_view.py (aws-grapher skill) → docs/diagrams/focus-5.N.drawio: section icons solid, the rest faded
-# 3) export_png.mjs (headless Edge + draw.io viewer, needs network) → static/images/5-Workshop/5.N/architecture.png
+﻿# Redraw every Workshop diagram from ONE source: docs/diagrams/overview.drawio (user-supplied base XML).
+# To change the base picture: open overview.drawio in diagrams.net, edit, save, then rerun this script.
+# 1) focus_view.py (aws-grapher skill) → docs/diagrams/focus-5.N.drawio: section icons solid, the rest faded
+# 2) export_png.mjs (headless Edge + draw.io viewer, needs network) → static/images/5-Workshop/5.N/architecture.png
 # Run from repo root:  powershell -File diagram/make_workshop.ps1
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
@@ -9,21 +9,22 @@ $focus = "$env:USERPROFILE\.agents\skills\aws-grapher\scripts\focus_view.py"
 $dia = Join-Path $root 'docs\diagrams'
 $img = Join-Path $root 'static\images\5-Workshop'
 
-python -B (Join-Path $root 'diagram\make_frame.py')
-if ($LASTEXITCODE) { throw 'make_frame failed' }
-
-$all = 'users waf_web cf cognito postconf s3web apigw lam evb ddb s3img rek bed cw sns'
+# Icon ids in overview.drawio:
+# n19 Users, n20 WAF, n21 CloudFront, n22 Cognito, n23 Lambda post-confirm, n24 S3 website,
+# n25 API Gateway, n26 Lambda API, n27 EventBridge, n28 DynamoDB, n29 S3 photos,
+# n30 Rekognition, n31 Bedrock, n32 CloudWatch, n33 SNS
+$all = 'n19 n20 n21 n22 n23 n24 n25 n26 n27 n28 n29 n30 n31 n32 n33'
 $scope = [ordered]@{
-  '5.2'  = 'bed cw sns'
-  '5.3'  = 'ddb'
-  '5.4'  = 'cognito postconf ddb'
-  '5.5'  = 'users s3img'
-  '5.6'  = 'cognito ddb apigw lam s3img'
-  '5.7'  = 'lam s3img rek bed'
-  '5.8'  = 'cognito cf apigw s3web'
-  '5.9'  = 'users cognito waf_web cf'
-  '5.10' = 'ddb lam evb'
-  '5.11' = 'apigw lam cw sns'
+  '5.2'  = 'n31 n32 n33'
+  '5.3'  = 'n28'
+  '5.4'  = 'n22 n23 n28'
+  '5.5'  = 'n19 n29'
+  '5.6'  = 'n22 n28 n25 n26 n29'
+  '5.7'  = 'n26 n29 n30 n31'
+  '5.8'  = 'n22 n21 n25 n24'
+  '5.9'  = 'n19 n22 n20 n21'
+  '5.10' = 'n28 n26 n27'
+  '5.11' = 'n25 n26 n32 n33'
   '5.12' = $all
 }
 
