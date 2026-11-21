@@ -8,6 +8,9 @@ chapter: false
 # Internship Report
 
 ### Student Information:
+
+![Profile picture](/images/avatar.png?width=240px)
+
 &emsp; **Full Name:** Kung Cẩm Thành
 
 &emsp; **Phone Number:** 0908122927 
@@ -25,8 +28,6 @@ chapter: false
 &emsp; **Internship Position:** Workforce Bootcamp - First Cloud AI Journey
 
 &emsp; **Internship Duration:** From 14/09/2026 to 04/12/2026
-
-![Profile picture](/images/avatar.png)
 
 ### Report Content
 
