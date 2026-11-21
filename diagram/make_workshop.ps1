@@ -2,6 +2,7 @@
 # To change the base picture: open overview.drawio in diagrams.net, edit, save, then rerun this script.
 # 1) focus_view.py (aws-grapher skill) → docs/diagrams/focus-5.N.drawio: section icons solid, the rest faded
 # 2) export_png.mjs (headless Edge + draw.io viewer, needs network) → static/images/5-Workshop/5.N/architecture.png
+#    (exports a labels-in-front copy, see step 3 below)
 # Run from repo root:  powershell -File diagram/make_workshop.ps1
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
@@ -28,12 +29,23 @@ $scope = [ordered]@{
   '5.12' = $all
 }
 
-node (Join-Path $root 'diagram\export_png.mjs') (Join-Path $dia 'overview.drawio') (Join-Path $img '5.1\overview.png')
-if ($LASTEXITCODE) { throw 'export overview failed' }
+# 3) labels_front.py: copy with every arrow label on a white box in front of the lines.
+#    Written to a temp folder only; overview.drawio and focus-*.drawio stay clean for editing.
+$front = Join-Path $root 'diagram\labels_front.py'
+$tmp = Join-Path $env:TEMP 'reloop-diagrams'
+New-Item -ItemType Directory -Force $tmp | Out-Null
+function Export-Front($drawio, $png) {
+  $t = Join-Path $tmp (Split-Path $drawio -Leaf)
+  python -B $front $drawio $t
+  if ($LASTEXITCODE) { throw "labels_front $drawio failed" }
+  node (Join-Path $root 'diagram\export_png.mjs') $t $png
+  if ($LASTEXITCODE) { throw "export $png failed" }
+}
+
+Export-Front (Join-Path $dia 'overview.drawio') (Join-Path $img '5.1\overview.png')
 foreach ($k in $scope.Keys) {
   $f = Join-Path $dia "focus-$k.drawio"
   python -B $focus (Join-Path $dia 'overview.drawio') $f @($scope[$k] -split ' ')
   if ($LASTEXITCODE) { throw "focus $k failed" }
-  node (Join-Path $root 'diagram\export_png.mjs') $f (Join-Path $img "$k\architecture.png")
-  if ($LASTEXITCODE) { throw "export $k failed" }
+  Export-Front $f (Join-Path $img "$k\architecture.png")
 }

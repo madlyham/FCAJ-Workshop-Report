@@ -20,7 +20,7 @@
     <mxCell id="n16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#C925D1;fontColor=#C925D1;fontSize=12;fontStyle=1;verticalAlign=bottom;align=left;spacingLeft=8;spacingRight=8;spacingBottom=2;mxgraph.aws4.group;" value="Data storage" vertex="1">
       <mxGeometry height="246" width="150" x="1270" y="264" as="geometry" />
     </mxCell>
-<mxCell id="n17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#01A88D;fontColor=#01A88D;fontSize=12;fontStyle=1;verticalAlign=top;align=left;spacingLeft=8;spacingRight=8;spacingBottom=2;mxgraph.aws4.group;" value="AI processing" vertex="1">
+    <mxCell id="n17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#01A88D;fontColor=#01A88D;fontSize=12;fontStyle=1;verticalAlign=top;align=left;spacingLeft=8;spacingRight=8;spacingBottom=2;mxgraph.aws4.group;" value="AI processing" vertex="1">
       <mxGeometry height="140" width="370" x="1270" y="560" as="geometry" />
     </mxCell>
     <mxCell id="n18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#E7157B;fontColor=#E7157B;fontSize=12;fontStyle=1;verticalAlign=top;align=right;spacingLeft=8;spacingRight=8;spacingBottom=2;mxgraph.aws4.group;" value="Monitoring &amp; alerts" vertex="1">
@@ -43,7 +43,7 @@
         </Array>
       </mxGeometry>
     </mxCell>
-<mxCell id="n37" edge="1" parent="1" source="n21" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;opacity=20;textOpacity=20;" target="n25" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;4&lt;/span&gt; /api/* + x-origin-verify">
+    <mxCell id="n37" edge="1" parent="1" source="n21" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;opacity=20;textOpacity=20;" target="n25" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;4&lt;/span&gt; /api/* + x-origin-verify">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
     <mxCell id="n38" edge="1" parent="1" source="n25" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;opacity=20;textOpacity=20;" target="n26" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;5&lt;/span&gt; invoke">
@@ -56,7 +56,7 @@
         </Array>
       </mxGeometry>
     </mxCell>
-    <mxCell id="n40" edge="1" parent="1" source="n26" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;" target="n29" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;7&lt;/span&gt; presign &amp; tag">
+    <mxCell id="n40" edge="1" parent="1" source="n26" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;startArrow=block;startFill=1;" target="n29" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;7&lt;/span&gt; presign &amp; tag">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
     <mxCell id="n51" edge="1" parent="1" source="n19" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;startArrow=block;startFill=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#7AA116;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;dashed=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;opacity=20;textOpacity=20;" target="n29" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;8&lt;/span&gt; upload / view photos (presigned URL)">
@@ -66,7 +66,7 @@
           <mxPoint x="1470" y="110" />
           <mxPoint x="1470" y="432" />
         </Array>
-</mxGeometry>
+      </mxGeometry>
     </mxCell>
     <mxCell id="n41" edge="1" parent="1" source="n26" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;exitX=0.75;exitY=1;exitDx=0;exitDy=38;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=block;startFill=1;" target="n30" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;9&lt;/span&gt; image moderation">
       <mxGeometry relative="1" x="0.45" as="geometry">
@@ -95,7 +95,7 @@
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
     <mxCell id="n49" edge="1" parent="1" source="n22" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;dashed=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;opacity=20;textOpacity=20;" target="n23" value="post-confirmation trigger">
-<mxGeometry relative="1" as="geometry" />
+      <mxGeometry relative="1" as="geometry" />
     </mxCell>
     <mxCell id="n50" edge="1" parent="1" source="n23" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;opacity=20;textOpacity=20;" target="n28" value="create profile">
       <mxGeometry relative="1" as="geometry">
@@ -125,7 +125,7 @@
     <mxCell id="n20" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.waf;fillColor=#DD344C;opacity=20;textOpacity=20;" value="AWS WAF (web)" vertex="1">
       <mxGeometry height="64" width="64" x="300" y="255" as="geometry" />
     </mxCell>
-<mxCell id="n21" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudfront;fillColor=#8C4FFF;opacity=20;textOpacity=20;" value="Amazon CloudFront" vertex="1">
+    <mxCell id="n21" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudfront;fillColor=#8C4FFF;opacity=20;textOpacity=20;" value="Amazon CloudFront" vertex="1">
       <mxGeometry height="64" width="64" x="450" y="400" as="geometry" />
     </mxCell>
     <mxCell id="n22" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cognito;fillColor=#DD344C;opacity=20;textOpacity=20;" value="Amazon Cognito" vertex="1">
@@ -143,7 +143,7 @@
     <mxCell id="n26" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;fillColor=#ED7100;" value="AWS Lambda&lt;br&gt;(API)" vertex="1">
       <mxGeometry height="64" width="64" x="1060" y="400" as="geometry" />
     </mxCell>
-<mxCell id="n27" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.eventbridge;fillColor=#E7157B;opacity=20;textOpacity=20;" value="Amazon EventBridge" vertex="1">
+    <mxCell id="n27" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.eventbridge;fillColor=#E7157B;opacity=20;textOpacity=20;" value="Amazon EventBridge" vertex="1">
       <mxGeometry height="64" width="64" x="850" y="640" as="geometry" />
     </mxCell>
     <mxCell id="n28" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.dynamodb;fillColor=#C925D1;opacity=20;textOpacity=20;" value="Amazon DynamoDB" vertex="1">
@@ -161,7 +161,7 @@
     <mxCell id="n32" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch_2;fillColor=#E7157B;opacity=20;textOpacity=20;" value="Amazon CloudWatch" vertex="1">
       <mxGeometry height="64" width="64" x="1060" y="770" as="geometry" />
     </mxCell>
-<mxCell id="n33" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sns;fillColor=#E7157B;opacity=20;textOpacity=20;" value="Amazon SNS" vertex="1">
+    <mxCell id="n33" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sns;fillColor=#E7157B;opacity=20;textOpacity=20;" value="Amazon SNS" vertex="1">
       <mxGeometry height="64" width="64" x="1310" y="770" as="geometry" />
     </mxCell>
   </root>
