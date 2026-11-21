@@ -13,8 +13,12 @@ from xml.sax.saxutils import escape
 HERE = Path(__file__).parent.parent / 'static' / 'images' / '2-Proposal'  # nơi Hugo lấy ảnh
 # --simple: CÙNG bố cục, icon, đường nối; chỉ bớt chữ (dưới icon chỉ tên dịch vụ, đường nối không nhãn trừ số ① ② ③)
 # → reloop-architecture-simple.drawio, xuất PNG: node diagram/export_png.mjs reloop-architecture-simple
-SIMPLE = '--simple' in sys.argv
+# --workshop: giống hệt bản gọn (khung nhóm), id ổn định (users, lam, ddb…) → docs/diagrams/overview.drawio,
+# từ đó focus_view.py (skill aws-grapher) tạo ảnh từng mục 5.2–5.12 — xem diagram/make_workshop.ps1
+WORKSHOP = '--workshop' in sys.argv
+SIMPLE = '--simple' in sys.argv or WORKSHOP
 NAME = 'reloop-architecture-simple' if SIMPLE else 'reloop-architecture'
+OUT = (Path(__file__).parent.parent / 'docs' / 'diagrams' / 'overview.drawio') if WORKSHOP else (HERE / f'{NAME}.drawio')
 
 
 def pick(label: str, short: str | None) -> str:
@@ -47,8 +51,8 @@ def text(label: str) -> str:
     return escape(label.replace('\n', '<br>'))
 
 
-def node(x, y, style, label, size=64):
-    i = nid()
+def node(x, y, style, label, size=64, cid=None):
+    i = cid or nid()
     cells.append(
         f'<mxCell id="{i}" value="{text(label)}" style="{style}" vertex="1" parent="1">'
         f'<mxGeometry x="{x}" y="{y}" width="{size}" height="{size}" as="geometry"/></mxCell>'
@@ -60,12 +64,12 @@ BASE = ('sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0
         'verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;')
 
 
-def icon(x, y, res, cat, label, short=None):
-    return node(x, y, BASE + f'strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.{res};fillColor={COLORS[cat]};', pick(label, short))
+def icon(cid, x, y, res, cat, label, short=None):
+    return node(x, y, BASE + f'strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.{res};fillColor={COLORS[cat]};', pick(label, short), cid=cid)
 
 
-def plain_icon(x, y, shape, label, short=None):
-    return node(x, y, BASE + f'fillColor=#232F3D;strokeColor=none;shape=mxgraph.aws4.{shape};', pick(label, short))
+def plain_icon(cid, x, y, shape, label, short=None):
+    return node(x, y, BASE + f'fillColor=#232F3D;strokeColor=none;shape=mxgraph.aws4.{shape};', pick(label, short), cid=cid)
 
 
 def group(x, y, w, h, gr, label, stroke, dashed=False):
@@ -138,36 +142,36 @@ if SIMPLE:
     box(1000, 730, 420, 140, 'Monitoring & alerts', COLORS['mgmt'], align='right')
 
 # ---- Người dùng / người phát triển (ngoài AWS)
-users = plain_icon(50, 400, 'users', 'Users (web browser)\nGuests · Tier-1 / Tier-2\npartners · Admin')
-dev = plain_icon(60, 1020, 'client', 'Developer\nlaptop · AWS CLI\nTerraform · deploy.sh')
-repo = plain_icon(320, 1020, 'git_repository', 'GitHub repository\nbranch main\npull requests')
-ci = plain_icon(580, 1020, 'gear', 'GitHub Actions (CI)\ntypecheck · tests · build\n(no AWS credentials)')
+users = plain_icon('users', 50, 400, 'users', 'Users (web browser)\nGuests · Tier-1 / Tier-2\npartners · Admin')
+dev = plain_icon('dev', 60, 1020, 'client', 'Developer\nlaptop · AWS CLI\nTerraform · deploy.sh')
+repo = plain_icon('repo', 320, 1020, 'git_repository', 'GitHub repository\nbranch main\npull requests')
+ci = plain_icon('ci', 580, 1020, 'gear', 'GitHub Actions (CI)\ntypecheck · tests · build\n(no AWS credentials)')
 
 # ---- Biên (edge, toàn cầu)
-waf_web = icon(270, 400, 'waf', 'security', 'AWS WAF (web)\n3 managed rule groups\n2 rate limits (429)\nblocked → logs (3 days)')
-cf = icon(450, 400, 'cloudfront', 'net', 'Amazon CloudFront\nCSP · HSTS · OAC\n/api/* → API')
+waf_web = icon('waf_web', 270, 400, 'waf', 'security', 'AWS WAF (web)\n3 managed rule groups\n2 rate limits (429)\nblocked → logs (3 days)')
+cf = icon('cf', 450, 400, 'cloudfront', 'net', 'Amazon CloudFront\nCSP · HSTS · OAC\n/api/* → API')
 
 # ---- Region: đăng nhập
-waf_auth = icon(650, 170, 'waf', 'security', 'AWS WAF (auth)\non user pool\n300 tries / 5 min / IP\nblocked → logs (3 days)')
-cognito = icon(850, 170, 'cognito', 'security', 'Amazon Cognito\nuser pool · groups\nAdmins / FinanceAdmins')
-postconf = icon(1310, 154, 'lambda', 'compute', 'AWS Lambda\nreloop-auth-post-confirmation\n(creates user profile)')
+waf_auth = icon('waf_auth', 650, 170, 'waf', 'security', 'AWS WAF (auth)\non user pool\n300 tries / 5 min / IP\nblocked → logs (3 days)')
+cognito = icon('cognito', 850, 170, 'cognito', 'security', 'Amazon Cognito\nuser pool · groups\nAdmins / FinanceAdmins')
+postconf = icon('postconf', 1310, 154, 'lambda', 'compute', 'AWS Lambda\nreloop-auth-post-confirmation\n(creates user profile)')
 
 # ---- Region: web tĩnh, API + xử lý
-s3web = icon(650, 620, 's3', 'storage', 'Amazon S3\nweb bundle\n(private bucket)', short='Amazon S3\n(website)')
-apigw = icon(850, 400, 'api_gateway', 'net', 'Amazon API Gateway\nHTTP API · JWT authorizer\n20 req/s · burst 50')
-lam = icon(1060, 400, 'lambda', 'compute', 'AWS Lambda\nreloop-dev-api · Node.js 22\narm64 · 512 MB')
-evb = icon(850, 640, 'eventbridge', 'mgmt', 'Amazon EventBridge\nrate(15 minutes)\nexpiry · invoices · reminders')
+s3web = icon('s3web', 650, 620, 's3', 'storage', 'Amazon S3\nweb bundle\n(private bucket)', short='Amazon S3\n(website)')
+apigw = icon('apigw', 850, 400, 'api_gateway', 'net', 'Amazon API Gateway\nHTTP API · JWT authorizer\n20 req/s · burst 50')
+lam = icon('lam', 1060, 400, 'lambda', 'compute', 'AWS Lambda\nreloop-dev-api · Node.js 22\narm64 · 512 MB')
+evb = icon('evb', 850, 640, 'eventbridge', 'mgmt', 'Amazon EventBridge\nrate(15 minutes)\nexpiry · invoices · reminders')
 
 # ---- Dữ liệu + AI
-ddb = icon(1310, 270, 'dynamodb', 'db', 'Amazon DynamoDB\nsingle table + GSI1\non-demand · PITR · TTL')
-s3img = icon(1310, 400, 's3', 'storage', 'Amazon S3 (photos)\npresigned POST / GET\nlifecycle 1 / 90 days')
-rek = icon(1310, 600, 'rekognition', 'ml', 'Amazon Rekognition\nimage moderation\n+ text detection')
-bed = icon(1550, 600, 'bedrock', 'ml', 'Amazon Bedrock\nKimi K3 (photo analysis)\nGuardrail (photo text)')
+ddb = icon('ddb', 1310, 270, 'dynamodb', 'db', 'Amazon DynamoDB\nsingle table + GSI1\non-demand · PITR · TTL')
+s3img = icon('s3img', 1310, 400, 's3', 'storage', 'Amazon S3 (photos)\npresigned POST / GET\nlifecycle 1 / 90 days')
+rek = icon('rek', 1310, 600, 'rekognition', 'ml', 'Amazon Rekognition\nimage moderation\n+ text detection')
+bed = icon('bed', 1550, 600, 'bedrock', 'ml', 'Amazon Bedrock\nKimi K3 (photo analysis)\nGuardrail (photo text)')
 
 # ---- Giám sát + IaC
-cw = icon(1060, 770, 'cloudwatch_2', 'mgmt', 'Amazon CloudWatch\nlogs 7 days · 10 alarms\ndashboard')
-sns = icon(1310, 770, 'sns', 'mgmt', 'Amazon SNS\nemail alerts\nto Admin')
-tfstate = icon(650, 760, 's3', 'storage', 'Amazon S3\nTerraform state\n(versioned)', short='Amazon S3\n(Terraform state)')
+cw = icon('cw', 1060, 770, 'cloudwatch_2', 'mgmt', 'Amazon CloudWatch\nlogs 7 days · 10 alarms\ndashboard')
+sns = icon('sns', 1310, 770, 'sns', 'mgmt', 'Amazon SNS\nemail alerts\nto Admin')
+tfstate = icon('tfstate', 650, 760, 's3', 'storage', 'Amazon S3\nTerraform state\n(versioned)', short='Amazon S3\n(Terraform state)')
 
 # ---- Luồng chính
 edge(users, waf_web, 'HTTPS')
@@ -213,5 +217,5 @@ xml = (
     'page="1" pageScale="1" pageWidth="1800" pageHeight="1170" background="#ffffff" math="0" shadow="0"><root>'
     '<mxCell id="0"/><mxCell id="1" parent="0"/>' + ''.join(groups + edges + vertices) + '</root></mxGraphModel></diagram></mxfile>'
 )
-(HERE / f'{NAME}.drawio').write_text(xml, encoding='utf-8')
+OUT.write_text(xml, encoding='utf-8')
 print('ok', len(cells), 'cells')
