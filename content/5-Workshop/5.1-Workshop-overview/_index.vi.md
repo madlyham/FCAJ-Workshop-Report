@@ -1,51 +1,64 @@
 ---
 title : "Tổng quan Workshop"
-date : 2026-11-14
+date : 2026-11-21
 weight : 1
 chapter : false
 pre : " <b> 5.1. </b> "
 ---
 
-### Mục tiêu bài thực hành
+### Bạn sẽ xây dựng gì
 
-**ReLoop** là nền tảng kết nối chủ sở hữu thiết bị điện tử cũ/hỏng với các đối tác thu mua và sửa chữa đã xác minh, sử dụng AI đa phương thức để sàng lọc ảnh và tự động điền thông tin tin đăng. Trong bài thực hành này, bạn tự tay triển khai toàn bộ hệ thống `reloop2` hoàn toàn bằng dịch vụ serverless của AWS—không máy chủ EC2, không NAT Gateway, chi phí bằng 0 khi không có lưu lượng sau khi dọn dẹp.
+**ReLoop** kết nối người có thiết bị điện tử cũ với các đối tác sửa chữa và tái chế đã được duyệt, đồng thời dùng AI kiểm duyệt và đọc ảnh thiết bị để tin đăng luôn sạch, có cấu trúc và chính xác. Bạn sẽ triển khai toàn bộ hệ thống `reloop2` hoàn toàn serverless tại vùng **Asia Pacific (Singapore) `ap-southeast-1`**, kết hợp phân phối và bảo vệ biên toàn cầu bằng **Amazon CloudFront** và **AWS WAF**.
 
 ![Kiến trúc tổng thể ReLoop trên AWS](/images/5-Workshop/5.1/overview.png)
 
-### Luồng xử lý chính (Request Flows)
+### Giải thích kiến trúc theo đúng mũi tên 1 → 10
 
-1. **Phân phối Web SPA tĩnh (`/` và mọi route giao diện):** Trình duyệt gửi HTTPS -> Edge WAF (`reloop2-web` tại `us-east-1`) -> CloudFront Distribution (`PriceClass_200`) -> CloudFront Function `reloop2-spa-rewrite` viết lại các route không có đuôi file thành `/index.html` (đồng thời giữ nguyên các URL chat có dấu chấm dạng `<partnerId>.<listingId>`) -> bucket S3 web riêng tư qua Origin Access Control (OAC).
-2. **Giao tiếp API & Xác thực (`/api/*`):** Trình duyệt gọi cùng domain CloudFront `/api/*` -> CloudFront Function `reloop2-api-prefix` cắt tiền tố `/api` -> chuyển tiếp tới HTTP API Gateway (`reloop2-api` tại `ap-southeast-1`) kèm header bí mật `x-origin-verify` -> API Gateway xác thực JWT từ Cognito (`ANY /{proxy+}`) hoặc cho qua các route công khai -> Lambda `reloop2-api` (Node.js 22 ARM64) kiểm tra `x-origin-verify` bằng `timingSafeEqual` và truy vấn DynamoDB.
-3. **Upload ảnh trực tiếp & Phân tích AI:** Người dùng xin presigned URL từ Lambda -> tải ảnh thẳng lên bucket riêng tư `reloop2-images-<suffix>` với tag `state=pending` -> Khi bấm gợi ý AI, Lambda gọi **Amazon Rekognition** (`DetectModerationLabels` + `DetectText` OCR) -> kiểm duyệt chữ đọc được bằng **Amazon Bedrock Guardrail** (`ApplyGuardrailCommand`) -> gọi **Amazon Bedrock (`global.moonshotai.kimi-k3`)** `ConverseCommand` để trả về JSON gợi ý tiêu đề, loại thiết bị, hãng, model, tình trạng và mô tả lỗi.
-4. **Tác vụ định kỳ & Giám sát:** Mỗi 15 phút, Amazon EventBridge rule `reloop2-sweep` kích hoạt `reloop2-api` để hết hạn tin sau 7 ngày, nhắc lịch nhận máy sau 24 giờ và tự hoàn tất sau 48 giờ. CloudWatch Logs (lưu 7 ngày), metric filter `UnhandledErrors`, 2 CloudWatch Alarms, SNS email và Dashboard `ReLoop2-Backend-Health` giúp theo dõi sức khỏe hệ thống theo thời gian thực.
+Mỗi học phần trong workshop khớp trực tiếp với các mũi tên đánh số và đường kết nối phụ trên sơ đồ:
 
-### Các lớp bảo mật trọng tâm
+| Bước | Mũi tên trên sơ đồ | Điều gì xảy ra | Xây dựng ở |
+| --- | --- | --- | --- |
+| **1** | **Users → CloudFront** (`HTTPS (TLS)`) | Trình duyệt kết nối HTTPS tới CloudFront. **AWS WAF (`reloop2-web`)** được gắn kèm (`associated web ACL`) để chặn IP xấu, tấn công web phổ biến và giới hạn tần suất yêu cầu. | [5.3](../5.3-global-edge/) |
+| **2** | **CloudFront → S3 (website)** (`static files (OAC)`) | CloudFront đọc các tệp giao diện React riêng tư từ `reloop2-web-<suffix>` qua Origin Access Control (OAC) và điều hướng tuyến SPA ngay tại CloudFront. | [5.3](../5.3-global-edge/) |
+| **3** | **Users → Cognito** (`sign up / sign in`) | Người dùng đăng ký và đăng nhập tại **Amazon Cognito** (`reloop2-user-pool`). Sau khi xác nhận tài khoản, Cognito kích hoạt `post-confirmation trigger` gọi **AWS Lambda (Post-confirm)** để tự tạo hồ sơ `Owner` trong DynamoDB (`create profile`). | [5.4](../5.4-sign-up-and-sign-in/) |
+| **4** | **CloudFront → API Gateway** (`/api/* + x-origin-verify`) | Các yêu cầu `/api/*` được cắt tiền tố `/api` tại CloudFront rồi chuyển tiếp tới **Amazon API Gateway** kèm tiêu đề bí mật `x-origin-verify` nhằm chặn truy cập vòng. | [5.5](../5.5-api-backend/) |
+| **5** | **API Gateway → Lambda (API)** (`invoke`) | API Gateway kiểm tra mã JWT của các tuyến bảo vệ qua Cognito (`verify JWT (JWKS)`), sau đó gọi **AWS Lambda (`reloop2-api`)** chạy Node.js 22 trên ARM64. | [5.5](../5.5-api-backend/) |
+| **6** | **Lambda (API) ↔ DynamoDB** (`read/write users, listings & invoices`) | Lambda đọc và ghi hồ sơ người dùng, đối tác, tin đăng thiết bị, bộ hẹn giờ hết hạn và hóa đơn phí theo tháng trong một bảng on-demand duy nhất (`reloop2-core-table`). | [5.6](../5.6-dynamodb/) |
+| **7** | **Lambda (API) ↔ S3 (photos)** (`presign & tag`) | Khi người bán đính kèm ảnh thiết bị, Lambda cấp URL ký sẵn (presigned URL) ngắn hạn và gắn thẻ trạng thái cho ảnh trong `reloop2-images-<suffix>`. | [5.7](../5.7-s3-photos/) |
+| **8** | **Users ↔ S3 (photos)** (`upload / view photos (presigned URL)`) | Trình duyệt tải ảnh trực tiếp lên S3 riêng tư và xem ảnh tin đăng qua URL ký sẵn — không đẩy dữ liệu ảnh đi qua Lambda. | [5.7](../5.7-s3-photos/) |
+| **9** | **Lambda (API) ↔ Rekognition** (`image moderation`) | Lambda gọi **Amazon Rekognition** để chặn ảnh không phù hợp và đọc chữ từ tem/nhãn thông số trên thiết bị. | [5.8](../5.8-ai-processing/) |
+| **10** | **Lambda (API) ↔ Bedrock** (`AI analysis + Guardrail`) | Lambda lọc chữ trích xuất qua **Amazon Bedrock Guardrail** (`apac.guardrail.v1:0`) và gọi **Amazon Bedrock (`global.moonshotai.kimi-k3`)** tại `ap-southeast-1` để tự động điền tiêu đề, loại máy, hãng, tình trạng và mô tả lỗi. | [5.8](../5.8-ai-processing/) |
 
-| Tầng | Cơ chế bảo vệ đã áp dụng |
+**Các đường vận hành nền (mũi tên nét đứt không đánh số):**
+
+- **EventBridge → Lambda (API)** (`expire listings every 15 min`): Quy tắc `reloop2-sweep` gọi `reloop2-api` mỗi 15 phút để hết hạn các tin đăng quá hạn ([Học phần 5.9](../5.9-eventbridge/)).
+- **Lambda (API) → CloudWatch** (`logs & metrics`) **→ SNS** (`alarm → email Admin`): Nhật ký Lambda lưu giữ 7 ngày, và cảnh báo `reloop2-lambda-errors` gửi thông báo qua chủ đề SNS `reloop2-alerts` tới email quản trị viên ([Học phần 5.10](../5.10-monitoring/)).
+
+### Điểm nhấn bảo mật
+
+| Khu vực trên sơ đồ | Cơ chế bảo vệ |
 | --- | --- |
-| **Biên mạng (Edge)** | `reloop2-web` WAFv2 (CloudFront, `us-east-1`): giới hạn 100 req/phút cho public API, 1.000 req/phút mỗi IP, bộ rule IP uy tín AWS, Known Bad Inputs, Common Rule Set |
-| **Header trình duyệt** | CloudFront Response Headers Policy `reloop2-security-headers`: HSTS 1 năm, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, bật `frame-ancestors 'none'` + CSP-Report-Only |
-| **Bảo vệ Origin** | Cả hai bucket S3 đều bật Block All Public Access (`s3-web` chỉ qua OAC, `s3-images` chỉ qua presigned URL); Lambda từ chối mọi yêu cầu thiếu `x-origin-verify` hợp lệ |
-| **Danh tính (Identity)** | Cognito User Pool gắn Regional WAF `reloop2-auth` (`ap-southeast-1`, 300 lượt auth / 5 phút / IP), Pre-SignUp chặn trùng email, Deletion Protection `ACTIVE`, Auth Code PKCE |
-| **IAM tối thiểu (Least Privilege)** | Tách riêng role cho `reloop2-post-confirmation` và `reloop2-api`, giới hạn đúng ARN bảng DynamoDB, tiền tố `listings/*` và quyền AI cần thiết |
+| **Global edge** | AWS WAF (`reloop2-web`, phạm vi CloudFront): giới hạn 100 req/phút cho API công khai, 1.000 req/phút/IP toàn cục, cùng 3 bộ quy tắc quản lý bởi AWS |
+| **Cô lập Origin** | Cả hai bucket S3 đều bật Block Public Access (`reloop2-web` chỉ cho CloudFront OAC, `reloop2-images` chỉ qua presigned URL); `reloop2-api` từ chối mọi yêu cầu thiếu tiêu đề `x-origin-verify` |
+| **Định danh** | Cognito User Pool (gói Essentials) bật chính sách mật khẩu, xác minh email, bảo vệ xóa `ACTIVE`, Auth Code PKCE và kiểm tra JWT (`JWKS`) trên tuyến `ANY /{proxy+}` của API Gateway |
+| **An toàn AI** | Kiểm duyệt ảnh bằng Rekognition kết hợp Bedrock Guardrail (bậc `STANDARD`, mức `HIGH` cho Violence, Hate, Sexual, Insults, Misconduct và Prompt Attack) |
+| **IAM tối thiểu quyền** | Hai vai trò Lambda tách biệt (`reloop2-post-confirmation-role` và `reloop2-api-lambda-role`), giới hạn đúng bảng `reloop2-core-table`, tiền tố `listings/*` và các hành động AI/nhật ký cần thiết |
 
-### Ước tính chi phí thực hành
+### Ước tính chi phí Workshop
 
-| Dịch vụ | Mức sử dụng khi chạy Workshop | Chi phí ước tính |
+Hoàn thành học phần **5.2–5.11** và dọn dẹp ngay trong ngày ở học phần **5.12** tiêu tốn dưới **1,00 USD**:
+
+| Dịch vụ | Mức sử dụng trong Workshop | Chi phí ước tính trong ngày |
 | --- | --- | --- |
-| **DynamoDB** | On-demand (<5 MB dữ liệu, bật PITR) | ~$0.01 (nằm trong Free Tier) |
-| **S3** | 2 bucket riêng tư, <20 MB web bundle & ảnh test | <$0.01 |
-| **Lambda & HTTP API Gateway** | ~100–300 lượt gọi, 512 MB ARM64 | $0.00 (Free Tier) |
-| **Cognito** | Essentials tier, 1–5 tài khoản thử nghiệm | $0.00 (Free Tier 10.000 MAU) |
-| **CloudFront** | <1 GB băng thông, 2 CloudFront Functions | $0.00 (Free Tier 1 TB/tháng) |
-| **AWS WAFv2** | 2 Web ACL x 7 rule chạy khoảng 1 ngày + ~1.000 request | ~$0.25–$0.50 (nếu để cả tháng ~ $12/tháng!) |
-| **Bedrock & Rekognition** | ~5–15 ảnh test kiểm duyệt + gọi Kimi K3 | ~$0.05–$0.30 |
-| **Tổng chi phí trọn bài** | Triển khai, test E2E và dọn dẹp trong ngày | **< $1.00 USD** |
+| **Amazon CloudFront & S3** | Hai bucket riêng tư (<20 MB), <1 GB lưu lượng | $0,00 (Free Tier) |
+| **AWS WAFv2** | **1 Web ACL (`reloop2-web`)** + 5 quy tắc, tính theo ~1 ngày | ~$0,35 (hoặc ~$10/tháng nếu để chạy 30 ngày) |
+| **Amazon Cognito** | Gói Essentials, 1–5 tài khoản thử | $0,00 (Free Tier: 10.000 MAU) |
+| **API Gateway & Lambda** | ~100 lượt gọi, 512 MB ARM64 | $0,00 (Free Tier) |
+| **Amazon DynamoDB** | Đọc/ghi theo yêu cầu (<5 MB, bật PITR) | ~$0,01 |
+| **Rekognition & Bedrock** | Vài lượt kiểm duyệt ảnh + Guardrail + Kimi K3 | ~$0,05–$0,25 |
+| **EventBridge, CloudWatch & SNS** | 1 quy tắc, 1 nhóm nhật ký, 1 cảnh báo, 1 chủ đề SNS | $0,00 (Free Tier) |
+| **Tổng cộng (dựng & xóa trong ngày)** | Chạy thử đủ luồng + dọn dẹp ở 5.12 | **< 1,00 USD** |
 
 {{% notice warning %}}
-AWS WAFv2 tính phí cố định theo giờ (**$5/tháng mỗi Web ACL + $1/tháng mỗi rule**) ngay cả khi không có lưu lượng. Hãy thực hiện ngay Phần **5.13** sau khi test xong Phần **5.12** để tránh phát sinh chi phí tháng.
+Mỗi Web ACL của AWS WAFv2 tính phí **$5/tháng + $1/tháng cho mỗi quy tắc** ngay cả khi không có lưu lượng. Hãy thực hiện [Học phần 5.12](../5.12-cleanup-and-iac/) ngay sau khi hoàn tất [Học phần 5.11](../5.11-end-to-end-verification/) để tránh phát sinh phí kéo dài.
 {{% /notice %}}
-
-### Tài nguyên Terraform tham chiếu
-
-Toàn bộ tài nguyên bạn tạo thủ công ở Phần **5.2–5.11** đều đã được viết thành bộ Terraform sạch tại thư mục `terraform/` của kho mã (đã kiểm chứng import khớp `71/71` tài nguyên và `0 to destroy` với hệ thống chạy thực tế). Xem hướng dẫn chi tiết ở [Phần 5.13](../5.13-cleanup-and-iac/).

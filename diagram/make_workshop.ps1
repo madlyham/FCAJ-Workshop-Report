@@ -16,17 +16,16 @@ $img = Join-Path $root 'static\images\5-Workshop'
 # n30 Rekognition, n31 Bedrock, n32 CloudWatch, n33 SNS
 $all = 'n19 n20 n21 n22 n23 n24 n25 n26 n27 n28 n29 n30 n31 n32 n33'
 $scope = [ordered]@{
-  '5.2'  = 'n31 n32 n33'
-  '5.3'  = 'n28'
-  '5.4'  = 'n22 n23 n28'
-  '5.5'  = 'n19 n29'
-  '5.6'  = 'n22 n28 n25 n26 n29'
-  '5.7'  = 'n26 n29 n30 n31'
-  '5.8'  = 'n22 n21 n25 n24'
-  '5.9'  = 'n19 n22 n20 n21'
-  '5.10' = 'n28 n26 n27'
-  '5.11' = 'n25 n26 n32 n33'
-  '5.12' = $all
+  '5.2'  = 'n31'
+  '5.3'  = 'n19 n20 n21 n24'
+  '5.4'  = 'n19 n22 n23 n28'
+  '5.5'  = 'n21 n22 n25 n26'
+  '5.6'  = 'n23 n26 n28'
+  '5.7'  = 'n19 n26 n29'
+  '5.8'  = 'n26 n29 n30 n31'
+  '5.9'  = 'n26 n27 n28'
+  '5.10' = 'n26 n32 n33'
+  '5.11' = $all
 }
 
 # 3) labels_front.py: copy with every arrow label on a white box in front of the lines.

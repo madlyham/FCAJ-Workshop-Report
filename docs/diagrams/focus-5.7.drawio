@@ -20,7 +20,7 @@
     <mxCell id="n16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#C925D1;fontColor=#C925D1;fontSize=12;fontStyle=1;verticalAlign=bottom;align=left;spacingLeft=8;spacingRight=8;spacingBottom=2;mxgraph.aws4.group;" value="Data storage" vertex="1">
       <mxGeometry height="246" width="150" x="1270" y="264" as="geometry" />
     </mxCell>
-    <mxCell id="n17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#01A88D;fontColor=#01A88D;fontSize=12;fontStyle=1;verticalAlign=top;align=left;spacingLeft=8;spacingRight=8;spacingBottom=2;mxgraph.aws4.group;" value="AI processing" vertex="1">
+    <mxCell id="n17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#01A88D;fontColor=#01A88D;fontSize=12;fontStyle=1;verticalAlign=top;align=left;spacingLeft=8;spacingRight=8;spacingBottom=2;mxgraph.aws4.group;opacity=20;textOpacity=20;" value="AI processing" vertex="1">
       <mxGeometry height="140" width="370" x="1270" y="560" as="geometry" />
     </mxCell>
     <mxCell id="n18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#E7157B;fontColor=#E7157B;fontSize=12;fontStyle=1;verticalAlign=top;align=right;spacingLeft=8;spacingRight=8;spacingBottom=2;mxgraph.aws4.group;opacity=20;textOpacity=20;" value="Monitoring &amp; alerts" vertex="1">
@@ -59,7 +59,7 @@
     <mxCell id="n40" edge="1" parent="1" source="n26" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;startArrow=block;startFill=1;" target="n29" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;7&lt;/span&gt; presign &amp; tag">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
-    <mxCell id="n51" edge="1" parent="1" source="n19" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;startArrow=block;startFill=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#7AA116;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;dashed=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;opacity=20;textOpacity=20;" target="n29" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;8&lt;/span&gt; upload / view photos (presigned URL)">
+    <mxCell id="n51" edge="1" parent="1" source="n19" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;startArrow=block;startFill=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#7AA116;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;dashed=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="n29" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;8&lt;/span&gt; upload / view photos (presigned URL)">
       <mxGeometry relative="1" as="geometry">
         <Array as="points">
           <mxPoint x="66" y="110" />
@@ -68,14 +68,14 @@
         </Array>
       </mxGeometry>
     </mxCell>
-    <mxCell id="n41" edge="1" parent="1" source="n26" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;exitX=0.75;exitY=1;exitDx=0;exitDy=38;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=block;startFill=1;" target="n30" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;9&lt;/span&gt; image moderation">
+    <mxCell id="n41" edge="1" parent="1" source="n26" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;exitX=0.75;exitY=1;exitDx=0;exitDy=38;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=block;startFill=1;opacity=20;textOpacity=20;" target="n30" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;9&lt;/span&gt; image moderation">
       <mxGeometry relative="1" x="0.45" as="geometry">
         <Array as="points">
           <mxPoint x="1108" y="632" />
         </Array>
       </mxGeometry>
     </mxCell>
-    <mxCell id="n42" edge="1" parent="1" source="n26" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;exitX=1;exitY=0.85;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=block;startFill=1;" target="n31" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;10&lt;/span&gt; AI analysis + Guardrail">
+    <mxCell id="n42" edge="1" parent="1" source="n26" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;exitX=1;exitY=0.85;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=block;startFill=1;opacity=20;textOpacity=20;" target="n31" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;10&lt;/span&gt; AI analysis + Guardrail">
       <mxGeometry relative="1" x="0.3" as="geometry">
         <Array as="points">
           <mxPoint x="1240" y="454" />
@@ -119,7 +119,7 @@
     <mxCell id="n45" edge="1" parent="1" source="n32" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;opacity=20;textOpacity=20;" target="n33" value="alarm → email Admin">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
-    <mxCell id="n19" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;fillColor=#232F3D;strokeColor=none;shape=mxgraph.aws4.users;opacity=20;textOpacity=20;" value="Users (web browser)" vertex="1">
+    <mxCell id="n19" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;fillColor=#232F3D;strokeColor=none;shape=mxgraph.aws4.users;" value="Users (web browser)" vertex="1">
       <mxGeometry height="64" width="64" x="50" y="400" as="geometry" />
     </mxCell>
     <mxCell id="n20" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.waf;fillColor=#DD344C;opacity=20;textOpacity=20;" value="AWS WAF (web)" vertex="1">
@@ -152,10 +152,10 @@
     <mxCell id="n29" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;fillColor=#7AA116;" value="Amazon S3 (photos)" vertex="1">
       <mxGeometry height="64" width="64" x="1310" y="400" as="geometry" />
     </mxCell>
-    <mxCell id="n30" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.rekognition;fillColor=#01A88D;" value="Amazon Rekognition" vertex="1">
+    <mxCell id="n30" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.rekognition;fillColor=#01A88D;opacity=20;textOpacity=20;" value="Amazon Rekognition" vertex="1">
       <mxGeometry height="64" width="64" x="1310" y="600" as="geometry" />
     </mxCell>
-    <mxCell id="n31" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.bedrock;fillColor=#01A88D;" value="Amazon Bedrock" vertex="1">
+    <mxCell id="n31" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.bedrock;fillColor=#01A88D;opacity=20;textOpacity=20;" value="Amazon Bedrock" vertex="1">
       <mxGeometry height="64" width="64" x="1550" y="600" as="geometry" />
     </mxCell>
     <mxCell id="n32" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch_2;fillColor=#E7157B;opacity=20;textOpacity=20;" value="Amazon CloudWatch" vertex="1">

@@ -36,7 +36,7 @@
         </Array>
       </mxGeometry>
     </mxCell>
-    <mxCell id="n46" edge="1" parent="1" source="n19" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;opacity=20;textOpacity=20;" target="n22" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;3&lt;/span&gt; sign up / sign in">
+    <mxCell id="n46" edge="1" parent="1" source="n19" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="n22" value="&lt;span style=&quot;background-color:#232F3E;color:#ffffff;font-weight:bold;font-size:15px;border-radius:12px;padding:1px 7px;&quot;&gt;3&lt;/span&gt; sign up / sign in">
       <mxGeometry relative="1" as="geometry">
         <Array as="points">
           <mxPoint x="82" y="202" />
@@ -119,7 +119,7 @@
     <mxCell id="n45" edge="1" parent="1" source="n32" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=1;endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#545B64;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#ffffff;opacity=20;textOpacity=20;" target="n33" value="alarm → email Admin">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
-    <mxCell id="n19" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;fillColor=#232F3D;strokeColor=none;shape=mxgraph.aws4.users;opacity=20;textOpacity=20;" value="Users (web browser)" vertex="1">
+    <mxCell id="n19" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;fillColor=#232F3D;strokeColor=none;shape=mxgraph.aws4.users;" value="Users (web browser)" vertex="1">
       <mxGeometry height="64" width="64" x="50" y="400" as="geometry" />
     </mxCell>
     <mxCell id="n20" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;labelBackgroundColor=#ffffff;strokeColor=#ffffff;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.waf;fillColor=#DD344C;opacity=20;textOpacity=20;" value="AWS WAF (web)" vertex="1">
