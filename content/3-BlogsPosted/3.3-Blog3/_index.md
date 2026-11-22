@@ -8,7 +8,7 @@ pre: " <b> 3.3. </b> "
 
 # The Partner Has Closed the App, But Work Still Has to Find Them
 
-**Published on AWS Study Group:** [Read original Facebook post](https://www.facebook.com/share/p/1LZaN36GBA/)
+**Published on AWS Study Group:** [Read original Facebook post](https://www.facebook.com/share/p/1Gs4wyyVsv/)
 
 A familiar challenge: A customer posts a service request, and the system needs to match qualified partners and send quote invitations. But the partner is currently offline. Their app is closed, their phone is resting on the table.
 

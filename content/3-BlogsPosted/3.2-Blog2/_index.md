@@ -8,7 +8,7 @@ pre: " <b> 3.2. </b> "
 
 # You Have a Valid Passport, But Do You Have the Right to Renovate Your Neighbor's House?
 
-**Published on AWS Study Group:** [Read original Facebook post](https://www.facebook.com/share/p/1Gs4wyyVsv/)
+**Published on AWS Study Group:** [Read original Facebook post](https://www.facebook.com/share/p/1FM4NPiHjC/)
 
 There is an intriguing security vulnerability in web application development that is easy to overlook. A user signs in successfully, provides a cryptographically valid token, and the API responds normally. But does that mean they have the right to edit every post in the system? Absolutely not.
 

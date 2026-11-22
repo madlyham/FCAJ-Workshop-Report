@@ -8,7 +8,7 @@ pre: " <b> 3.1. </b> "
 
 # Một cái ghế, hai người, và một database không biết nhường nhịn
 
-**Đăng trên AWS Study Group:** [Xem bài viết gốc trên Facebook](https://www.facebook.com/share/p/1FM4NPiHjC/)
+**Đăng trên AWS Study Group:** [Xem bài viết gốc trên Facebook](https://www.facebook.com/share/p/1LZaN36GBA/)
 
 Hãy tưởng tượng một nền tảng kết nối khách hàng với đối tác, nơi mỗi công việc chỉ được một người nhận. Partner A và Partner B cùng thấy một công việc, và cả hai cùng bấm “Nhận việc” gần như cùng lúc.
 
