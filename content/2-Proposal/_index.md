@@ -14,6 +14,11 @@ ReLoop is a web marketplace where people in Vietnam sell used or broken electron
 
 On 08/11/2026, the live environment had 14 registered accounts, 12 active listings from 7 sellers, and roughly 31,000 API requests in its first month. The serverless design scales automatically without re-architecture, with Lambda concurrency approved up to 1,000. The platform uses 12 managed AWS services (plus AWS IAM for least-privilege access): **CloudFront, AWS WAF, S3, Cognito, API Gateway, Lambda, DynamoDB, Rekognition, Bedrock, EventBridge, CloudWatch, and SNS**. Guests browse the public market without an account, signed-in `Owners` chat and buy, Admin-approved `Partners` unlock selling (Tier 1) or buying and quoting (Tier 2), and `Admins` / `FinanceAdmins` moderate flagged content and handle monthly fee invoices.
 
+{{% notice tip %}}
+**Live Demo:** [https://d1cjl1tvcp0r6q.cloudfront.net/](https://d1cjl1tvcp0r6q.cloudfront.net/) (verified live HTTPS CloudFront deployment of ReLoop)  
+**Companion Code & Terraform Repo:** [https://github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop)
+{{% /notice %}}
+
 #### Team
 
 | Member | Role |
@@ -30,7 +35,7 @@ The Global E-waste Monitor 2024 (UNITAR/ITU) reports that the world generated 62
 
 - Automatic matching of listings to repair shops whose coverage area serves the seller's location.
 - Upfront price estimates calculated from each buyer's own pricing rules.
-- A reputation record that rewards buyers who honor their quotes.
+- A reputation record that tracks star ratings, completion/cancellation rates, and quote-deviation flags.
 
 Small repair shops face the same gap from the other side: they have no low-cost channel to receive nearby devices that match what they buy.
 
@@ -103,6 +108,17 @@ ReLoop runs on a fully serverless architecture in **Asia Pacific (Singapore) `ap
 | **Amazon S3 + CloudFront (OAC) + Presigned URLs** | Proxying uploads through backend or public buckets | **11 nines (`99.999999999%`) durability**; keeps photo bytes off Lambda (avoiding payload limits and memory cost); **1 TB + 10M requests/month** CloudFront Free Tier; strict private buckets via OAC and short-lived presigned URLs. |
 | **Amazon Cognito + Rekognition + Bedrock (Kimi K3 & Guardrail)** | Self-built auth + self-hosted GPU models | Fully managed pay-per-use (Cognito free up to **10,000 MAU**, zero idle GPU cost); built-in JWT/JWKS authentication, automated image moderation, and **Amazon Bedrock Guardrails** protection against prompt injection. |
 | **AWS WAF (CloudFront) + EventBridge + CloudWatch / SNS** | Self-managed reverse proxy, cron server & monitoring stack | Managed edge rate limits & OWASP rules with zero proxy upkeep; serverless 15-minute scheduler and Free Tier logs, metric alarm, and Admin email notifications. |
+
+#### AWS Well-Architected Framework Alignment
+
+| Pillar | How ReLoop Implements It |
+| --- | --- |
+| **Operational Excellence** | Modular Terraform IaC ([`madlyham/ReLoop/terraform/`](https://github.com/madlyham/ReLoop/tree/main/terraform)), single CI-verified deployment flow, structured JSON CloudWatch Logs (7-day retention), and Lambda Errors alarm → SNS Admin email alerts. |
+| **Security** | CloudFront-attached AWS WAF (3 managed rule groups + 2 per-IP rate limits), private S3 buckets (Block Public Access + OAC + short-lived presigned URLs), `x-origin-verify` secret header blocking direct API Gateway calls, Cognito JWT (`JWKS`) on `ANY /{proxy+}`, separate least-privilege IAM roles, Rekognition + Bedrock Guardrail screening, and zero hardcoded secrets in Git. |
+| **Reliability** | Multi-AZ managed serverless stack (CloudFront, API Gateway, Lambda concurrency 1,000, DynamoDB on-demand with 35-day PITR), S3 11-nines (`99.999999999%`) durability, conditional DynamoDB writes & `Idempotency-Key`, EventBridge 15-minute expiry sweeps, and graceful degradation when Bedrock is unavailable (manual form entry still works). |
+| **Performance Efficiency** | CloudFront edge caching for SPA assets, ARM64 (Graviton) Node.js 22 Lambda (144 ms avg duration), single-table DynamoDB with `GSI1` & time-bucketed queries (zero table scans), direct browser-to-S3 presigned POST/GET keeping binary uploads off Lambda, and async self-invoke for ~35 s AI analysis. |
+| **Cost Optimization** | Serverless pay-per-use staying mostly in Free Tier (`$11.70/month` total including `$10.00` CloudFront WAF; `$1.70/month` without WAF; `< $1.00` same-day workshop run), ARM64 Graviton ~20% compute savings, S3 1-day pending / 90-day retention lifecycle, 7-day CloudWatch retention, 20/user/day AI cap, and documented reverse-order cleanup. |
+| **Sustainability** *(Checklist note)* | Serverless scale-to-zero compute eliminates idle 24/7 servers; ARM64 Graviton processors improve performance-per-watt; S3 lifecycle rules and 7-day log retention minimize unneeded storage. |
 
 #### Component Design
 - **Edge / Client:** a React 18 + TypeScript single-page app (Vite) using Leaflet + OpenStreetMap for location picking. Guests browse the public market; signed-in `Owners` chat and buy; Admin-approved partners access the partner portal (Tier 1 individual sellers: up to 3 open listings; Tier 2 business partners with branches, pricing rules, and quotes: up to 10 open listings); and `Admins` / `FinanceAdmins` access the Admin portal.

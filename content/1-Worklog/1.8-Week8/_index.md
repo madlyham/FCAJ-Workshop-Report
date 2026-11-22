@@ -18,11 +18,11 @@ pre: " <b> 1.8. </b> "
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Monday** | • Background matching with geohash + Haversine distance: each listing goes to every approved branch whose service area (1–15 km) covers it; listings within 5 km rank first | 02/11/2026 | 02/11/2026 | `matching.ts` |
-| **Tuesday** | • Consolidate 5 QA rounds: 146 findings logged and prioritized (03/11/2026) | 03/11/2026 | 03/11/2026 | QA tracker |
-| **Wednesday** | • First load test (`loadtest.mjs`, 80 parallel requests): 26% `5xx` at Lambda concurrency 10; request and receive a quota raise to 1,000 | 04/11/2026 | 04/11/2026 | `loadtest.mjs`, Service Quotas |
-| **Thursday** | • AI quota of 20 analyses per user per day (`AI_DAILY_LIMIT`); store the AI suggestion next to the seller's final value (`AILABEL`) | 05/11/2026 | 05/11/2026 | `aiService.ts` |
-| **Friday** | • Configure a single CloudFront AWS WAF web ACL (3 AWS managed rule groups + 2 per-IP rate limits: 100 req/min on the public API and 1,000 req/min overall) on 06/11/2026; write `RELOOP_TECHNICAL_REFERENCE` (30+ key patterns, all API routes) | 06/11/2026 | 06/11/2026 | `infra/waf.tf`, `RELOOP_TECHNICAL_REFERENCE` |
+| **Monday** | • Background matching with geohash + Haversine distance: each listing goes to every approved branch whose service area (1–15 km) covers it; listings within 5 km rank first | 02/11/2026 | 02/11/2026 | [Amazon DynamoDB Docs](https://docs.aws.amazon.com/dynamodb/), [ReLoop Repository](https://github.com/madlyham/ReLoop) (`matching.ts`) |
+| **Tuesday** | • Consolidate 5 QA rounds: 146 findings logged and prioritized (03/11/2026) | 03/11/2026 | 03/11/2026 | [ReLoop Repository](https://github.com/madlyham/ReLoop), [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) |
+| **Wednesday** | • First load test (`loadtest.mjs`, 80 parallel requests): 26% `5xx` at Lambda concurrency 10; request and receive a quota raise to 1,000 | 04/11/2026 | 04/11/2026 | [AWS Lambda Docs](https://docs.aws.amazon.com/lambda/), [ReLoop Repository](https://github.com/madlyham/ReLoop) (`loadtest.mjs`) |
+| **Thursday** | • AI quota of 20 analyses per user per day (`AI_DAILY_LIMIT`); store the AI suggestion next to the seller's final value (`AILABEL`) | 05/11/2026 | 05/11/2026 | [Amazon Bedrock Docs](https://docs.aws.amazon.com/bedrock/), [ReLoop Repository](https://github.com/madlyham/ReLoop) (`aiService.ts`) |
+| **Friday** | • Configure a single CloudFront AWS WAF web ACL (3 AWS managed rule groups + 2 per-IP rate limits: 100 req/min on the public API and 1,000 req/min overall) on 06/11/2026; write `RELOOP_TECHNICAL_REFERENCE` (30+ key patterns, all API routes) | 06/11/2026 | 06/11/2026 | [AWS WAF Docs](https://docs.aws.amazon.com/waf/), [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs), [ReLoop Repository](https://github.com/madlyham/ReLoop) (`infra/waf.tf`) |
 
 ## **3. Key Achievements & Outcomes**
 

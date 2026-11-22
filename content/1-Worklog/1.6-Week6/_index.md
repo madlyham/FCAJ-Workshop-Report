@@ -18,12 +18,12 @@ pre: " <b> 1.6. </b> "
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Monday** | • Confirm the full market flow live on AWS by 19/10/2026 (listing → match → quote → chat offer → transaction → review); store Terraform state in a versioned S3 bucket | 19/10/2026 | 19/10/2026 | Terraform Docs |
-| **Tuesday** | • Rebuild the dev stack in Terraform: `reloop-dev-user-pool`, `reloop-dev-api`, CloudFront with Origin Access Control (OAC) for the web bucket | 20/10/2026 | 20/10/2026 | `infra/*.tf` |
-| **Wednesday** | • Configure an Amazon EventBridge scheduled rule every 15 minutes to expire open listings past their 7-day window | 21/10/2026 | 21/10/2026 | Amazon EventBridge Docs |
-| **Thursday** | • Deploy and run `smoke-aws.py` against the live dev stack: 25/25 checks pass | 22/10/2026 | 22/10/2026 | `smoke-aws.py` |
-| **Friday** | • Configure 7-day CloudWatch log retention and a Lambda Errors metric alarm (≥ 3 errors in 5 min) routed to Admin email alerts via Amazon SNS | 23/10/2026 | 23/10/2026 | Amazon CloudWatch Docs, Amazon SNS Docs |
-| **Saturday** | • Attend [Event 4: Cloud & AI Infrastructure Meetup](../../4-eventparticipated/4.4-event4/) (10:30 AM – 12:00 PM at Bitexco Financial Tower). Deep-dive into AI data object storage (S3 API compatibility at scale), GPU cluster inference serving, and Agent Router & memory graph architectures. | 24/10/2026 | 24/10/2026 | Event 4 / OMZ, Viettel & AWS |
+| **Monday** | • Confirm the full market flow live on AWS by 19/10/2026 (listing → match → quote → chat offer → transaction → review); store Terraform state in a versioned S3 bucket | 19/10/2026 | 19/10/2026 | [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs), [Amazon S3 Docs](https://docs.aws.amazon.com/s3/) |
+| **Tuesday** | • Rebuild the dev stack in Terraform: `reloop-dev-user-pool`, `reloop-dev-api`, CloudFront with Origin Access Control (OAC) for the web bucket | 20/10/2026 | 20/10/2026 | [Amazon CloudFront Docs](https://docs.aws.amazon.com/cloudfront/), [ReLoop Repository](https://github.com/madlyham/ReLoop) (`infra/*.tf`) |
+| **Wednesday** | • Configure an Amazon EventBridge scheduled rule every 15 minutes to expire open listings past their 7-day window | 21/10/2026 | 21/10/2026 | [Amazon EventBridge Docs](https://docs.aws.amazon.com/eventbridge/) |
+| **Thursday** | • Deploy and run `smoke-aws.py` against the live dev stack: 25/25 checks pass | 22/10/2026 | 22/10/2026 | [ReLoop Repository](https://github.com/madlyham/ReLoop) (`smoke-aws.py`) |
+| **Friday** | • Configure 7-day CloudWatch log retention and a Lambda Errors metric alarm (≥ 3 errors in 5 min) routed to Admin email alerts via Amazon SNS | 23/10/2026 | 23/10/2026 | [Amazon CloudWatch Docs](https://docs.aws.amazon.com/cloudwatch/), [Amazon SNS Docs](https://docs.aws.amazon.com/sns/) |
+| **Saturday** | • Attend [Event 4: Cloud & AI Infrastructure Meetup](../../4-eventparticipated/4.4-event4/) (10:30 AM – 12:00 PM at Bitexco Financial Tower). Deep-dive into AI data object storage (S3 API compatibility at scale), GPU cluster inference serving, and Agent Router & memory graph architectures. | 24/10/2026 | 24/10/2026 | [Event 4](../../4-eventparticipated/4.4-event4/), [Amazon S3 Docs](https://docs.aws.amazon.com/s3/) |
 
 ## **3. Key Achievements & Outcomes**
 

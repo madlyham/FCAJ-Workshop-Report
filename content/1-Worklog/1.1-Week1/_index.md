@@ -18,11 +18,11 @@ pre: " <b> 1.1. </b> "
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Monday** | • Onboarding to the First Cloud Journey program; tour of the AWS Console, regions, Availability Zones, and Free Tier limits | 14/09/2026 | 14/09/2026 | AWS Cloud Journey |
-| **Tuesday** | • Install and configure AWS CLI v2 (profiles, default region `ap-southeast-1`); run first read-only commands | 15/09/2026 | 15/09/2026 | AWS CLI Docs |
-| **Wednesday** | • Hands-on: launch an EC2 instance, attach an EBS volume, assign an Elastic IP, then stop/terminate to avoid charges | 16/09/2026 | 16/09/2026 | AWS Cloud Journey |
-| **Thursday** | • IAM basics: users, groups, roles, JSON policies; create an IAM admin user with MFA and lock away the root account | 17/09/2026 | 17/09/2026 | AWS Cloud Journey |
-| **Friday** | • VPC basics: build a custom VPC (`10.0.0.0/16`) with public/private subnets, Internet Gateway, route tables, Security Groups vs NACLs | 18/09/2026 | 18/09/2026 | AWS Cloud Journey |
+| **Monday** | • Onboarding to the First Cloud Journey program; tour of the AWS Console, regions, Availability Zones, and Free Tier limits | 14/09/2026 | 14/09/2026 | [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) |
+| **Tuesday** | • Install and configure AWS CLI v2 (profiles, default region `ap-southeast-1`); run first read-only commands | 15/09/2026 | 15/09/2026 | [AWS CLI Docs](https://docs.aws.amazon.com/cli/) |
+| **Wednesday** | • Hands-on: launch an EC2 instance, attach an EBS volume, assign an Elastic IP, then stop/terminate to avoid charges | 16/09/2026 | 16/09/2026 | [Amazon EC2 Docs](https://docs.aws.amazon.com/ec2/) |
+| **Thursday** | • IAM basics: users, groups, roles, JSON policies; create an IAM admin user with MFA and lock away the root account | 17/09/2026 | 17/09/2026 | [AWS IAM Docs](https://docs.aws.amazon.com/iam/) |
+| **Friday** | • VPC basics: build a custom VPC (`10.0.0.0/16`) with public/private subnets, Internet Gateway, route tables, Security Groups vs NACLs | 18/09/2026 | 18/09/2026 | [AWS VPC Docs](https://docs.aws.amazon.com/vpc/) |
 
 ## **3. Key Achievements & Outcomes**
 

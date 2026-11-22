@@ -8,6 +8,11 @@ pre : " <b> 5.11. </b> "
 
 Kiểm chứng trực tiếp toàn bộ sơ đồ kiến trúc từ **Mũi tên 1 đến Mũi tên 10**, cộng thêm **EventBridge** và **CloudWatch → SNS**, đối chiếu phản hồi thực tế và bằng chứng dữ liệu ở từng chặng.
 
+{{% notice tip %}}
+**Bản Demo trực tuyến (Live Demo):** [https://d1cjl1tvcp0r6q.cloudfront.net/](https://d1cjl1tvcp0r6q.cloudfront.net/) (bản triển khai HTTPS trực tiếp của ReLoop trên CloudFront)  
+**Mã nguồn đồng hành & Terraform Repo:** [https://github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop)
+{{% /notice %}}
+
 **Các mũi tên được kiểm chứng ở bước này:** Toàn bộ **1 → 10** + **WAF**, **Post-confirm**, **verify JWT**, **EventBridge** và **CloudWatch → SNS**.
 
 ![Trọng tâm học phần 5.11: Kiểm chứng toàn bộ kiến trúc thực tế](/images/5-Workshop/5.11/architecture.png)
@@ -25,6 +30,19 @@ Kiểm chứng trực tiếp toàn bộ sơ đồ kiến trúc từ **Mũi tên 
    curl -i https://<api-id>.execute-api.ap-southeast-1.amazonaws.com/feed/public
    # Kỳ vọng: HTTP/2 403 -> {"code":"DIRECT_ACCESS_FORBIDDEN",...}
    ```
+
+#### Kiểm thử tình huống lỗi & bảo vệ hệ thống
+
+Xác minh các yêu cầu chưa xác thực, truy vấn sai định dạng và lưu lượng đột biến đều bị chặn gọn gàng ngay tại lớp biên hoặc lớp xác thực:
+
+- **Gọi tuyến bảo vệ qua CloudFront khi chưa đăng nhập** (kiểm chứng bộ xác thực JWT Cognito trên API Gateway chặn yêu cầu thiếu token trước khi Lambda chạy):
+  ```bash
+  curl -i https://<dist-domain>.cloudfront.net/api/partners/me
+  # Kỳ vọng: HTTP/2 401 Unauthorized (bị từ chối bởi bộ xác thực JWT của API Gateway)
+  ```
+- **Đường dẫn không tồn tại/dữ liệu sai định dạng & bảo vệ giới hạn tốc độ ở biên:**
+  - Đường dẫn API không tồn tại trả về `HTTP/2 404` và dữ liệu gửi lên sai định dạng trả về lỗi kiểm tra có cấu trúc `HTTP/2 400`, không phát sinh lỗi `5xx` chưa xử lý.
+  - Lưu lượng đột biến vượt **100 request/phút** từ một IP tới các API công khai sẽ kích hoạt AWS WAF (`reloop2-web`) tại CloudFront, trả về `HTTP/2 429` (`RATE_LIMITED`) kèm header `retry-after: 60` trước khi yêu cầu chạm tới API Gateway hay Lambda.
 
 ---
 

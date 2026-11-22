@@ -18,11 +18,11 @@ pre: " <b> 1.8. </b> "
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Thứ 2** | • Ghép tin chạy nền bằng geohash + khoảng cách Haversine: mỗi tin được gửi tới mọi chi nhánh đã duyệt có vùng phục vụ (1–15 km) bao phủ; tin trong 5 km được xếp trước | 02/11/2026 | 02/11/2026 | `matching.ts` |
-| **Thứ 3** | • Tổng hợp 5 đợt QA: 146 mục được ghi nhận và xếp ưu tiên (03/11/2026) | 03/11/2026 | 03/11/2026 | Bảng theo dõi QA |
-| **Thứ 4** | • Load test lần đầu (`loadtest.mjs`, 80 request song song): 26% lỗi `5xx` khi giới hạn Lambda là 10; xin và được nâng giới hạn lên 1.000 | 04/11/2026 | 04/11/2026 | `loadtest.mjs`, Service Quotas |
-| **Thứ 5** | • Giới hạn AI 20 lượt phân tích/người/ngày (`AI_DAILY_LIMIT`); lưu gợi ý của AI cạnh giá trị người bán chốt (`AILABEL`) | 05/11/2026 | 05/11/2026 | `aiService.ts` |
-| **Thứ 6** | • Cấu hình một AWS WAF web ACL duy nhất cho CloudFront (3 bộ luật AWS managed + 2 giới hạn tốc độ theo IP: 100 request/phút cho API công khai và 1.000 request/phút toàn hệ thống) ngày 06/11/2026; viết `RELOOP_TECHNICAL_REFERENCE` (hơn 30 mẫu khóa, toàn bộ route API) | 06/11/2026 | 06/11/2026 | `infra/waf.tf`, `RELOOP_TECHNICAL_REFERENCE` |
+| **Thứ 2** | • Ghép tin chạy nền bằng geohash + khoảng cách Haversine: mỗi tin được gửi tới mọi chi nhánh đã duyệt có vùng phục vụ (1–15 km) bao phủ; tin trong 5 km được xếp trước | 02/11/2026 | 02/11/2026 | [Tài liệu Amazon DynamoDB](https://docs.aws.amazon.com/dynamodb/), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`matching.ts`) |
+| **Thứ 3** | • Tổng hợp 5 đợt QA: 146 mục được ghi nhận và xếp ưu tiên (03/11/2026) | 03/11/2026 | 03/11/2026 | [Repository ReLoop](https://github.com/madlyham/ReLoop), [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) |
+| **Thứ 4** | • Load test lần đầu (`loadtest.mjs`, 80 request song song): 26% lỗi `5xx` khi giới hạn Lambda là 10; xin và được nâng giới hạn lên 1.000 | 04/11/2026 | 04/11/2026 | [Tài liệu AWS Lambda](https://docs.aws.amazon.com/lambda/), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`loadtest.mjs`) |
+| **Thứ 5** | • Giới hạn AI 20 lượt phân tích/người/ngày (`AI_DAILY_LIMIT`); lưu gợi ý của AI cạnh giá trị người bán chốt (`AILABEL`) | 05/11/2026 | 05/11/2026 | [Tài liệu Amazon Bedrock](https://docs.aws.amazon.com/bedrock/), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`aiService.ts`) |
+| **Thứ 6** | • Cấu hình một AWS WAF web ACL duy nhất cho CloudFront (3 bộ luật AWS managed + 2 giới hạn tốc độ theo IP: 100 request/phút cho API công khai và 1.000 request/phút toàn hệ thống) ngày 06/11/2026; viết `RELOOP_TECHNICAL_REFERENCE` (hơn 30 mẫu khóa, toàn bộ route API) | 06/11/2026 | 06/11/2026 | [Tài liệu AWS WAF](https://docs.aws.amazon.com/waf/), [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`infra/waf.tf`) |
 
 ## **3. Kết quả đạt được**
 

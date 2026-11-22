@@ -77,3 +77,24 @@ terraform apply
 ```
 
 After `terraform apply` finishes, return to the repository root (`cd ..`), run `python frontend/configure.py` with the printed Cognito outputs, and sync `frontend/build/` to the S3 web bucket (see the repository [README](https://github.com/madlyham/ReLoop#option-2--deploy-with-terraform-reproducible-iac)). When finished, empty both S3 buckets, set `cognito_deletion_protection = "INACTIVE"` in `terraform.tfvars`, run `terraform apply` first to disable deletion protection on the User Pool, and then run `terraform destroy`.
+
+---
+
+### Part D — Troubleshooting, Lessons Learned & Future Roadmap
+
+#### Issues Encountered & How We Solved Them
+
+| # | Issue Encountered | Root Cause | How We Solved It |
+| --- | --- | --- | --- |
+| 1 | **IAM Role creation denied (`AccessDenied`)** | Team account IAM policy requires a permissions boundary on every newly created application role. | Attached the required permissions boundary (`TeamAppRoleBoundary`) to both `reloop2-api-lambda-role` and `reloop2-post-confirmation-role`. |
+| 2 | **API Gateway routes failed with `/api` prefix mismatch** | CloudFront routes `/api/*` to the API Gateway origin, while backend routes are registered without the `/api` prefix (e.g. `/feed/public`). | Added CloudFront Function `reloop2-api-prefix` on the `/api/*` behavior to strip `/api` at the edge before forwarding to API Gateway. |
+| 3 | **Direct API Gateway calls bypassed CloudFront & WAF** | Default `execute-api` endpoints remain publicly reachable unless explicitly locked to CloudFront. | Configured CloudFront to send the `x-origin-verify` secret header and verified it in `reloop2-api` with constant-time `timingSafeEqual`, rejecting direct calls with `403 DIRECT_ACCESS_FORBIDDEN`. |
+| 4 | **Bedrock invocation in Singapore & prompt injection in photo text** | Cross-region model routing and untrusted text printed on device labels posed reliability and prompt-injection risks. | Used `global.moonshotai.kimi-k3` via Converse API in `ap-southeast-1` and screened Rekognition-extracted text through Amazon Bedrock Guardrail (`apac.guardrail.v1:0`) before LLM analysis. |
+| 5 | **26% `5xx` errors under 80-request burst load test** | Account Lambda concurrency started at `10`, saturating workers before throttling could shape burst traffic. | Raised Lambda concurrency to `1,000`, configured API Gateway throttling (`20 req/s`, burst `50`), and attached CloudFront WAF per-IP rate limits returning clean `429` responses — eliminating `5xx` errors on re-test. |
+
+#### Future Roadmap
+
+- **Custom Email Delivery with Amazon SES:** Move beyond Cognito's default ~50 emails/day sender limit to a verified Amazon SES domain for public sign-ups and notifications.
+- **Real-Time WebSocket Chat:** Replace the current 5-second HTTP chat polling with Amazon API Gateway WebSocket APIs for instant buyer–seller messaging and offers.
+- **GitHub Actions OIDC Terraform CD:** Automate `terraform plan` on pull requests and approved `terraform apply` runs using keyless GitHub Actions OIDC credentials.
+- **Multi-City Expansion:** Expand ReLoop beyond Ho Chi Minh City using the existing location-agnostic geohash + Haversine matching engine and modular Terraform stacks.

@@ -77,3 +77,24 @@ terraform apply
 ```
 
 Sau khi `terraform apply` xong, quay về thư mục gốc kho mã nguồn (`cd ..`), chạy `python frontend/configure.py` với các giá trị Cognito đầu ra rồi đồng bộ `frontend/build/` lên bucket S3 web (xem [README](https://github.com/madlyham/ReLoop#option-2--deploy-with-terraform-reproducible-iac)). Khi hoàn tất, làm rỗng cả hai bucket S3, đặt `cognito_deletion_protection = "INACTIVE"` trong `terraform.tfvars`, chạy `terraform apply` trước để tắt bảo vệ xóa trên User Pool, rồi mới chạy `terraform destroy`.
+
+---
+
+### Phần D — Xử lý sự cố, Bài học kinh nghiệm & Định hướng mở rộng
+
+#### Các sự cố đã gặp & Cách khắc phục
+
+| # | Sự cố gặp phải | Nguyên nhân gốc | Cách khắc phục |
+| --- | --- | --- | --- |
+| 1 | **Tạo IAM Role bị từ chối (`AccessDenied`)** | Chính sách IAM của tài khoản nhóm bắt buộc mọi role ứng dụng mới tạo phải gắn permissions boundary. | Gắn permissions boundary bắt buộc (`TeamAppRoleBoundary`) cho cả `reloop2-api-lambda-role` và `reloop2-post-confirmation-role`. |
+| 2 | **Các tuyến API Gateway lỗi không khớp tiền tố `/api`** | CloudFront định tuyến `/api/*` tới API Gateway, trong khi backend đăng ký các tuyến không có tiền tố `/api` (ví dụ `/feed/public`). | Thêm hàm CloudFront Function `reloop2-api-prefix` trên behavior `/api/*` để cắt tiền tố `/api` ngay tại lớp biên trước khi chuyển tiếp tới API Gateway. |
+| 3 | **Gọi thẳng API Gateway bỏ qua CloudFront & WAF** | Điểm cuối `execute-api` mặc định vẫn truy cập công khai được nếu không khóa chặt nguồn gốc. | Cấu hình CloudFront gửi header bí mật `x-origin-verify` và kiểm tra trong `reloop2-api` bằng phép so sánh thời gian hằng `timingSafeEqual`, chặn gọi trực tiếp bằng mã `403 DIRECT_ACCESS_FORBIDDEN`. |
+| 4 | **Gọi Bedrock tại Singapore & prompt injection từ chữ trên ảnh** | Định tuyến model liên vùng và văn bản không đáng tin cậy in trên nhãn thiết bị gây rủi ro sẵn sàng và chèn lệnh AI. | Dùng `global.moonshotai.kimi-k3` qua Converse API tại `ap-southeast-1` và lọc chữ trích xuất từ Rekognition qua Amazon Bedrock Guardrail (`apac.guardrail.v1:0`) trước khi phân tích AI. |
+| 5 | **26% lỗi `5xx` khi kiểm thử tải đột biến 80 request đồng thời** | Hạn mức thực thi đồng thời ban đầu của Lambda là `10`, gây quá tải trước khi lớp điều tiết lưu lượng kịp chặn. | Nâng hạn mức đồng thời Lambda lên `1.000`, cấu hình throttling API Gateway (`20 request/giây`, burst `50`) và gắn giới hạn tốc độ theo IP trên CloudFront WAF trả mã `429` gọn gàng — loại bỏ hoàn toàn lỗi `5xx` khi kiểm thử lại. |
+
+#### Định hướng mở rộng
+
+- **Gửi email tùy chỉnh với Amazon SES:** Vượt qua giới hạn mặc định ~50 email/ngày của Cognito bằng tên miền xác thực trên Amazon SES cho đăng ký công khai và thông báo.
+- **Chat thời gian thực qua WebSocket:** Thay cơ chế hỏi định kỳ HTTP mỗi 5 giây hiện tại bằng Amazon API Gateway WebSocket API để trao đổi và gửi mức giá tức thời.
+- **Triển khai tự động Terraform CD bằng GitHub Actions OIDC:** Tự động hóa `terraform plan` trên pull request và `terraform apply` có phê duyệt bằng cơ chế xác thực không khóa tĩnh GitHub Actions OIDC.
+- **Mở rộng đa thành phố:** Triển khai ReLoop ra ngoài TP. Hồ Chí Minh bằng thuật toán ghép chi nhánh geohash + Haversine không phụ thuộc khu vực và bộ module Terraform sẵn có.

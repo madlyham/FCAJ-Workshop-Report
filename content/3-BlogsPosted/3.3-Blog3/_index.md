@@ -1,12 +1,14 @@
 ---
 title: "Blog 3"
-date: 2026-11-07
+date: 2026-11-22
 weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
 
 # The Partner Has Closed the App, But Work Still Has to Find Them
+
+**Published on AWS Study Group:** [Read original Facebook post](https://www.facebook.com/share/p/1LZaN36GBA/)
 
 A familiar challenge: A customer posts a service request, and the system needs to match qualified partners and send quote invitations. But the partner is currently offline. Their app is closed, their phone is resting on the table.
 

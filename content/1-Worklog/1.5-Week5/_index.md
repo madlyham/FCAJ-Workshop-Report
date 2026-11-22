@@ -18,11 +18,11 @@ pre: " <b> 1.5. </b> "
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Monday** | • `S3ImageStore`: presigned POST (300 s, max 5 MB, JPEG/PNG/WebP, up to 6 photos per listing); `assertOwnImageKeys` so users can only attach their own photos | 12/10/2026 | 12/10/2026 | `imageStore.ts` |
-| **Tuesday** | • Rekognition `DetectModerationLabels` (`MinConfidence 70`); unsafe photos return `422 IMAGE_REJECTED`; lifecycle rules delete unattached photos after 1 day and all photos after 90 days | 13/10/2026 | 13/10/2026 | Amazon Rekognition Docs |
-| **Wednesday** | • Check Billing → Credits → applicable products; drop SageMaker and Rekognition Custom Labels (hourly cost, need training data); pick Amazon Nova Pro (`apac.amazon.nova-pro-v1:0`), billed per token and covered by credits | 14/10/2026 | 14/10/2026 | AWS Billing Console, Bedrock Docs |
-| **Thursday** | • Implement `BedrockAnalyzer` with the Converse API and forced `toolChoice` so the model must return JSON matching our `AiResult` schema (`temperature 0`, `maxTokens 2048`) | 15/10/2026 | 15/10/2026 | `analyzer.ts` |
-| **Friday** | • Run AI analysis asynchronously in the background (Lambda self-invoke, `InvocationType=Event`) and test on real laptop and component photos | 16/10/2026 | 16/10/2026 | `aiService.ts` |
+| **Monday** | • `S3ImageStore`: presigned POST (300 s, max 5 MB, JPEG/PNG/WebP, up to 6 photos per listing); `assertOwnImageKeys` so users can only attach their own photos | 12/10/2026 | 12/10/2026 | [Amazon S3 Docs](https://docs.aws.amazon.com/s3/), [ReLoop Repository](https://github.com/madlyham/ReLoop) (`imageStore.ts`) |
+| **Tuesday** | • Rekognition `DetectModerationLabels` (`MinConfidence 70`); unsafe photos return `422 IMAGE_REJECTED`; lifecycle rules delete unattached photos after 1 day and all photos after 90 days | 13/10/2026 | 13/10/2026 | [Amazon Rekognition Docs](https://docs.aws.amazon.com/rekognition/) |
+| **Wednesday** | • Check Billing → Credits → applicable products; drop SageMaker and Rekognition Custom Labels (hourly cost, need training data); pick Amazon Nova Pro (`apac.amazon.nova-pro-v1:0`), billed per token and covered by credits | 14/10/2026 | 14/10/2026 | [AWS Billing & Cost Explorer](https://docs.aws.amazon.com/cost-management/), [Amazon Bedrock Docs](https://docs.aws.amazon.com/bedrock/) |
+| **Thursday** | • Implement `BedrockAnalyzer` with the Converse API and forced `toolChoice` so the model must return JSON matching our `AiResult` schema (`temperature 0`, `maxTokens 2048`) | 15/10/2026 | 15/10/2026 | [Amazon Bedrock Docs](https://docs.aws.amazon.com/bedrock/), [ReLoop Repository](https://github.com/madlyham/ReLoop) (`analyzer.ts`) |
+| **Friday** | • Run AI analysis asynchronously in the background (Lambda self-invoke, `InvocationType=Event`) and test on real laptop and component photos | 16/10/2026 | 16/10/2026 | [AWS Lambda Docs](https://docs.aws.amazon.com/lambda/), [ReLoop Repository](https://github.com/madlyham/ReLoop) (`aiService.ts`) |
 
 ## **3. Key Achievements & Outcomes**
 

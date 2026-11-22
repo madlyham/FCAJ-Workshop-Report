@@ -18,11 +18,11 @@ pre: " <b> 1.5. </b> "
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Thứ 2** | • `S3ImageStore`: presigned POST (300 giây, tối đa 5 MB, JPEG/PNG/WebP, tối đa 6 ảnh mỗi tin); `assertOwnImageKeys` để người dùng chỉ gắn được ảnh của chính mình | 12/10/2026 | 12/10/2026 | `imageStore.ts` |
-| **Thứ 3** | • Rekognition `DetectModerationLabels` (`MinConfidence 70`); ảnh không phù hợp trả `422 IMAGE_REJECTED`; lifecycle xóa ảnh chưa gắn sau 1 ngày và mọi ảnh sau 90 ngày | 13/10/2026 | 13/10/2026 | Tài liệu Amazon Rekognition |
-| **Thứ 4** | • Kiểm tra Billing → Credits → dịch vụ áp dụng; bỏ SageMaker và Rekognition Custom Labels (tính phí theo giờ, cần dữ liệu huấn luyện); chọn Amazon Nova Pro (`apac.amazon.nova-pro-v1:0`), tính theo token và được credit chi trả | 14/10/2026 | 14/10/2026 | AWS Billing Console, Tài liệu Bedrock |
-| **Thứ 5** | • Viết `BedrockAnalyzer` bằng Converse API với `toolChoice` bắt buộc để model phải trả JSON đúng schema `AiResult` (`temperature 0`, `maxTokens 2048`) | 15/10/2026 | 15/10/2026 | `analyzer.ts` |
-| **Thứ 6** | • Chạy phân tích AI chạy nền (bất đồng bộ) qua Lambda tự gọi (`InvocationType=Event`) và thử trên ảnh laptop, linh kiện thật | 16/10/2026 | 16/10/2026 | `aiService.ts` |
+| **Thứ 2** | • `S3ImageStore`: presigned POST (300 giây, tối đa 5 MB, JPEG/PNG/WebP, tối đa 6 ảnh mỗi tin); `assertOwnImageKeys` để người dùng chỉ gắn được ảnh của chính mình | 12/10/2026 | 12/10/2026 | [Tài liệu Amazon S3](https://docs.aws.amazon.com/s3/), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`imageStore.ts`) |
+| **Thứ 3** | • Rekognition `DetectModerationLabels` (`MinConfidence 70`); ảnh không phù hợp trả `422 IMAGE_REJECTED`; lifecycle xóa ảnh chưa gắn sau 1 ngày và mọi ảnh sau 90 ngày | 13/10/2026 | 13/10/2026 | [Tài liệu Amazon Rekognition](https://docs.aws.amazon.com/rekognition/) |
+| **Thứ 4** | • Kiểm tra Billing → Credits → dịch vụ áp dụng; bỏ SageMaker và Rekognition Custom Labels (tính phí theo giờ, cần dữ liệu huấn luyện); chọn Amazon Nova Pro (`apac.amazon.nova-pro-v1:0`), tính theo token và được credit chi trả | 14/10/2026 | 14/10/2026 | [AWS Billing & Cost Explorer](https://docs.aws.amazon.com/cost-management/), [Tài liệu Amazon Bedrock](https://docs.aws.amazon.com/bedrock/) |
+| **Thứ 5** | • Viết `BedrockAnalyzer` bằng Converse API với `toolChoice` bắt buộc để model phải trả JSON đúng schema `AiResult` (`temperature 0`, `maxTokens 2048`) | 15/10/2026 | 15/10/2026 | [Tài liệu Amazon Bedrock](https://docs.aws.amazon.com/bedrock/), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`analyzer.ts`) |
+| **Thứ 6** | • Chạy phân tích AI chạy nền (bất đồng bộ) qua Lambda tự gọi (`InvocationType=Event`) và thử trên ảnh laptop, linh kiện thật | 16/10/2026 | 16/10/2026 | [Tài liệu AWS Lambda](https://docs.aws.amazon.com/lambda/), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`aiService.ts`) |
 
 ## **3. Kết quả đạt được**
 

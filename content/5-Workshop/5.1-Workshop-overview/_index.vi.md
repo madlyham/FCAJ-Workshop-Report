@@ -43,6 +43,17 @@ Mỗi học phần trong workshop khớp trực tiếp với các mũi tên đá
 | **S3 + CloudFront (OAC) + Presigned URL** | Đẩy tệp qua backend | Độ bền 11 số 9 (`99,999999999%`), giảm tải cho Lambda, tối ưu băng thông (CloudFront Free Tier 1 TB/tháng), khóa kín bucket riêng tư. |
 | **Cognito + Rekognition + Bedrock (Kimi K3 & Guardrail)** | Tự dựng Auth / tự host GPU | Quản lý hoàn toàn, serverless trả theo lượt dùng (10.000 MAU miễn phí; không tốn phí GPU rảnh), có sẵn kiểm duyệt ảnh và Guardrail bảo vệ. |
 
+### Tuân thủ AWS Well-Architected Framework
+
+| Trụ cột | Cách ReLoop áp dụng |
+| --- | --- |
+| **Vận hành xuất sắc (Operational Excellence)** | Hạ tầng dạng mã Terraform mô-đun hóa ([`madlyham/ReLoop/terraform/`](https://github.com/madlyham/ReLoop/tree/main/terraform)), một luồng triển khai duy nhất đã qua CI, CloudWatch Logs dạng JSON có cấu trúc (lưu 7 ngày) và cảnh báo lỗi Lambda → gửi email SNS tới Admin. |
+| **Bảo mật (Security)** | AWS WAF gắn trên CloudFront (3 bộ luật do AWS quản lý + 2 giới hạn tốc độ theo IP), bucket S3 riêng tư (Block Public Access + OAC + presigned URL ngắn hạn), header bí mật `x-origin-verify` chặn gọi thẳng API Gateway, xác thực Cognito JWT (`JWKS`) trên `ANY /{proxy+}`, hai IAM role quyền tối thiểu riêng biệt, kiểm duyệt bằng Rekognition + Bedrock Guardrail và không lưu cứng bí mật trong Git. |
+| **Độ tin cậy (Reliability)** | Hạ tầng serverless quản lý đa vùng sẵn sàng Multi-AZ (CloudFront, API Gateway, Lambda concurrency 1.000, DynamoDB on-demand kèm PITR 35 ngày), độ bền S3 11 số 9 (`99,999999999%`), lệnh ghi DynamoDB có điều kiện & `Idempotency-Key`, lịch EventBridge 15 phút tự đóng tin hết hạn và cơ chế hạ cấp an toàn khi Bedrock gián đoạn (người bán vẫn nhập biểu mẫu thủ công bình thường). |
+| **Hiệu năng (Performance Efficiency)** | Bộ nhớ đệm biên CloudFront cho tệp SPA, Lambda Node.js 22 trên ARM64 (Graviton) (thời gian chạy trung bình 144 ms), DynamoDB một bảng kèm `GSI1` và truy vấn chia khung thời gian (không quét toàn bảng), trình duyệt tải ảnh thẳng lên S3 qua presigned POST/GET giúp không đẩy tệp nhị phân qua Lambda và tự gọi bất đồng bộ cho tác vụ phân tích AI ~35 giây. |
+| **Tối ưu chi phí (Cost Optimization)** | Serverless trả theo mức dùng nằm phần lớn trong Free Tier (`11,70 USD/tháng` tổng cộng gồm `10,00 USD` AWS WAF trên CloudFront; `1,70 USD/tháng` nếu không bật WAF; `< 1,00 USD` khi chạy workshop và xóa trong ngày), ARM64 Graviton tiết kiệm ~20% chi phí tính toán, lifecycle S3 1 ngày ảnh chờ / 90 ngày lưu trữ, lưu log CloudWatch 7 ngày, giới hạn 20 lượt AI/người/ngày và hướng dẫn dọn dẹp ngược thứ tự đầy đủ. |
+| **Tính bền vững (Sustainability)** *(Ghi chú bổ sung)* | Kiến trúc serverless tự thu về 0 khi không có tải giúp loại bỏ máy chủ chạy không tải 24/7; bộ xử lý ARM64 Graviton nâng cao hiệu năng trên mỗi watt điện; quy tắc vòng đời S3 và lưu log 7 ngày giảm thiểu dung lượng lưu trữ dư thừa. |
+
 ### Điểm nhấn bảo mật
 
 | Khu vực trên sơ đồ | Cơ chế bảo vệ |
@@ -67,6 +78,16 @@ Hoàn thành học phần **5.2–5.11** và dọn dẹp ngay trong ngày ở h�
 | **Rekognition & Bedrock** | Vài lượt kiểm duyệt ảnh + Guardrail + Kimi K3 | ~$0,05–$0,25 |
 | **EventBridge, CloudWatch & SNS** | 1 quy tắc, 2 nhóm nhật ký, 1 cảnh báo, 1 chủ đề SNS | $0,00 (Free Tier) |
 | **Tổng cộng (dựng & xóa trong ngày)** | Chạy thử đủ luồng + dọn dẹp ở 5.12 | **< 1,00 USD** |
+
+Bạn có thể tự tính lại ước tính dài hạn trên **[AWS Pricing Calculator](https://calculator.aws/)** hoặc xem bảng chi tiết từng dòng theo tháng tại **[reloop-cost-estimate.csv](/files/2-proposal/reloop-cost-estimate.csv)** (**11,70 USD/tháng** vận hành thường xuyên kèm CloudFront WAF / **1,70 USD/tháng** nếu không bật WAF; **< 1,00 USD** khi chạy và dọn workshop trong ngày).
+
+#### Tối ưu chi phí trong vận hành
+
+- **Free Tier & Serverless tự thu về 0:** Các dịch vụ lõi gồm Lambda, CloudFront, Cognito (tới 10.000 MAU), EventBridge, CloudWatch và SNS nằm trong AWS Free Tier và tốn `0 USD` khi không có tải.
+- **Bộ xử lý ARM64 (Graviton):** Chạy `reloop2-api` trên kiến trúc `arm64` tiết kiệm ~20% chi phí tính toán Lambda so với `x86_64`.
+- **Tự động dọn lưu trữ & nhật ký:** Quy tắc vòng đời S3 xóa ảnh `pending` chưa gắn tin sau 1 ngày và xóa ảnh tin đăng sau 90 ngày, còn CloudWatch Logs tự hết hạn sau 7 ngày.
+- **Giới hạn mức dùng AI theo người dùng:** Hạn mức cứng ở backend giới hạn phân tích Amazon Bedrock tối đa **20 lượt/người/ngày**, kiểm soát chặt chi phí AI biến đổi.
+- **Dọn ngay WAF ở Học phần 5.12:** Xóa AWS WAFv2 Web ACL trên CloudFront tại [Học phần 5.12](../5.12-cleanup-and-iac/) ngay sau khi kiểm thử để chấm dứt khoản phí cố định `10,00 USD/tháng` của Web ACL + 5 quy tắc.
 
 {{% notice warning %}}
 Mỗi Web ACL của AWS WAFv2 tính phí **$5/tháng + $1/tháng cho mỗi quy tắc** ngay cả khi không có lưu lượng. Hãy thực hiện [Học phần 5.12](../5.12-cleanup-and-iac/) ngay sau khi hoàn tất [Học phần 5.11](../5.11-end-to-end-verification/) để tránh phát sinh phí kéo dài.

@@ -20,11 +20,11 @@ pre: " <b> 1.11. </b> "
 
 | Ngày | Mô tả công việc dự kiến | Ngày dự kiến | Trạng thái | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Thứ 2** | • Kiểm kê toàn bộ tài nguyên AWS tại `ap-southeast-1` và `us-east-1` bằng Resource Explorer và đối chiếu với tệp Terraform state | 23/11/2026 | Dự kiến | AWS Resource Explorer, `infra/*.tf` |
-| **Thứ 3** | • Rà soát các tài nguyên còn sót lại từ giai đoạn tạo thủ công ở Tuần 1–5 (user pool cũ, API thử nghiệm, bucket thực hành, IAM role không dùng) ngoài phạm vi quản lý của Terraform | 24/11/2026 | Dự kiến | AWS Console, Resource Explorer |
-| **Thứ 4** | • Xác nhận `terraform plan` không còn thay đổi phát sinh, sao lưu danh mục dọn dẹp và xin thống nhất của nhóm trước khi xóa bất kỳ tài nguyên nào | 25/11/2026 | Dự kiến | `infra/backend.tf` |
-| **Thứ 5** | • Xóa các tài sản thừa đã được duyệt và chạy lại `smoke-aws.py` trên hệ thống ReLoop thật để xác nhận không ảnh hưởng vận hành | 26/11/2026 | Dự kiến | `smoke-aws.py` |
-| **Thứ 6** | • Hoàn tất rà soát chi phí trên Cost Explorer so với mức dự toán **$11.70/tháng** ($10.00/tháng cho CloudFront WAF + ~$1.70/tháng theo mức sử dụng, trong đó tính toán/DB/API/S3 cốt lõi dưới $0.30/tháng) và xác nhận hạn mức credit ($189.80 USD còn lại ngày 21/11/2026 đến 28/02/2027) | 27/11/2026 | Dự kiến | AWS Cost Explorer |
+| **Thứ 2** | • Kiểm kê toàn bộ tài nguyên AWS tại `ap-southeast-1` và `us-east-1` bằng Resource Explorer và đối chiếu với tệp Terraform state | 23/11/2026 | Dự kiến | [Tài liệu AWS CLI](https://docs.aws.amazon.com/cli/), [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`infra/*.tf`) |
+| **Thứ 3** | • Rà soát các tài nguyên còn sót lại từ giai đoạn tạo thủ công ở Tuần 1–5 (user pool cũ, API thử nghiệm, bucket thực hành, IAM role không dùng) ngoài phạm vi quản lý của Terraform | 24/11/2026 | Dự kiến | [Tài liệu AWS IAM](https://docs.aws.amazon.com/iam/), [Tài liệu Amazon S3](https://docs.aws.amazon.com/s3/) |
+| **Thứ 4** | • Xác nhận `terraform plan` không còn thay đổi phát sinh, sao lưu danh mục dọn dẹp và xin thống nhất của nhóm trước khi xóa bất kỳ tài nguyên nào | 25/11/2026 | Dự kiến | [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`infra/backend.tf`) |
+| **Thứ 5** | • Xóa các tài sản thừa đã được duyệt và chạy lại `smoke-aws.py` trên hệ thống ReLoop thật để xác nhận không ảnh hưởng vận hành | 26/11/2026 | Dự kiến | [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`smoke-aws.py`) |
+| **Thứ 6** | • Hoàn tất rà soát chi phí trên Cost Explorer so với mức dự toán **$11.70/tháng** ($10.00/tháng cho CloudFront WAF + ~$1.70/tháng theo mức sử dụng, trong đó tính toán/DB/API/S3 cốt lõi dưới $0.30/tháng) và xác nhận hạn mức credit ($189.80 USD còn lại ngày 21/11/2026 đến 28/02/2027) | 27/11/2026 | Dự kiến | [AWS Billing & Cost Explorer](https://docs.aws.amazon.com/cost-management/) |
 
 ## **3. Kết quả dự kiến**
 

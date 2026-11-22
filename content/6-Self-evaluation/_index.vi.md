@@ -16,20 +16,20 @@ Về thái độ làm việc, tôi luôn nêu cao tinh thần trách nhiệm, ch
 
 Để nhìn nhận khách quan quá trình thực tập, tôi tự đánh giá bản thân theo các tiêu chí sau:
 
-| STT | Tiêu chí đánh giá | Mô tả | Tốt | Khá | Trung bình |
-| :---: | :--- | :--- | :---: | :---: | :---: |
-| 1 | **Kiến thức & kỹ năng chuyên môn** | Nắm vững chuyên môn, áp dụng thực tế, sử dụng thành thạo công cụ, chất lượng công việc | ☐ | ✅ | ☐ |
-| 2 | **Khả năng học hỏi** | Khả năng tiếp thu kiến thức mới và tốc độ nắm bắt công việc | ✅ | ☐ | ☐ |
-| 3 | **Tính chủ động** | Tinh thần tự giác, chủ động tìm kiếm công việc mà không chờ nhắc nhở | ✅ | ☐ | ☐ |
-| 4 | **Ý thức trách nhiệm** | Hoàn thành công việc đúng hạn và đảm bảo chất lượng cam kết | ✅ | ☐ | ☐ |
-| 5 | **Tính kỷ luật** | Tuân thủ giờ giấc, nội quy và quy trình làm việc | ☐ | ✅ | ☐ |
-| 6 | **Tinh thần cầu tiến** | Sẵn sàng lắng nghe góp ý và không ngừng hoàn thiện bản thân | ✅ | ☐ | ☐ |
-| 7 | **Kỹ năng giao tiếp** | Khả năng trình bày ý tưởng và báo cáo công việc rõ ràng, mạch lạc | ☐ | ✅ | ☐ |
-| 8 | **Làm việc nhóm** | Phối hợp hiệu quả với đồng nghiệp và tích cực trong hoạt động nhóm | ✅ | ☐ | ☐ |
-| 9 | **Tác phong làm việc** | Tôn trọng đồng nghiệp, đối tác và văn hóa doanh nghiệp | ✅ | ☐ | ☐ |
-| 10 | **Kỹ năng giải quyết vấn đề** | Nhận diện vấn đề, đề xuất giải pháp sáng tạo và khả thi | ☐ | ✅ | ☐ |
-| 11 | **Đóng góp cho dự án/tập thể** | Hiệu quả công việc thực tế, sáng kiến và sự ghi nhận từ nhóm | ✅ | ☐ | ☐ |
-| 12 | **Đánh giá chung** | Nhận định tổng thể về toàn bộ quá trình thực tập | ✅ | ☐ | ☐ |
+| STT | Tiêu chí đánh giá | Mô tả | Tốt | Khá | Trung bình | Nhận xét cụ thể |
+| :---: | :--- | :--- | :---: | :---: | :---: | :--- |
+| 1 | **Kiến thức & kỹ năng chuyên môn** | Nắm vững chuyên môn, áp dụng thực tế, sử dụng thành thạo công cụ, chất lượng công việc | ☐ | ✅ | ☐ | Xây dựng stack AI serverless, bảo mật và Terraform cho ReLoop (Bedrock, Rekognition, DynamoDB), đồng thời tiếp tục rèn chiều sâu thiết kế khóa và đánh đổi chi phí. |
+| 2 | **Khả năng học hỏi** | Khả năng tiếp thu kiến thức mới và tốc độ nắm bắt công việc | ✅ | ☐ | ☐ | Tiếp thu nhanh 12 dịch vụ AWS quản lý, Terraform IaC và Bedrock Guardrails trong suốt 12 tuần bootcamp FCAJ. |
+| 3 | **Tính chủ động** | Tinh thần tự giác, chủ động tìm kiếm công việc mà không chờ nhắc nhở | ✅ | ☐ | ☐ | Chủ động rà soát đặc tả (45 quyết định nghiệp vụ), thực hiện red-team prompt injection và chuyển model từ Nova Pro sang Kimi K3 dựa trên số liệu đo thực tế. |
+| 4 | **Ý thức trách nhiệm** | Hoàn thành công việc đúng hạn và đảm bảo chất lượng cam kết | ✅ | ☐ | ☐ | Hoàn thành Đề xuất Phần 1–2, xác thực trực tiếp Workshop (5.1–5.12) và 3 bài blog trên AWS Study Group đúng tiến độ với số liệu đã kiểm chứng. |
+| 5 | **Tính kỷ luật** | Tuân thủ giờ giấc, nội quy và quy trình làm việc | ☐ | ✅ | ☐ | Tuân thủ đều đặn giờ giấc và quy định bảo mật, đồng thời siết chặt kỷ luật vận hành về đặt tên nhánh, nhịp độ sprint và triển khai qua một luồng CI/CD duy nhất. |
+| 6 | **Tinh thần cầu tiến** | Sẵn sàng lắng nghe góp ý và không ngừng hoàn thiện bản thân | ✅ | ☐ | ☐ | Tích cực tiếp thu góp ý từ mentor và 5 đợt QA (146 mục) để cải thiện độ chính xác AI tiếng Việt, xử lý throttling và gia cố khóa nguồn. |
+| 7 | **Kỹ năng giao tiếp** | Khả năng trình bày ý tưởng và báo cáo công việc rõ ràng, mạch lạc | ☐ | ✅ | ☐ | Trao đổi hiệu quả trong nhóm và tài liệu kỹ thuật, đồng thời cần cải thiện báo cáo vướng mắc sớm hơn tới mentor theo cấu trúc vấn đề – tác động – phương án. |
+| 8 | **Làm việc nhóm** | Phối hợp hiệu quả với đồng nghiệp và tích cực trong hoạt động nhóm | ✅ | ☐ | ☐ | Phối hợp nhịp nhàng trong nhóm ReLoop 5 thành viên (frontend, backend lõi, AI và IaC), thống nhất hợp đồng API, code review và quy tắc triển khai chung. |
+| 9 | **Tác phong làm việc** | Tôn trọng đồng nghiệp, đối tác và văn hóa doanh nghiệp | ✅ | ☐ | ☐ | Duy trì tác phong tôn trọng, xây dựng với mentor AWS, đồng đội và đối tác cộng đồng xuyên suốt 6 sự kiện FCAJ và các buổi làm việc tại văn phòng. |
+| 10 | **Kỹ năng giải quyết vấn đề** | Nhận diện vấn đề, đề xuất giải pháp sáng tạo và khả thi | ☐ | ✅ | ☐ | Giải quyết các sự cố thực tế như lỗi 5xx do giới hạn Lambda và visual prompt injection, đồng thời chuyển từ vá nhanh cục bộ sang phân tích nguyên nhân gốc bài bản. |
+| 11 | **Đóng góp cho dự án/tập thể** | Hiệu quả công việc thực tế, sáng kiến và sự ghi nhận từ nhóm | ✅ | ☐ | ☐ | Đảm nhiệm vai trò Team Lead, trực tiếp hoàn thiện hạ tầng Terraform, pipeline Bedrock Kimi K3 + Guardrails (độ chính xác tăng từ 40% lên 92%) và tài liệu kỹ thuật. |
+| 12 | **Đánh giá chung** | Nhận định tổng thể về toàn bộ quá trình thực tập | ✅ | ☐ | ☐ | Trưởng thành rõ rệt về kiến trúc đám mây, DevSecOps và dẫn dắt nhóm, cùng kế hoạch hành động cụ thể để khắc phục các điểm còn hạn chế. |
 
 ---
 

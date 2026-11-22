@@ -8,6 +8,11 @@ pre : " <b> 5.11. </b> "
 
 Walk the entire architecture diagram live from **Arrow 1 through Arrow 10**, plus **EventBridge** and **CloudWatch → SNS**, verifying real responses and backend evidence at every hop.
 
+{{% notice tip %}}
+**Live Demo:** [https://d1cjl1tvcp0r6q.cloudfront.net/](https://d1cjl1tvcp0r6q.cloudfront.net/) (verified live HTTPS CloudFront deployment of ReLoop)  
+**Companion Code & Terraform Repo:** [https://github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop)
+{{% /notice %}}
+
 **Graph arrows verified in this step:** All arrows **1 → 10** + **WAF**, **Post-confirm**, **verify JWT**, **EventBridge**, and **CloudWatch → SNS**.
 
 ![Module 5.11 Focus: Full Live Architecture Verification](/images/5-Workshop/5.11/architecture.png)
@@ -25,6 +30,19 @@ Walk the entire architecture diagram live from **Arrow 1 through Arrow 10**, plu
    curl -i https://<api-id>.execute-api.ap-southeast-1.amazonaws.com/feed/public
    # Expected: HTTP/2 403 -> {"code":"DIRECT_ACCESS_FORBIDDEN",...}
    ```
+
+#### Error & Failure-Scenario Checks
+
+Verify unauthorized requests, invalid calls, and burst traffic fail cleanly at the edge or authorizer layer:
+
+- **Unauthenticated call to a protected route via CloudFront** (verifies the API Gateway Cognito JWT authorizer blocks missing tokens before Lambda runs):
+  ```bash
+  curl -i https://<dist-domain>.cloudfront.net/api/partners/me
+  # Expected: HTTP/2 401 Unauthorized (rejected by API Gateway JWT authorizer)
+  ```
+- **Malformed/unknown routes & edge rate-limit protection:**
+  - Unknown API paths return `HTTP/2 404` and malformed payloads return structured `HTTP/2 400` validation errors rather than unhandled `5xx` failures.
+  - Sustaining bursts above **100 req/min** per IP on public API endpoints triggers AWS WAF (`reloop2-web`) at CloudFront, returning `HTTP/2 429` (`RATE_LIMITED`) with a `retry-after: 60` header before requests reach API Gateway or Lambda.
 
 ---
 

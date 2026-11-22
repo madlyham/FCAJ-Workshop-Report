@@ -14,6 +14,11 @@ ReLoop là nền tảng web mua bán giúp người dùng tại Việt Nam bán 
 
 Ngày 08/11/2026, môi trường chạy thực tế có 14 tài khoản đăng ký, 12 tin đang mở của 7 người bán và khoảng 31.000 request API trong tháng đầu. Thiết kế serverless tự động mở rộng mà không cần tái cấu trúc kiến trúc, với giới hạn thực thi đồng thời của Lambda đã được duyệt lên tới 1.000. Nền tảng sử dụng 12 dịch vụ AWS được quản lý (cùng AWS IAM cho phân quyền tối thiểu): **CloudFront, AWS WAF, S3, Cognito, API Gateway, Lambda, DynamoDB, Rekognition, Bedrock, EventBridge, CloudWatch và SNS**. Khách xem chợ công khai không cần tài khoản; người dùng đã đăng nhập (`Owners`) có thể nhắn tin và mua hàng; đối tác được Admin duyệt (`Partners`) được mở khóa quyền đăng bán (Cấp 1) hoặc thu mua và gửi báo giá (Cấp 2); còn `Admins` và `FinanceAdmins` kiểm duyệt nội dung bị gắn cờ và quản lý hóa đơn phí hằng tháng.
 
+{{% notice tip %}}
+**Bản Demo trực tuyến (Live Demo):** [https://d1cjl1tvcp0r6q.cloudfront.net/](https://d1cjl1tvcp0r6q.cloudfront.net/) (bản triển khai HTTPS trực tiếp của ReLoop trên CloudFront)  
+**Mã nguồn đồng hành & Terraform Repo:** [https://github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop)
+{{% /notice %}}
+
 #### Thành viên nhóm
 
 | Thành viên | Vai trò |
@@ -30,7 +35,7 @@ Theo Global E-waste Monitor 2024 (UNITAR/ITU), năm 2022 thế giới thải ra 
 
 - Tự động kết nối tin đăng với các tiệm sửa chữa có bán kính phục vụ bao gồm vị trí người bán.
 - Hiển thị ước tính giá ngay từ đầu theo bảng quy tắc giá của từng bên thu mua.
-- Lưu trữ hồ sơ uy tín ghi nhận những bên mua giữ đúng cam kết báo giá.
+- Lưu lịch sử uy tín gồm điểm đánh giá sao, tỷ lệ hoàn tất/hủy giao dịch và cờ cảnh báo lệch giá dự kiến.
 
 Ở chiều ngược lại, các tiệm sửa chữa nhỏ cũng gặp khoảng trống tương tự: họ thiếu một kênh chi phí thấp để tiếp nhận các thiết bị gần mình phù hợp với danh mục cần thu mua.
 
@@ -103,6 +108,17 @@ ReLoop chạy trên kiến trúc hoàn toàn serverless tại **Asia Pacific (Si
 | **Amazon S3 + CloudFront (OAC) + Presigned URL** | Đẩy tệp ảnh qua backend hoặc mở bucket công khai | **Độ bền dữ liệu đạt 99,999999999%**; giảm tải hoàn toàn dữ liệu ảnh khỏi Lambda (tránh giới hạn payload và tốn RAM); tối ưu băng thông với CloudFront Free Tier (**1 TB + 10 triệu request/tháng**); khóa kín bucket bằng OAC và presigned URL ngắn hạn. |
 | **Amazon Cognito + Rekognition + Bedrock (Kimi K3 & Guardrail)** | Tự dựng hệ thống Auth + tự host mô hình GPU | Quản lý hoàn toàn, trả tiền theo lượt dùng (Cognito miễn phí tới **10.000 MAU**, không tốn chi phí duy trì GPU khi không có tải); có sẵn JWT/JWKS, kiểm duyệt ảnh tự động và **Amazon Bedrock Guardrails** chặn prompt injection. |
 | **AWS WAF (CloudFront) + EventBridge + CloudWatch / SNS** | Tự vận hành reverse proxy, máy chủ cron & hệ thống giám sát | Giới hạn tốc độ và bộ luật OWASP ở biên không cần bảo trì proxy; lịch chạy serverless mỗi 15 phút cùng log, alarm và email cảnh báo Admin trong Free Tier. |
+
+#### Tuân thủ AWS Well-Architected Framework
+
+| Trụ cột | Cách ReLoop áp dụng |
+| --- | --- |
+| **Vận hành xuất sắc (Operational Excellence)** | Hạ tầng dạng mã Terraform mô-đun hóa ([`madlyham/ReLoop/terraform/`](https://github.com/madlyham/ReLoop/tree/main/terraform)), một luồng triển khai duy nhất đã qua CI, CloudWatch Logs dạng JSON có cấu trúc (lưu 7 ngày) và cảnh báo lỗi Lambda → gửi email SNS tới Admin. |
+| **Bảo mật (Security)** | AWS WAF gắn trên CloudFront (3 bộ luật do AWS quản lý + 2 giới hạn tốc độ theo IP), bucket S3 riêng tư (Block Public Access + OAC + presigned URL ngắn hạn), header bí mật `x-origin-verify` chặn gọi thẳng API Gateway, xác thực Cognito JWT (`JWKS`) trên `ANY /{proxy+}`, hai IAM role quyền tối thiểu riêng biệt, kiểm duyệt bằng Rekognition + Bedrock Guardrail và không lưu cứng bí mật trong Git. |
+| **Độ tin cậy (Reliability)** | Hạ tầng serverless quản lý đa vùng sẵn sàng Multi-AZ (CloudFront, API Gateway, Lambda concurrency 1.000, DynamoDB on-demand kèm PITR 35 ngày), độ bền S3 11 số 9 (`99,999999999%`), lệnh ghi DynamoDB có điều kiện & `Idempotency-Key`, lịch EventBridge 15 phút tự đóng tin hết hạn và cơ chế hạ cấp an toàn khi Bedrock gián đoạn (người bán vẫn nhập biểu mẫu thủ công bình thường). |
+| **Hiệu năng (Performance Efficiency)** | Bộ nhớ đệm biên CloudFront cho tệp SPA, Lambda Node.js 22 trên ARM64 (Graviton) (thời gian chạy trung bình 144 ms), DynamoDB một bảng kèm `GSI1` và truy vấn chia khung thời gian (không quét toàn bảng), trình duyệt tải ảnh thẳng lên S3 qua presigned POST/GET giúp không đẩy tệp nhị phân qua Lambda và tự gọi bất đồng bộ cho tác vụ phân tích AI ~35 giây. |
+| **Tối ưu chi phí (Cost Optimization)** | Serverless trả theo mức dùng nằm phần lớn trong Free Tier (`11,70 USD/tháng` tổng cộng gồm `10,00 USD` AWS WAF trên CloudFront; `1,70 USD/tháng` nếu không bật WAF; `< 1,00 USD` khi chạy workshop và xóa trong ngày), ARM64 Graviton tiết kiệm ~20% chi phí tính toán, lifecycle S3 1 ngày ảnh chờ / 90 ngày lưu trữ, lưu log CloudWatch 7 ngày, giới hạn 20 lượt AI/người/ngày và hướng dẫn dọn dẹp ngược thứ tự đầy đủ. |
+| **Tính bền vững (Sustainability)** *(Ghi chú bổ sung)* | Kiến trúc serverless tự thu về 0 khi không có tải giúp loại bỏ máy chủ chạy không tải 24/7; bộ xử lý ARM64 Graviton nâng cao hiệu năng trên mỗi watt điện; quy tắc vòng đời S3 và lưu log 7 ngày giảm thiểu dung lượng lưu trữ dư thừa. |
 
 #### Thiết kế thành phần
 - **Tầng biên & Ứng dụng khách (Edge / Client):** ứng dụng web trang đơn (SPA) viết bằng React 18 + TypeScript (Vite) dùng Leaflet + OpenStreetMap để chọn vị trí. Khách xem chợ công khai; người dùng đã đăng nhập (`Owners`) nhắn tin và mua hàng; đối tác được Admin duyệt truy cập cổng đối tác (Cấp 1 – người bán cá nhân: tối đa 3 tin đang mở; Cấp 2 – đối tác doanh nghiệp có chi nhánh, bảng quy tắc giá và báo giá: tối đa 10 tin đang mở); còn `Admins` và `FinanceAdmins` truy cập cổng Admin.

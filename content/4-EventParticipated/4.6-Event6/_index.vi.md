@@ -36,6 +36,4 @@ Rất vui khi thấy nhiều bạn sinh viên quan tâm đến Cloud. Các câu 
 
 ### **Hình ảnh sự kiện**
 
-![Tham gia game Quiz của Cloud Mastery trên Quiz.com](/images/report/image13.jpg)
-
-*Ảnh: ChauLe*
+![Tham gia game Quiz của Cloud Mastery trên Quiz.com (Ảnh: ChauLe)](/images/report/image13.jpg)

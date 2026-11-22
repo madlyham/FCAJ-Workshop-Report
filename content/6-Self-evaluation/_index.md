@@ -16,20 +16,20 @@ In terms of work ethic, I consistently took ownership of complex deliverables, a
 
 To objectively reflect on my internship period, I evaluate my performance based on the following criteria:
 
-| No. | Criteria | Description | Good | Fair | Average |
-| :--- | :--- | :--- | :---: | :---: | :---: |
-| 1 | **Professional knowledge & skills** | Understanding of the field, applying knowledge in practice, proficiency with tools, work quality | ☐ | ✅ | ☐ |
-| 2 | **Ability to learn** | Ability to absorb new knowledge and learn quickly | ✅ | ☐ | ☐ |
-| 3 | **Proactiveness** | Taking initiative, seeking out tasks without waiting for instructions | ✅ | ☐ | ☐ |
-| 4 | **Sense of responsibility** | Completing tasks on time and ensuring quality | ✅ | ☐ | ☐ |
-| 5 | **Discipline** | Adhering to schedules, rules, and work processes | ☐ | ✅ | ☐ |
-| 6 | **Progressive mindset** | Willingness to receive feedback and improve oneself | ✅ | ☐ | ☐ |
-| 7 | **Communication** | Presenting ideas and reporting work clearly | ☐ | ✅ | ☐ |
-| 8 | **Teamwork** | Working effectively with colleagues and participating in teams | ✅ | ☐ | ☐ |
-| 9 | **Professional conduct** | Respecting colleagues, partners, and the work environment | ✅ | ☐ | ☐ |
-| 10 | **Problem-solving skills** | Identifying problems, proposing solutions, and showing creativity | ☐ | ✅ | ☐ |
-| 11 | **Contribution to project/team** | Work effectiveness, innovative ideas, recognition from the team | ✅ | ☐ | ☐ |
-| 12 | **Overall** | General evaluation of the entire internship period | ✅ | ☐ | ☐ |
+| No. | Criteria | Description | Good | Fair | Average | Specific Comment |
+| :--- | :--- | :--- | :---: | :---: | :---: | :--- |
+| 1 | **Professional knowledge & skills** | Understanding of the field, applying knowledge in practice, proficiency with tools, work quality | ☐ | ✅ | ☐ | Built ReLoop's serverless AI, security, and Terraform stack (Bedrock, Rekognition, DynamoDB), while continuing to deepen system-level foresight on key design and cost trade-offs. |
+| 2 | **Ability to learn** | Ability to absorb new knowledge and learn quickly | ✅ | ☐ | ☐ | Rapidly mastered 12 managed AWS services, Terraform IaC, and Bedrock Guardrails across the 12-week FCAJ bootcamp from scratch. |
+| 3 | **Proactiveness** | Taking initiative, seeking out tasks without waiting for instructions | ✅ | ☐ | ☐ | Led spec-gap triage (45 business decisions), initiated red-team prompt-injection testing, and proactively switched AI models from Nova Pro to Kimi K3 based on measured accuracy. |
+| 4 | **Sense of responsibility** | Completing tasks on time and ensuring quality | ✅ | ☐ | ☐ | Delivered Proposal Parts 1–2, live Workshop verification (5.1–5.12), and 3 AWS Study Group blogs on schedule with zero unverified claims. |
+| 5 | **Discipline** | Adhering to schedules, rules, and work processes | ☐ | ✅ | ☐ | Met attendance and security rules consistently, while strengthening daily operational discipline around branch hygiene, sprint pacing, and single-workflow CI/CD deploys. |
+| 6 | **Progressive mindset** | Willingness to receive feedback and improve oneself | ✅ | ☐ | ☐ | Actively incorporated mentor feedback and 5 QA rounds (146 findings) to fix Vietnamese AI accuracy, concurrency throttling, and origin-locking gaps. |
+| 7 | **Communication** | Presenting ideas and reporting work clearly | ☐ | ✅ | ☐ | Communicated effectively within the team and in written technical docs, while working to escalate blockers to mentors earlier with concise impact-and-options briefs. |
+| 8 | **Teamwork** | Working effectively with colleagues and participating in teams | ✅ | ☐ | ☐ | Coordinated cleanly across the 5-member ReLoop team (frontend, core backend, AI, and IaC), aligning API contracts, code reviews, and shared deploy rules. |
+| 9 | **Professional conduct** | Respecting colleagues, partners, and the work environment | ✅ | ☐ | ☐ | Maintained respectful, constructive collaboration with AWS mentors, teammates, and community partners across all 6 FCAJ events and office sessions. |
+| 10 | **Problem-solving skills** | Identifying problems, proposing solutions, and showing creativity | ☐ | ✅ | ☐ | Resolved real issues such as Lambda 5xx spikes and visual prompt injection, while shifting from fast local patches toward structured root-cause analysis before coding. |
+| 11 | **Contribution to project/team** | Work effectiveness, innovative ideas, recognition from the team | ✅ | ☐ | ☐ | Served as Team Lead and delivered ReLoop's Terraform stack, Bedrock Kimi K3 + Guardrails pipeline (40% → 92% benchmark accuracy), and technical reference. |
+| 12 | **Overall** | General evaluation of the entire internship period | ✅ | ☐ | ☐ | Strong end-to-end growth across cloud architecture, DevSecOps, and team leadership, with a clear action plan to close operational and communication gaps. |
 
 ---
 

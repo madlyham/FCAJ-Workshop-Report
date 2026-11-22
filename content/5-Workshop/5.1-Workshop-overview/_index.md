@@ -43,6 +43,17 @@ Every section in this workshop maps directly to the numbered arrows and supporti
 | **S3 + CloudFront (OAC) + Presigned URLs** | Proxying files through backend | 11 nines (`99.999999999%`) durability, keeps uploads off Lambda, CloudFront Free Tier (1 TB/month), private buckets only. |
 | **Cognito + Rekognition + Bedrock (Kimi K3 & Guardrail)** | Self-built Auth / self-hosted GPU models | Fully managed serverless pay-per-use (10,000 free MAU; zero idle GPU cost) with built-in content moderation & Guardrail safety. |
 
+### AWS Well-Architected Framework Alignment
+
+| Pillar | How ReLoop Implements It |
+| --- | --- |
+| **Operational Excellence** | Modular Terraform IaC ([`madlyham/ReLoop/terraform/`](https://github.com/madlyham/ReLoop/tree/main/terraform)), single CI-verified deployment flow, structured JSON CloudWatch Logs (7-day retention), and Lambda Errors alarm → SNS Admin email alerts. |
+| **Security** | CloudFront-attached AWS WAF (3 managed rule groups + 2 per-IP rate limits), private S3 buckets (Block Public Access + OAC + short-lived presigned URLs), `x-origin-verify` secret header blocking direct API Gateway calls, Cognito JWT (`JWKS`) on `ANY /{proxy+}`, separate least-privilege IAM roles, Rekognition + Bedrock Guardrail screening, and zero hardcoded secrets in Git. |
+| **Reliability** | Multi-AZ managed serverless stack (CloudFront, API Gateway, Lambda concurrency 1,000, DynamoDB on-demand with 35-day PITR), S3 11-nines (`99.999999999%`) durability, conditional DynamoDB writes & `Idempotency-Key`, EventBridge 15-minute expiry sweeps, and graceful degradation when Bedrock is unavailable (manual form entry still works). |
+| **Performance Efficiency** | CloudFront edge caching for SPA assets, ARM64 (Graviton) Node.js 22 Lambda (144 ms avg duration), single-table DynamoDB with `GSI1` & time-bucketed queries (zero table scans), direct browser-to-S3 presigned POST/GET keeping binary uploads off Lambda, and async self-invoke for ~35 s AI analysis. |
+| **Cost Optimization** | Serverless pay-per-use staying mostly in Free Tier (`$11.70/month` total including `$10.00` CloudFront WAF; `$1.70/month` without WAF; `< $1.00` same-day workshop run), ARM64 Graviton ~20% compute savings, S3 1-day pending / 90-day retention lifecycle, 7-day CloudWatch retention, 20/user/day AI cap, and documented reverse-order cleanup. |
+| **Sustainability** *(Checklist note)* | Serverless scale-to-zero compute eliminates idle 24/7 servers; ARM64 Graviton processors improve performance-per-watt; S3 lifecycle rules and 7-day log retention minimize unneeded storage. |
+
 ### Security Highlights
 
 | Graph Area | Protection Built |
@@ -67,6 +78,16 @@ Completing Modules **5.2–5.11** and tearing down in Module **5.12** the same d
 | **Rekognition & Bedrock** | Test moderation + Guardrail + Kimi K3 calls | ~$0.05–$0.25 |
 | **EventBridge, CloudWatch & SNS** | 1 rule, 2 log groups, 1 metric alarm, 1 SNS topic | $0.00 (Free Tier) |
 | **Total (built & cleaned up same day)** | Full E2E run + Module 5.12 cleanup | **< $1.00 USD** |
+
+You can reproduce ongoing estimates in the **[AWS Pricing Calculator](https://calculator.aws/)** or inspect the full monthly line-by-line breakdown in **[reloop-cost-estimate.csv](/files/2-proposal/reloop-cost-estimate.csv)** (**11.70 USD/month** ongoing with CloudFront WAF / **1.70 USD/month** without WAF; **< 1.00 USD** for a same-day workshop run).
+
+#### Operational Cost Optimization
+
+- **Free Tier & Scale-to-Zero Serverless:** Core compute (Lambda), global delivery (CloudFront), authentication (Cognito up to 10,000 MAU), EventBridge, CloudWatch, and SNS stay within AWS Free Tier and bill `$0` when idle.
+- **ARM64 (Graviton) Compute:** Running `reloop2-api` on `arm64` saves ~20% on Lambda compute cost compared with `x86_64`.
+- **Automated Storage & Log Lifecycles:** S3 lifecycle rules delete unattached `pending` photos after 1 day and expire listing photos after 90 days, while CloudWatch Logs automatically expire after 7 days.
+- **Per-User AI Quota Cap:** A hard backend quota limits Amazon Bedrock analyses to **20 calls/user/day**, capping variable generative-AI spend.
+- **Immediate Module 5.12 Teardown for WAF:** Deleting the CloudFront AWS WAFv2 Web ACL in [Module 5.12](../5.12-cleanup-and-iac/) right after verification eliminates the fixed `$10.00/month` Web ACL + 5-rule charge.
 
 {{% notice warning %}}
 An AWS WAFv2 Web ACL bills **$5/month + $1/month per rule** continuously even with zero traffic. Complete [Module 5.12](../5.12-cleanup-and-iac/) right after finishing [Module 5.11](../5.11-end-to-end-verification/) so no ongoing charges remain.

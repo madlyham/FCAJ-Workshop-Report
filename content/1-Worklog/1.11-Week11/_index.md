@@ -20,11 +20,11 @@ pre: " <b> 1.11. </b> "
 
 | Day | Planned Task Description | Target Date | Status | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Monday** | • Inventory every AWS resource in `ap-southeast-1` and `us-east-1` using Resource Explorer and cross-check against the Terraform state file | 23/11/2026 | Planned | AWS Resource Explorer, `infra/*.tf` |
-| **Tuesday** | • Identify leftover resources created manually in Weeks 1–5 (old user pools, test APIs, practice buckets, unused IAM roles) outside Terraform management | 24/11/2026 | Planned | AWS Console, Resource Explorer |
-| **Wednesday** | • Confirm `terraform plan` shows no pending changes, back up the cleanup inventory, and obtain team approval before deleting any resource | 25/11/2026 | Planned | `infra/backend.tf` |
-| **Thursday** | • Delete approved unused assets and re-run `smoke-aws.py` against the live ReLoop stack to verify zero impact | 26/11/2026 | Planned | `smoke-aws.py` |
-| **Friday** | • Finalize the Cost Explorer review against the **$11.70/month** budget ($10.00/month CloudFront WAF + ~$1.70/month usage, with core compute/DB/API/S3 under $0.30/month) and verify credit runway ($189.80 USD remaining on 21/11/2026 until 28/02/2027) | 27/11/2026 | Planned | AWS Cost Explorer |
+| **Monday** | • Inventory every AWS resource in `ap-southeast-1` and `us-east-1` using Resource Explorer and cross-check against the Terraform state file | 23/11/2026 | Planned | [AWS CLI Docs](https://docs.aws.amazon.com/cli/), [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs), [ReLoop Repository](https://github.com/madlyham/ReLoop) (`infra/*.tf`) |
+| **Tuesday** | • Identify leftover resources created manually in Weeks 1–5 (old user pools, test APIs, practice buckets, unused IAM roles) outside Terraform management | 24/11/2026 | Planned | [AWS IAM Docs](https://docs.aws.amazon.com/iam/), [Amazon S3 Docs](https://docs.aws.amazon.com/s3/) |
+| **Wednesday** | • Confirm `terraform plan` shows no pending changes, back up the cleanup inventory, and obtain team approval before deleting any resource | 25/11/2026 | Planned | [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs), [ReLoop Repository](https://github.com/madlyham/ReLoop) (`infra/backend.tf`) |
+| **Thursday** | • Delete approved unused assets and re-run `smoke-aws.py` against the live ReLoop stack to verify zero impact | 26/11/2026 | Planned | [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html), [ReLoop Repository](https://github.com/madlyham/ReLoop) (`smoke-aws.py`) |
+| **Friday** | • Finalize the Cost Explorer review against the **$11.70/month** budget ($10.00/month CloudFront WAF + ~$1.70/month usage, with core compute/DB/API/S3 under $0.30/month) and verify credit runway ($189.80 USD remaining on 21/11/2026 until 28/02/2027) | 27/11/2026 | Planned | [AWS Billing & Cost Explorer](https://docs.aws.amazon.com/cost-management/) |
 
 ## **3. Expected Outcomes**
 

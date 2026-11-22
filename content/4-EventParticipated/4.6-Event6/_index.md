@@ -36,6 +36,4 @@ It was good to see so many students interested in cloud. The questions were real
 
 ### **Event Photos**
 
-![Joined the Cloud Mastery quiz game on Quiz.com](/images/report/image13.jpg)
-
-*Photo: ChauLe*
+![Joined the Cloud Mastery quiz game on Quiz.com (Photo: ChauLe)](/images/report/image13.jpg)

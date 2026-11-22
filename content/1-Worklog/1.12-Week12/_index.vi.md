@@ -20,11 +20,11 @@ pre: " <b> 1.12. </b> "
 
 | Ngày | Mô tả công việc dự kiến | Ngày dự kiến | Trạng thái | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Thứ 2** | • Rà soát và hoàn thiện hướng dẫn Workshop (`5.1`–`5.12`) — sơ đồ kiến trúc, các bước triển khai, xác thực và dọn dẹp — đồng bộ với `RELOOP_TECHNICAL_REFERENCE` | 30/11/2026 | Dự kiến | `RELOOP_TECHNICAL_REFERENCE`, [Workshop](../../5-workshop/) |
-| **Thứ 3** | • Hoàn thiện báo cáo thực tập cuối kỳ: kết quả xác thực trực tiếp, bảng chi phí **$11.70/tháng**, tổng kết gia cố bảo mật và bài học rút ra | 01/12/2026 | Dự kiến | Báo cáo cuối kỳ |
-| **Thứ 4** | • Tổng duyệt demo trọn luồng trên hệ thống ReLoop bằng tài khoản kiểm thử trên hệ thống thật (AI điền tin, ghép tin, báo giá, giao dịch và đánh giá) | 02/12/2026 | Dự kiến | Kịch bản demo |
-| **Thứ 5** | • Trình bày buổi demo trực tiếp cuối kỳ với các mentor AWS và ghi nhận góp ý | 03/12/2026 | Dự kiến | Trình bày demo |
-| **Thứ 6** | • Bàn giao hoàn chỉnh (tài liệu, mã Terraform, runbook vận hành, báo cáo chi phí và credit hiệu lực đến 28/02/2027) và kết thúc kỳ thực tập | 04/12/2026 | Dự kiến | Bộ tài liệu bàn giao |
+| **Thứ 2** | • Rà soát và hoàn thiện hướng dẫn Workshop (`5.1`–`5.12`) — sơ đồ kiến trúc, các bước triển khai, xác thực và dọn dẹp — đồng bộ với `RELOOP_TECHNICAL_REFERENCE` | 30/11/2026 | Dự kiến | [Workshop](../../5-workshop/), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`RELOOP_TECHNICAL_REFERENCE`) |
+| **Thứ 3** | • Hoàn thiện báo cáo thực tập cuối kỳ: kết quả xác thực trực tiếp, bảng chi phí **$11.70/tháng**, tổng kết gia cố bảo mật và bài học rút ra | 01/12/2026 | Dự kiến | [AWS Billing & Cost Explorer](https://docs.aws.amazon.com/cost-management/), [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) |
+| **Thứ 4** | • Tổng duyệt demo trọn luồng trên hệ thống ReLoop bằng tài khoản kiểm thử trên hệ thống thật (AI điền tin, ghép tin, báo giá, giao dịch và đánh giá) | 02/12/2026 | Dự kiến | [Tài liệu Amazon Bedrock](https://docs.aws.amazon.com/bedrock/), [Tài liệu Amazon DynamoDB](https://docs.aws.amazon.com/dynamodb/) |
+| **Thứ 5** | • Trình bày buổi demo trực tiếp cuối kỳ với các mentor AWS và ghi nhận góp ý | 03/12/2026 | Dự kiến | [Đề xuất](../../2-proposal/), [Workshop](../../5-workshop/) |
+| **Thứ 6** | • Bàn giao hoàn chỉnh (tài liệu, mã Terraform, runbook vận hành, báo cáo chi phí và credit hiệu lực đến 28/02/2027) và kết thúc kỳ thực tập | 04/12/2026 | Dự kiến | [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs), [Repository ReLoop](https://github.com/madlyham/ReLoop) |
 
 ## **3. Kết quả dự kiến**
 
