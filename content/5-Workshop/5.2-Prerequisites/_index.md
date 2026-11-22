@@ -16,7 +16,11 @@ Before building Arrow 1, confirm your AWS account is set to **Asia Pacific (Sing
 
 - An AWS account with Console and AWS CLI v2 access (`aws sts get-caller-identity` succeeds).
 - Permissions to create CloudFront, WAFv2, S3, Cognito, API Gateway, Lambda, DynamoDB, Bedrock Guardrails, EventBridge, CloudWatch, SNS, and scoped IAM execution roles.
-- Node.js 20+ (only needed if you rebuild the frontend bundle locally; prebuilt assets and Lambda `.zip` packages are ready to upload).
+- Git and Python 3 to clone the companion repository **[github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop)** (contains prebuilt Lambda `.zip` packages, sanitized frontend bundle + `configure.py`, CloudFront Functions, and modular Terraform IaC):
+  ```bash
+  git clone https://github.com/madlyham/ReLoop.git
+  cd ReLoop
+  ```
 
 ---
 

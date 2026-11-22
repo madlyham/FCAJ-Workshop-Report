@@ -86,7 +86,7 @@ Now build the orange **API backend** box on the diagram: **AWS Lambda (`reloop2-
    - **Function name:** `reloop2-api`
    - **Runtime:** `Node.js 22.x` · **Architecture:** `arm64`
    - **Execution role:** `reloop2-api-lambda-role`
-   - Upload `reloop2-api.zip` (handler `index.handler`).
+   - Upload [`reloop2-api.zip`](https://github.com/madlyham/ReLoop/releases/download/v1.0.0/reloop2-api.zip) (also in `ReLoop/zips/reloop2-api.zip` from [github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop); handler `index.handler`).
    - Under **Configuration -> General configuration**, set **Memory:** `512 MB`, **Timeout:** `3 min` (`180s`).
 
 ![Lambda reloop2-api running Node.js 22 ARM64 with 512 MB and 3-minute timeout](/images/5-Workshop/5.5/01-api-lambda-config.png)

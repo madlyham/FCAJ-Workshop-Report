@@ -44,7 +44,7 @@ Inside **Amazon CloudFront**, create two small helper features needed for Arrows
 
 ![CloudFront Origin Access Control reloop2-web-oac](/images/5-Workshop/5.3/02-cf-oac.png)
 
-2. **CloudFront Functions (`cloudfront-js-2.0`):** Open **CloudFront -> Functions** and create + publish two lightweight viewer-request functions:
+2. **CloudFront Functions (`cloudfront-js-2.0`):** Open **CloudFront -> Functions** and create + publish two lightweight viewer-request functions (also saved in [`cloudfront-functions/`](https://github.com/madlyham/ReLoop/tree/main/cloudfront-functions) in the companion repo):
    - **`reloop2-spa-rewrite`** (supports **Arrow 2** so SPA routes like `/feed` or `/listings/new` resolve to `/index.html` while keeping real asset extensions untouched):
      ```javascript
      function handler(event) {

@@ -88,7 +88,7 @@ When a user confirms sign-up, Cognito calls `reloop2-post-confirmation`, which w
    - **Runtime:** `Python 3.12` (`x86_64`), **Memory:** `128 MB`, **Timeout:** `3s`
    - **Execution role:** `reloop2-post-confirmation-role`
    - **Environment variable:** `TABLE_NAME = reloop2-core-table`
-   - **Code (`lambda_function.py`):** Inserts `USER#<sub> / PROFILE` with `role = Owner`, `status = ACTIVE`, `GSI1PK = ROLE#Owner`, guarded by `ConditionExpression='attribute_not_exists(PK)'`, and returns `event` unchanged so Cognito completes sign-in.
+   - **Code (`lambda_function.py`):** Upload [`reloop2-post-confirmation.zip`](https://github.com/madlyham/ReLoop/releases/download/v1.0.0/reloop2-post-confirmation.zip) (also in `ReLoop/zips/` after cloning, or copy [`backend/post-confirmation/lambda_function.py`](https://github.com/madlyham/ReLoop/blob/main/backend/post-confirmation/lambda_function.py)). It inserts `USER#<sub> / PROFILE` with `role = Owner`, `status = ACTIVE`, `GSI1PK = ROLE#Owner`, guarded by `ConditionExpression='attribute_not_exists(PK)'`, and returns `event` unchanged so Cognito completes sign-in.
 
 ![Lambda reloop2-post-confirmation with TABLE_NAME environment variable](/images/5-Workshop/5.4/05-postconf-lambda.png)
 
@@ -103,17 +103,17 @@ When a user confirms sign-up, Cognito calls `reloop2-post-confirmation`, which w
 
 ### Part D — Upload Frontend Bundle to S3 Website (`Arrow 2` Live Assets)
 
-Now that your Cognito User Pool ID, App Client ID, and domain exist, configure your frontend environment variables and upload the built bundle to `reloop2-web-<suffix>` (created in Module 5.3):
+Now that your Cognito User Pool ID, App Client ID, and domain exist, stamp those values into the prebuilt React bundle from **[github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop/tree/main/frontend)** using `frontend/configure.py` and sync to `reloop2-web-<suffix>` (created in Module 5.3):
 
 ```bash
-# In your frontend build environment:
-VITE_COGNITO_USER_POOL_ID="ap-southeast-1_<id>"
-VITE_COGNITO_CLIENT_ID="<client-id>"
-VITE_COGNITO_DOMAIN="https://reloop2-auth.auth.ap-southeast-1.amazoncognito.com"
-npm run build
+# Inside your cloned ReLoop repository (no Node.js build required):
+python frontend/configure.py \
+  --pool-id "ap-southeast-1_<id>" \
+  --client-id "<client-id>" \
+  --domain "https://reloop2-auth.auth.ap-southeast-1.amazoncognito.com"
 
-# Upload built files to the private S3 website bucket and refresh CloudFront cache:
-aws s3 sync dist/ s3://reloop2-web-<suffix>/ --region ap-southeast-1 --delete
+# Upload configured static files to the private S3 website bucket and refresh CloudFront cache:
+aws s3 sync frontend/build/ s3://reloop2-web-<suffix>/ --region ap-southeast-1 --delete
 aws cloudfront create-invalidation --distribution-id <dist-id> --paths "/*"
 ```
 

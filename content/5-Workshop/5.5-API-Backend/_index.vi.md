@@ -86,7 +86,7 @@ Bây giờ bạn xây dựng khối màu cam **API backend** trên sơ đồ: **
    - **Function name:** `reloop2-api`
    - **Runtime:** `Node.js 22.x` · **Architecture:** `arm64`
    - **Execution role:** `reloop2-api-lambda-role`
-   - Tải lên tệp `reloop2-api.zip` (handler `index.handler`).
+   - Tải lên tệp [`reloop2-api.zip`](https://github.com/madlyham/ReLoop/releases/download/v1.0.0/reloop2-api.zip) (cũng có sẵn tại `ReLoop/zips/reloop2-api.zip` trong [github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop); handler `index.handler`).
    - Vào **Configuration -> General configuration**, đặt **Memory:** `512 MB`, **Timeout:** `3 min` (`180s`).
 
 ![Lambda reloop2-api chạy Node.js 22 ARM64 với 512 MB và timeout 3 phút](/images/5-Workshop/5.5/01-api-lambda-config.png)

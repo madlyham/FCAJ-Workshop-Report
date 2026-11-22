@@ -16,7 +16,11 @@ Trước khi dựng Mũi tên 1, hãy xác nhận tài khoản AWS đang chọn 
 
 - Tài khoản AWS có quyền truy cập AWS Management Console và AWS CLI v2 (`aws sts get-caller-identity` chạy thành công).
 - Quyền tạo CloudFront, WAFv2, S3, Cognito, API Gateway, Lambda, DynamoDB, Bedrock Guardrails, EventBridge, CloudWatch, SNS và vai trò thực thi IAM giới hạn quyền.
-- Node.js 20+ (chỉ cần nếu bạn tự build lại giao diện React; gói tĩnh và tệp `.zip` của Lambda đã sẵn sàng để tải lên).
+- Git và Python 3 để tải kho mã nguồn đồng hành **[github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop)** (chứa sẵn các gói `.zip` Lambda, bản dựng giao diện tĩnh kèm `configure.py`, CloudFront Functions và mã Terraform dạng mô-đun):
+  ```bash
+  git clone https://github.com/madlyham/ReLoop.git
+  cd ReLoop
+  ```
 
 ---
 

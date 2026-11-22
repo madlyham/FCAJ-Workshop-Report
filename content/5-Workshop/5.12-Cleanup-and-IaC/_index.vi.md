@@ -64,4 +64,16 @@ aws sns list-topics --region ap-southeast-1 --query "Topics[?contains(TopicArn,'
 
 ### Phần C — Tham khảo Hạ tầng dưới dạng Mã (Terraform)
 
-Nếu bạn muốn tái dựng tự động thay vì thao tác tay trên Console, bộ mã Terraform dạng mô-đun trong thư mục `terraform/` của kho lưu trữ (`provider.tf`, `frontend.tf`, `security.tf`, `identity.tf`, `api.tf`, `data.tf`, `storage.tf`, `ai.tf`, `events.tf`, `monitoring.tf`) mô tả trọn vẹn kiến trúc serverless này. Sao chép `terraform.tfvars.example` thành `terraform.tfvars`, điền tiền tố/hậu tố riêng rồi chạy `terraform init`, `terraform plan`, `terraform apply`, và `terraform destroy` khi hoàn tất.
+Nếu bạn muốn tái dựng tự động thay vì thao tác tay trên Console, hãy clone kho đồng hành **[github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop)**. Thư mục [`terraform/`](https://github.com/madlyham/ReLoop/tree/main/terraform) mô tả trọn vẹn kiến trúc 12 dịch vụ này (`provider.tf`, `data.tf`, `variables.tf`, `frontend.tf`, `security.tf`, `identity.tf`, `api.tf`, `storage.tf`, `ai.tf`, `events.tf`, `monitoring.tf`, `outputs.tf`) và tham chiếu trực tiếp đến `zips/` cùng `cloudfront-functions/` trong cùng kho:
+
+```bash
+git clone https://github.com/madlyham/ReLoop.git
+cd ReLoop/terraform
+cp terraform.tfvars.example terraform.tfvars
+# Chỉnh terraform.tfvars (bucket_suffix, alert_email, origin_verify_secret)
+terraform init
+terraform plan
+terraform apply
+```
+
+Sau khi `terraform apply` xong, chạy `python ../frontend/configure.py` với các giá trị Cognito đầu ra rồi đồng bộ `frontend/build/` lên bucket S3 web (xem [README](https://github.com/madlyham/ReLoop#option-2--deploy-with-terraform-reproducible-iac)). Khi hoàn tất, làm rỗng hai bucket S3, đặt `cognito_deletion_protection = "INACTIVE"` và chạy `terraform destroy`.

@@ -88,7 +88,7 @@ Khi người dùng xác nhận đăng ký, Cognito gọi `reloop2-post-confirmat
    - **Runtime:** `Python 3.12` (`x86_64`), **Memory:** `128 MB`, **Timeout:** `3s`
    - **Execution role:** `reloop2-post-confirmation-role`
    - **Biến môi trường:** `TABLE_NAME = reloop2-core-table`
-   - **Mã nguồn (`lambda_function.py`):** Ghi `USER#<sub> / PROFILE` với `role = Owner`, `status = ACTIVE`, `GSI1PK = ROLE#Owner`, kèm `ConditionExpression='attribute_not_exists(PK)'`, rồi trả về `event` nguyên vẹn để Cognito hoàn tất đăng nhập.
+   - **Mã nguồn (`lambda_function.py`):** Tải lên [`reloop2-post-confirmation.zip`](https://github.com/madlyham/ReLoop/releases/download/v1.0.0/reloop2-post-confirmation.zip) (cũng có sẵn trong `ReLoop/zips/` sau khi clone, hoặc chép từ [`backend/post-confirmation/lambda_function.py`](https://github.com/madlyham/ReLoop/blob/main/backend/post-confirmation/lambda_function.py)). Hàm ghi `USER#<sub> / PROFILE` với `role = Owner`, `status = ACTIVE`, `GSI1PK = ROLE#Owner`, kèm `ConditionExpression='attribute_not_exists(PK)'`, rồi trả về `event` nguyên vẹn để Cognito hoàn tất đăng nhập.
 
 ![Hàm Lambda reloop2-post-confirmation cùng biến môi trường TABLE_NAME](/images/5-Workshop/5.4/05-postconf-lambda.png)
 
@@ -103,17 +103,17 @@ Khi người dùng xác nhận đăng ký, Cognito gọi `reloop2-post-confirmat
 
 ### Phần D — Tải gói giao diện lên S3 Website (Tệp tĩnh cho `Mũi tên 2`)
 
-Sau khi có Cognito User Pool ID, App Client ID và domain, hãy cấu hình biến môi trường frontend và tải bản dựng lên bucket `reloop2-web-<suffix>` (đã tạo ở Học phần 5.3):
+Sau khi có Cognito User Pool ID, App Client ID và domain, hãy gắn các giá trị này vào bản dựng React có sẵn trong **[github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop/tree/main/frontend)** bằng `frontend/configure.py` rồi đồng bộ lên bucket `reloop2-web-<suffix>` (đã tạo ở Học phần 5.3):
 
 ```bash
-# Trong thư mục mã nguồn frontend:
-VITE_COGNITO_USER_POOL_ID="ap-southeast-1_<id>"
-VITE_COGNITO_CLIENT_ID="<client-id>"
-VITE_COGNITO_DOMAIN="https://reloop2-auth.auth.ap-southeast-1.amazoncognito.com"
-npm run build
+# Chạy trong thư mục ReLoop đã clone (không cần build bằng Node.js):
+python frontend/configure.py \
+  --pool-id "ap-southeast-1_<id>" \
+  --client-id "<client-id>" \
+  --domain "https://reloop2-auth.auth.ap-southeast-1.amazoncognito.com"
 
-# Đồng bộ tệp tĩnh lên S3 website riêng tư và xóa bộ nhớ đệm CloudFront:
-aws s3 sync dist/ s3://reloop2-web-<suffix>/ --region ap-southeast-1 --delete
+# Đồng bộ tệp tĩnh đã cấu hình lên S3 website riêng tư và xóa bộ nhớ đệm CloudFront:
+aws s3 sync frontend/build/ s3://reloop2-web-<suffix>/ --region ap-southeast-1 --delete
 aws cloudfront create-invalidation --distribution-id <dist-id> --paths "/*"
 ```
 

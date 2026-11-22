@@ -44,7 +44,7 @@ Ngay trong **Amazon CloudFront**, bạn tạo hai thành phần nhỏ cần thi�
 
 ![CloudFront Origin Access Control reloop2-web-oac](/images/5-Workshop/5.3/02-cf-oac.png)
 
-2. **CloudFront Functions (`cloudfront-js-2.0`):** Mở **CloudFront -> Functions**, tạo và xuất bản (Publish) hai hàm `viewer-request`:
+2. **CloudFront Functions (`cloudfront-js-2.0`):** Mở **CloudFront -> Functions**, tạo và xuất bản (Publish) hai hàm `viewer-request` (cũng có sẵn trong thư mục [`cloudfront-functions/`](https://github.com/madlyham/ReLoop/tree/main/cloudfront-functions) của kho đồng hành):
    - **`reloop2-spa-rewrite`** (hỗ trợ **Mũi tên 2** để các đường dẫn SPA như `/feed` hay `/listings/new` trỏ về `/index.html`, còn tệp tĩnh có phần mở rộng giữ nguyên):
      ```javascript
      function handler(event) {

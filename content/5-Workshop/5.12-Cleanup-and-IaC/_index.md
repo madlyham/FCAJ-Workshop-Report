@@ -64,4 +64,16 @@ aws sns list-topics --region ap-southeast-1 --query "Topics[?contains(TopicArn,'
 
 ### Part C — Terraform Infrastructure-as-Code Reference
 
-If you prefer reproducible Infrastructure as Code over manual Console clicks, the modular Terraform configuration in the repository's `terraform/` directory models this exact serverless architecture (`provider.tf`, `frontend.tf`, `security.tf`, `identity.tf`, `api.tf`, `data.tf`, `storage.tf`, `ai.tf`, `events.tf`, `monitoring.tf`). Copy `terraform.tfvars.example` to `terraform.tfvars`, set your unique prefix/suffix, and run `terraform init`, `terraform plan`, `terraform apply`, and `terraform destroy` when finished.
+If you prefer reproducible Infrastructure as Code over manual Console clicks, clone the companion repository **[github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop)**. Its modular [`terraform/`](https://github.com/madlyham/ReLoop/tree/main/terraform) directory models this exact 12-service architecture (`provider.tf`, `data.tf`, `variables.tf`, `frontend.tf`, `security.tf`, `identity.tf`, `api.tf`, `storage.tf`, `ai.tf`, `events.tf`, `monitoring.tf`, `outputs.tf`) and references the included `zips/` and `cloudfront-functions/` directly:
+
+```bash
+git clone https://github.com/madlyham/ReLoop.git
+cd ReLoop/terraform
+cp terraform.tfvars.example terraform.tfvars
+# Edit terraform.tfvars (bucket_suffix, alert_email, origin_verify_secret)
+terraform init
+terraform plan
+terraform apply
+```
+
+After `terraform apply` finishes, run `python ../frontend/configure.py` with the printed Cognito outputs and sync `frontend/build/` to the S3 web bucket (see the repository [README](https://github.com/madlyham/ReLoop#option-2--deploy-with-terraform-reproducible-iac)). When finished, empty the S3 buckets, set `cognito_deletion_protection = "INACTIVE"`, and run `terraform destroy`.
