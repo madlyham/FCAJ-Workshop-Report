@@ -34,6 +34,15 @@ Every section in this workshop maps directly to the numbered arrows and supporti
 - **EventBridge → Lambda (API)** (`expire listings every 15 min`): Rule `reloop2-sweep` invokes `reloop2-api` every 15 minutes to expire old open listings ([Module 5.9](../5.9-eventbridge/)).
 - **Lambda (API) → CloudWatch** (`logs & metrics`) **→ SNS** (`alarm → email Admin`): Structured Lambda logs keep 7-day retention, and the `reloop2-lambda-errors` alarm publishes to SNS topic `reloop2-alerts` to email the admin ([Module 5.10](../5.10-monitoring/)).
 
+### Service Selection Rationale
+
+| Chosen AWS Services | Instead Of | Why Chosen (Cost · Scalability · Availability) |
+| --- | --- | --- |
+| **API Gateway (HTTP API) + Lambda (`arm64`)** | EC2 / ECS | `$0` when idle, auto-scales to 1,000 concurrency, Multi-AZ HA built in, Graviton `arm64` saves ~20% compute cost. |
+| **DynamoDB On-Demand (Single-Table)** | Amazon RDS | Zero 24/7 server bill (~$0.10/month at workshop/dev scale), built-in Multi-AZ replication, native PITR & TTL. |
+| **S3 + CloudFront (OAC) + Presigned URLs** | Proxying files through backend | 11 nines (`99.999999999%`) durability, keeps uploads off Lambda, CloudFront Free Tier (1 TB/month), private buckets only. |
+| **Cognito + Rekognition + Bedrock (Kimi K3 & Guardrail)** | Self-built Auth / self-hosted GPU models | Fully managed serverless pay-per-use (10,000 free MAU; zero idle GPU cost) with built-in content moderation & Guardrail safety. |
+
 ### Security Highlights
 
 | Graph Area | Protection Built |

@@ -92,6 +92,16 @@ ReLoop runs fully serverless in **Asia Pacific (Singapore) `ap-southeast-1`**, p
 - **Amazon SNS:** sends email alerts to Admins whenever the CloudWatch alarm enters the `ALARM` state.
 - **AWS IAM:** 2 separate least-privilege execution roles — one scoped to DynamoDB profile writes for the Post-confirm Lambda, and one scoped strictly to the core table, photo bucket prefix, Rekognition, Bedrock model & Guardrail, and CloudWatch Logs for the API Lambda.
 
+#### Service Selection Rationale
+
+| Chosen AWS Services | Alternative Considered | Why Chosen (Cost · Scalability · Availability & Operations) |
+|---|---|---|
+| **API Gateway (HTTP API) + Lambda (`arm64` Graviton)** | Amazon EC2 or Amazon ECS | **$0 when idle** (Always Free 1M requests + 400,000 GB-s/month) and Graviton `arm64` saves ~20% on compute vs `x86_64`; auto-scales to **1,000 concurrency** with built-in Multi-AZ high availability and zero OS patching. |
+| **Amazon DynamoDB On-Demand (Single-Table)** | Amazon RDS (MySQL/PostgreSQL) | No 24/7 database instance bill (**~$0.10/month** at current traffic); instant pay-per-request scaling; built-in Multi-AZ replication plus native **PITR (35 days)** and **TTL** expiry. |
+| **Amazon S3 + CloudFront (OAC) + Presigned URLs** | Proxying uploads through backend or public buckets | **11 nines (`99.999999999%`) durability**; keeps photo bytes off Lambda (avoiding payload limits and memory cost); **1 TB + 10M requests/month** CloudFront Free Tier; strict private buckets via OAC and short-lived presigned URLs. |
+| **Amazon Cognito + Rekognition + Bedrock (Kimi K3 & Guardrail)** | Self-built auth + self-hosted GPU models | Fully managed pay-per-use (Cognito free up to **10,000 MAU**, zero idle GPU cost); built-in JWT/JWKS authentication, automated image moderation, and **Bedrock Guardrail** protection against prompt injection. |
+| **AWS WAF (CloudFront) + EventBridge + CloudWatch / SNS** | Self-managed reverse proxy, cron server & monitoring stack | Managed edge rate limits & OWASP rules with zero proxy upkeep; serverless 15-minute scheduler and Free Tier logs, metric alarm, and admin email notifications. |
+
 #### Component Design
 - **Edge / Client:** a React 18 + TypeScript single-page app (Vite) using Leaflet + OpenStreetMap for location picking. Guests browse the public market; signed-in users access the partner portal (Tier 1 individual sellers: max 3 open listings; Tier 2 business buyers with branches, pricing rules, and quotes: max 10) or the Admin portal.
 - **Photo Ingestion:**

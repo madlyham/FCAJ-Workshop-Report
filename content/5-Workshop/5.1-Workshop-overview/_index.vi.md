@@ -34,6 +34,15 @@ Mỗi học phần trong workshop khớp trực tiếp với các mũi tên đá
 - **EventBridge → Lambda (API)** (`expire listings every 15 min`): Quy tắc `reloop2-sweep` gọi `reloop2-api` mỗi 15 phút để hết hạn các tin đăng quá hạn ([Học phần 5.9](../5.9-eventbridge/)).
 - **Lambda (API) → CloudWatch** (`logs & metrics`) **→ SNS** (`alarm → email Admin`): Nhật ký Lambda lưu giữ 7 ngày, và cảnh báo `reloop2-lambda-errors` gửi thông báo qua chủ đề SNS `reloop2-alerts` tới email quản trị viên ([Học phần 5.10](../5.10-monitoring/)).
 
+### Căn cứ lựa chọn dịch vụ
+
+| Dịch vụ AWS đã chọn | Thay cho | Lý do lựa chọn (Chi phí · Mở rộng · Độ sẵn sàng) |
+| --- | --- | --- |
+| **API Gateway (HTTP API) + Lambda (`arm64`)** | EC2 / ECS | 0 USD khi rảnh, tự mở rộng tới 1.000 lượt song song, sẵn sàng cao Multi-AZ mặc định, chip Graviton `arm64` tiết kiệm ~20% chi phí. |
+| **DynamoDB On-Demand (Single-Table)** | Amazon RDS | Không tốn phí máy chủ 24/7 (~$0,10/tháng ở quy mô hiện tại), nhân bản Multi-AZ mặc định, tích hợp sẵn PITR & TTL. |
+| **S3 + CloudFront (OAC) + Presigned URL** | Đẩy tệp qua backend | Độ bền 11 số 9 (`99,999999999%`), giảm tải cho Lambda, tối ưu băng thông (CloudFront Free Tier 1 TB/tháng), khóa kín bucket riêng tư. |
+| **Cognito + Rekognition + Bedrock (Kimi K3 & Guardrail)** | Tự dựng Auth / tự host GPU | Quản lý hoàn toàn, serverless trả theo lượt dùng (10.000 MAU miễn phí; không tốn phí GPU rảnh), có sẵn kiểm duyệt ảnh và Guardrail bảo vệ. |
+
 ### Điểm nhấn bảo mật
 
 | Khu vực trên sơ đồ | Cơ chế bảo vệ |

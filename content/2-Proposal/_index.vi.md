@@ -92,6 +92,16 @@ ReLoop chạy hoàn toàn serverless tại **Asia Pacific (Singapore) `ap-southe
 - **Amazon SNS:** gửi email cảnh báo cho Admin ngay khi alarm CloudWatch chuyển sang trạng thái `ALARM`.
 - **AWS IAM:** 2 execution role quyền tối thiểu riêng biệt — một role chỉ có quyền ghi hồ sơ vào DynamoDB cho Lambda Post-confirm, và một role giới hạn đúng bảng chính, thư mục ảnh S3, Rekognition, model & Guardrail Bedrock và CloudWatch Logs cho Lambda API.
 
+#### Căn cứ lựa chọn dịch vụ
+
+| Dịch vụ AWS đã chọn | Phương án thay thế cân nhắc | Lý do lựa chọn (Chi phí · Khả năng mở rộng · Sẵn sàng & Vận hành) |
+|---|---|---|
+| **API Gateway (HTTP API) + Lambda (`arm64` Graviton)** | Amazon EC2 hoặc Amazon ECS | **0 USD khi không có tải** (Always Free 1 triệu request + 400.000 GB-s/tháng) và chip Graviton `arm64` tiết kiệm ~20% chi phí tính toán so với `x86_64`; tự mở rộng tới **1.000 lượt chạy song song**, sẵn sàng cao Multi-AZ mặc định và không cần vá hệ điều hành. |
+| **Amazon DynamoDB On-Demand (Single-Table)** | Amazon RDS (MySQL/PostgreSQL) | Không tốn phí máy chủ chạy 24/7 (**~0,10 USD/tháng** ở tải hiện tại); tự mở rộng theo từng yêu cầu; nhân bản Multi-AZ mặc định kèm sẵn **PITR (35 ngày)** và tự xóa bằng **TTL**. |
+| **Amazon S3 + CloudFront (OAC) + Presigned URL** | Đẩy tệp ảnh qua backend hoặc mở bucket công khai | **Độ bền 11 số 9 (`99,999999999%`)**; giảm tải hoàn toàn dữ liệu ảnh khỏi Lambda (tránh giới hạn payload và tốn RAM); tối ưu băng thông với CloudFront Free Tier (**1 TB + 10 triệu request/tháng**); khóa kín bucket bằng OAC và presigned URL ngắn hạn. |
+| **Amazon Cognito + Rekognition + Bedrock (Kimi K3 & Guardrail)** | Tự dựng hệ thống Auth + tự host mô hình GPU | Quản lý hoàn toàn, trả tiền theo lượt dùng (Cognito miễn phí tới **10.000 MAU**, không tốn phí GPU rảnh); có sẵn JWT/JWKS, kiểm duyệt ảnh tự động và **Bedrock Guardrail** chặn prompt injection. |
+| **AWS WAF (CloudFront) + EventBridge + CloudWatch / SNS** | Tự vận hành reverse proxy, máy chủ cron & hệ thống giám sát | Giới hạn tốc độ và bộ luật OWASP ở biên không cần bảo trì proxy; lịch chạy serverless mỗi 15 phút cùng log, alarm và email cảnh báo trong Free Tier. |
+
 #### Thiết kế thành phần
 - **Giao diện người dùng (Edge / Client):** ứng dụng một trang React 18 + TypeScript (Vite) dùng Leaflet + OpenStreetMap để chọn vị trí. Khách xem Chợ công khai; người đã đăng nhập truy cập cổng đối tác (Cấp 1 người bán cá nhân: tối đa 3 tin đang mở; Cấp 2 doanh nghiệp thu mua có chi nhánh, bảng quy tắc giá và báo giá: tối đa 10 tin) hoặc cổng Admin.
 - **Tiếp nhận ảnh (Photo Ingestion):**

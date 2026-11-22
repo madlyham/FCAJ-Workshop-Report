@@ -88,7 +88,47 @@ Khi người dùng xác nhận đăng ký, Cognito gọi `reloop2-post-confirmat
    - **Runtime:** `Python 3.12` (`x86_64`), **Memory:** `128 MB`, **Timeout:** `3s`
    - **Execution role:** `reloop2-post-confirmation-role`
    - **Biến môi trường:** `TABLE_NAME = reloop2-core-table`
-   - **Mã nguồn (`lambda_function.py`):** Tải lên [`reloop2-post-confirmation.zip`](https://github.com/madlyham/ReLoop/releases/download/v1.0.0/reloop2-post-confirmation.zip) (cũng có sẵn trong `ReLoop/zips/` sau khi clone, hoặc chép từ [`backend/post-confirmation/lambda_function.py`](https://github.com/madlyham/ReLoop/blob/main/backend/post-confirmation/lambda_function.py)). Hàm ghi `USER#<sub> / PROFILE` với `role = Owner`, `status = ACTIVE`, `GSI1PK = ROLE#Owner`, kèm `ConditionExpression='attribute_not_exists(PK)'`, rồi trả về `event` nguyên vẹn để Cognito hoàn tất đăng nhập.
+   - **Mã nguồn (`lambda_function.py`):** Tải lên [`reloop2-post-confirmation.zip`](https://github.com/madlyham/ReLoop/releases/download/v1.0.0/reloop2-post-confirmation.zip) (cũng có sẵn trong `ReLoop/zips/` sau khi clone), hoặc dán trực tiếp mã nguồn [`backend/post-confirmation/lambda_function.py`](https://github.com/madlyham/ReLoop/blob/main/backend/post-confirmation/lambda_function.py) vào trình soạn thảo Lambda:
+     ```python
+     import os
+     import boto3
+     import datetime
+
+     dynamodb = boto3.client('dynamodb')
+     TABLE_NAME = os.environ['TABLE_NAME']
+
+     def lambda_handler(event, context):
+         if event.get('triggerSource') != 'PostConfirmation_ConfirmSignUp':
+             return event
+
+         user_attributes = event['request']['userAttributes']
+         user_id = user_attributes['sub']
+         email = user_attributes.get('email', '')
+         name = user_attributes.get('name', 'Unknown')
+         role = 'Owner'
+         timestamp = datetime.datetime.utcnow().isoformat() + 'Z'
+
+         try:
+             dynamodb.put_item(
+                 TableName=TABLE_NAME,
+                 Item={
+                     'PK': {'S': f"USER#{user_id}"},
+                     'SK': {'S': "PROFILE"},
+                     'GSI1PK': {'S': f"ROLE#{role}"},
+                     'GSI1SK': {'S': f"USER#{user_id}"},
+                     'email': {'S': email},
+                     'fullName': {'S': name},
+                     'role': {'S': role},
+                     'status': {'S': 'ACTIVE'},
+                     'createdAt': {'S': timestamp}
+                 },
+                 ConditionExpression='attribute_not_exists(PK)'
+             )
+         except Exception as e:
+             print(f"Failed to write user to DynamoDB: {str(e)}")
+
+         return event
+     ```
 
 ![Hàm Lambda reloop2-post-confirmation cùng biến môi trường TABLE_NAME](/images/5-Workshop/5.4/05-postconf-lambda.png)
 
