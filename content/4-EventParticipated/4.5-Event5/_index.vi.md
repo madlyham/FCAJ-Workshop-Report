@@ -9,7 +9,7 @@ pre: " <b> 4.5. </b> "
 # **Sự kiện 5: Gấu bông thông minh cho trẻ em – Hoạt động vì cộng đồng phối hợp cùng Operation Smile Vietnam**
 
 **Ngày:** Thứ Hai, ngày 26 tháng 10 năm 2026  
-**Thời gian:** 01:30 PM – 03:30 PM (GMT+7)  
+**Thời gian:** 13:30 – 15:30 (GMT+7)  
 **Địa điểm:** Phòng EC2, Tầng 36, Văn phòng AWS Việt Nam, Bitexco Financial Tower, TP. Hồ Chí Minh.  
 **Vai trò:** Người tham gia  
 
@@ -33,5 +33,6 @@ Sự kiện là một trải nghiệm đặc biệt và đáng nhớ trong kỳ 
 
 ### **Hình ảnh sự kiện**
 
+![Thực hành lắp ráp gấu bông IoT tương tác cùng Operation Smile Vietnam](/images/report/image11.png)
 
-![](/images/report/image11.png) ![](/images/report/image12.png) 
+![Thành phẩm gấu bông thông minh cùng nhóm tình nguyện tại Phòng EC2, Tầng 36, Văn phòng AWS Việt Nam](/images/report/image12.png)

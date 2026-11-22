@@ -6,7 +6,7 @@ chapter : false
 pre : " <b> 5.9. </b> "
 ---
 
-Add the scheduled background arrow on the diagram: **Amazon EventBridge** wakes up `reloop2-api` every 15 minutes to scan `TIMER#` partitions in DynamoDB and automatically expire open listings past their 7-day window.
+Add the scheduled background arrow on the diagram: **Amazon EventBridge** wakes up `reloop2-api` every 15 minutes to query `TIMER#` partitions in DynamoDB and automatically expire open listings past their 7-day window.
 
 **Graph arrow covered in this step:**
 - **Supporting link:** `Amazon EventBridge → AWS Lambda (API)` (`expire listings every 15 min`)
@@ -20,7 +20,7 @@ Add the scheduled background arrow on the diagram: **Amazon EventBridge** wakes 
 1. Open **Amazon EventBridge -> Buses -> Rules -> Create rule** in **`ap-southeast-1`**.
 2. Configure:
    - **Name:** `reloop2-sweep`
-   - **Description:** `ReLoop 2: expire listings every 15 min`
+   - **Description:** `ReLoop: expire listings every 15 min`
    - **Event bus:** `default`
    - **Rule type:** **`Schedule`** -> **Continue in EventBridge Rule**
    - **Schedule pattern:** **Fixed rate of `15` `Minutes`** (`rate(15 minutes)`)

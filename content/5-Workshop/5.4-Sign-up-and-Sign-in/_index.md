@@ -23,7 +23,7 @@ Next on the architecture path is **Arrow 3**: users register and sign in directl
 2. Configure:
    - **Pool name:** `reloop2-user-pool`
    - **Tier:** `Essentials`
-   - **Sign-in & attributes:** Username + required `email` (auto-verified by email) and optional `name`
+   - **Sign-in & attributes:** Username (with email sign-in alias) + required `email` (auto-verified by email) and optional `name`
    - **Password policy:** Minimum 8 characters with uppercase, lowercase, number, and symbol
    - **Account recovery:** Verified email only
    - **Deletion protection:** `ACTIVE`
@@ -70,6 +70,7 @@ When a user confirms sign-up, Cognito calls `reloop2-post-confirmation`, which w
    - **Role name:** `reloop2-post-confirmation-role`
    - Attach AWS managed policy `AWSLambdaBasicExecutionRole` (for CloudWatch Logs).
    - Add inline policy **`DynamoDBWriteAccess`**:
+     *(Replace placeholder `123456789012` with your 12-digit AWS Account ID.)*
      ```json
      {
        "Version": "2012-10-17",
@@ -146,11 +147,12 @@ When a user confirms sign-up, Cognito calls `reloop2-post-confirmation`, which w
 Now that your Cognito User Pool ID, App Client ID, and domain exist, stamp those values into the prebuilt React bundle from **[github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop/tree/main/frontend)** using `frontend/configure.py` and sync to `reloop2-web-<suffix>` (created in Module 5.3):
 
 ```bash
-# Inside your cloned ReLoop repository (no Node.js build required):
+# Inside your cloned ReLoop repository (no Node.js build required;
+# replace <your-cognito-domain> with reloop2-auth or your suffixed domain prefix from Part B):
 python frontend/configure.py \
   --pool-id "ap-southeast-1_<id>" \
   --client-id "<client-id>" \
-  --domain "https://reloop2-auth.auth.ap-southeast-1.amazoncognito.com"
+  --domain "https://<your-cognito-domain>.auth.ap-southeast-1.amazoncognito.com"
 
 # Upload configured static files to the private S3 website bucket and refresh CloudFront cache:
 aws s3 sync frontend/build/ s3://reloop2-web-<suffix>/ --region ap-southeast-1 --delete

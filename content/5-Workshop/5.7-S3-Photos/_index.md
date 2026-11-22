@@ -8,8 +8,8 @@ pre : " <b> 5.7. </b> "
 
 Complete the **Data storage** box by creating the private photo bucket `reloop2-images-<suffix>`. In the diagram, photo handling uses a two-step presigned URL pattern so large image uploads never pass through API Gateway or Lambda:
 
-1. **Arrow 7 (`presign & tag`):** `AWS Lambda (API)` generates a short-lived presigned upload URL for `listings/<userId>/<uuid>.jpg` and tags unattached uploads with `state=pending`.
-2. **Arrow 8 (`upload / view photos`):** `Users (web browser)` PUT the image straight into private S3 and later view photos via short-lived presigned GET URLs.
+1. **Arrow 7 (`presign & tag`):** `AWS Lambda (API)` generates a short-lived presigned `POST` upload policy for `listings/<hash>/<uuid>.<ext>` with the `state=pending` object tag (via `createPresignedPost`).
+2. **Arrow 8 (`upload / view photos`):** `Users (web browser)` upload (`POST`) the image straight into private S3 using that presigned `POST` and later view photos via short-lived presigned `GET` URLs.
 
 **Graph arrows covered in this step:**
 - **Arrow 7:** `AWS Lambda (API) ↔ Amazon S3 (photos)` (`presign & tag`)
@@ -57,7 +57,7 @@ Because CloudFront is already deployed from Module 5.3, you enter your live `htt
 
 ---
 
-### Step 3 — Add 3 Cost-Control Lifecycle Rules (`Arrow 7` Tag Cleanup)
+### Step 3 — Add 3 Cost-Control Lifecycle Rules (Cleanup of Tagged Arrow 7 Uploads)
 
 Open the **Management** tab -> **Create lifecycle rule** three times so abandoned or expired photos never accumulate storage charges:
 

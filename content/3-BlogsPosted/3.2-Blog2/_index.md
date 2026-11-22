@@ -42,9 +42,8 @@ Log in with User A's credentials, use A's valid token to attempt modifying User 
 
 Holding a valid passport doesn't mean you own every house in the city.
 
-*Note: This architecture and testing design is a proposed pattern.*
-
+*Note: This is a proposed architecture and testing design pattern, not a live production deployment report.*
 
 #AWS #Cognito #APIGateway #DynamoDB #CyberSecurity #Authorization
 
-![](/images/report/image2.png)
+![Amazon Cognito, API Gateway JWT Authorizer, and DynamoDB conditional ownership check diagram](/images/report/image2.png)

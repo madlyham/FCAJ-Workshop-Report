@@ -33,7 +33,7 @@ Dù sơ đồ ghi nhãn **Amazon S3 (website)** vì đây là nơi chứa bản 
 
 ---
 
-### Phần B — Tạo CloudFront OAC & Hàm định tuyến nội bộ
+### Phần B — Tạo CloudFront OAC & Hàm định tuyến (CloudFront Functions)
 
 Ngay trong **Amazon CloudFront**, bạn tạo hai thành phần nhỏ cần thiết cho Mũi tên 2 và Mũi tên 4:
 
@@ -45,7 +45,7 @@ Ngay trong **Amazon CloudFront**, bạn tạo hai thành phần nhỏ cần thi�
 ![CloudFront Origin Access Control reloop2-web-oac](/images/5-Workshop/5.3/02-cf-oac.png)
 
 2. **CloudFront Functions (`cloudfront-js-2.0`):** Mở **CloudFront -> Functions**, tạo và xuất bản (Publish) hai hàm `viewer-request` (cũng có sẵn trong thư mục [`cloudfront-functions/`](https://github.com/madlyham/ReLoop/tree/main/cloudfront-functions) của kho đồng hành):
-   - **`reloop2-spa-rewrite`** (hỗ trợ **Mũi tên 2** để các đường dẫn SPA như `/feed` hay `/listings/new` trỏ về `/index.html`, còn tệp tĩnh có phần mở rộng giữ nguyên):
+   - **`reloop2-spa-rewrite`** (hỗ trợ **Mũi tên 2** để các đường dẫn SPA như `/feed` hay `/listings/new` trỏ về `/index.html`, còn các tệp tài nguyên tĩnh (như .js, .css, ảnh...) vẫn được phục vụ trực tiếp):
      ```javascript
      function handler(event) {
        var req = event.request;
@@ -84,6 +84,7 @@ Ngay trong **Amazon CloudFront**, bạn tạo hai thành phần nhỏ cần thi�
 ![CloudFront distribution reloop2-web phục vụ qua HTTPS](/images/5-Workshop/5.3/04-cf-distribution-overview.png)
 
 3. Quay lại **S3 -> `reloop2-web-<suffix>` -> Permissions -> Bucket policy** và dán chính sách giới hạn quyền đọc chỉ cho ARN distribution của bạn:
+   *(Thay giá trị mẫu `123456789012` bằng mã tài khoản AWS 12 chữ số của bạn, cùng với `<suffix>` và `<dist-id>`.)*
    ```json
    {
      "Version": "2012-10-17",
@@ -125,7 +126,7 @@ Ngay trong **Amazon CloudFront**, bạn tạo hai thành phần nhỏ cần thi�
 Trên sơ đồ, **AWS WAF (web)** nối trực tiếp với **Amazon CloudFront** qua `associated web ACL`. Web ACL cho CloudFront bắt buộc tạo ở phạm vi **Global (CloudFront) / `us-east-1`**.
 
 1. Mở **AWS WAF & Shield -> Web ACLs**, chọn **Global (CloudFront)** rồi nhấn **Create web ACL**.
-2. Đặt **Name:** `reloop2-web`, **Description:** `ReLoop 2: IP rate limits, bad IPs, common attack patterns - CloudFront`, và liên kết với CloudFront distribution (`reloop2 web`).
+2. Đặt **Name:** `reloop2-web`, **Description:** `ReLoop: IP rate limits, bad IPs, common attack patterns - CloudFront`, và liên kết với CloudFront distribution (`reloop2 web`).
 3. Thêm **Custom response body** tên **`rate_limited`** (kiểu `JSON`):
    ```json
    {"code":"RATE_LIMITED","message":"Too many requests - wait about 1 minute and try again"}

@@ -23,7 +23,7 @@ Must we wait until they come online to dispatch the invitation? Not at all. We b
 
 **The Key Insight**
 
-State is saved first; notifications are delivered second. Even if the partner was offline during job creation, the invitation rests safely in the database. When they reopen the app, frontend queries `GET /my-offers`, and backend returns all persisted offers.
+State is saved first; notifications are delivered second. Even if the partner was offline during job creation, the invitation rests safely in the database. When they reopen the app, the frontend queries `GET /my-offers`, and the backend returns all persisted offers.
 
 We don't gamble on push notifications arriving reliably. A push notification is merely a knock on the door; DynamoDB holds the letter.
 
@@ -33,15 +33,14 @@ What if EventBridge replays events, or SQS delivers a message twice? Idempotent 
 
 * Create a job while the candidate partner is offline.  
 * Verify that the offer record is persisted in DynamoDB.  
-* Open the app subsequently and confirm the offer renders correctly.  
+* Open the app afterward and confirm the offer renders correctly.  
 * Replay the exact event payload multiple times to prove offers are never duplicated.  
 * Inject an unparseable payload to verify DLQ redirection.
 
 A resilient system finishes its work without depending on 24/7 client connectivity.
 
-*Note: This architecture and testing design is a proposed pattern.*
-
+*Note: This is a standalone conceptual AWS Study Group reference pattern (separate from ReLoop's 12-service stack) and a proposed testing design, not a live production deployment report.*
 
 #AWS #EventDrivenArchitecture #SQS #EventBridge #Lambda #DynamoDB #SNS
 
-![](/images/report/image3.png)
+![Event-driven offline-tolerant partner matching architecture with EventBridge, SQS, Lambda, DynamoDB, and SNS](/images/report/image3.png)

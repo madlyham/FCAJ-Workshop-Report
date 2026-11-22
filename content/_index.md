@@ -1,22 +1,23 @@
 ---
 title: "Internship Report"
-date: 2026-11-07
+date: 2026-11-22
 weight: 1
 chapter: false
 ---
 
 # Internship Report
 
-### Student Information:
+## Student Information
+
 &emsp; **Full Name:** Kung Cẩm Thành
 
-&emsp; **Phone Number:** 0908122927 
+&emsp; **Phone Number:** 0908122927
 
 &emsp; **Email:** madlyhamm@gmail.com
 
 &emsp; **University:** FPT University
 
-&emsp; **Major:** Cyber-Security
+&emsp; **Major:** Cybersecurity
 
 &emsp; **Class:** OJT202
 
@@ -28,7 +29,7 @@ chapter: false
 
 ![Profile picture](/images/avatar.png?width=240px)
 
-### Report Content
+## Report Content
 
 1.  [Worklog](1-Worklog/)
 2.  [Proposal](2-Proposal/)

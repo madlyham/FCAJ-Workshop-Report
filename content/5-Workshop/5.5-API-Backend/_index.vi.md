@@ -23,7 +23,8 @@ Bây giờ bạn xây dựng khối màu cam **API backend** trên sơ đồ: **
    ```bash
    python -c "import secrets; print(secrets.token_hex(32))"
    ```
-2. **IAM Role:** Tạo **`reloop2-api-lambda-role`** (tin cậy `lambda.amazonaws.com`) cùng inline policy **`reloop2-api-access`** cấp đúng quyền cho các mũi tên đi ra từ `AWS Lambda (API)` (DynamoDB ở 5.6, S3 photos ở 5.7, Rekognition & Bedrock ở 5.8 và CloudWatch Logs ở 5.10):
+2. **IAM Role:** Tạo **`reloop2-api-lambda-role`** (chọn trusted entity / dịch vụ tin cậy là **AWS service -> Lambda**), gắn chính sách quản lý của AWS **`AWSLambdaBasicExecutionRole`**, rồi thêm inline policy **`reloop2-api-access`** cấp đúng quyền cho các mũi tên đi ra từ `AWS Lambda (API)` (DynamoDB ở 5.6, S3 photos ở 5.7, Rekognition & Bedrock ở 5.8 và CloudWatch Logs ở 5.10):
+   *(Thay giá trị mẫu `123456789012` bằng mã tài khoản AWS 12 chữ số của bạn và `<suffix>` bằng hậu tố bucket của bạn.)*
    ```json
    {
      "Version": "2012-10-17",
@@ -127,7 +128,7 @@ Bây giờ bạn xây dựng khối màu cam **API backend** trên sơ đồ: **
    - **Identity source:** `$request.header.Authorization`
    - **Issuer URL:** `https://cognito-idp.ap-southeast-1.amazonaws.com/ap-southeast-1_<id>`
    - **Audience:** `<client-id>`
-   - Gắn **`cognito`** duy nhất cho tuyến **`ANY /{proxy+}`** (giữ mở 6 tuyến công khai).
+   - Chỉ gắn **`cognito`** cho tuyến **`ANY /{proxy+}`** (giữ không xác thực cho 6 tuyến công khai).
 
 ![Bộ xác thực JWT của API Gateway kiểm tra Cognito JWKS trên tuyến ANY /{proxy+}](/images/5-Workshop/5.5/04-apigw-jwt-authorizer.png)
 

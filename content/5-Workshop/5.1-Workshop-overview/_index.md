@@ -65,7 +65,7 @@ Completing Modules **5.2–5.11** and tearing down in Module **5.12** the same d
 | **API Gateway & Lambda** | ~100 invocations, 512 MB ARM64 | $0.00 (Free Tier) |
 | **Amazon DynamoDB** | On-demand reads/writes (<5 MB, PITR) | ~$0.01 |
 | **Rekognition & Bedrock** | Test moderation + Guardrail + Kimi K3 calls | ~$0.05–$0.25 |
-| **EventBridge, CloudWatch & SNS** | 1 rule, 1 log group, 1 metric alarm, 1 SNS topic | $0.00 (Free Tier) |
+| **EventBridge, CloudWatch & SNS** | 1 rule, 2 log groups, 1 metric alarm, 1 SNS topic | $0.00 (Free Tier) |
 | **Total (built & cleaned up same day)** | Full E2E run + Module 5.12 cleanup | **< $1.00 USD** |
 
 {{% notice warning %}}

@@ -23,7 +23,7 @@ Xóa sạch mọi tài nguyên `reloop2` đã tạo ở các Học phần **5.3�
 4. **Xử lý AI (`ap-southeast-1`):** Mở **Amazon Bedrock -> Guardrails** -> xóa **`reloop2-ai-guardrail`** (xóa cả `DRAFT` và Version `1`).
 5. **API Backend (`ap-southeast-1`):** Xóa HTTP API Gateway **`reloop2-api`**.
 6. **Đăng ký & Đăng nhập (`ap-southeast-1`):** Mở **Cognito -> `reloop2-user-pool`**:
-   - Vào **Branding -> Domain**, xóa miền `reloop2-auth`.
+   - Vào **Branding -> Domain**, xóa miền `reloop2-auth` (hoặc tiền tố kèm hậu tố của bạn).
    - Vào **Overview -> Delete user pool**, tắt **Deletion protection** rồi xóa `reloop2-user-pool`.
 7. **Lambda & IAM Roles:**
    - Xóa hai hàm Lambda **`reloop2-api`** và **`reloop2-post-confirmation`** (`ap-southeast-1`).
@@ -76,4 +76,4 @@ terraform plan
 terraform apply
 ```
 
-Sau khi `terraform apply` xong, chạy `python ../frontend/configure.py` với các giá trị Cognito đầu ra rồi đồng bộ `frontend/build/` lên bucket S3 web (xem [README](https://github.com/madlyham/ReLoop#option-2--deploy-with-terraform-reproducible-iac)). Khi hoàn tất, làm rỗng hai bucket S3, đặt `cognito_deletion_protection = "INACTIVE"` và chạy `terraform destroy`.
+Sau khi `terraform apply` xong, quay về thư mục gốc kho mã nguồn (`cd ..`), chạy `python frontend/configure.py` với các giá trị Cognito đầu ra rồi đồng bộ `frontend/build/` lên bucket S3 web (xem [README](https://github.com/madlyham/ReLoop#option-2--deploy-with-terraform-reproducible-iac)). Khi hoàn tất, làm rỗng cả hai bucket S3, đặt `cognito_deletion_protection = "INACTIVE"` trong `terraform.tfvars`, chạy `terraform apply` trước để tắt bảo vệ xóa trên User Pool, rồi mới chạy `terraform destroy`.

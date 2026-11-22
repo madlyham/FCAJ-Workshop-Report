@@ -10,7 +10,7 @@ pre: " <b> 4.3. </b> "
 
 **Date:** Friday, October 2, 2026  
 **Time:** 10:30 AM – 12:00 PM (GMT+7)  
-**Location:** Amazon Web Services Vietnam Office, 26th Floor, Bitexco Financial Tower, 02 Hai Trieu Street, Ho Chi Minh City, Vietnam.  
+**Location:** Amazon Web Services Vietnam Office, Level 26, Bitexco Financial Tower, 02 Hai Trieu Street, Ho Chi Minh City, Vietnam.  
 **Role:** Attendee  
 
 ### **Event Objectives**
@@ -31,9 +31,8 @@ pre: " <b> 4.3. </b> "
 
 ### **Key Takeaways & Application**
 
-* Reinforced our ReLoop design decisions: single-table isolation, versioned concurrency control, and graceful offline degradation.
+* Reinforced our ReLoop design decisions: single-table DynamoDB design, conditional concurrency control, and asynchronous background processing.
 
 ### **Event Photos**
 
-
-![](/images/report/image8.png) 
+![Fireside Chat with Dr. Werner Vogels at AWS Vietnam Office, Bitexco Financial Tower](/images/report/image8.png)

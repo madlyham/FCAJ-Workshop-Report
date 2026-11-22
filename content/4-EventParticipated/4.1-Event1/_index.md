@@ -10,7 +10,7 @@ pre: " <b> 4.1. </b> "
 
 **Date:** Saturday, September 26, 2026  
 **Time:** 10:30 AM – 12:00 PM (GMT+7)  
-**Location:** Amazon Web Services Vietnam Office, 26th Floor, Bitexco Financial Tower, 02 Hai Trieu Street, Ho Chi Minh City, Vietnam.  
+**Location:** Amazon Web Services Vietnam Office, Level 26, Bitexco Financial Tower, 02 Hai Trieu Street, Ho Chi Minh City, Vietnam.  
 **Role:** Participant  
 
 ### **Event Objectives**
@@ -23,7 +23,7 @@ pre: " <b> 4.1. </b> "
 
 ### **Speakers**
 
-The event featured industry professionals and AWS practitioners sharing their experiences in cloud computing, artificial intelligence, and career development.
+The event featured industry professionals and experienced engineers from AWS and CMC Global sharing their experiences in cloud computing, artificial intelligence, and career development.
 
 ### **Key Highlights**
 
@@ -43,10 +43,9 @@ The event featured industry professionals and AWS practitioners sharing their ex
 
 ### **Key Takeaways & Application**
 
-* Connected AWS serverless backends with multimodal AI agent reasoning.  
-* Applied prompt engineering and context knowledge base patterns into our ReLoop capstone project.
+* Explored how AWS serverless backends integrate with multimodal AI classification workflows.  
+* Applied prompt engineering and structured context-management patterns to ReLoop's device-classification module.
 
 ### **Event Photos**
 
-
-![](/images/report/image4.png) 
+![Buildrathon Kickoff – Code the Future with CMC Global at AWS Vietnam Office](/images/report/image4.png)

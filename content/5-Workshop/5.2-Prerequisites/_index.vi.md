@@ -41,7 +41,7 @@ Chỉ riêng **AWS WAF (`reloop2-web`)** gắn với Amazon CloudFront sử dụ
 ReLoop gọi **`global.moonshotai.kimi-k3`** thông qua **Global cross-region inference profile** của Amazon Bedrock ngay từ **`ap-southeast-1`**. Hãy giữ nguyên vùng **Asia Pacific (Singapore) `ap-southeast-1`** — không cần chuyển sang `us-east-1`.
 
 1. Mở **Amazon Bedrock -> Test -> Playground** (xác nhận góc trên bên phải vẫn là **Asia Pacific (Singapore)**).
-2. Nhấn **Select model** -> **Moonshot AI** -> **Kimi K3** -> chọn hồ sơ **Cross-region** **`Global Moonshot AI Kimi K3`** -> nhấn **Apply**.
+2. Nhấn **Select model** -> **Moonshot AI** -> **Kimi K3** -> chọn inference profile **Cross-region** **`Global Moonshot AI Kimi K3`** -> nhấn **Apply**.
 
 ![Chọn mô hình Global Moonshot AI Kimi K3 tại Bedrock Playground Singapore](/images/5-Workshop/5.2/02-bedrock-kimi-k3-select.png)
 

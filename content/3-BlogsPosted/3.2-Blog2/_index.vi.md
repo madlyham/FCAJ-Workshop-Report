@@ -16,7 +16,7 @@ Thử hình dung:
 * User B tạo một bài đăng có ID `123`.  
 * User A gửi request `PATCH /posts/123` để sửa bài của B.
 
-Nếu backend chỉ kiểm tra token có hợp lệ hay không, A hoàn toàn có thể sửa dữ liệu của B.
+Nếu backend chỉ kiểm tra token có hợp lệ hay không, A hoàn toàn có thể sửa dữ liệu của B (lỗ hổng IDOR).
 
 **Hai khái niệm cần tách bạch**
 
@@ -38,13 +38,12 @@ Một chi tiết quan trọng: ẩn nút Edit trên frontend không phải là b
 
 **Cần kiểm chứng điều gì?**
 
-Đăng nhập bằng tài khoản A, dùng token hợp lệ của A để sửa bài đăng của B. Kết quả đúng là authentication thành công nhưng authorization thất bại.
+Đăng nhập bằng tài khoản A, dùng token hợp lệ của A để sửa bài đăng của B. Kết quả đúng là authentication thành công nhưng authorization thất bại (403 Forbidden).
 
-Vì có hộ chiếu không có nghĩa là bạn sở hữu mọi căn nhà trong thành phố.
+Có hộ chiếu hợp lệ không có nghĩa là bạn sở hữu mọi căn nhà trong thành phố.
 
-*Lưu ý: đây là kiến trúc và thiết kế kiểm thử đề xuất, chưa phải kết quả triển khai thực tế.*
-
+*Lưu ý: Đây là kiến trúc và thiết kế kiểm thử đề xuất, không phải báo cáo triển khai sản xuất thực tế.*
 
 #AWS #Cognito #APIGateway #DynamoDB #CyberSecurity #Authorization
 
-![](/images/report/image2.png)
+![Sơ đồ phân quyền với Amazon Cognito, API Gateway JWT Authorizer và kiểm tra quyền sở hữu trên DynamoDB](/images/report/image2.png)

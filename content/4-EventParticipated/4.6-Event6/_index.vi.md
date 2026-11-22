@@ -15,20 +15,20 @@ pre: " <b> 4.6. </b> "
 
 ### **Mục tiêu sự kiện**
 
-* Chia sẻ kiến thức Cloud và định hướng nghề nghiệp cho các bạn sinh viên trẻ đến từ khắp nơi tại Sài Gòn.  
+* Chia sẻ kiến thức Cloud và định hướng nghề nghiệp cho các bạn sinh viên tại TP. Hồ Chí Minh.  
 * Giải đáp các câu hỏi thực tế của sinh viên, từ định hướng đến chuyên môn về Cloud.  
 * Ôn lại nội dung một cách vui vẻ qua trò chơi Quiz trực tiếp cuối buổi.
 
 ### **Nội dung nổi bật**
 
-#### **Hỏi đáp – "Không có hồi kết"**
+#### **Hỏi đáp mở kéo dài**
 * Phần hỏi đáp kéo dài hơn dự kiến rất nhiều. Các bạn sinh viên đặt những câu hỏi rất thực tế và hay: nên bắt đầu học Cloud từ đâu, kỹ năng nào quan trọng, và phát triển sự nghiệp Cloud như thế nào.
 
 #### **Game Quiz cuối buổi**
-* Trò chơi Quiz.com trực tiếp khép lại buổi chia sẻ. Hơn 100 người chơi tham gia (119 người tại thời điểm chụp ảnh) và được hưởng ứng rất nồng nhiệt.
+* Trò chơi Quiz.com trực tiếp khép lại buổi chia sẻ. Trò chơi thu hút hơn 100 người tham gia (119 người tại thời điểm chụp ảnh) và nhận được sự hưởng ứng rất nồng nhiệt.
 
-#### **Sự kiện sắp tới**
-* Ban tổ chức nhắc đến một buổi chia sẻ về Cloud khác dành cho sinh viên vào cuối tuần sau: **AWS Student Community Day Vietnam 2026**.
+#### **Sự kiện được giới thiệu tại buổi chia sẻ (21–22/11/2026)**
+* Ban tổ chức giới thiệu thêm một sự kiện Cloud khác dành cho sinh viên diễn ra vào ngày 21–22/11/2026: **AWS Student Community Day Vietnam 2026**.
 
 ### **Trải nghiệm sự kiện**
 

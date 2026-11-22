@@ -10,7 +10,7 @@ pre: " <b> 4.5. </b> "
 
 **Date:** Monday, October 26, 2026  
 **Time:** 01:30 PM – 03:30 PM (GMT+7)  
-**Location:** EC2, Level 36, AWS Vietnam Office, Bitexco Financial Tower, Ho Chi Minh City, Vietnam.  
+**Location:** EC2 Room, Level 36, AWS Vietnam Office, Bitexco Financial Tower, Ho Chi Minh City, Vietnam.  
 **Role:** Participant  
 
 ### **Event Objectives**
@@ -33,5 +33,6 @@ Participating in this workshop stood out from purely technical cloud sessions. I
 
 ### **Event Photos**
 
+![Hands-on assembly of interactive IoT smart plushies with Operation Smile Vietnam](/images/report/image11.png)
 
-![](/images/report/image11.png) ![](/images/report/image12.png) 
+![Completed smart plushies and volunteer team at EC2 Room, Level 36, AWS Vietnam Office](/images/report/image12.png)

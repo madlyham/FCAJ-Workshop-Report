@@ -1,13 +1,14 @@
 ---
 title: "Báo cáo thực tập"
-date: 2026-11-07
+date: 2026-11-22
 weight: 1
 chapter: false
 ---
 
 # Báo cáo thực tập
 
-### Thông tin sinh viên:
+## Thông tin sinh viên
+
 &emsp; **Họ và tên:** Kung Cẩm Thành
 
 &emsp; **Số điện thoại:** 0908122927
@@ -28,12 +29,12 @@ chapter: false
 
 ![Ảnh đại diện](/images/avatar.png?width=240px)
 
-### Nội dung báo cáo
+## Nội dung báo cáo
 
 1.  [Nhật ký công việc](1-Worklog/)
 2.  [Proposal](2-Proposal/)
-3.  [Các bài blogs đã đăng](3-BlogsPosted/)
-4.  [Các events đã tham gia](4-EventParticipated/)
+3.  [Các bài blog đã đăng](3-BlogsPosted/)
+4.  [Các sự kiện đã tham gia](4-EventParticipated/)
 5.  [Workshop](5-Workshop/)
 6.  [Tự đánh giá](6-Self-evaluation/)
 7.  [Chia sẻ, đóng góp ý kiến](7-Feedback/)

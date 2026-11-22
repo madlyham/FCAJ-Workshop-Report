@@ -1,42 +1,44 @@
 ---
 title: "Week 11 Worklog"
-date: 2026-11-07
+date: 2026-11-22
 weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
 
-# **Week 11 Work Log: Terraform State Migration, Resource Clean-up & Cost Review**
+# **Week 11 Worklog — Resource Audit, Unused-Asset Cleanup & Cost Review [Planned]**
+
+> **Status:** Planned (upcoming sprint: 23/11/2026 – 27/11/2026; last updated 22/11/2026).
 
 ## **1. Weekly Objectives**
 
-* Put all Terraform state in one safe, versioned place per environment.
-* Remove old resources left over from the early manual setup.
-* Compare real costs with the estimate and confirm the credits last until 28/02/2027.
+* Audit every active AWS resource across `ap-southeast-1` and `us-east-1` (CloudFront WAF) against the versioned Terraform state file.
+* Identify and remove leftover unmanaged resources from the early manual setup in Weeks 1–5 without disrupting the live ReLoop stack.
+* Reconcile actual AWS Cost Explorer spend against the **$11.70/month** budget and confirm the remaining AWS credits (**$189.80 USD** as of 21/11/2026) cover operations until 28/02/2027.
 
 ## **2. Weekly Execution Schedule**
 
-| Day | Task Description | Start Date | Completion Date | Reference Material |
+| Day | Planned Task Description | Target Date | Status | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Day 2** | • Plan the state migration: list every resource, back up the current state files | 11/23/2026 | 11/23/2026 | Terraform Docs |
-| **Day 3** | • Migrate state to the versioned S3 backend (one key per environment) and confirm terraform plan shows no changes | 11/24/2026 | 11/24/2026 | infra/backend.tf |
-| **Day 4** | • Find resources created by hand in weeks 1–5 (old user pool, test API, practice buckets) that Terraform does not manage | 11/25/2026 | 11/25/2026 | AWS Console, Resource Explorer |
-| **Day 5** | • Delete the unused resources after team approval; re-run the smoke test on dev and production | 11/26/2026 | 11/26/2026 | smoke-aws.py |
-| **Day 6** | • Cost review in Cost Explorer against the estimate (about 18.70 USD/month, mostly WAF); confirm the credits cover the run until 28/02/2027 | 11/27/2026 | 11/27/2026 | AWS Cost Explorer |
+| **Monday** | • Inventory every AWS resource in `ap-southeast-1` and `us-east-1` using Resource Explorer and cross-check against the Terraform state file | 23/11/2026 | Planned | AWS Resource Explorer, `infra/*.tf` |
+| **Tuesday** | • Identify leftover resources created manually in Weeks 1–5 (old user pools, test APIs, practice buckets, unused IAM roles) outside Terraform management | 24/11/2026 | Planned | AWS Console, Resource Explorer |
+| **Wednesday** | • Confirm `terraform plan` shows no pending changes, back up the cleanup inventory, and obtain team approval before deleting any resource | 25/11/2026 | Planned | `infra/backend.tf` |
+| **Thursday** | • Delete approved unused assets and re-run `smoke-aws.py` against the live ReLoop stack to verify zero impact | 26/11/2026 | Planned | `smoke-aws.py` |
+| **Friday** | • Finalize the Cost Explorer review against the **$11.70/month** budget ($10.00/month CloudFront WAF + ~$1.70/month usage, with core compute/DB/API/S3 under $0.30/month) and verify credit runway ($189.80 USD remaining on 21/11/2026 until 28/02/2027) | 27/11/2026 | Planned | AWS Cost Explorer |
 
-## **3. Key Achievements & Outcomes**
+## **3. Expected Outcomes**
 
 ### **Theoretical Foundation**
 
-* Learned how to move Terraform state safely without recreating live resources.
-* Understood that most of our bill is fixed WAF cost, while usage-based services stay under 1 USD/month.
+* Reinforce how infrastructure drift detection and Resource Explorer inventories prevent silent bill creep on shared AWS accounts.
+* Confirm quantitatively that fixed edge protection (the single CloudFront WAF web ACL at $10.00/month) accounts for most of the bill while serverless core compute, database, API, and S3 stay under $0.30/month.
 
 ### **Environment Setup & Configuration**
 
-* Versioned S3 state backend with one key per environment.
-* Account cleaned of unmanaged leftover resources.
+* Account cleaned of all unmanaged leftover assets from Weeks 1–5, with only the 12-service (+ IAM) ReLoop Terraform stack active.
+* `terraform plan` confirmed clean with zero unintended drift.
 
 ### **Practical Skills & Operations**
 
-* Confirmed terraform plan was clean after the migration before deleting anything.
-* Wrote a short cost summary for the final report.
+* Complete safe, approved cleanup followed by a passing `smoke-aws.py` verification on the live stack.
+* Prepare a concise Cost Explorer & credit-runway summary ($11.70/month run-rate; $189.80 USD remaining as of 21/11/2026 until 28/02/2027) for the final report.

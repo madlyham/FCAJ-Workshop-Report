@@ -10,7 +10,7 @@ pre: " <b> 3.3. </b> "
 
 Một tình huống khá quen thuộc: khách hàng đăng yêu cầu dịch vụ, hệ thống cần tìm các đối tác phù hợp và gửi lời mời báo giá. Nhưng đối tác lại đang offline. Họ không mở app, không có mạng, có khi điện thoại còn đang nằm úp trên bàn.
 
-Vậy có phải ta phải chờ họ online rồi mới gửi lời mời được không? Không cần. Hãy thử xây một hệ thống mà backend vẫn làm việc bình thường ngay cả khi người nhận chưa xuất hiện.
+Vậy ta có cần chờ họ online rồi mới gửi lời mời được không? Không cần. Hãy thử xây một hệ thống mà backend vẫn làm việc bình thường ngay cả khi người nhận chưa xuất hiện.
 
 **Kiến trúc đề xuất**
 
@@ -25,23 +25,22 @@ Vậy có phải ta phải chờ họ online rồi mới gửi lời mời đư�
 
 Lời mời được lưu trước, thông báo gửi sau. Nên dù đối tác đang offline lúc công việc được tạo, lời mời vẫn nằm yên trong database. Khi họ mở app trở lại, frontend gọi `GET /my-offers` và backend trả về những lời mời đã lưu.
 
-Mình không cần hy vọng push notification lúc nào cũng đến nơi. Push chỉ là tiếng gõ cửa, còn DynamoDB mới là nơi giữ lá thư.
+Ta không cần hy vọng push notification lúc nào cũng đến nơi. Push chỉ là tiếng gõ cửa, còn DynamoDB mới là nơi giữ lá thư.
 
-Còn nếu EventBridge phát lại sự kiện, hoặc SQS giao một message nhiều lần thì sao? Conditional Put sẽ ngăn việc tạo ra nhiều lời mời giống hệt nhau. Những message cứ lỗi mãi có thể được chuyển sang Dead-Letter Queue để kiểm tra sau.
+Còn nếu EventBridge phát lại sự kiện, hoặc SQS giao một message nhiều lần thì sao? Conditional Put sẽ ngăn việc tạo ra nhiều lời mời giống hệt nhau. Các message liên tục lỗi sau nhiều lần thử lại có thể được chuyển sang Dead-Letter Queue (DLQ) để kiểm tra sau.
 
 **Cần kiểm chứng điều gì?**
 
 * Tạo một công việc khi đối tác đang offline.  
-* Xác nhận lời mời vẫn được lưu.  
-* Mở app sau đó và lấy lại lời mời.  
+* Xác nhận lời mời vẫn được lưu trong DynamoDB.  
+* Mở app sau đó và xác nhận lời mời hiển thị chính xác.  
 * Replay cùng một event nhiều lần, kiểm tra số lượng offer không bị nhân đôi.  
-* Thử một message lỗi để kiểm tra DLQ.
+* Thử một message lỗi để kiểm tra định tuyến sang DLQ.
 
-Một hệ thống tốt không cần người dùng online 24/7 thì backend mới hoàn thành được việc của mình.
+Một hệ thống bền bỉ hoàn thành trọn vẹn công việc của backend mà không phụ thuộc vào việc người dùng online 24/7.
 
-*Lưu ý: đây là kiến trúc và thiết kế kiểm thử đề xuất, chưa phải kết quả triển khai thực tế.*
-
+*Lưu ý: Đây là mô hình kiến trúc tham khảo độc lập chia sẻ trên AWS Study Group (tách biệt với stack 12 dịch vụ của ReLoop) và thiết kế kiểm thử đề xuất, không phải báo cáo triển khai sản xuất thực tế.*
 
 #AWS #EventDrivenArchitecture #SQS #EventBridge #Lambda #DynamoDB #SNS
 
-![](/images/report/image3.png)
+![Kiến trúc hướng sự kiện hỗ trợ đối tác offline với EventBridge, SQS, Lambda, DynamoDB và SNS](/images/report/image3.png)

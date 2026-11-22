@@ -18,13 +18,13 @@ pre : " <b> 5.6. </b> "
 
 ### Thiết kế bảng đơn (`users, listings & invoices`)
 
-ReLoop gom mọi thực thể vào một bảng on-demand (`PK` / `SK`) kèm một Global Secondary Index (`GSI1` trên `GSI1PK` / `GSI1SK`):
+ReLoop gom mọi thực thể vào một bảng on-demand (`PK` / `SK`) kèm một Global Secondary Index dùng chung (overloaded GSI, `GSI1` trên `GSI1PK` / `GSI1SK`):
 
 | Thực thể | `PK` | `SK` | Mục đích |
 | --- | --- | --- | --- |
 | **Hồ sơ người dùng** | `USER#<userId>` | `PROFILE` | Do `reloop2-post-confirmation` tự tạo (`GSI1PK = ROLE#Owner`) |
 | **Hồ sơ đối tác** | `PARTNER#<userId>` | `PROFILE` | Đăng ký và duyệt đối tác (`GSI1PK = PARTNER#STATUS#PENDING\|APPROVED`) |
-| **Tin đăng thiết bị** | `LISTING#<listingId>` | `META` | Tin đang mở (`GSI1PK = LISTING#STATUS#OPEN`, tự hết hạn sau 7 ngày) |
+| **Tin đăng thiết bị** | `LISTING#<listingId>` | `META` | Tin đăng của chủ thiết bị (`GSI1PK = OWNER#<userId>`, tự hết hạn sau 7 ngày; bản ghi bảng tin công khai dùng `PK = FEED#<YYYY-MM>`) |
 | **Hóa đơn theo tháng** | `USER#<userId>` | `INVOICE#<invoiceId>` | Hóa đơn phí giao dịch hàng tháng & gói VIP (`SYSTEM / BILLINGRUN#<YYYY-MM>`) |
 | **Bộ hẹn giờ hết hạn** | `TIMER#<YYYY-MM-DDTHH>` | `LISTING_EXPIRE#<id>` | Được lịch quét EventBridge truy vấn mỗi 15 phút (Học phần 5.9) |
 | **Thông báo** | `USER#<userId>` | `NOTIF#<ts>#<id>` | Tự xóa sau 90 ngày nhờ DynamoDB TTL (thuộc tính `ttl`) |

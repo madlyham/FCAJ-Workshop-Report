@@ -8,8 +8,8 @@ pre : " <b> 5.7. </b> "
 
 Hoàn thiện khối **Data storage** bằng cách tạo bucket chứa ảnh riêng tư `reloop2-images-<suffix>`. Trên sơ đồ, luồng ảnh dùng mô hình presigned URL gồm 2 bước để ảnh dung lượng lớn không đi qua API Gateway hay Lambda:
 
-1. **Mũi tên 7 (`presign & tag`):** `AWS Lambda (API)` tạo URL ký sẵn ngắn hạn cho đường dẫn `listings/<userId>/<uuid>.jpg` và gắn thẻ `state=pending` cho ảnh đang chờ đăng.
-2. **Mũi tên 8 (`upload / view photos`):** `Users (web browser)` tải ảnh thẳng lên S3 riêng tư bằng `PUT` và xem lại ảnh tin đăng qua URL ký sẵn ngắn hạn.
+1. **Mũi tên 7 (`presign & tag`):** `AWS Lambda (API)` tạo chính sách tải lên presigned `POST` ngắn hạn cho khóa `listings/<hash>/<uuid>.<ext>` kèm thẻ `state=pending` (qua `createPresignedPost`).
+2. **Mũi tên 8 (`upload / view photos`):** `Users (web browser)` tải ảnh thẳng lên S3 riêng tư bằng presigned `POST` và xem lại ảnh tin đăng qua URL ký sẵn `GET` ngắn hạn.
 
 **Các mũi tên trên sơ đồ thuộc bước này:**
 - **Mũi tên 7:** `AWS Lambda (API) ↔ Amazon S3 (photos)` (`presign & tag`)
@@ -57,7 +57,7 @@ Vì CloudFront đã sẵn sàng từ Học phần 5.3, bạn nhập luôn tên m
 
 ---
 
-### Bước 3 — Thêm 3 quy tắc vòng đời kiểm soát chi phí (Dọn thẻ của `Mũi tên 7`)
+### Bước 3 — Thêm 3 quy tắc vòng đời kiểm soát chi phí (Dọn ảnh theo thẻ gắn ở Mũi tên 7)
 
 Mở thẻ **Management** -> **Create lifecycle rule** ba lần để ảnh bỏ dở hoặc quá hạn không tích tụ chi phí lưu trữ:
 

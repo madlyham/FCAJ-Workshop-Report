@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 1.1. </b> "
 ---
 
-# **Nhật ký công việc Tuần 1: Nền tảng AWS: Console, CLI, EC2, IAM và VPC**
+# **Nhật ký công việc Tuần 1 — Nền tảng AWS, Console, CLI, EC2, IAM và VPC**
 
 ## **1. Mục tiêu tuần**
 
@@ -18,11 +18,11 @@ pre: " <b> 1.1. </b> "
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ngày 2** | • Nhập môn chương trình First Cloud Journey; làm quen AWS Console, region, Availability Zone và giới hạn Free Tier | 09/14/2026 | 09/14/2026 | AWS Cloud Journey |
-| **Ngày 3** | • Cài đặt và cấu hình AWS CLI v2 (profile, region mặc định ap-southeast-1); chạy các lệnh chỉ đọc đầu tiên | 09/15/2026 | 09/15/2026 | Tài liệu AWS CLI |
-| **Ngày 4** | • Thực hành: tạo EC2, gắn ổ EBS, gán Elastic IP, sau đó dừng/xóa để tránh phát sinh phí | 09/16/2026 | 09/16/2026 | AWS Cloud Journey |
-| **Ngày 5** | • IAM cơ bản: user, group, role, policy JSON; tạo IAM admin có MFA và cất giữ tài khoản root | 09/17/2026 | 09/17/2026 | AWS Cloud Journey |
-| **Ngày 6** | • VPC cơ bản: dựng VPC tùy chỉnh (10.0.0.0/16) với subnet public/private, Internet Gateway, route table, so sánh Security Group và NACL | 09/18/2026 | 09/18/2026 | AWS Cloud Journey |
+| **Thứ 2** | • Nhập môn chương trình First Cloud Journey; làm quen AWS Console, region, Availability Zone và giới hạn Free Tier | 14/09/2026 | 14/09/2026 | AWS Cloud Journey |
+| **Thứ 3** | • Cài đặt và cấu hình AWS CLI v2 (profile, region mặc định `ap-southeast-1`); chạy các lệnh chỉ đọc đầu tiên | 15/09/2026 | 15/09/2026 | Tài liệu AWS CLI |
+| **Thứ 4** | • Thực hành: tạo EC2, gắn ổ EBS, gán Elastic IP, sau đó dừng/xóa để tránh phát sinh phí | 16/09/2026 | 16/09/2026 | AWS Cloud Journey |
+| **Thứ 5** | • IAM cơ bản: user, group, role, policy JSON; tạo IAM admin có MFA và cất giữ tài khoản root | 17/09/2026 | 17/09/2026 | AWS Cloud Journey |
+| **Thứ 6** | • VPC cơ bản: dựng VPC tùy chỉnh (`10.0.0.0/16`) với subnet public/private, Internet Gateway, route table, so sánh Security Group và NACL | 18/09/2026 | 18/09/2026 | AWS Cloud Journey |
 
 ## **3. Kết quả đạt được**
 
@@ -34,12 +34,12 @@ pre: " <b> 1.1. </b> "
 
 ### **Cài đặt & Thiết lập môi trường**
 
-* Cấu hình AWS CLI v2 với profile riêng và region ap-southeast-1.
+* Cấu hình AWS CLI v2 với profile riêng và region `ap-southeast-1`.
 * Tạo IAM admin có MFA; thông tin root được cất an toàn, không dùng hằng ngày.
 * VPC tùy chỉnh trải trên 2 Availability Zone với 2 subnet public và 2 subnet private.
 
 ### **Kỹ năng thực hành & Vận hành**
 
-* Tạo, kết nối và dọn dẹp tài nguyên EC2 mà không để sót mục tính phí.
+* Tạo, kết nối và dọn dẹp tài nguyên EC2 mà không để sót tài nguyên phát sinh phí.
 * Viết và kiểm thử policy IAM JSON chỉ cho phép đúng các thao tác đọc/ghi cần thiết.
-* Kiểm tra phân lập mạng: subnet public ra Internet qua IGW, subnet private không nhận kết nối từ ngoài vào.
+* Kiểm tra cô lập mạng: subnet public ra Internet qua IGW, subnet private không nhận kết nối từ ngoài vào.

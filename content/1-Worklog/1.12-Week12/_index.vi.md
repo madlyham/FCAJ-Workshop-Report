@@ -1,42 +1,44 @@
 ---
 title: "Nhật ký công việc Tuần 12"
-date: 2026-11-07
+date: 2026-11-22
 weight: 12
 chapter: false
 pre: " <b> 1.12. </b> "
 ---
 
-# **Nhật ký công việc Tuần 12: Tài liệu Workshop, Báo cáo Cuối kỳ, Demo và Bàn giao**
+# **Nhật ký công việc Tuần 12 — Báo cáo cuối kỳ, demo trực tiếp và bàn giao [Dự kiến]**
+
+> **Trạng thái:** Dự kiến (tuần kế tiếp: 30/11/2026 – 04/12/2026; cập nhật ngày 22/11/2026).
 
 ## **1. Mục tiêu tuần**
 
-* Hoàn thành tài liệu workshop và báo cáo thực tập cuối kỳ.
-* Tổng duyệt và trình bày demo cuối kỳ.
-* Bàn giao dự án để có thể tiếp tục chạy trong thời hạn credit.
+* Hoàn thiện tài liệu Workshop (`5.1`–`5.12`) và báo cáo thực tập cuối kỳ với đầy đủ dẫn chứng kiến trúc, chi phí và bảo mật đã xác thực.
+* Tổng duyệt và trình bày buổi demo trực tiếp trọn luồng cho các mentor.
+* Bàn giao dự án đầy đủ để nhóm và người tiếp nhận có thể vận hành độc lập trong thời hạn credit AWS.
 
 ## **2. Lịch trình thực hiện**
 
-| Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| Ngày | Mô tả công việc dự kiến | Ngày dự kiến | Trạng thái | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ngày 2** | • Viết hướng dẫn workshop (kiến trúc, các bước deploy, dọn dẹp) dựa trên RELOOP_TECHNICAL_REFERENCE | 11/30/2026 | 11/30/2026 | RELOOP_TECHNICAL_REFERENCE |
-| **Ngày 3** | • Viết bản nháp báo cáo cuối kỳ: kết quả, chi phí, bảo mật, bài học rút ra | 12/01/2026 | 12/01/2026 | Báo cáo cuối kỳ |
-| **Ngày 4** | • Tổng duyệt demo trên production với tài khoản thử thật | 12/02/2026 | 12/02/2026 | Kịch bản demo |
-| **Ngày 5** | • Demo cuối kỳ với mentor; ghi nhận góp ý | 12/03/2026 | 12/03/2026 | Demo |
-| **Ngày 6** | • Bàn giao: tài liệu, Terraform, runbook, tình trạng chi phí và credit; kết thúc kỳ thực tập | 12/04/2026 | 12/04/2026 | Bộ tài liệu bàn giao |
+| **Thứ 2** | • Rà soát và hoàn thiện hướng dẫn Workshop (`5.1`–`5.12`) — sơ đồ kiến trúc, các bước triển khai, xác thực và dọn dẹp — đồng bộ với `RELOOP_TECHNICAL_REFERENCE` | 30/11/2026 | Dự kiến | `RELOOP_TECHNICAL_REFERENCE`, [Workshop](../../5-workshop/) |
+| **Thứ 3** | • Hoàn thiện báo cáo thực tập cuối kỳ: kết quả xác thực trực tiếp, bảng chi phí **$11.70/tháng**, tổng kết gia cố bảo mật và bài học rút ra | 01/12/2026 | Dự kiến | Báo cáo cuối kỳ |
+| **Thứ 4** | • Tổng duyệt demo trọn luồng trên hệ thống ReLoop bằng tài khoản kiểm thử trên hệ thống thật (AI điền tin, ghép tin, báo giá, giao dịch và đánh giá) | 02/12/2026 | Dự kiến | Kịch bản demo |
+| **Thứ 5** | • Trình bày buổi demo trực tiếp cuối kỳ với các mentor AWS và ghi nhận góp ý | 03/12/2026 | Dự kiến | Trình bày demo |
+| **Thứ 6** | • Bàn giao hoàn chỉnh (tài liệu, mã Terraform, runbook vận hành, báo cáo chi phí và credit hiệu lực đến 28/02/2027) và kết thúc kỳ thực tập | 04/12/2026 | Dự kiến | Bộ tài liệu bàn giao |
 
-## **3. Kết quả đạt được**
+## **3. Kết quả dự kiến**
 
 ### **Cơ sở lý thuyết**
 
-* Hiểu rằng tài liệu tốt là một phần của sản phẩm: giúp người khác vận hành và sửa hệ thống mà không cần mình.
-* Nhìn lại cả hành trình, từ EC2 đầu tiên tới một sản phẩm serverless có bảo mật trên AWS.
+* Củng cố bài học rằng tài liệu tốt là một phần không thể thiếu của sản phẩm, giúp người tiếp nhận có thể vận hành độc lập và mở rộng hệ thống dễ dàng.
+* Tổng kết hành trình 12 tuần thực tập trên AWS — từ máy chủ EC2 đầu tiên đến một sản phẩm serverless bảo mật hoàn chỉnh.
 
 ### **Cài đặt & Thiết lập môi trường**
 
-* Hướng dẫn workshop và bộ tài liệu bàn giao lưu cùng repository.
-* Stack dev và production tiếp tục chạy trong thời hạn credit (tới 28/02/2027).
+* Bộ hướng dẫn Workshop (`5.1`–`5.12`), báo cáo cuối kỳ và gói tài liệu bàn giao được lưu trữ đầy đủ trong repository.
+* Stack ReLoop 12 dịch vụ (+ IAM) duy trì hoạt động ổn định trong thời hạn credit AWS (tới 28/02/2027).
 
 ### **Kỹ năng thực hành & Vận hành**
 
-* Trình bày demo trực tiếp trọn luồng: AI điền tin, ghép tin, báo giá, giao dịch và đánh giá.
-* Trả lời câu hỏi của mentor về đánh đổi kiến trúc, chi phí và bảo mật.
+* Trình diễn thành công buổi demo trực tiếp trọn luồng: AI điền tin, ghép tin chạy nền, báo giá, giao dịch và đánh giá.
+* Giải trình rõ ràng các đánh đổi về kiến trúc, chi phí ($11.70/tháng) và bảo mật trước câu hỏi của mentor.

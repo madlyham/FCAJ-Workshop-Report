@@ -10,12 +10,12 @@ pre: " <b> 4.2. </b> "
 
 **Date:** Tuesday, September 29, 2026  
 **Time:** 08:00 AM – 05:00 PM (GMT+7)  
-**Location:** Amazon Web Services Vietnam Office, 26th Floor, Bitexco Financial Tower, Ho Chi Minh City, Vietnam.  
+**Location:** Amazon Web Services Vietnam Office, Level 26, Bitexco Financial Tower, Ho Chi Minh City, Vietnam.  
 **Role:** Attendee  
 
 ### **Event Objectives**
 
-* Present latest advancements in AWS Cloud infrastructure and Enterprise AI.  
+* Present the latest advancements in AWS Cloud infrastructure and Enterprise AI.  
 * Explore real-world enterprise modernization patterns using generative AI and Kubernetes.  
 * Connect cloud builders, solution architects, and technology leaders across Vietnam.
 
@@ -33,9 +33,12 @@ pre: " <b> 4.2. </b> "
 ### **Key Takeaways & Application**
 
 * Selecting the right architecture (FinOps and cost efficiency) is more critical than blindly choosing the newest tools.  
-* Applied automated deployment scripts and CloudWatch metrics into our ReLoop development lifecycle.
+* Applied automated deployment workflows and CloudWatch log and error-alarm monitoring into our ReLoop development lifecycle.
 
 ### **Event Photos**
 
+![AWS Cloud and AI Day Hanoi Watch Party session at AWS Vietnam Office, Level 26 Bitexco](/images/report/image5.png)
 
-![](/images/report/image5.png) ![](/images/report/image6.png) ![](/images/report/image7.png) 
+![Attendees following the AWS Cloud and AI Day Hanoi keynote livestream](/images/report/image6.png)
+
+![Networking and discussion during the AWS Cloud and AI Day Hanoi Watch Party](/images/report/image7.png)

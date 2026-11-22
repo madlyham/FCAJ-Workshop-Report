@@ -36,7 +36,7 @@ Giữ nguyên vùng **Asia Pacific (Singapore) `ap-southeast-1`** (cùng vùng v
 1. Mở **Amazon Bedrock -> Build -> Guardrails -> Create guardrail**.
 2. Cấu hình thông tin:
    - **Name:** `reloop2-ai-guardrail`
-   - **Description:** `ReLoop 2: screen device photos and text before AI analysis`
+   - **Description:** `ReLoop: screen device photos and text before AI analysis`
    - **Cross-region inference:** Bật và chọn **`APAC Guardrail v1:0`** (`apac.guardrail.v1:0`)
    - **Blocked input message:** `Ảnh không phù hợp.`
    - **Blocked output message:** `Kết quả không phù hợp.`

@@ -18,13 +18,13 @@ Follow **Arrow 6** into the **Data storage** box: one serverless **Amazon Dynamo
 
 ### Single-Table Key Design (`users, listings & invoices`)
 
-ReLoop packs all entities into one on-demand table (`PK` / `SK`) plus one inverted Global Secondary Index (`GSI1` on `GSI1PK` / `GSI1SK`):
+ReLoop packs all entities into one on-demand table (`PK` / `SK`) plus one overloaded Global Secondary Index (`GSI1` on `GSI1PK` / `GSI1SK`):
 
 | Entity | `PK` | `SK` | Purpose |
 | --- | --- | --- | --- |
 | **User Profile** | `USER#<userId>` | `PROFILE` | Created automatically by `reloop2-post-confirmation` (`GSI1PK = ROLE#Owner`) |
 | **Partner Profile** | `PARTNER#<userId>` | `PROFILE` | Partner onboarding & approval (`GSI1PK = PARTNER#STATUS#PENDING\|APPROVED`) |
-| **Device Listing** | `LISTING#<listingId>` | `META` | Open listings (`GSI1PK = LISTING#STATUS#OPEN`, expires after 7 days) |
+| **Device Listing** | `LISTING#<listingId>` | `META` | Owner's listings (`GSI1PK = OWNER#<userId>`, expires after 7 days; public feed records use `PK = FEED#<YYYY-MM>`) |
 | **Monthly Invoice** | `USER#<userId>` | `INVOICE#<invoiceId>` | Monthly transaction fee invoices & VIP billing (`SYSTEM / BILLINGRUN#<YYYY-MM>`) |
 | **Expiry Timer** | `TIMER#<YYYY-MM-DDTHH>` | `LISTING_EXPIRE#<id>` | Queried every 15 minutes by the EventBridge sweep (Module 5.9) |
 | **Notifications** | `USER#<userId>` | `NOTIF#<ts>#<id>` | Auto-deleted after 90 days via DynamoDB TTL (`ttl` attribute) |

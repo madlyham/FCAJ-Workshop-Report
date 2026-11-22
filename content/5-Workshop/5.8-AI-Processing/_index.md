@@ -36,7 +36,7 @@ Stay in **Asia Pacific (Singapore) `ap-southeast-1`** (the same region as Lambda
 1. Open **Amazon Bedrock -> Build -> Guardrails -> Create guardrail**.
 2. Configure details:
    - **Name:** `reloop2-ai-guardrail`
-   - **Description:** `ReLoop 2: screen device photos and text before AI analysis`
+   - **Description:** `ReLoop: screen device photos and text before AI analysis`
    - **Cross-region inference:** Enable and select **`APAC Guardrail v1:0`** (`apac.guardrail.v1:0`)
    - **Blocked input message:** `Ảnh không phù hợp.`
    - **Blocked output message:** `Kết quả không phù hợp.`

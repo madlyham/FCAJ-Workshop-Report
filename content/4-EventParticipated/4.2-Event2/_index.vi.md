@@ -9,7 +9,7 @@ pre: " <b> 4.2. </b> "
 # **Sự kiện 2: AWS Cloud and AI Day Hanoi – Sự kiện Watch Party TP.HCM**
 
 **Ngày:** Thứ Ba, ngày 29 tháng 09 năm 2026  
-**Thời gian:** 08:00 AM – 05:00 PM (GMT+7)  
+**Thời gian:** 08:00 – 17:00 (GMT+7)  
 **Địa điểm:** Văn phòng AWS Việt Nam, Tầng 26, Bitexco Financial Tower, TP. Hồ Chí Minh, Việt Nam.  
 **Vai trò:** Người tham dự  
 
@@ -32,10 +32,13 @@ pre: " <b> 4.2. </b> "
 
 ### **Bài học rút ra & Ứng dụng**
 
-* Lựa chọn kiến trúc dịch vụ phù hợp bài toán quan trọng hơn việc chạy theo công nghệ mới nhất.  
-* Tích hợp tự động hóa triển khai và giám sát độ trễ CloudWatch vào dự án thực tập.
+* Lựa chọn kiến trúc dịch vụ phù hợp bài toán (FinOps và tối ưu chi phí) quan trọng hơn việc chạy theo công nghệ mới nhất.  
+* Tích hợp tự động hóa triển khai và giám sát log và cảnh báo lỗi CloudWatch vào vòng đời phát triển dự án thực tập ReLoop.
 
 ### **Hình ảnh sự kiện**
 
+![Phiên theo dõi Watch Party AWS Cloud and AI Day Hanoi tại Văn phòng AWS Việt Nam, Tầng 26 Bitexco](/images/report/image5.png)
 
-![](/images/report/image5.png) ![](/images/report/image6.png) ![](/images/report/image7.png) 
+![Người tham dự theo dõi trực tuyến bài phát biểu chính AWS Cloud and AI Day Hanoi](/images/report/image6.png)
+
+![Trao đổi và kết nối trong sự kiện Watch Party AWS Cloud and AI Day Hanoi](/images/report/image7.png)

@@ -1,42 +1,44 @@
 ---
 title: "Week 12 Worklog"
-date: 2026-11-07
+date: 2026-11-22
 weight: 12
 chapter: false
 pre: " <b> 1.12. </b> "
 ---
 
-# **Week 12 Work Log: Workshop Documentation, Final Report, Demo & Hand-over**
+# **Week 12 Worklog — Final Report, Live Demo & Handover [Planned]**
+
+> **Status:** Planned (upcoming sprint: 30/11/2026 – 04/12/2026; last updated 22/11/2026).
 
 ## **1. Weekly Objectives**
 
-* Finish the workshop documentation and the final internship report.
-* Rehearse and give the final demo.
-* Hand over the project so it can keep running within the credit window.
+* Polish the hands-on Workshop guide (`5.1`–`5.12`) and finalize the internship report with verified architecture, cost, and security evidence.
+* Rehearse and deliver the live end-to-end ReLoop demo to mentors.
+* Complete project handover so the team and mentors can operate the system independently within the AWS credit window.
 
 ## **2. Weekly Execution Schedule**
 
-| Day | Task Description | Start Date | Completion Date | Reference Material |
+| Day | Planned Task Description | Target Date | Status | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Day 2** | • Write the workshop guide (architecture, deploy steps, clean-up) from RELOOP_TECHNICAL_REFERENCE | 11/30/2026 | 11/30/2026 | RELOOP_TECHNICAL_REFERENCE |
-| **Day 3** | • Draft the final report: results, costs, security, lessons learned | 12/01/2026 | 12/01/2026 | Final report |
-| **Day 4** | • Dress rehearsal of the demo on production with real test accounts | 12/02/2026 | 12/02/2026 | Demo script |
-| **Day 5** | • Final demo to mentors; collect feedback | 12/03/2026 | 12/03/2026 | Demo |
-| **Day 6** | • Hand-over: documentation, Terraform, runbook, cost and credit status; close the internship | 12/04/2026 | 12/04/2026 | Hand-over pack |
+| **Monday** | • Polish the Workshop guide (`5.1`–`5.12`) — architecture diagrams, deployment steps, verification checks, and cleanup instructions — aligned with `RELOOP_TECHNICAL_REFERENCE` | 30/11/2026 | Planned | `RELOOP_TECHNICAL_REFERENCE`, [Workshop](../../5-workshop/) |
+| **Tuesday** | • Finalize the internship report: verified live results, **$11.70/month** cost breakdown, security hardening summary, and lessons learned | 01/12/2026 | Planned | Final report |
+| **Wednesday** | • Run a full dress rehearsal of the live demo on the ReLoop stack using live test accounts (AI listing, matching, quote, transaction, and review) | 02/12/2026 | Planned | Demo script |
+| **Thursday** | • Deliver the final live demo to AWS mentors and collect closing feedback | 03/12/2026 | Planned | Demo presentation |
+| **Friday** | • Complete final handover (documentation, Terraform modules, operational runbook, cost and credit status valid until 28/02/2027) and close the internship | 04/12/2026 | Planned | Handover pack |
 
-## **3. Key Achievements & Outcomes**
+## **3. Expected Outcomes**
 
 ### **Theoretical Foundation**
 
-* Learned that good documentation is part of the product: it lets others run and change the system without us.
-* Reflected on the full cloud journey, from first EC2 instance to a secured, serverless product on AWS.
+* Consolidate the lesson that clear documentation is part of the product, enabling future maintainers to operate and evolve the system independently.
+* Synthesize end-to-end lessons from the 12-week cloud journey — from launching a first EC2 instance to delivering a secured serverless product on AWS.
 
 ### **Environment Setup & Configuration**
 
-* Workshop guide and hand-over pack stored with the repository.
-* Dev and production stacks left running within the credit window (until 28/02/2027).
+* Final Workshop guide (`5.1`–`5.12`), internship report, and handover pack committed cleanly in the repository.
+* ReLoop 12-service (+ IAM) stack left healthy and operating well within the AWS credit window (until 28/02/2027).
 
 ### **Practical Skills & Operations**
 
-* Presented the live demo end to end: AI listing, matching, quote, transaction and review.
-* Answered mentor questions on architecture, cost and security trade-offs.
+* Deliver a smooth end-to-end live demo covering AI listing, background matching, quotes, transactions, and reviews.
+* Defend architecture, cost ($11.70/month), and security trade-offs clearly during mentor Q&A.

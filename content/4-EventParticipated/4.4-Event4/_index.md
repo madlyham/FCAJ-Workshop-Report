@@ -10,7 +10,7 @@ pre: " <b> 4.4. </b> "
 
 **Date:** Saturday, October 24, 2026  
 **Time:** 10:30 AM – 12:00 PM (GMT+7)  
-**Location:** Amazon Web Services Vietnam Office, 26th Floor, Bitexco Financial Tower, 02 Hai Trieu Street, Ho Chi Minh City, Vietnam.  
+**Location:** Amazon Web Services Vietnam Office, Level 26, Bitexco Financial Tower, 02 Hai Trieu Street, Ho Chi Minh City, Vietnam.  
 **Role:** Attendee  
 
 ### **Event Objectives**
@@ -37,7 +37,13 @@ pre: " <b> 4.4. </b> "
 #### **Agent Router & Memory Graphs**
 * Long-term AI memory structures and stateful agent coordination across distributed microservices.
 
+### **Key Takeaways & Application**
+
+* Reinforced ReLoop's choice of private Amazon S3 object storage with presigned POST policies and lifecycle rules for handling user-uploaded device photos cleanly without operating custom storage servers.  
+* Clarified inference cost and throughput trade-offs for AI workloads, validating our serverless Amazon Bedrock integration with strict output schemas and per-user daily quotas.
+
 ### **Event Photos**
 
+![Cloud & AI Infrastructure Meetup technical session at AWS Vietnam Office](/images/report/image9.png)
 
-![](/images/report/image9.png) ![](/images/report/image10.png) 
+![Speakers and attendees at the Cloud & AI Infrastructure Meetup, Bitexco Level 26](/images/report/image10.png)

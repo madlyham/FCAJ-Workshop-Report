@@ -19,7 +19,7 @@ Hoàn thiện khối màu hồng **Monitoring & alerts** ở dưới cùng sơ �
 ### Bước 1 — Đặt lưu giữ 7 ngày cho Log Group của Lambda (`logs & metrics`)
 
 1. Mở **Amazon CloudWatch -> Logs -> Log Management** tại **`ap-southeast-1`**.
-2. Mở **`/aws/lambda/reloop2-api`** (tạo trước nếu `reloop2-api` chưa từng chạy) -> **Actions -> Edit retention setting** -> chọn **`1 week (7 days)`** -> **Save**.
+2. Mở **`/aws/lambda/reloop2-api`** (tạo trước nếu `reloop2-api` chưa từng chạy) -> **Actions -> Edit retention setting** -> chọn **`1 week (7 days)`** -> **Save**. *(Tùy chọn đặt cùng mức lưu giữ 7 ngày cho **`/aws/lambda/reloop2-post-confirmation`** để khớp với Terraform IaC.)*
 
 ![CloudWatch Log Group /aws/lambda/reloop2-api với thời hạn lưu giữ 1 tuần](/images/5-Workshop/5.10/01-cw-log-group-retention.png)
 
@@ -34,7 +34,7 @@ Hoàn thiện khối màu hồng **Monitoring & alerts** ở dưới cùng sơ �
 2. Mở `reloop2-alerts` -> **Create subscription**:
    - **Protocol:** `Email`
    - **Endpoint:** Địa chỉ email quản trị viên của bạn (hiển thị dạng mẫu ẩn danh `alerts@example.com`).
-3. Nhấn xác nhận đường dẫn trong hộp thư để cảnh báo được gửi ngay khi kích hoạt.
+3. Mở email xác nhận từ AWS trong hộp thư và nhấn liên kết Confirm subscription để bắt đầu nhận cảnh báo.
 
 ![Chủ đề Amazon SNS reloop2-alerts cùng đăng ký email quản trị viên](/images/5-Workshop/5.10/02-sns-topic-subscription.png)
 
@@ -44,6 +44,7 @@ Hoàn thiện khối màu hồng **Monitoring & alerts** ở dưới cùng sơ �
 
 1. Mở **Amazon CloudWatch -> Alarms -> All alarms -> Create alarm** tại **`ap-southeast-1`**.
 2. Chọn chỉ số **`AWS/Lambda` -> `By Function Name` -> `reloop2-api` -> `Errors`**.
+   *(Nếu chưa thấy `reloop2-api` trong `AWS/Lambda -> By Function Name`, hãy gửi nhanh một yêu cầu — ví dụ mở `https://<dist-domain>.cloudfront.net/feed` hoặc chạy một Lambda test event — rồi làm mới sau khoảng 1 phút.)*
 3. Cấu hình điều kiện:
    - **Statistic:** `Sum` · **Period:** `5 minutes` (`300s`)
    - **Threshold:** `Static` -> `Greater/Equal` -> **`3`**

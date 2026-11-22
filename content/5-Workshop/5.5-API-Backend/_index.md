@@ -23,7 +23,8 @@ Now build the orange **API backend** box on the diagram: **AWS Lambda (`reloop2-
    ```bash
    python -c "import secrets; print(secrets.token_hex(32))"
    ```
-2. **IAM Role:** Create **`reloop2-api-lambda-role`** (trust entity: `lambda.amazonaws.com`) with inline policy **`reloop2-api-access`** covering the exact downstream arrows from `AWS Lambda (API)` (DynamoDB in 5.6, S3 photos in 5.7, Rekognition & Bedrock in 5.8, and CloudWatch Logs in 5.10):
+2. **IAM Role:** Create **`reloop2-api-lambda-role`** (trusted entity: **AWS service -> Lambda**), attach AWS managed policy **`AWSLambdaBasicExecutionRole`**, and add inline policy **`reloop2-api-access`** covering the exact downstream arrows from `AWS Lambda (API)` (DynamoDB in 5.6, S3 photos in 5.7, Rekognition & Bedrock in 5.8, and CloudWatch Logs in 5.10):
+   *(Replace placeholder `123456789012` with your 12-digit AWS Account ID and `<suffix>` with your bucket suffix.)*
    ```json
    {
      "Version": "2012-10-17",

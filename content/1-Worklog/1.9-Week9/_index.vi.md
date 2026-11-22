@@ -1,46 +1,44 @@
 ---
 title: "Nhật ký công việc Tuần 9"
-date: 2026-11-07
+date: 2026-11-22
 weight: 9
 chapter: false
 pre: " <b> 1.9. </b> "
 ---
 
-# **Nhật ký công việc Tuần 9: Pentest bằng AWS Security Agent, Sửa lỗi, CSP, Email SES, Budgets và Đề xuất Phần 2**
+# **Nhật ký công việc Tuần 9 — Rà soát bảo mật, bản vá gia cố, Đề xuất Phần 2 và Sự kiện Cloud Mastery**
 
 ## **1. Mục tiêu tuần**
 
-* Xem kết quả pentest tự động và sửa mọi mục sửa được.
-* Bật Content-Security-Policy chặt cho ứng dụng web.
-* Gỡ giới hạn email của Cognito bằng Amazon SES và thêm cảnh báo ngân sách.
-* Nộp Đề xuất (Phần 2) với chi phí thật và kết quả bảo mật.
-* Tham dự Sự kiện 6 (Cloud Mastery) tại văn phòng AWS.
+* Rà soát bảo mật toàn diện đối với IAM role, phân quyền Cognito JWT, cơ chế khóa nguồn `x-origin-verify` trên CloudFront và bộ luật WAF trên CloudFront.
+* Triển khai các bản vá gia cố bảo mật và xác thực lại toàn bộ hệ thống bằng smoke test.
+* Rà soát chi phí thực tế trên AWS Cost Explorer so với số dư credit còn lại và nộp Đề xuất (Phần 2).
+* Tham dự Sự kiện 6 (Cloud Mastery) tại Văn phòng AWS Việt Nam.
 
 ## **2. Lịch trình thực hiện**
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ngày 2** | • Xem kết quả pentest hộp đen bằng AWS Security Agent trên web dev (chạy cuối tuần, 11/08; 3,63 task-hour): 7 phát hiện, không có mức cao | 11/09/2026 | 11/09/2026 | Báo cáo AWS Security Agent |
-| **Ngày 3** | • Sửa và deploy các phát hiện (header bảo mật, thông báo lỗi, kiểm dữ liệu đầu vào); chạy lại smoke test | 11/10/2026 | 11/10/2026 | PR sửa lỗi, smoke-aws.py |
-| **Ngày 4** | • Chuyển Content-Security-Policy từ chế độ chỉ báo cáo sang chặn thật trên CloudFront; kiểm mọi trang xem có tài nguyên bị chặn | 11/11/2026 | 11/11/2026 | infra/web.tf |
-| **Ngày 5** | • Chuyển email của Cognito sang Amazon SES để đăng ký không bị chặn bởi giới hạn mặc định (~50 email/ngày) | 11/12/2026 | 11/12/2026 | Tài liệu Amazon SES |
-| **Ngày 6** | • Cảnh báo AWS Budgets ở mức 50% / 80% số credit còn lại; rà soát số dư credit và chi phí từng dịch vụ<br>• **Nộp Đề xuất (Phần 2)**: bản đề xuất cập nhật với chi phí thật từ Cost Explorer, kết quả pentest và phần gia cố | 11/13/2026 | 11/13/2026 | AWS Billing Console, [Đề xuất](../../2-proposal/) |
-| **Ngày 7** | • Tham dự [Sự kiện 6: Cloud Mastery](../../4-eventparticipated/4.6-event6/) (buổi sáng, Văn phòng AWS Việt Nam). Hỏi đáp kéo dài với sinh viên về định hướng và chuyên môn Cloud, sau đó chơi Quiz.com trực tiếp | 11/14/2026 | 11/14/2026 | [Sự kiện 6](../../4-eventparticipated/4.6-event6/) |
+| **Thứ 2** | • Rà soát bảo mật các policy IAM theo nguyên tắc quyền tối thiểu, kiểm tra claim Cognito JWT cùng phân quyền 4 nhóm (`Admins`, `FinanceAdmins`, `Partners`, `Owners`) và điều kiện quyền sở hữu trên DynamoDB | 09/11/2026 | 09/11/2026 | `infra/*.tf`, `backend/src/` |
+| **Thứ 3** | • Kiểm tra cơ chế bắt buộc header bí mật `x-origin-verify` từ CloudFront tới API Gateway (chặn truy cập trực tiếp bỏ qua CloudFront) và rà soát CloudFront WAF web ACL duy nhất (3 bộ luật AWS managed + 2 giới hạn tốc độ theo IP) | 10/11/2026 | 10/11/2026 | `infra/waf.tf`, `infra/web.tf` |
+| **Thứ 4** | • Triển khai các bản vá gia cố bảo mật (siết kiểm tra quyền sở hữu/vai trò, chuẩn hóa thông báo lỗi an toàn, siết kiểm tra dữ liệu đầu vào); chạy lại `smoke-aws.py` xác nhận không phát sinh lỗi hồi quy | 11/11/2026 | 11/11/2026 | PR sửa lỗi, `smoke-aws.py` |
+| **Thứ 5** | • Rà soát chi phí từng dịch vụ trên AWS Cost Explorer đối chiếu với số dư credit AWS và xác nhận stack 12 dịch vụ (+ IAM) duy trì ở mức ~$11.70/tháng ($10.00 CloudFront WAF + ~$1.70 theo mức sử dụng) | 12/11/2026 | 12/11/2026 | AWS Cost Explorer |
+| **Thứ 6** | • Hoàn thiện và **nộp Đề xuất (Phần 2)**: cập nhật kiến trúc 12 dịch vụ AWS quản lý (+ IAM), bảng chi phí thực tế từ Cost Explorer và kết quả gia cố bảo mật | 13/11/2026 | 13/11/2026 | [Đề xuất](../../2-proposal/) |
+| **Thứ 7** | • Tham dự [Sự kiện 6: Cloud Mastery – Buổi chia sẻ về Cloud cho sinh viên](../../4-eventparticipated/4.6-event6/) (buổi sáng, Văn phòng AWS Việt Nam). Hỏi đáp mở kéo dài với sinh viên về định hướng và chuyên môn Cloud, sau đó chơi Quiz.com trực tiếp | 14/11/2026 | 14/11/2026 | [Sự kiện 6](../../4-eventparticipated/4.6-event6/) |
 
 ## **3. Kết quả đạt được**
 
 ### **Cơ sở lý thuyết**
 
-* Hiểu cách pentest hộp đen tự động tìm lỗi từ bên ngoài, giống cách kẻ tấn công nhìn hệ thống.
-* Hiểu vì sao CSP nên chạy chế độ chỉ báo cáo trước, rồi mới bật chặn khi không trang nào bị lỗi.
+* Hiểu cách phòng thủ nhiều lớp kết hợp lọc tại biên (CloudFront + WAF), khóa nguồn (`x-origin-verify`), xác thực nhóm quyền JWT và điều kiện ghi trên DynamoDB.
+* Nắm quy trình đối chiếu dữ liệu chi phí thực tế từ Cost Explorer với ước tính kiến trúc trước khi chốt đề xuất dự án.
 
 ### **Cài đặt & Thiết lập môi trường**
 
-* Header CSP chặt, HSTS và X-Frame-Options được áp trên CloudFront.
-* Cognito gửi email qua Amazon SES; cảnh báo AWS Budgets ở mức 50% / 80%.
-* Đã nộp Đề xuất (Phần 2) ngày 11/13/2026.
+* Các policy IAM quyền tối thiểu, kiểm tra JWT 4 nhóm Cognito, khóa nguồn `x-origin-verify` và luật CloudFront WAF đã được xác thực trên hệ thống thật.
+* Đã nộp Đề xuất (Phần 2) ngày 13/11/2026 kèm số liệu Cost Explorer thực tế.
 
 ### **Kỹ năng thực hành & Vận hành**
 
-* Đóng mọi phát hiện pentest sửa được và xác nhận bằng kiểm thử lại.
-* Giữ pentest trong ngân sách bằng cách dừng ở khoảng 3,5 task-hour.
+* Triển khai đầy đủ các bản vá gia cố bảo mật và vượt qua smoke test trọn luồng không có lỗi hồi quy.
+* Xác nhận mức chi phí vận hành (~$11.70/tháng) nằm gọn trong ngân sách credit AWS còn lại.

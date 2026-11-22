@@ -19,7 +19,7 @@ Complete the pink **Monitoring & alerts** box at the bottom of the diagram: conf
 ### Step 1 — Set 7-Day Retention on Lambda Log Group (`logs & metrics`)
 
 1. Open **Amazon CloudWatch -> Logs -> Log Management** in **`ap-southeast-1`**.
-2. Open **`/aws/lambda/reloop2-api`** (create it first if `reloop2-api` has not run yet) -> **Actions -> Edit retention setting** -> select **`1 week (7 days)`** -> **Save**.
+2. Open **`/aws/lambda/reloop2-api`** (create it first if `reloop2-api` has not run yet) -> **Actions -> Edit retention setting** -> select **`1 week (7 days)`** -> **Save**. *(Optionally set the same 7-day retention on **`/aws/lambda/reloop2-post-confirmation`** to match the Terraform IaC.)*
 
 ![CloudWatch Log Group /aws/lambda/reloop2-api configured with 1-week retention](/images/5-Workshop/5.10/01-cw-log-group-retention.png)
 
@@ -44,6 +44,7 @@ Complete the pink **Monitoring & alerts** box at the bottom of the diagram: conf
 
 1. Open **Amazon CloudWatch -> Alarms -> All alarms -> Create alarm** in **`ap-southeast-1`**.
 2. Select metric **`AWS/Lambda` -> `By Function Name` -> `reloop2-api` -> `Errors`**.
+   *(If `reloop2-api` is not yet listed under `AWS/Lambda -> By Function Name`, trigger one quick request — e.g., open `https://<dist-domain>.cloudfront.net/feed` or run a Lambda test event — and refresh after ~1 minute.)*
 3. Configure conditions:
    - **Statistic:** `Sum` · **Period:** `5 minutes` (`300s`)
    - **Threshold:** `Static` -> `Greater/Equal` -> **`3`**

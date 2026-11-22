@@ -1,42 +1,43 @@
 ---
 title: "Week 10 Worklog"
-date: 2026-11-07
+date: 2026-11-22
 weight: 10
 chapter: false
 pre: " <b> 1.10. </b> "
 ---
 
-# **Week 10 Work Log: Load Test, Throttling Fix, Single Deploy Path & Production Environment**
+# **Week 10 Worklog — Load Test, Throttling Fix, Single Deploy Workflow & Live Workshop Verification**
 
 ## **1. Weekly Objectives**
 
-* Prove the system handles bursts gracefully after the concurrency raise.
-* Move all deploys to one CI/CD path with one IAM user per member.
-* Create the production environment from the same Terraform code.
+* Prove the system handles traffic bursts gracefully after the Lambda concurrency quota raise.
+* Enforce a single CI/CD deploy workflow with one IAM user per member and zero root access keys.
+* Rebuild the streamlined hands-on Workshop (`5.1`–`5.12`) and complete full live end-to-end verification across Arrows 1 → 10, EventBridge, and CloudWatch/SNS.
 
 ## **2. Weekly Execution Schedule**
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Day 2** | • Re-run loadtest.mjs (80 parallel requests) against the earlier baseline of 26% 5xx; with concurrency 1,000 the 5xx errors are gone | 11/16/2026 | 11/16/2026 | loadtest.mjs |
-| **Day 3** | • Throttling fix: API Gateway throttle 20 requests/s with burst 50; WAF rate limits and API return 429 with Retry-After instead of failing | 11/17/2026 | 11/17/2026 | API Gateway Docs |
-| **Day 4** | • Single CI/CD deploy path in GitHub Actions from a committed revision; one IAM user per team member; plan removal of root access keys | 11/18/2026 | 11/18/2026 | GitHub Actions, IAM |
-| **Day 5** | • Create the production stack from the same Terraform modules with separate variables | 11/19/2026 | 11/19/2026 | infra/*.tf |
-| **Day 6** | • Run the smoke test on production and fix the last environment-specific issues | 11/20/2026 | 11/20/2026 | smoke-aws.py |
+| **Monday** | • Re-run `loadtest.mjs` (80 parallel requests) against the earlier baseline of 26% `5xx`; with Lambda concurrency at 1,000, `5xx` errors drop to zero | 16/11/2026 | 16/11/2026 | `loadtest.mjs` |
+| **Tuesday** | • Throttling fix: configure API Gateway throttling (20 req/s, burst 50) and verify CloudFront WAF rate limits return controlled rate-limiting responses (`429` + `Retry-After`) instead of failing | 17/11/2026 | 17/11/2026 | API Gateway Docs, `infra/waf.tf` |
+| **Wednesday** | • Enforce a single CI/CD deploy workflow in GitHub Actions from committed revisions (no manual laptop deploys); finalize one IAM user per team member and confirm zero root access keys exist on the account | 18/11/2026 | 18/11/2026 | GitHub Actions, IAM |
+| **Thursday** | • Rebuild and streamline the ReLoop Workshop (`5.1`–`5.12`) to match the exact 12-service (+ IAM) Terraform stack with repeatable setup and cleanup instructions | 19/11/2026 | 19/11/2026 | [Workshop](../../5-workshop/) |
+| **Friday** | • Run full live end-to-end verification across Arrows 1 → 10 (CloudFront + WAF edge, Cognito auth, S3 presigned upload, Rekognition moderation, Bedrock Kimi K3 + Guardrail, and DynamoDB single-table marketplace flows) | 20/11/2026 | 20/11/2026 | `smoke-aws.py`, [Workshop](../../5-workshop/) |
+| **Saturday** | • Verify the EventBridge 15-minute listing-expiry sweep and CloudWatch 7-day logs + Lambda Errors alarm (≥ 3 errors in 5 min) → SNS Admin email alerts; record Cost Explorer & credit snapshot ($189.80 USD remaining until 28/02/2027) | 21/11/2026 | 21/11/2026 | EventBridge, CloudWatch, Cost Explorer |
 
 ## **3. Key Achievements & Outcomes**
 
 ### **Theoretical Foundation**
 
-* Learned the difference between failing under load (5xx) and pushing back politely (429 + Retry-After).
-* Understood why one deploy path from a committed revision prevents two machines from overwriting each other.
+* Learned the difference between failing under load (`5xx`) and pushing back gracefully with controlled rate limiting (`429` + `Retry-After`).
+* Understood why a single CI/CD deploy workflow from committed revisions prevents concurrent overwrites across developer machines.
 
 ### **Environment Setup & Configuration**
 
-* API Gateway throttle 20/s, burst 50; WAF rate limits returning 429.
-* Production stack built from the same Terraform modules as dev.
+* API Gateway throttle (20 req/s, burst 50) and CloudFront WAF rate limits verified to return `429` + `Retry-After`.
+* CI-only GitHub Actions deploy workflow active, per-member IAM users enforced, and zero root access keys confirmed.
 
 ### **Practical Skills & Operations**
 
-* Compared load-test results before and after the fix and recorded them for the final report.
-* Deployed through CI only, with no manual deploys from laptops.
+* Compared load-test results before and after the fix and documented them for the final report.
+* Completed live end-to-end Workshop verification (`5.1`–`5.12`) across Arrows 1 → 10, EventBridge, and CloudWatch/SNS, and verified remaining credits ($189.80 USD on 21/11/2026 until 28/02/2027).

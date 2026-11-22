@@ -21,7 +21,7 @@ Mỗi học phần trong workshop khớp trực tiếp với các mũi tên đá
 | **1** | **Users → CloudFront** (`HTTPS (TLS)`) | Trình duyệt kết nối HTTPS tới CloudFront. **AWS WAF (`reloop2-web`)** được gắn kèm (`associated web ACL`) để chặn IP xấu, tấn công web phổ biến và giới hạn tần suất yêu cầu. | [5.3](../5.3-global-edge/) |
 | **2** | **CloudFront → S3 (website)** (`static files (OAC)`) | CloudFront đọc các tệp giao diện React riêng tư từ `reloop2-web-<suffix>` qua Origin Access Control (OAC) và điều hướng tuyến SPA ngay tại CloudFront. | [5.3](../5.3-global-edge/) |
 | **3** | **Users → Cognito** (`sign up / sign in`) | Người dùng đăng ký và đăng nhập tại **Amazon Cognito** (`reloop2-user-pool`). Sau khi xác nhận tài khoản, Cognito kích hoạt `post-confirmation trigger` gọi **AWS Lambda (Post-confirm)** để tự tạo hồ sơ `Owner` trong DynamoDB (`create profile`). | [5.4](../5.4-sign-up-and-sign-in/) |
-| **4** | **CloudFront → API Gateway** (`/api/* + x-origin-verify`) | Các yêu cầu `/api/*` được cắt tiền tố `/api` tại CloudFront rồi chuyển tiếp tới **Amazon API Gateway** kèm tiêu đề bí mật `x-origin-verify` nhằm chặn truy cập vòng. | [5.5](../5.5-api-backend/) |
+| **4** | **CloudFront → API Gateway** (`/api/* + x-origin-verify`) | Các yêu cầu `/api/*` được cắt tiền tố `/api` tại CloudFront rồi chuyển tiếp tới **Amazon API Gateway** kèm tiêu đề bí mật `x-origin-verify` nhằm chặn truy cập trực tiếp bỏ qua CloudFront. | [5.5](../5.5-api-backend/) |
 | **5** | **API Gateway → Lambda (API)** (`invoke`) | API Gateway kiểm tra mã JWT của các tuyến bảo vệ qua Cognito (`verify JWT (JWKS)`), sau đó gọi **AWS Lambda (`reloop2-api`)** chạy Node.js 22 trên ARM64. | [5.5](../5.5-api-backend/) |
 | **6** | **Lambda (API) ↔ DynamoDB** (`read/write users, listings & invoices`) | Lambda đọc và ghi hồ sơ người dùng, đối tác, tin đăng thiết bị, bộ hẹn giờ hết hạn và hóa đơn phí theo tháng trong một bảng on-demand duy nhất (`reloop2-core-table`). | [5.6](../5.6-dynamodb/) |
 | **7** | **Lambda (API) ↔ S3 (photos)** (`presign & tag`) | Khi người bán đính kèm ảnh thiết bị, Lambda cấp URL ký sẵn (presigned URL) ngắn hạn và gắn thẻ trạng thái cho ảnh trong `reloop2-images-<suffix>`. | [5.7](../5.7-s3-photos/) |
@@ -31,7 +31,7 @@ Mỗi học phần trong workshop khớp trực tiếp với các mũi tên đá
 
 **Các đường vận hành nền (mũi tên nét đứt không đánh số):**
 
-- **EventBridge → Lambda (API)** (`expire listings every 15 min`): Quy tắc `reloop2-sweep` gọi `reloop2-api` mỗi 15 phút để hết hạn các tin đăng quá hạn ([Học phần 5.9](../5.9-eventbridge/)).
+- **EventBridge → Lambda (API)** (`expire listings every 15 min`): Quy tắc `reloop2-sweep` gọi `reloop2-api` mỗi 15 phút để tự động đóng (chuyển sang hết hạn) các tin đăng đang mở đã quá hạn ([Học phần 5.9](../5.9-eventbridge/)).
 - **Lambda (API) → CloudWatch** (`logs & metrics`) **→ SNS** (`alarm → email Admin`): Nhật ký Lambda lưu giữ 7 ngày, và cảnh báo `reloop2-lambda-errors` gửi thông báo qua chủ đề SNS `reloop2-alerts` tới email quản trị viên ([Học phần 5.10](../5.10-monitoring/)).
 
 ### Căn cứ lựa chọn dịch vụ
@@ -39,7 +39,7 @@ Mỗi học phần trong workshop khớp trực tiếp với các mũi tên đá
 | Dịch vụ AWS đã chọn | Thay cho | Lý do lựa chọn (Chi phí · Mở rộng · Độ sẵn sàng) |
 | --- | --- | --- |
 | **API Gateway (HTTP API) + Lambda (`arm64`)** | EC2 / ECS | 0 USD khi rảnh, tự mở rộng tới 1.000 lượt song song, sẵn sàng cao Multi-AZ mặc định, chip Graviton `arm64` tiết kiệm ~20% chi phí. |
-| **DynamoDB On-Demand (Single-Table)** | Amazon RDS | Không tốn phí máy chủ 24/7 (~$0,10/tháng ở quy mô hiện tại), nhân bản Multi-AZ mặc định, tích hợp sẵn PITR & TTL. |
+| **DynamoDB On-Demand (Single-Table)** | Amazon RDS | Không tốn phí máy chủ 24/7 (~$0,10/tháng ở quy mô workshop/dev), nhân bản Multi-AZ mặc định, tích hợp sẵn PITR & TTL. |
 | **S3 + CloudFront (OAC) + Presigned URL** | Đẩy tệp qua backend | Độ bền 11 số 9 (`99,999999999%`), giảm tải cho Lambda, tối ưu băng thông (CloudFront Free Tier 1 TB/tháng), khóa kín bucket riêng tư. |
 | **Cognito + Rekognition + Bedrock (Kimi K3 & Guardrail)** | Tự dựng Auth / tự host GPU | Quản lý hoàn toàn, serverless trả theo lượt dùng (10.000 MAU miễn phí; không tốn phí GPU rảnh), có sẵn kiểm duyệt ảnh và Guardrail bảo vệ. |
 
@@ -65,7 +65,7 @@ Hoàn thành học phần **5.2–5.11** và dọn dẹp ngay trong ngày ở h�
 | **API Gateway & Lambda** | ~100 lượt gọi, 512 MB ARM64 | $0,00 (Free Tier) |
 | **Amazon DynamoDB** | Đọc/ghi theo yêu cầu (<5 MB, bật PITR) | ~$0,01 |
 | **Rekognition & Bedrock** | Vài lượt kiểm duyệt ảnh + Guardrail + Kimi K3 | ~$0,05–$0,25 |
-| **EventBridge, CloudWatch & SNS** | 1 quy tắc, 1 nhóm nhật ký, 1 cảnh báo, 1 chủ đề SNS | $0,00 (Free Tier) |
+| **EventBridge, CloudWatch & SNS** | 1 quy tắc, 2 nhóm nhật ký, 1 cảnh báo, 1 chủ đề SNS | $0,00 (Free Tier) |
 | **Tổng cộng (dựng & xóa trong ngày)** | Chạy thử đủ luồng + dọn dẹp ở 5.12 | **< 1,00 USD** |
 
 {{% notice warning %}}

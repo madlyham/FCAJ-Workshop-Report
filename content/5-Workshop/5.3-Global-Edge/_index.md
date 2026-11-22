@@ -84,6 +84,7 @@ Inside **Amazon CloudFront**, create two small helper features needed for Arrows
 ![CloudFront distribution reloop2-web deployed over HTTPS](/images/5-Workshop/5.3/04-cf-distribution-overview.png)
 
 3. Return to **S3 -> `reloop2-web-<suffix>` -> Permissions -> Bucket policy** and paste the least-privilege policy granting read access strictly to your distribution ARN:
+   *(Replace placeholder `123456789012` with your 12-digit AWS Account ID, plus `<suffix>` and `<dist-id>`.)*
    ```json
    {
      "Version": "2012-10-17",
@@ -125,7 +126,7 @@ Inside **Amazon CloudFront**, create two small helper features needed for Arrows
 In the diagram, **AWS WAF (web)** connects directly to **Amazon CloudFront** via `associated web ACL`. CloudFront WAF ACLs must be created in **Global (CloudFront) / `us-east-1`**.
 
 1. Open **AWS WAF & Shield -> Web ACLs**, select **Global (CloudFront)**, and click **Create web ACL**.
-2. Set **Name:** `reloop2-web`, **Description:** `ReLoop 2: IP rate limits, bad IPs, common attack patterns - CloudFront`, and associate your CloudFront distribution (`reloop2 web`).
+2. Set **Name:** `reloop2-web`, **Description:** `ReLoop: IP rate limits, bad IPs, common attack patterns - CloudFront`, and associate your CloudFront distribution (`reloop2 web`).
 3. Add a **Custom response body** named **`rate_limited`** (Content type: `JSON`):
    ```json
    {"code":"RATE_LIMITED","message":"Too many requests - wait about 1 minute and try again"}

@@ -23,7 +23,7 @@ Delete every `reloop2` resource created in Modules **5.3–5.10** in safe revers
 4. **AI Processing (`ap-southeast-1`):** Open **Amazon Bedrock -> Guardrails** -> delete **`reloop2-ai-guardrail`** (deletes `DRAFT` and Version `1`).
 5. **API Backend (`ap-southeast-1`):** Delete HTTP API Gateway **`reloop2-api`**.
 6. **Sign-up & Sign-in (`ap-southeast-1`):** Open **Cognito -> `reloop2-user-pool`**:
-   - Under **Branding -> Domain**, delete domain `reloop2-auth`.
+   - Under **Branding -> Domain**, delete domain `reloop2-auth` (or your suffixed domain prefix).
    - Under **Overview -> Delete user pool**, uncheck/deactivate **Deletion protection** and delete `reloop2-user-pool`.
 7. **Lambdas & IAM Roles:**
    - Delete Lambda functions **`reloop2-api`** and **`reloop2-post-confirmation`** (`ap-southeast-1`).
@@ -76,4 +76,4 @@ terraform plan
 terraform apply
 ```
 
-After `terraform apply` finishes, run `python ../frontend/configure.py` with the printed Cognito outputs and sync `frontend/build/` to the S3 web bucket (see the repository [README](https://github.com/madlyham/ReLoop#option-2--deploy-with-terraform-reproducible-iac)). When finished, empty the S3 buckets, set `cognito_deletion_protection = "INACTIVE"`, and run `terraform destroy`.
+After `terraform apply` finishes, return to the repository root (`cd ..`), run `python frontend/configure.py` with the printed Cognito outputs, and sync `frontend/build/` to the S3 web bucket (see the repository [README](https://github.com/madlyham/ReLoop#option-2--deploy-with-terraform-reproducible-iac)). When finished, empty both S3 buckets, set `cognito_deletion_protection = "INACTIVE"` in `terraform.tfvars`, run `terraform apply` first to disable deletion protection on the User Pool, and then run `terraform destroy`.

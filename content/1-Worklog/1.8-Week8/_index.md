@@ -6,23 +6,23 @@ chapter: false
 pre: " <b> 1.8. </b> "
 ---
 
-# **Week 8 Work Log: Background Matching, QA Rounds, WAF & Developer Reference**
+# **Week 8 Worklog — Background Matching, QA Rounds, WAF & Developer Reference**
 
 ## **1. Weekly Objectives**
 
 * Match every new listing to buyer branches nearby, automatically and in the background.
 * Find and fix bugs through structured QA rounds and a first load test.
-* Protect the site and sign-in with AWS WAF and write the developer reference.
+* Protect the CloudFront edge and public API with AWS WAF and write the developer reference.
 
 ## **2. Weekly Execution Schedule**
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Day 2** | • Background matching with geohash + Haversine distance: each listing goes to every approved branch whose service area (1–15 km) covers it; listings within 5 km rank first | 11/02/2026 | 11/02/2026 | matching.ts |
-| **Day 3** | • Consolidate 5 QA rounds: 146 findings logged and prioritised (03/11) | 11/03/2026 | 11/03/2026 | QA tracker |
-| **Day 4** | • First load test (loadtest.mjs, 80 parallel requests): 26% 5xx at Lambda concurrency 10; request and receive a quota raise to 1,000 | 11/04/2026 | 11/04/2026 | loadtest.mjs, Service Quotas |
-| **Day 5** | • AI quota of 20 analyses per user per day (AI_DAILY_LIMIT); store the AI suggestion next to the seller's final value (AILABEL) | 11/05/2026 | 11/05/2026 | aiService.ts |
-| **Day 6** | • AWS WAF on CloudFront (managed rules + rate limits) and on the Cognito user pool (login rate limit) (06/11); write RELOOP_TECHNICAL_REFERENCE (30+ key patterns, all API routes) | 11/06/2026 | 11/06/2026 | infra/waf.tf, RELOOP_TECHNICAL_REFERENCE |
+| **Monday** | • Background matching with geohash + Haversine distance: each listing goes to every approved branch whose service area (1–15 km) covers it; listings within 5 km rank first | 02/11/2026 | 02/11/2026 | `matching.ts` |
+| **Tuesday** | • Consolidate 5 QA rounds: 146 findings logged and prioritized (03/11/2026) | 03/11/2026 | 03/11/2026 | QA tracker |
+| **Wednesday** | • First load test (`loadtest.mjs`, 80 parallel requests): 26% `5xx` at Lambda concurrency 10; request and receive a quota raise to 1,000 | 04/11/2026 | 04/11/2026 | `loadtest.mjs`, Service Quotas |
+| **Thursday** | • AI quota of 20 analyses per user per day (`AI_DAILY_LIMIT`); store the AI suggestion next to the seller's final value (`AILABEL`) | 05/11/2026 | 05/11/2026 | `aiService.ts` |
+| **Friday** | • Configure a single CloudFront AWS WAF web ACL (3 AWS managed rule groups + 2 per-IP rate limits: 100 req/min on the public API and 1,000 req/min overall) on 06/11/2026; write `RELOOP_TECHNICAL_REFERENCE` (30+ key patterns, all API routes) | 06/11/2026 | 06/11/2026 | `infra/waf.tf`, `RELOOP_TECHNICAL_REFERENCE` |
 
 ## **3. Key Achievements & Outcomes**
 
@@ -33,10 +33,10 @@ pre: " <b> 1.8. </b> "
 
 ### **Environment Setup & Configuration**
 
-* Two WAF web ACLs: reloop-dev-web (CloudFront) and reloop-dev-auth (Cognito).
+* Single CloudFront WAF web ACL ($10.00/month) with 3 AWS managed rule groups and 2 per-IP rate limits (100 req/min public API, 1,000 req/min overall).
 * Lambda concurrency quota raised from 10 to 1,000; AI daily limit set to 20 per user.
 
 ### **Practical Skills & Operations**
 
-* Closed the highest-priority QA findings and re-tested the affected flows.
+* Resolved the highest-priority QA bugs and re-tested the affected flows.
 * Wrote the developer reference so new team members can find every key pattern and route in one place.

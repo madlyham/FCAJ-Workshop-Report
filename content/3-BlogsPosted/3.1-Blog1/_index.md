@@ -34,9 +34,8 @@ Fire two concurrent requests from different users targeting the same job record.
 
 One transaction, one winner, no human referee required.
 
-*Note: This architecture and testing design is a proposed pattern.*
-
+*Note: This is a proposed architecture and testing design pattern, not a live production deployment report.*
 
 #AWS #DynamoDB #Serverless #RaceCondition #Engineering
 
-![](/images/report/image1.png)
+![DynamoDB TransactWriteItems and Idempotency Key concurrency control diagram](/images/report/image1.png)

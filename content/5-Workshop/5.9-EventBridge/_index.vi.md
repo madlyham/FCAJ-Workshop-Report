@@ -6,7 +6,7 @@ chapter : false
 pre : " <b> 5.9. </b> "
 ---
 
-Bổ sung mũi tên chạy nền định kỳ trên sơ đồ: **Amazon EventBridge** đánh thức `reloop2-api` mỗi 15 phút để quét các phân vùng `TIMER#` trong DynamoDB và tự động hết hạn những tin đăng đã quá 7 ngày.
+Bổ sung mũi tên chạy nền định kỳ trên sơ đồ: **Amazon EventBridge** đánh thức `reloop2-api` mỗi 15 phút để truy vấn các phân vùng `TIMER#` trong DynamoDB và tự động đóng (chuyển sang trạng thái hết hạn) những tin đăng đang mở đã quá 7 ngày.
 
 **Mũi tên trên sơ đồ thuộc bước này:**
 - **Liên kết phụ:** `Amazon EventBridge → AWS Lambda (API)` (`expire listings every 15 min`)
@@ -20,7 +20,7 @@ Bổ sung mũi tên chạy nền định kỳ trên sơ đồ: **Amazon EventBri
 1. Mở **Amazon EventBridge -> Buses -> Rules -> Create rule** tại **`ap-southeast-1`**.
 2. Cấu hình:
    - **Name:** `reloop2-sweep`
-   - **Description:** `ReLoop 2: expire listings every 15 min`
+   - **Description:** `ReLoop: expire listings every 15 min`
    - **Event bus:** `default`
    - **Rule type:** **`Schedule`** -> **Continue in EventBridge Rule**
    - **Schedule pattern:** **Fixed rate of `15` `Minutes`** (`rate(15 minutes)`)

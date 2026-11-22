@@ -1,42 +1,44 @@
 ---
 title: "Nhật ký công việc Tuần 11"
-date: 2026-11-07
+date: 2026-11-22
 weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
 
-# **Nhật ký công việc Tuần 11: Chuyển Terraform State, Dọn dẹp Tài nguyên và Rà soát Chi phí**
+# **Nhật ký công việc Tuần 11 — Kiểm toán tài nguyên, dọn dẹp tài sản thừa và rà soát chi phí [Dự kiến]**
+
+> **Trạng thái:** Dự kiến (tuần kế tiếp: 23/11/2026 – 27/11/2026; cập nhật ngày 22/11/2026).
 
 ## **1. Mục tiêu tuần**
 
-* Đưa toàn bộ Terraform state về một nơi an toàn, có versioning cho từng môi trường.
-* Xóa các tài nguyên cũ còn sót lại từ giai đoạn dựng tay ban đầu.
-* So sánh chi phí thực với ước tính và xác nhận credit đủ dùng tới 28/02/2027.
+* Kiểm toán toàn bộ tài nguyên AWS đang hoạt động tại `ap-southeast-1` và `us-east-1` (CloudFront WAF) đối chiếu với tệp Terraform state có versioning.
+* Rà soát và xóa bỏ các tài nguyên thừa tạo thủ công từ Tuần 1–5 mà không làm ảnh hưởng đến hệ thống ReLoop đang chạy.
+* Đối chiếu chi phí thực tế trên AWS Cost Explorer với mức **$11.70/tháng** và xác nhận số dư credit AWS (**$189.80 USD** tính đến 21/11/2026) đủ duy trì vận hành tới 28/02/2027.
 
 ## **2. Lịch trình thực hiện**
 
-| Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
+| Ngày | Mô tả công việc dự kiến | Ngày dự kiến | Trạng thái | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ngày 2** | • Lên kế hoạch chuyển state: liệt kê mọi tài nguyên, sao lưu các file state hiện có | 11/23/2026 | 11/23/2026 | Tài liệu Terraform |
-| **Ngày 3** | • Chuyển state sang backend S3 có versioning (mỗi môi trường một key) và xác nhận terraform plan không có thay đổi | 11/24/2026 | 11/24/2026 | infra/backend.tf |
-| **Ngày 4** | • Tìm các tài nguyên tạo tay trong tuần 1–5 (user pool cũ, API thử, bucket thực hành) mà Terraform không quản lý | 11/25/2026 | 11/25/2026 | AWS Console, Resource Explorer |
-| **Ngày 5** | • Xóa các tài nguyên không dùng sau khi nhóm đồng ý; chạy lại smoke test trên dev và production | 11/26/2026 | 11/26/2026 | smoke-aws.py |
-| **Ngày 6** | • Rà soát chi phí trên Cost Explorer so với ước tính (khoảng 18,70 USD/tháng, phần lớn là WAF); xác nhận credit đủ chạy tới 28/02/2027 | 11/27/2026 | 11/27/2026 | AWS Cost Explorer |
+| **Thứ 2** | • Kiểm kê toàn bộ tài nguyên AWS tại `ap-southeast-1` và `us-east-1` bằng Resource Explorer và đối chiếu với tệp Terraform state | 23/11/2026 | Dự kiến | AWS Resource Explorer, `infra/*.tf` |
+| **Thứ 3** | • Rà soát các tài nguyên còn sót lại từ giai đoạn tạo thủ công ở Tuần 1–5 (user pool cũ, API thử nghiệm, bucket thực hành, IAM role không dùng) ngoài phạm vi quản lý của Terraform | 24/11/2026 | Dự kiến | AWS Console, Resource Explorer |
+| **Thứ 4** | • Xác nhận `terraform plan` không còn thay đổi phát sinh, sao lưu danh mục dọn dẹp và xin thống nhất của nhóm trước khi xóa bất kỳ tài nguyên nào | 25/11/2026 | Dự kiến | `infra/backend.tf` |
+| **Thứ 5** | • Xóa các tài sản thừa đã được duyệt và chạy lại `smoke-aws.py` trên hệ thống ReLoop thật để xác nhận không ảnh hưởng vận hành | 26/11/2026 | Dự kiến | `smoke-aws.py` |
+| **Thứ 6** | • Hoàn tất rà soát chi phí trên Cost Explorer so với mức dự toán **$11.70/tháng** ($10.00/tháng cho CloudFront WAF + ~$1.70/tháng theo mức sử dụng, trong đó tính toán/DB/API/S3 cốt lõi dưới $0.30/tháng) và xác nhận hạn mức credit ($189.80 USD còn lại ngày 21/11/2026 đến 28/02/2027) | 27/11/2026 | Dự kiến | AWS Cost Explorer |
 
-## **3. Kết quả đạt được**
+## **3. Kết quả dự kiến**
 
 ### **Cơ sở lý thuyết**
 
-* Học cách chuyển Terraform state an toàn mà không tạo lại tài nguyên đang chạy.
-* Hiểu rằng phần lớn hóa đơn là chi phí cố định của WAF, còn các dịch vụ tính theo mức dùng dưới 1 USD/tháng.
+* Củng cố phương pháp phát hiện sai lệch hạ tầng (drift) và kiểm kê qua Resource Explorer để tránh phát sinh chi phí ngầm trên tài khoản AWS dùng chung.
+* Xác nhận định lượng rằng chi phí cố định của CloudFront WAF ($10.00/tháng) chiếm phần lớn hóa đơn, trong khi các dịch vụ cốt lõi (compute, DB, API, S3) duy trì dưới $0.30/tháng.
 
 ### **Cài đặt & Thiết lập môi trường**
 
-* Backend state S3 có versioning, mỗi môi trường một key.
-* Tài khoản đã dọn sạch tài nguyên sót lại không được quản lý.
+* Tài khoản AWS được dọn sạch các tài sản thừa từ Tuần 1–5, chỉ giữ lại đúng stack Terraform 12 dịch vụ (+ IAM) của ReLoop.
+* `terraform plan` không còn thay đổi phát sinh sau khi kiểm toán.
 
 ### **Kỹ năng thực hành & Vận hành**
 
-* Xác nhận terraform plan sạch sau khi chuyển state rồi mới xóa tài nguyên.
-* Viết bản tóm tắt chi phí ngắn cho báo cáo cuối kỳ.
+* Hoàn tất quy trình dọn dẹp an toàn có phê duyệt và xác nhận `smoke-aws.py` vượt qua trọn vẹn trên hệ thống thật.
+* Hoàn chỉnh bảng tóm tắt chi phí Cost Explorer và thời hạn credit ($11.70/tháng; còn $189.80 USD tính đến 21/11/2026, hiệu lực đến 28/02/2027) cho báo cáo cuối kỳ.

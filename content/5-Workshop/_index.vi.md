@@ -24,7 +24,7 @@ Hướng dẫn dùng tiền tố tài nguyên `reloop2` cùng các giá trị m�
 6. [5.6. Lưu trữ dữ liệu: Amazon DynamoDB](5.6-dynamodb/) — **Mũi tên 6** (`đọc/ghi người dùng, tin đăng & hóa đơn`)
 7. [5.7. Lưu trữ ảnh: Amazon S3 Photos](5.7-s3-photos/) — **Mũi tên 7, 8** (`tạo URL ký sẵn & gắn thẻ` + `tải lên / xem ảnh`)
 8. [5.8. Xử lý AI: Rekognition & Bedrock](5.8-ai-processing/) — **Mũi tên 9, 10** (`kiểm duyệt ảnh` + `phân tích AI + Guardrail`)
-9. [5.9. Dọn tin định kỳ: Amazon EventBridge](5.9-eventbridge/) — `hết hạn tin đăng mỗi 15 phút`
+9. [5.9. Dọn tin định kỳ: Amazon EventBridge](5.9-eventbridge/) — `tự động đóng tin đăng quá hạn mỗi 15 phút`
 10. [5.10. Giám sát & Cảnh báo: CloudWatch & SNS](5.10-monitoring/) — `nhật ký & chỉ số → cảnh báo → email Admin`
 11. [5.11. Kiểm thử toàn luồng thực tế](5.11-end-to-end-verification/) — Chạy kiểm chứng **Mũi tên 1 → 10** + EventBridge + CloudWatch & SNS
 12. [5.12. Dọn dẹp tài nguyên & Tham khảo Terraform](5.12-cleanup-and-iac/) — Xóa ngược thứ tự phụ thuộc & xác minh sạch tài nguyên

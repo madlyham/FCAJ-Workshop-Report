@@ -10,25 +10,25 @@ pre: " <b> 4.6. </b> "
 
 **Date:** Saturday, November 14, 2026  
 **Time:** Morning (GMT+7)  
-**Location:** AWS Vietnam Office, 26th Floor, Bitexco Financial Tower, Ho Chi Minh City, Vietnam.  
+**Location:** AWS Vietnam Office, Level 26, Bitexco Financial Tower, Ho Chi Minh City, Vietnam.  
 **Role:** Attendee  
 
 ### **Event Objectives**
 
-* Share cloud knowledge and career guidance with young students from across Saigon.  
+* Share cloud knowledge and career guidance with students across Ho Chi Minh City.  
 * Answer real questions from students, from career direction to hands-on cloud skills.  
 * Review the content in a fun way with a live quiz game at the end.
 
 ### **Key Highlights**
 
-#### **Open Q&A – "With No End"**
+#### **Extended Open Q&A**
 * The Q&A part ran much longer than planned. Students asked very practical questions about where to start in cloud, which skills matter, and how to grow a cloud career.
 
 #### **Quiz Game at the End**
 * A live Quiz.com game closed the session. Over 100 players joined (119 at the time of the photo) and the room was very lively.
 
-#### **What's Next**
-* The organizers mentioned another student-focused cloud event the following weekend: **AWS Student Community Day Vietnam 2026**.
+#### **Upcoming Event Announced at the Session (21–22/11/2026)**
+* The organizers highlighted another student-focused cloud event scheduled for 21–22/11/2026: **AWS Student Community Day Vietnam 2026**.
 
 ### **Event Experience**
 

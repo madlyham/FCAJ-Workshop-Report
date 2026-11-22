@@ -23,7 +23,7 @@ Bước tiếp theo trên sơ đồ kiến trúc là **Mũi tên 3**: người d
 2. Cấu hình:
    - **Pool name:** `reloop2-user-pool`
    - **Tier:** `Essentials`
-   - **Đăng nhập & thuộc tính:** Tên đăng nhập + `email` bắt buộc (tự động xác minh qua email) và `name` tùy chọn
+   - **Đăng nhập & thuộc tính:** Tên đăng nhập (bật bí danh đăng nhập bằng email) + `email` bắt buộc (tự động xác minh qua email) và `name` tùy chọn
    - **Chính sách mật khẩu:** Tối thiểu 8 ký tự gồm chữ hoa, chữ thường, số và ký tự đặc biệt
    - **Khôi phục tài khoản:** Chỉ qua email đã xác minh
    - **Deletion protection:** `ACTIVE`
@@ -56,7 +56,7 @@ Bước tiếp theo trên sơ đồ kiến trúc là **Mũi tên 3**: người d
 ![Cognito App Client reloop2-web-client gắn sẵn tên miền CloudFront](/images/5-Workshop/5.4/03-cognito-app-client-login.png)
 
 3. Vào **Branding -> Domain**, tạo tiền tố miền Cognito:
-   - **Domain prefix:** `reloop2-auth` (tạo ra `https://reloop2-auth.auth.ap-southeast-1.amazoncognito.com`; thêm hậu tố của bạn nếu đã có người dùng).
+   - **Domain prefix:** `reloop2-auth` (tạo ra `https://reloop2-auth.auth.ap-southeast-1.amazoncognito.com`; thêm hậu tố của bạn nếu tiền tố tên miền này đã có người đăng ký).
 
 ![Tên miền đăng nhập Cognito reloop2-auth](/images/5-Workshop/5.4/04-cognito-domain.png)
 
@@ -70,6 +70,7 @@ Khi người dùng xác nhận đăng ký, Cognito gọi `reloop2-post-confirmat
    - **Role name:** `reloop2-post-confirmation-role`
    - Gắn chính sách quản lý `AWSLambdaBasicExecutionRole` (cho CloudWatch Logs).
    - Thêm inline policy **`DynamoDBWriteAccess`**:
+     *(Thay giá trị mẫu `123456789012` bằng mã tài khoản AWS 12 chữ số của bạn.)*
      ```json
      {
        "Version": "2012-10-17",
@@ -146,11 +147,12 @@ Khi người dùng xác nhận đăng ký, Cognito gọi `reloop2-post-confirmat
 Sau khi có Cognito User Pool ID, App Client ID và domain, hãy gắn các giá trị này vào bản dựng React có sẵn trong **[github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop/tree/main/frontend)** bằng `frontend/configure.py` rồi đồng bộ lên bucket `reloop2-web-<suffix>` (đã tạo ở Học phần 5.3):
 
 ```bash
-# Chạy trong thư mục ReLoop đã clone (không cần build bằng Node.js):
+# Chạy trong thư mục ReLoop đã clone (không cần build bằng Node.js;
+# thay <your-cognito-domain> bằng reloop2-auth hoặc tiền tố kèm hậu tố của bạn ở Phần B):
 python frontend/configure.py \
   --pool-id "ap-southeast-1_<id>" \
   --client-id "<client-id>" \
-  --domain "https://reloop2-auth.auth.ap-southeast-1.amazoncognito.com"
+  --domain "https://<your-cognito-domain>.auth.ap-southeast-1.amazoncognito.com"
 
 # Đồng bộ tệp tĩnh đã cấu hình lên S3 website riêng tư và xóa bộ nhớ đệm CloudFront:
 aws s3 sync frontend/build/ s3://reloop2-web-<suffix>/ --region ap-southeast-1 --delete

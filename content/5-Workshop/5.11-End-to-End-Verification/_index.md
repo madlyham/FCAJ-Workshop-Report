@@ -30,7 +30,7 @@ Walk the entire architecture diagram live from **Arrow 1 through Arrow 10**, plu
 
 ### 2. Arrow 3 + Post-Confirm — Sign-Up, Confirmation, Login & Profile Creation
 
-3. Register and confirm a test user (`reloop_owner` / `owner@example.com`) against **Amazon Cognito** (`reloop2-user-pool`). Confirming sign-up fires `reloop2-post-confirmation` automatically, inserting `USER#<sub> / PROFILE` into DynamoDB.
+3. Self-register and confirm a test user (for example, `reloop_owner` with your real email inbox, shown below as sanitized placeholder `owner@example.com`) through the **ReLoop web app** (`https://<dist-domain>.cloudfront.net/` -> **Sign up**) against **Amazon Cognito** (`reloop2-user-pool`). Confirming sign-up fires `reloop2-post-confirmation` automatically, inserting `USER#<sub> / PROFILE` into DynamoDB. *(Do not create the user via Cognito Console `AdminCreateUser`, as it does not fire `PostConfirmation_ConfirmSignUp`.)*
 
 ![Confirmed user inside Cognito User Pool reloop2-user-pool](/images/5-Workshop/5.11/03-cognito-user-confirmed.png)
 
@@ -42,10 +42,10 @@ Walk the entire architecture diagram live from **Arrow 1 through Arrow 10**, plu
 
 ### 3. Arrows 4 → 10 — Presigned S3 Photo Upload, Rekognition, Bedrock & DynamoDB
 
-5. Add your test user to the **`Admins`** group (or approve a partner application) so you can open **Create Listing** (`/listings/new`).
+5. Because `reloop2-api` restricts posting listings to approved **`Partners`** or **`Admins`**, add your test user to the **`Admins`** group in Cognito (or approve a partner application), then **sign out and sign back in** to the ReLoop web app so your JWT refreshes with the new group claim before opening **Create Listing** (`/listings/new`).
 6. Upload a used laptop photo. Behind the scenes, every remaining numbered arrow executes in order:
-   - **Arrow 7:** `reloop2-api` signs a presigned upload URL for `reloop2-images-<suffix>/listings/...` and tags it `state=pending`.
-   - **Arrow 8:** The browser PUTs the photo directly to private S3.
+   - **Arrow 7:** `reloop2-api` generates a presigned `POST` upload policy for `reloop2-images-<suffix>/listings/...` and tags it `state=pending`.
+   - **Arrow 8:** The browser `POSTs` the photo directly to private S3 using that presigned `POST`.
    - **Arrow 9:** `reloop2-api` calls **Amazon Rekognition** (`DetectModerationLabels` + `DetectText`).
    - **Arrow 10:** `reloop2-api` screens extracted text via **Bedrock Guardrail** (`reloop2-ai-guardrail` v1) and invokes **Bedrock (`global.moonshotai.kimi-k3`)**, which auto-fills Title (`Laptop Dell màu đen đã qua sử dụng, còn hoạt động`), Category (`Laptop`), Brand (`Dell`), Condition, and visible defect notes with high confidence.
 
@@ -63,7 +63,7 @@ Walk the entire architecture diagram live from **Arrow 1 through Arrow 10**, plu
 
 ![Uploaded device photo verified in private S3 bucket reloop2-images-7k3q](/images/5-Workshop/5.11/06-s3-photos-live.png)
 
-9. **DynamoDB (`reloop2-core-table` -> Explore items -> Run Scan):** Verify persisted application items — `USER#... / PROFILE` (from Post-confirm), `PARTNER#...`, `USER#... / AI#...`, `TIMER#... / LISTING_EXPIRE#...`, and `SYSTEM / BILLINGRUN#...`.
+9. **DynamoDB (`reloop2-core-table` -> Explore items -> Run Scan):** Verify persisted application items — `USER#... / PROFILE` (from Post-confirm), `LISTING#... / META`, `USER#... / AI#...`, and `TIMER#... / LISTING_EXPIRE#...` *(plus `PARTNER#...` after partner onboarding and `SYSTEM / BILLINGRUN#...` after running the EventBridge sweep)*.
 
 ![DynamoDB Scan confirming persisted user, partner, AI, billing, and expiry timer records](/images/5-Workshop/5.11/07-ddb-items-live.png)
 
