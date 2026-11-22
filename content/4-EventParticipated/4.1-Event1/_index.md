@@ -1,12 +1,12 @@
 ---
-title: "Event 1"
+title: "Event 1: Kick-off & AWS AI/GenAI"
 date: 2026-11-07
 weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
 ---
 
-# **Event 1: Buildrathon – Kickoff: Code the Future with CMC Global**
+## **Event 1: Buildrathon – Kickoff: Code the Future with CMC Global**
 
 **Date:** Saturday, September 26, 2026  
 **Time:** 10:30 AM – 12:00 PM (GMT+7)  
@@ -23,7 +23,7 @@ pre: " <b> 4.1. </b> "
 
 ### **Speakers**
 
-The event featured industry professionals and experienced engineers from AWS and CMC Global sharing their experiences in cloud computing, artificial intelligence, and career development.
+Hosted by the AWS Vietnam and CMC Global teams, who shared their experience in cloud computing, AI, and career growth.
 
 ### **Key Highlights**
 

@@ -1,12 +1,12 @@
 ---
-title: "Sự kiện 2"
+title: "Sự kiện 2: Watch Party AWS Cloud & AI Day"
 date: 2026-11-07
 weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-# **Sự kiện 2: AWS Cloud and AI Day Hanoi – Sự kiện Watch Party TP.HCM**
+## **Sự kiện 2: AWS Cloud and AI Day Hanoi – Sự kiện Watch Party TP.HCM**
 
 **Ngày:** Thứ Ba, ngày 29 tháng 09 năm 2026  
 **Thời gian:** 08:00 – 17:00 (GMT+7)  
@@ -15,9 +15,9 @@ pre: " <b> 4.2. </b> "
 
 ### **Mục tiêu sự kiện**
 
-* Cập nhật những bước tiến mới nhất trong hệ sinh thái đám mây AWS và Trí tuệ nhân tạo doanh nghiệp.  
-* Khám phá các mô hình hiện đại hóa ứng dụng quy mô lớn kết hợp AI và Kubernetes.  
-* Kết nối cộng đồng chuyên gia giải pháp đám mây và các kỹ sư phần mềm tại Việt Nam.
+* Cùng cộng đồng TP.HCM theo dõi trực tiếp (livestream) sự kiện AWS Cloud and AI Day Hanoi tại văn phòng AWS Việt Nam.  
+* Theo dõi bài phát biểu chính và các phiên về hạ tầng đám mây AWS, AI tạo sinh và hiện đại hóa với Kubernetes.  
+* Trao đổi về nội dung các phiên và kết nối với các kỹ sư đám mây tại TP. Hồ Chí Minh.
 
 ### **Nội dung nổi bật**
 

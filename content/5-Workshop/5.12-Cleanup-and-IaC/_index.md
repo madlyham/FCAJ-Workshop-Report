@@ -19,14 +19,14 @@ Delete every `reloop2` resource created in Modules **5.3–5.10** in safe revers
 3. **Monitoring & Alerts (`ap-southeast-1`):**
    - Delete CloudWatch alarm **`reloop2-lambda-errors`**.
    - Delete SNS topic **`reloop2-alerts`** (and any confirmed subscriptions).
-   - Delete CloudWatch Log Groups **`/aws/lambda/reloop2-api`** and **`/aws/lambda/reloop2-post-confirmation`**.
 4. **AI Processing (`ap-southeast-1`):** Open **Amazon Bedrock -> Guardrails** -> delete **`reloop2-ai-guardrail`** (deletes `DRAFT` and Version `1`).
 5. **API Backend (`ap-southeast-1`):** Delete HTTP API Gateway **`reloop2-api`**.
 6. **Sign-up & Sign-in (`ap-southeast-1`):** Open **Cognito -> `reloop2-user-pool`**:
    - Under **Branding -> Domain**, delete domain `reloop2-auth` (or your suffixed domain prefix).
    - Under **Overview -> Delete user pool**, uncheck/deactivate **Deletion protection** and delete `reloop2-user-pool`.
-7. **Lambdas & IAM Roles:**
+7. **Lambdas, Log Groups & IAM Roles:**
    - Delete Lambda functions **`reloop2-api`** and **`reloop2-post-confirmation`** (`ap-southeast-1`).
+   - Delete CloudWatch Log Groups **`/aws/lambda/reloop2-api`** and **`/aws/lambda/reloop2-post-confirmation`** (`ap-southeast-1`) *after* deleting both Lambda functions so late requests cannot recreate them.
    - Open **IAM -> Roles** -> delete **`reloop2-api-lambda-role`** and **`reloop2-post-confirmation-role`** (inline policies are removed with the role).
 8. **Data Storage (`ap-southeast-1`):**
    - Delete DynamoDB table **`reloop2-core-table`**.
@@ -44,18 +44,22 @@ Delete every `reloop2` resource created in Modules **5.3–5.10** in safe revers
 
 ### Part B — Verify Zero Leftover `reloop2` Resources via AWS CLI
 
-Run this quick read-only check in your terminal and confirm every command returns `[]`:
+Run this quick read-only check in your terminal and confirm every command returns `[]` (or `null` when no CloudFront distributions, functions, or OACs remain):
 
 ```bash
 aws cloudfront list-distributions --query "DistributionList.Items[?contains(Comment || '', 'reloop2')].Id"
+aws cloudfront list-functions --query "FunctionList.Items[?contains(Name,'reloop2')].Name"
+aws cloudfront list-origin-access-controls --query "OriginAccessControlList.Items[?contains(Name,'reloop2')].Name"
 aws wafv2 list-web-acls --scope CLOUDFRONT --region us-east-1 --query "WebACLs[?contains(Name,'reloop2')].Name"
 aws s3api list-buckets --query "Buckets[?contains(Name,'reloop2')].Name"
 aws dynamodb list-tables --region ap-southeast-1 --query "TableNames[?contains(@,'reloop2')]"
 aws cognito-idp list-user-pools --max-results 60 --region ap-southeast-1 --query "UserPools[?contains(Name,'reloop2')].Name"
 aws apigatewayv2 get-apis --region ap-southeast-1 --query "Items[?contains(Name,'reloop2')].Name"
 aws lambda list-functions --region ap-southeast-1 --query "Functions[?contains(FunctionName,'reloop2')].FunctionName"
+aws iam list-roles --query "Roles[?contains(RoleName,'reloop2')].RoleName"
 aws bedrock list-guardrails --region ap-southeast-1 --query "guardrails[?contains(name,'reloop2')].name"
 aws events list-rules --region ap-southeast-1 --query "Rules[?contains(Name,'reloop2')].Name"
+aws logs describe-log-groups --region ap-southeast-1 --log-group-name-prefix /aws/lambda/reloop2 --query "logGroups[].logGroupName"
 aws cloudwatch describe-alarms --region ap-southeast-1 --query "MetricAlarms[?contains(AlarmName,'reloop2')].AlarmName"
 aws sns list-topics --region ap-southeast-1 --query "Topics[?contains(TopicArn,'reloop2')].TopicArn"
 ```
@@ -89,7 +93,7 @@ After `terraform apply` finishes, return to the repository root (`cd ..`), run `
 | 1 | **IAM Role creation denied (`AccessDenied`)** | Team account IAM policy requires a permissions boundary on every newly created application role. | Attached the required permissions boundary (`TeamAppRoleBoundary`) to both `reloop2-api-lambda-role` and `reloop2-post-confirmation-role`. |
 | 2 | **API Gateway routes failed with `/api` prefix mismatch** | CloudFront routes `/api/*` to the API Gateway origin, while backend routes are registered without the `/api` prefix (e.g. `/feed/public`). | Added CloudFront Function `reloop2-api-prefix` on the `/api/*` behavior to strip `/api` at the edge before forwarding to API Gateway. |
 | 3 | **Direct API Gateway calls bypassed CloudFront & WAF** | Default `execute-api` endpoints remain publicly reachable unless explicitly locked to CloudFront. | Configured CloudFront to send the `x-origin-verify` secret header and verified it in `reloop2-api` with constant-time `timingSafeEqual`, rejecting direct calls with `403 DIRECT_ACCESS_FORBIDDEN`. |
-| 4 | **Bedrock invocation in Singapore & prompt injection in photo text** | Cross-region model routing and untrusted text printed on device labels posed reliability and prompt-injection risks. | Used `global.moonshotai.kimi-k3` via Converse API in `ap-southeast-1` and screened Rekognition-extracted text through Amazon Bedrock Guardrail (`apac.guardrail.v1:0`) before LLM analysis. |
+| 4 | **Bedrock invocation in Singapore & prompt injection in photo text** | Kimi K3 has no single-region on-demand model ID in Singapore (`ap-southeast-1`), and untrusted text printed on device labels posed a prompt-injection risk. | Used AWS's required cross-region profiles — `global.moonshotai.kimi-k3` via Converse API and Amazon Bedrock Guardrail (`apac.guardrail.v1:0`) — directly from `ap-southeast-1` to invoke the model and screen Rekognition-extracted text before LLM analysis. |
 | 5 | **26% `5xx` errors under 80-request burst load test** | Account Lambda concurrency started at `10`, saturating workers before throttling could shape burst traffic. | Raised Lambda concurrency to `1,000`, configured API Gateway throttling (`20 req/s`, burst `50`), and attached CloudFront WAF per-IP rate limits returning clean `429` responses — eliminating `5xx` errors on re-test. |
 
 #### Future Roadmap

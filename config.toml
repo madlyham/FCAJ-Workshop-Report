@@ -5,6 +5,7 @@ defaultContentLanguage = "en"
 buildFuture = true
 buildDrafts = true
 buildExpired = true
+disableKinds = ["taxonomy", "term"]
 
 # Change the default theme to be use when building the site with Hugo
 theme = "hugo-theme-learn"
@@ -18,12 +19,12 @@ home = [ "HTML", "RSS", "JSON"]
   themeVariant = "workshop"
   # Git hub repo link
   editURL = ""
-  description = "Internship Report - Kung Cam Thanh - First Cloud AI Journey (FCAJ)"
+  description = "Internship Report - Kung Cẩm Thành - First Cloud AI Journey (FCAJ)"
   author = "madlyhamm@gmail.com"
   showVisitedLinks = true
   disableBreadcrumb = false
   disableNextPrev = false
-  
+
 [Languages]
 [Languages.en]
 title = "Internship Report"
@@ -47,10 +48,13 @@ title = "Báo cáo thực tập"
 weight = 2
 languageName = "Tiếng Việt"
 
+[Languages.vi.params]
+  description = "Báo cáo thực tập - Kung Cẩm Thành - First Cloud AI Journey (FCAJ)"
+
 [[Languages.vi.menu.shortcuts]]
 name = "<i class='fab fa-aws'></i> AWS Study Group - Blog"
 identifier = "AWS Study Group"
-url = "http://awsstudygroup.com"
+url = "https://awsstudygroup.com"
 weight = 20
 
 [[Languages.vi.menu.shortcuts]]

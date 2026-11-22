@@ -32,7 +32,7 @@ Bước tiếp theo trên sơ đồ kiến trúc là **Mũi tên 3**: người d
 
 ![Tổng quan Cognito User Pool reloop2-user-pool](/images/5-Workshop/5.4/01-cognito-pool-overview.png)
 
-4. Vào **User management -> Groups**, tạo 4 nhóm phân quyền:
+4. Vào **User management -> Groups**, tạo 4 nhóm người dùng:
    - `Owners` — Người có thiết bị đăng bán
    - `Partners` — Đối tác sửa chữa và tái chế đã duyệt
    - `Admins` — Quản trị viên nền tảng
@@ -50,13 +50,13 @@ Bước tiếp theo trên sơ đồ kiến trúc là **Mũi tên 3**: người d
    - **Kiểu cấp quyền OAuth 2.0:** `Authorization code grant` (PKCE)
    - **Phạm vi OpenID Connect:** `email`, `openid`, `phone`
    - **Allowed callback URLs:** `https://<dist-domain>.cloudfront.net/auth/callback` và `http://localhost:5173/auth/callback`
-   - **Allowed sign-out URLs:** `https://<dist-domain>.cloudfront.net/` và `http://localhost:5173/`
+   - **Allowed sign-out URLs:** `https://<dist-domain>.cloudfront.net/` và `http://localhost:5173/` *(hãy xóa các URL `http://localhost:5173` khỏi callback và sign-out khi triển khai môi trường production)*
 2. Ghi lại **Client ID** (`<client-id>`).
 
 ![Cognito App Client reloop2-web-client gắn sẵn tên miền CloudFront](/images/5-Workshop/5.4/03-cognito-app-client-login.png)
 
 3. Vào **Branding -> Domain**, tạo tiền tố miền Cognito:
-   - **Domain prefix:** `reloop2-auth` (tạo ra `https://reloop2-auth.auth.ap-southeast-1.amazoncognito.com`; thêm hậu tố của bạn nếu tiền tố tên miền này đã có người đăng ký).
+   - **Domain prefix:** `reloop2-auth` (tạo ra `https://reloop2-auth.auth.ap-southeast-1.amazoncognito.com`; thêm hậu tố của bạn nếu tiền tố tên miền này đã có người đăng ký trong vùng `ap-southeast-1` (duy nhất theo từng Region)).
 
 ![Tên miền đăng nhập Cognito reloop2-auth](/images/5-Workshop/5.4/04-cognito-domain.png)
 
@@ -86,7 +86,7 @@ Khi người dùng xác nhận đăng ký, Cognito gọi `reloop2-post-confirmat
      ```
 2. **Hàm Lambda:** Mở **AWS Lambda -> Create function** tại **`ap-southeast-1`**:
    - **Function name:** `reloop2-post-confirmation`
-   - **Runtime:** `Python 3.12` (`x86_64`), **Memory:** `128 MB`, **Timeout:** `3s`
+   - **Runtime:** `Python 3.12` (`x86_64` — hàm trigger nhỏ nằm gọn trong Free Tier, trong khi hàm API Lambda chính ở Học phần 5.5 dùng `arm64`), **Memory:** `128 MB`, **Timeout:** `3s`
    - **Execution role:** `reloop2-post-confirmation-role`
    - **Biến môi trường:** `TABLE_NAME = reloop2-core-table`
    - **Mã nguồn (`lambda_function.py`):** Tải lên [`reloop2-post-confirmation.zip`](https://github.com/madlyham/ReLoop/releases/download/v1.0.0/reloop2-post-confirmation.zip) (cũng có sẵn trong `ReLoop/zips/` sau khi clone), hoặc dán trực tiếp mã nguồn [`backend/post-confirmation/lambda_function.py`](https://github.com/madlyham/ReLoop/blob/main/backend/post-confirmation/lambda_function.py) vào trình soạn thảo Lambda:
@@ -107,7 +107,7 @@ Khi người dùng xác nhận đăng ký, Cognito gọi `reloop2-post-confirmat
          email = user_attributes.get('email', '')
          name = user_attributes.get('name', 'Unknown')
          role = 'Owner'
-         timestamp = datetime.datetime.utcnow().isoformat() + 'Z'
+         timestamp = datetime.datetime.now(datetime.timezone.utc).isoformat().replace('+00:00', 'Z')
 
          try:
              dynamodb.put_item(
@@ -130,6 +130,7 @@ Khi người dùng xác nhận đăng ký, Cognito gọi `reloop2-post-confirmat
 
          return event
      ```
+   - *(Nguồn phân quyền: quyền `Admins` và `FinanceAdmins` được kiểm tra từ claim nhóm Cognito gán qua Cognito Console, còn vai trò nghiệp vụ `OWNER`/`PARTNER` được lưu trong DynamoDB tại `USER#<sub> / PROFILE`; hai nhóm Cognito `Owners` và `Partners` là nhóm tổ chức tùy chọn.)*
 
 ![Hàm Lambda reloop2-post-confirmation cùng biến môi trường TABLE_NAME](/images/5-Workshop/5.4/05-postconf-lambda.png)
 
@@ -158,6 +159,10 @@ python frontend/configure.py \
 aws s3 sync frontend/build/ s3://reloop2-web-<suffix>/ --region ap-southeast-1 --delete
 aws cloudfront create-invalidation --distribution-id <dist-id> --paths "/*"
 ```
+
+{{% notice warning %}}
+Hãy đợi sau khi tạo bảng `reloop2-core-table` ở [Học phần 5.6](../5.6-dynamodb/) rồi mới thử đăng ký người dùng, nếu không hàm Lambda Post-confirmation sẽ chưa thể ghi hồ sơ ban đầu vào DynamoDB.
+{{% /notice %}}
 
 {{% notice tip %}}
 **Mũi tên 3 và luồng Post-confirmation đã sẵn sàng.** Tiếp theo, chuyển sang [Học phần 5.5 — Hệ thống API Backend](../5.5-api-backend/) để dựng **Mũi tên 4, 5 và xác thực JWT**.

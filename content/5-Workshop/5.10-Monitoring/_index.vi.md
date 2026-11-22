@@ -6,7 +6,7 @@ chapter : false
 pre : " <b> 5.10. </b> "
 ---
 
-Hoàn thiện khối màu hồng **Monitoring & alerts** ở dưới cùng sơ đồ: đặt thời hạn lưu nhật ký 7 ngày cho `/aws/lambda/reloop2-api`, tạo chủ đề email **Amazon SNS** cho quản trị viên, và nối **CloudWatch metric alarm** (`reloop2-lambda-errors`) để gửi cảnh báo ngay khi `reloop2-api` phát sinh lỗi.
+Hoàn thiện khối màu hồng **Monitoring & alerts** ở dưới cùng sơ đồ: đặt thời hạn lưu nhật ký 7 ngày cho `/aws/lambda/reloop2-api`, tạo chủ đề email **Amazon SNS** cho quản trị viên, và nối **CloudWatch metric alarm** (`reloop2-lambda-errors`) kích hoạt khi `reloop2-api` phát sinh từ 3 lỗi trở lên trong vòng 5 phút.
 
 **Các mũi tên trên sơ đồ thuộc bước này:**
 - **Liên kết phụ:** `AWS Lambda (API) → Amazon CloudWatch` (`logs & metrics`)

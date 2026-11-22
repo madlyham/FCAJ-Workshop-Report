@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 3. </b> "
 ---
 
-During my internship, I authored three technical blog posts published to the [AWS Study Group](https://www.facebook.com/groups/awsstudygroupfcj) community, focusing on real-world cloud architecture, cybersecurity authorization patterns, and serverless concurrency control.
+During my internship, I authored three technical blog posts published to the [AWS Study Group](https://www.facebook.com/groups/awsstudygroupfcj) community, focusing on practical serverless architecture design patterns, cybersecurity authorization patterns, and serverless concurrency control.
 
 ### Published Blog Articles
 

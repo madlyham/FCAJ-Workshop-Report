@@ -25,7 +25,7 @@ Complete the **Data storage** box by creating the private photo bucket `reloop2-
 2. Configure:
    - **Bucket name:** `reloop2-images-<suffix>` (matching `IMAGE_BUCKET` on `reloop2-api`, e.g., `reloop2-images-7k3q`)
    - **Block all public access:** **Enabled** (all 4 boxes checked)
-   - **Default encryption:** **SSE-S3** with Bucket Key **Enable**
+   - **Default encryption:** Server-side encryption with Amazon S3 managed keys (**SSE-S3**)
    - **Tag:** `Project = reloop2`
 3. Click **Create bucket**.
 
@@ -42,7 +42,7 @@ Because CloudFront is already deployed from Module 5.3, you enter your live `htt
    [
      {
        "AllowedHeaders": ["*"],
-       "AllowedMethods": ["PUT", "POST", "GET"],
+       "AllowedMethods": ["POST", "GET"],
        "AllowedOrigins": [
          "https://<dist-domain>.cloudfront.net",
          "http://localhost:5173"
@@ -51,7 +51,7 @@ Because CloudFront is already deployed from Module 5.3, you enter your live `htt
      }
    ]
    ```
-2. Click **Save changes**.
+2. Click **Save changes**. *(Remove `http://localhost:5173` from `AllowedOrigins` for production deployments.)*
 
 ![S3 photos CORS allowing direct uploads from the CloudFront origin](/images/5-Workshop/5.7/02-s3-images-cors.png)
 
@@ -66,6 +66,8 @@ Open the **Management** tab -> **Create lifecycle rule** three times so abandone
 | `reloop2-listing-images-unattached` | Prefix `listings/` + tag **`state=pending`** | Expire current versions after **1 day** (cleans photos uploaded before a user cancels the form) |
 | `reloop2-listing-images-retention` | Prefix `listings/` | Expire current versions after **90 days** |
 | `reloop2-abort-incomplete-uploads` | Prefix `listings/` | Delete incomplete multipart uploads after **1 day** |
+
+When a seller publishes a listing, `reloop2-api` automatically re-tags its photos from `state=pending` to `state=attached`, so the 1-day pending expiry rule only deletes abandoned uploads and keeps published photos until day 90.
 
 ![Management tab showing all 3 lifecycle rules active on reloop2-images-7k3q](/images/5-Workshop/5.7/03-s3-images-lifecycle.png)
 

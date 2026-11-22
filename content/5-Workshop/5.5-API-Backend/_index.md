@@ -50,7 +50,7 @@ Now build the orange **API backend** box on the diagram: **AWS Lambda (`reloop2-
          "Action": ["bedrock:InvokeModel"],
          "Resource": [
            "arn:aws:bedrock:*:123456789012:inference-profile/global.moonshotai.kimi-k3",
-           "arn:aws:bedrock:*::foundation-model/*"
+           "arn:aws:bedrock:*::foundation-model/moonshotai.kimi-k3*"
          ]
        },
        {
@@ -59,7 +59,7 @@ Now build the orange **API backend** box on the diagram: **AWS Lambda (`reloop2-
          "Action": ["bedrock:ApplyGuardrail"],
          "Resource": [
            "arn:aws:bedrock:ap-southeast-1:123456789012:guardrail/*",
-           "arn:aws:bedrock:*:123456789012:guardrail-profile/*"
+           "arn:aws:bedrock:*:123456789012:guardrail-profile/apac.guardrail.v1:0"
          ]
        },
        {
@@ -83,12 +83,13 @@ Now build the orange **API backend** box on the diagram: **AWS Lambda (`reloop2-
      ]
    }
    ```
+   *(Note: `SelfInvoke` lets `reloop2-api` invoke itself asynchronously for ~35s Bedrock AI analysis & partner-matching work, and Rekognition moderation/text APIs require `"Resource": "*"` per AWS IAM rules.)*
 3. **Create Lambda Function:** Open **AWS Lambda -> Create function** in **`ap-southeast-1`**:
    - **Function name:** `reloop2-api`
    - **Runtime:** `Node.js 22.x` · **Architecture:** `arm64`
    - **Execution role:** `reloop2-api-lambda-role`
    - Upload [`reloop2-api.zip`](https://github.com/madlyham/ReLoop/releases/download/v1.0.0/reloop2-api.zip) (also in `ReLoop/zips/reloop2-api.zip` from [github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop); handler `index.handler`).
-   - Under **Configuration -> General configuration**, set **Memory:** `512 MB`, **Timeout:** `3 min` (`180s`).
+   - Under **Configuration -> General configuration**, set **Memory:** `512 MB`, **Timeout:** `3 min` (`180s` — covers ~35s async Bedrock AI analysis + EventBridge sweeps, whereas API Gateway's synchronous HTTP limit is `30s`).
 
 ![Lambda reloop2-api running Node.js 22 ARM64 with 512 MB and 3-minute timeout](/images/5-Workshop/5.5/01-api-lambda-config.png)
 
@@ -118,7 +119,7 @@ Now build the orange **API backend** box on the diagram: **AWS Lambda (`reloop2-
    - **Integration:** Lambda -> `reloop2-api` (Payload format `2.0`)
    - **Routes:**
      - `ANY /{proxy+}` (protected by Cognito JWT)
-     - Public routes (`Authorization = None`): `GET /feed/public`, `GET /fees`, `POST /auth/session`, `POST /auth/refresh`, `POST /auth/logout`, `OPTIONS /{proxy+}`
+     - Public routes (`Authorization = None`): `GET /feed/public`, `GET /fees`, `POST /auth/session`, `POST /auth/refresh`, `POST /auth/logout`, `OPTIONS /{proxy+}` (required so CORS preflights bypass the JWT authorizer on `ANY /{proxy+}`)
    - **Stage:** `$default` with **Auto-deploy** enabled.
 
 ![HTTP API Gateway reloop2-api routes pointing to Lambda](/images/5-Workshop/5.5/03-apigw-routes.png)
@@ -133,7 +134,7 @@ Now build the orange **API backend** box on the diagram: **AWS Lambda (`reloop2-
 ![API Gateway JWT authorizer verifying Cognito JWKS on ANY /{proxy+}](/images/5-Workshop/5.5/04-apigw-jwt-authorizer.png)
 
 3. Under **Develop -> CORS**, enter your CloudFront origin from Module 5.3 directly (no backfill required):
-   - **Access-Control-Allow-Origin:** `https://<dist-domain>.cloudfront.net`, `http://localhost:5173`
+   - **Access-Control-Allow-Origin:** `https://<dist-domain>.cloudfront.net`, `http://localhost:5173` *(remove `http://localhost:5173` for production deployments)*
    - **Access-Control-Allow-Headers:** `authorization`, `idempotency-key`, `content-type`
    - **Access-Control-Allow-Methods:** `*` · **Max age:** `3600`
 4. Under **Protect -> Throttling**, edit the `$default` stage to **Rate limit:** `20` req/s, **Burst limit:** `50`.

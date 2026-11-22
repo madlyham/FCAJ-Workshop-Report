@@ -1,12 +1,12 @@
 ---
-title: "Event 5"
+title: "Event 5: Operation Smile Volunteer Event"
 date: 2026-11-07
 weight: 5
 chapter: false
 pre: " <b> 4.5. </b> "
 ---
 
-# **Event 5: Smart Plushies for Children – In Collaboration with Operation Smile Vietnam**
+## **Event 5: Teddy-Bear Gift Kits for Children – Volunteering with Operation Smile Vietnam**
 
 **Date:** Monday, October 26, 2026  
 **Time:** 01:30 PM – 03:30 PM (GMT+7)  
@@ -16,7 +16,7 @@ pre: " <b> 4.5. </b> "
 ### **Event Objectives**
 
 * Apply technology and creative engineering toward meaningful social impact.  
-* Introduce interactive, IoT-enabled educational plush toys for pediatric patients.  
+* Assemble teddy-bear gift kits with interactive audio modules for pediatric patients.  
 * Collaborate with Operation Smile Vietnam to bring comfort to hospitalized children.
 
 ### **Key Highlights**
@@ -25,14 +25,14 @@ pre: " <b> 4.5. </b> "
 * Demonstrating that engineering skills create tangible value when channeled toward empathetic, human-centric solutions.
 
 #### **Hands-on Assembly & Collaboration**
-* Interactive sensor integration, audio feedback programming, and working alongside cross-functional colleagues.
+* Fitting simple audio modules into the teddy bears and finishing the gift kits together with other volunteers.
 
 ### **Event Experience**
 
-Participating in this workshop stood out from purely technical cloud sessions. It served as a powerful reminder that technology achieves its highest purpose when improving human lives and bringing smiles to children.
+This event was a special and memorable part of my internship at AWS. Alongside hours of technical cloud work, it reminded me that the best purpose of technology is to serve people and bring smiles to children.
 
 ### **Event Photos**
 
-![Hands-on assembly of interactive IoT smart plushies with Operation Smile Vietnam](/images/report/image11.png)
+![Hands-on assembly of teddy-bear gift kits with Operation Smile Vietnam](/images/report/image11.png)
 
-![Completed smart plushies and volunteer team at EC2 Room, Level 36, AWS Vietnam Office](/images/report/image12.png)
+![Completed teddy-bear gift kits and volunteer team at EC2 Room, Level 36, AWS Vietnam Office](/images/report/image12.png)

@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 1.4. </b> "
 ---
 
-# **Nhật ký công việc Tuần 4 — Kiến trúc ReLoop, Đề xuất Phần 1 và Bắt đầu phát triển**
+## **Nhật ký công việc Tuần 4 — Kiến trúc ReLoop, Đề xuất Phần 1 và Bắt đầu phát triển**
 
 ## **1. Mục tiêu tuần**
 
@@ -30,7 +30,7 @@ pre: " <b> 1.4. </b> "
 ### **Cơ sở lý thuyết**
 
 * Hiểu cách mẫu adapter giữ nghiệp vụ tách khỏi AWS, nên test chạy được mà không tốn chi phí AWS.
-* Hiểu cách JWT của Cognito mang ID người dùng và nhóm quyền để API Gateway xác thực trên mọi route riêng tư.
+* Hiểu rõ ranh giới giữa xác thực và phân quyền: JWT authorizer của API Gateway HTTP API xác thực chữ ký token Cognito (qua JWKS), issuer, audience và thời hạn token trên mọi route riêng tư, trong khi mã ứng dụng trong Lambda kiểm tra claim `cognito:groups` (`Admins` / `FinanceAdmins`) cùng vai trò lưu trên DynamoDB để phân quyền.
 
 ### **Cài đặt & Thiết lập môi trường**
 

@@ -32,7 +32,7 @@ Next on the architecture path is **Arrow 3**: users register and sign in directl
 
 ![Cognito User Pool reloop2-user-pool overview](/images/5-Workshop/5.4/01-cognito-pool-overview.png)
 
-4. Under **User management -> Groups**, create four role groups used for access control:
+4. Under **User management -> Groups**, create four role groups:
    - `Owners` — Device owners listing items
    - `Partners` — Verified repair and recycling partners
    - `Admins` — Platform administrators
@@ -50,13 +50,13 @@ Next on the architecture path is **Arrow 3**: users register and sign in directl
    - **OAuth 2.0 grant type:** `Authorization code grant` (PKCE)
    - **OpenID Connect scopes:** `email`, `openid`, `phone`
    - **Allowed callback URLs:** `https://<dist-domain>.cloudfront.net/auth/callback` and `http://localhost:5173/auth/callback`
-   - **Allowed sign-out URLs:** `https://<dist-domain>.cloudfront.net/` and `http://localhost:5173/`
+   - **Allowed sign-out URLs:** `https://<dist-domain>.cloudfront.net/` and `http://localhost:5173/` *(remove the `http://localhost:5173` callback and sign-out URLs for production deployments)*
 2. Note the **Client ID** (`<client-id>`).
 
 ![Cognito App Client reloop2-web-client wired to the CloudFront domain](/images/5-Workshop/5.4/03-cognito-app-client-login.png)
 
 3. Under **Branding -> Domain**, create a Cognito domain prefix:
-   - **Domain prefix:** `reloop2-auth` (yielding `https://reloop2-auth.auth.ap-southeast-1.amazoncognito.com`; append your suffix if already taken globally).
+   - **Domain prefix:** `reloop2-auth` (yielding `https://reloop2-auth.auth.ap-southeast-1.amazoncognito.com`; append your suffix if already taken within `ap-southeast-1` (per Region)).
 
 ![Cognito Managed Login domain reloop2-auth](/images/5-Workshop/5.4/04-cognito-domain.png)
 
@@ -86,7 +86,7 @@ When a user confirms sign-up, Cognito calls `reloop2-post-confirmation`, which w
      ```
 2. **Lambda Function:** Open **AWS Lambda -> Create function** in **`ap-southeast-1`**:
    - **Function name:** `reloop2-post-confirmation`
-   - **Runtime:** `Python 3.12` (`x86_64`), **Memory:** `128 MB`, **Timeout:** `3s`
+   - **Runtime:** `Python 3.12` (`x86_64` — tiny trigger staying inside Free Tier, while the main API Lambda in Module 5.5 uses `arm64`), **Memory:** `128 MB`, **Timeout:** `3s`
    - **Execution role:** `reloop2-post-confirmation-role`
    - **Environment variable:** `TABLE_NAME = reloop2-core-table`
    - **Code (`lambda_function.py`):** Upload [`reloop2-post-confirmation.zip`](https://github.com/madlyham/ReLoop/releases/download/v1.0.0/reloop2-post-confirmation.zip) (also in `ReLoop/zips/` after cloning), or copy-paste [`backend/post-confirmation/lambda_function.py`](https://github.com/madlyham/ReLoop/blob/main/backend/post-confirmation/lambda_function.py) directly into the Lambda inline editor:
@@ -107,7 +107,7 @@ When a user confirms sign-up, Cognito calls `reloop2-post-confirmation`, which w
          email = user_attributes.get('email', '')
          name = user_attributes.get('name', 'Unknown')
          role = 'Owner'
-         timestamp = datetime.datetime.utcnow().isoformat() + 'Z'
+         timestamp = datetime.datetime.now(datetime.timezone.utc).isoformat().replace('+00:00', 'Z')
 
          try:
              dynamodb.put_item(
@@ -130,6 +130,7 @@ When a user confirms sign-up, Cognito calls `reloop2-post-confirmation`, which w
 
          return event
      ```
+   - *(Role sourcing: `Admins` and `FinanceAdmins` are enforced from Cognito group claims assigned via the Cognito Console, while business `OWNER`/`PARTNER` roles live in DynamoDB under `USER#<sub> / PROFILE`; the `Owners` and `Partners` Cognito groups are optional organizational groups.)*
 
 ![Lambda reloop2-post-confirmation with TABLE_NAME environment variable](/images/5-Workshop/5.4/05-postconf-lambda.png)
 
@@ -158,6 +159,10 @@ python frontend/configure.py \
 aws s3 sync frontend/build/ s3://reloop2-web-<suffix>/ --region ap-southeast-1 --delete
 aws cloudfront create-invalidation --distribution-id <dist-id> --paths "/*"
 ```
+
+{{% notice warning %}}
+Wait until you create `reloop2-core-table` in [Module 5.6](../5.6-dynamodb/) before testing user sign-up, otherwise the Post-confirmation Lambda cannot write the initial DynamoDB profile yet.
+{{% /notice %}}
 
 {{% notice tip %}}
 **Arrow 3 and the Post-confirmation flow are ready.** Next, move to [Module 5.5 — API Backend](../5.5-api-backend/) to build **Arrows 4, 5, and JWT verification**.

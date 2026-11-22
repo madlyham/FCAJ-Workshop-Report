@@ -62,5 +62,5 @@ ReLoop gom mọi thực thể vào một bảng on-demand (`PK` / `SK`) kèm m�
 ![Thẻ Backups của DynamoDB xác nhận đã bật PITR](/images/5-Workshop/5.6/03-ddb-pitr-ttl.png)
 
 {{% notice tip %}}
-**Mũi tên 6 (`DynamoDB`) đã sẵn sàng.** Cả `reloop2-post-confirmation` lẫn `reloop2-api` giờ đã có thể đọc/ghi người dùng, tin đăng và hóa đơn. Tiếp theo, chuyển sang [Học phần 5.7 — Lưu trữ ảnh: Amazon S3 Photos](../5.7-s3-photos/) cho **Mũi tên 7 và 8**.
+**Mũi tên 6 (`DynamoDB`) đã sẵn sàng.** `reloop2-post-confirmation` giờ đã có thể thêm hồ sơ người dùng mới (`PutItem`), còn `reloop2-api` đọc và ghi người dùng, tin đăng và hóa đơn. Tiếp theo, chuyển sang [Học phần 5.7 — Lưu trữ ảnh: Amazon S3](../5.7-s3-photos/) cho **Mũi tên 7 và 8**.
 {{% /notice %}}

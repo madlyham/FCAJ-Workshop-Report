@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 7. </b> "
 ---
 
-Below are my personal reflections and constructive feedback from participating in the **First Cloud AI Journey (FCAJ)** program, shared with the hope of supporting future cohorts.
+Below are my personal reflections and constructive feedback after 10 completed weeks (as of 22/11/2026) in the **First Cloud AI Journey (FCAJ)** program, approaching our 04/12/2026 wrap-up, shared with the hope of supporting future cohorts.
 
 ### Overall Evaluation
 
@@ -40,7 +40,7 @@ The main benefits were AWS credits to build on real services, free access to AWS
 
 **What did you find most satisfying during your internship?**
 
-Taking ReLoop from an idea to a live system on real AWS services in 12 weeks. The best moment was watching a real photo upload go through the whole AI pipeline (Rekognition + Bedrock) end to end, and then seeing our hardening and WAF/origin-verify security review come back with no high-severity findings after the fixes. The events at the AWS office, especially the "never-ending" Q&A at Cloud Mastery, were a close second.
+Taking ReLoop from an idea to a live system on real AWS services across the first 10 weeks, ready for final audit and demo in Weeks 11–12. The best moment was watching a real photo upload go through the whole AI pipeline (Rekognition + Bedrock) end to end, and then seeing our hardening and WAF/origin-verify security review come back with no high-severity findings after the fixes. The events at the AWS office, especially the "never-ending" Q&A at Cloud Mastery, were a close second.
 
 **What do you think the company should improve for future interns?**
 
@@ -68,4 +68,4 @@ Yes. I want to keep improving ReLoop, stay active in the FCAJ community and work
 
 **Any other comments (free sharing):**
 
-Thank you to the mentors, the FCAJ admin team and my teammates in AWSS3nt1n4L. Twelve weeks went by fast, and I leave with far more practical cloud and security experience than I started with.
+Thank you to the mentors, the FCAJ admin team and my teammates in AWSS3nt1n4L. Approaching the end of the 12-week internship (10 weeks completed as of 22/11/2026, with final wrap-up ahead on 04/12/2026), the time has gone by fast, and I am coming away with far more practical cloud and security experience than I started with.

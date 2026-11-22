@@ -8,7 +8,7 @@ pre: " <b> 1. </b> "
 
 Trong suốt 12 tuần thực tập tại Công ty TNHH Amazon Web Services Việt Nam (chương trình Workforce Bootcamp - First Cloud AI Journey, từ ngày 14/09/2026 đến ngày 04/12/2026; hiện đã hoàn thành đến hết Tuần 10 với Tuần 11–12 theo kế hoạch dự kiến), tôi đã tham gia đào tạo kiến trúc đám mây, các bài thực hành Serverless và vòng đời phát triển dự án thực tập **ReLoop** (chợ đồ điện tử cũ, hỏng theo mô hình kinh tế tuần hoàn).
 
-Song song với lịch trình kỹ thuật hằng tuần, tôi cũng đại diện cho nhóm tích cực tham gia **6 sự kiện công nghệ, hội nghị chuyên đề và hoạt động thiện nguyện xã hội** do AWS Việt Nam cùng các đối tác tổ chức (được đối chiếu xuyên suốt trong lịch trình thực hiện và trình bày chi tiết tại mục [Các sự kiện đã tham gia](../4-eventparticipated/)).
+Song song với lịch trình kỹ thuật hằng tuần, tôi đã tham gia **6 sự kiện kỹ thuật, hội thảo chuyên đề và hoạt động cộng đồng tại AWS Việt Nam** (được đối chiếu xuyên suốt trong lịch trình thực hiện và trình bày chi tiết tại mục [Các sự kiện đã tham gia](../4-eventparticipated/)).
 
 ### Tổng quan nhật ký công việc 12 tuần
 
@@ -27,5 +27,5 @@ Song song với lịch trình kỹ thuật hằng tuần, tôi cũng đại di�
 * **Tuần 9:** [Rà soát bảo mật, bản vá gia cố, Đề xuất Phần 2 và Sự kiện Cloud Mastery](1.9-week9/)  
   *(Đối chiếu: [Sự kiện 6: Cloud Mastery – Buổi chia sẻ về Cloud cho sinh viên](../4-eventparticipated/4.6-event6/) ngày 14/11/2026)*
 * **Tuần 10:** [Load Test, sửa throttling, một luồng triển khai duy nhất và xác thực Workshop trực tiếp](1.10-week10/)
-* **Tuần 11:** [Kiểm toán tài nguyên, dọn dẹp tài sản thừa và rà soát chi phí [Dự kiến]](1.11-week11/)
+* **Tuần 11:** [Rà soát tài nguyên, dọn dẹp tài sản thừa và đối chiếu chi phí [Dự kiến]](1.11-week11/)
 * **Tuần 12:** [Báo cáo cuối kỳ, demo trực tiếp và bàn giao [Dự kiến]](1.12-week12/)

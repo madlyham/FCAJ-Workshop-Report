@@ -1,12 +1,12 @@
 ---
-title: "Event 3"
+title: "Event 3: Fireside Chat with Dr. Werner Vogels"
 date: 2026-11-07
 weight: 3
 chapter: false
 pre: " <b> 4.3. </b> "
 ---
 
-# **Event 3: Fireside Chat with Dr. Werner – Navigating the Future of Cloud & AI in Vietnam**
+## **Event 3: Fireside Chat with Dr. Werner Vogels – Navigating the Future of Cloud & AI in Vietnam**
 
 **Date:** Friday, October 2, 2026  
 **Time:** 10:30 AM – 12:00 PM (GMT+7)  

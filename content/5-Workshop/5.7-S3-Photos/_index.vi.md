@@ -1,5 +1,5 @@
 ---
-title : "Lưu trữ ảnh: Amazon S3 Photos"
+title : "Lưu trữ ảnh: Amazon S3"
 date : 2026-11-21
 weight : 7
 chapter : false
@@ -15,7 +15,7 @@ Hoàn thiện khối **Data storage** bằng cách tạo bucket chứa ảnh ri�
 - **Mũi tên 7:** `AWS Lambda (API) ↔ Amazon S3 (photos)` (`presign & tag`)
 - **Mũi tên 8:** `Users (web browser) ↔ Amazon S3 (photos)` (`upload / view photos (presigned URL)`)
 
-![Trọng tâm học phần 5.7: Lưu trữ ảnh — Amazon S3 Photos](/images/5-Workshop/5.7/architecture.png)
+![Trọng tâm học phần 5.7: Lưu trữ ảnh — Amazon S3](/images/5-Workshop/5.7/architecture.png)
 
 ---
 
@@ -25,7 +25,7 @@ Hoàn thiện khối **Data storage** bằng cách tạo bucket chứa ảnh ri�
 2. Cấu hình:
    - **Bucket name:** `reloop2-images-<suffix>` (khớp biến `IMAGE_BUCKET` trên `reloop2-api`, ví dụ `reloop2-images-7k3q`)
    - **Block all public access:** **Bật** (tích cả 4 ô)
-   - **Default encryption:** **SSE-S3**, bật **Bucket Key**
+   - **Default encryption:** Mã hóa phía máy chủ với khóa do Amazon S3 quản lý (**SSE-S3**)
    - **Tag:** `Project = reloop2`
 3. Nhấn **Create bucket**.
 
@@ -42,7 +42,7 @@ Vì CloudFront đã sẵn sàng từ Học phần 5.3, bạn nhập luôn tên m
    [
      {
        "AllowedHeaders": ["*"],
-       "AllowedMethods": ["PUT", "POST", "GET"],
+       "AllowedMethods": ["POST", "GET"],
        "AllowedOrigins": [
          "https://<dist-domain>.cloudfront.net",
          "http://localhost:5173"
@@ -51,7 +51,7 @@ Vì CloudFront đã sẵn sàng từ Học phần 5.3, bạn nhập luôn tên m
      }
    ]
    ```
-2. Nhấn **Save changes**.
+2. Nhấn **Save changes**. *(Hãy xóa `http://localhost:5173` khỏi `AllowedOrigins` khi triển khai môi trường production.)*
 
 ![Cấu hình CORS trên bucket S3 ảnh cho phép tải trực tiếp từ tên miền CloudFront](/images/5-Workshop/5.7/02-s3-images-cors.png)
 
@@ -66,6 +66,8 @@ Mở thẻ **Management** -> **Create lifecycle rule** ba lần để ảnh bỏ
 | `reloop2-listing-images-unattached` | Tiền tố `listings/` + thẻ **`state=pending`** | Xóa sau **1 ngày** (dọn ảnh đã tải lên nhưng người dùng hủy không đăng tin) |
 | `reloop2-listing-images-retention` | Tiền tố `listings/` | Xóa phiên bản hiện tại sau **90 ngày** |
 | `reloop2-abort-incomplete-uploads` | Tiền tố `listings/` | Hủy các phiên tải lên nhiều phần bị gián đoạn sau **1 ngày** |
+
+Khi người bán đăng tin chính thức, `reloop2-api` tự động đổi thẻ các ảnh đính kèm từ `state=pending` sang `state=attached`, nhờ đó quy tắc xóa ảnh chờ sau 1 ngày chỉ dọn các ảnh tải lên bị bỏ dở và giữ ảnh tin đã đăng đến ngày thứ 90.
 
 ![Thẻ Management hiển thị cả 3 quy tắc lifecycle đang bật trên reloop2-images-7k3q](/images/5-Workshop/5.7/03-s3-images-lifecycle.png)
 

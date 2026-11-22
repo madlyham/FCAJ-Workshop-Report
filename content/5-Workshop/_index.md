@@ -6,7 +6,7 @@ chapter : false
 pre : " <b> 5. </b> "
 ---
 
-# Deploy ReLoop Serverless E-Waste Marketplace on AWS
+## Deploy ReLoop Serverless E-Waste Marketplace on AWS
 
 Welcome to the **ReLoop AWS Serverless Workshop**. Across Modules **5.1 through 5.12**, you build and verify a complete serverless web application on AWS following the exact request flow of the architecture diagram — from **Arrow 1** at the global edge all the way through **Arrow 10** in AI processing, plus scheduled cleanup, monitoring, live verification, and teardown.
 

@@ -8,7 +8,7 @@ pre: " <b> 1. </b> "
 
 During my 12-week internship at Amazon Web Services Vietnam (Workforce Bootcamp - First Cloud AI Journey, from 14/09/2026 to 04/12/2026; currently completed through Week 10 with Weeks 11–12 planned), I participated in foundational cloud architecture training, hands-on serverless labs, and the engineering lifecycle of the **ReLoop** circular marketplace capstone project for used and broken electronics.
 
-In parallel with our weekly engineering sprint deliverables, I actively represented the team and participated in **6 major technology conferences, executive roundtables, and community workshops** hosted by AWS Vietnam and industry partners (cross-referenced throughout the schedule and detailed in the [Events Participated](../4-eventparticipated/) section).
+In parallel with our weekly engineering sprint deliverables, I participated as an attendee in **6 AWS Vietnam community events, technical workshops, and volunteer sessions** hosted by AWS Vietnam and industry partners (cross-referenced throughout the schedule and detailed in the [Events Participated](../4-eventparticipated/) section).
 
 ### Weekly Worklog Overview
 
@@ -16,7 +16,7 @@ In parallel with our weekly engineering sprint deliverables, I actively represen
 * **Week 2:** [Serverless Basics (S3, DynamoDB, Lambda, API Gateway) & Buildrathon Kickoff](1.2-week2/)  
   *(Cross-ref: [Event 1: Buildrathon – Kickoff: Code the Future with CMC Global](../4-eventparticipated/4.1-event1/) on 26/09/2026)*
 * **Week 3:** [ReLoop Specification, 45 Business Decisions, AI Day Watch Party & Dr. Werner Vogels Fireside](1.3-week3/)  
-  *(Cross-ref: [Event 2: AWS Cloud and AI Day Hanoi – Watch Party](../4-eventparticipated/4.2-event2/) on 29/09/2026 & [Event 3: Fireside Chat with Dr. Werner Vogels](../4-eventparticipated/4.3-event3/) on 02/10/2026)*
+  *(Cross-ref: [Event 2: AWS Cloud and AI Day Hanoi – HCMC Watch Party](../4-eventparticipated/4.2-event2/) on 29/09/2026 & [Event 3: Fireside Chat with Dr. Werner Vogels](../4-eventparticipated/4.3-event3/) on 02/10/2026)*
 * **Week 4:** [ReLoop Architecture, Proposal Part 1 & Start of Development](1.4-week4/)
 * **Week 5:** [Secure S3 Uploads, Rekognition Moderation & AI Listing with Bedrock Nova Pro](1.5-week5/)
 * **Week 6:** [Terraform Dev Environment, Full Market Flow on AWS & Cloud & AI Meetup](1.6-week6/)  

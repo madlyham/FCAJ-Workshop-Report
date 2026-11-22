@@ -1,12 +1,12 @@
 ---
-title: "Sự kiện 3"
+title: "Sự kiện 3: Tọa đàm cùng TS. Werner Vogels"
 date: 2026-11-07
 weight: 3
 chapter: false
 pre: " <b> 4.3. </b> "
 ---
 
-# **Sự kiện 3: Trò chuyện thân mật cùng TS. Werner Vogels – Định hình tương lai Điện toán đám mây & AI tại Việt Nam**
+## **Sự kiện 3: Trò chuyện thân mật cùng TS. Werner Vogels – Định hình tương lai Điện toán đám mây & AI tại Việt Nam**
 
 **Ngày:** Thứ Sáu, ngày 02 tháng 10 năm 2026  
 **Thời gian:** 10:30 – 12:00 (GMT+7)  

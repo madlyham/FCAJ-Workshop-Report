@@ -25,7 +25,7 @@ Dù sơ đồ ghi nhãn **Amazon S3 (website)** vì đây là nơi chứa bản 
 2. Cấu hình:
    - **Bucket name:** `reloop2-web-<suffix>` (ví dụ `reloop2-web-7k3q`)
    - **Block all public access:** **Bật** (tích cả 4 ô)
-   - **Default encryption:** Mã hóa phía máy chủ **SSE-S3**, bật **Bucket Key**
+   - **Default encryption:** Mã hóa phía máy chủ với khóa do Amazon S3 quản lý (**SSE-S3**)
    - **Tag:** `Project = reloop2`
 3. Nhấn **Create bucket**. (Bạn sẽ tải gói giao diện lên sau khi có mã Cognito ở Học phần 5.4.)
 

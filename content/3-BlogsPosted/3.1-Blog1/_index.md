@@ -1,14 +1,14 @@
 ---
-title: "Blog 1"
+title: "Blog 1: Concurrency & Idempotency"
 date: 2026-11-22
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
 
-# One Chair, Two People, and an Unforgiving Database
+## One Chair, Two People, and an Unforgiving Database
 
-**Published on AWS Study Group:** [Read original Facebook post](https://www.facebook.com/share/p/1LZaN36GBA/)
+**Published:** November 2026 · **AWS Study Group:** [Read original Facebook post](https://www.facebook.com/share/p/1LZaN36GBA/)
 
 Imagine a platform connecting customers with service partners, where each job can only be accepted by one person. Partner A and Partner B see the same listing, and both click "Accept Job" almost simultaneously.
 

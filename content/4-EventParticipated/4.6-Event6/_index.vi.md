@@ -1,12 +1,12 @@
 ---
-title: "Sự kiện 6"
+title: "Sự kiện 6: Chia sẻ Cloud Mastery"
 date: 2026-11-19
 weight: 6
 chapter: false
 pre: " <b> 4.6. </b> "
 ---
 
-# **Sự kiện 6: Cloud Mastery – Buổi chia sẻ về Cloud cho sinh viên**
+## **Sự kiện 6: Cloud Mastery – Buổi chia sẻ về Cloud cho sinh viên**
 
 **Ngày:** Thứ Bảy, ngày 14 tháng 11 năm 2026  
 **Thời gian:** Buổi sáng (GMT+7)  

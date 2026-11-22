@@ -1,4 +1,4 @@
-{{- $alt := trim (.Text | plainify) " \t\n\r" -}}
+{{- $alt := trim (.Text | plainify | htmlUnescape) " \t\n\r" -}}
 {{- if or (eq $alt "") (in .Destination "avatar.png") -}}
 <img src="{{ .Destination | safeURL }}" alt="{{ $alt }}"{{ with .Title }} title="{{ . }}"{{ end }}>
 {{- else -}}

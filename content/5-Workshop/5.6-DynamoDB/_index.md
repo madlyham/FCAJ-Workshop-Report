@@ -62,5 +62,5 @@ ReLoop packs all entities into one on-demand table (`PK` / `SK`) plus one overlo
 ![DynamoDB Backups tab confirming PITR is enabled](/images/5-Workshop/5.6/03-ddb-pitr-ttl.png)
 
 {{% notice tip %}}
-**Arrow 6 (`DynamoDB`) is live.** Both `reloop2-post-confirmation` and `reloop2-api` can now read and write users, listings, and invoices. Next, move to [Module 5.7 — Data Storage: Amazon S3 Photos](../5.7-s3-photos/) for **Arrows 7 and 8**.
+**Arrow 6 (`DynamoDB`) is live.** `reloop2-post-confirmation` can now insert new user profiles (`PutItem`), while `reloop2-api` reads and writes users, listings, and invoices. Next, move to [Module 5.7 — Data Storage: Amazon S3 Photos](../5.7-s3-photos/) for **Arrows 7 and 8**.
 {{% /notice %}}

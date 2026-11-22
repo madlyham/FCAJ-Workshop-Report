@@ -1,14 +1,14 @@
 ---
-title: "Blog 3"
+title: "Blog 3: Xử lý bất đồng bộ cho đối tác offline"
 date: 2026-11-22
 weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
 
-# Đối tác đã tắt ứng dụng, nhưng công việc vẫn phải tìm đến họ
+## Đối tác đã tắt ứng dụng, nhưng công việc vẫn phải tìm đến họ
 
-**Đăng trên AWS Study Group:** [Xem bài viết gốc trên Facebook](https://www.facebook.com/share/p/1Gs4wyyVsv/)
+**Ngày đăng:** Tháng 11/2026 · **AWS Study Group:** [Xem bài viết gốc trên Facebook](https://www.facebook.com/share/p/1Gs4wyyVsv/)
 
 Một tình huống khá quen thuộc: khách hàng đăng yêu cầu dịch vụ, hệ thống cần tìm các đối tác phù hợp và gửi lời mời báo giá. Nhưng đối tác lại đang offline. Họ không mở app, không có mạng, có khi điện thoại còn đang nằm úp trên bàn.
 

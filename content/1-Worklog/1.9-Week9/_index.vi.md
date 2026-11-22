@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 1.9. </b> "
 ---
 
-# **Nhật ký công việc Tuần 9 — Rà soát bảo mật, bản vá gia cố, Đề xuất Phần 2 và Sự kiện Cloud Mastery**
+## **Nhật ký công việc Tuần 9 — Rà soát bảo mật, bản vá gia cố, Đề xuất Phần 2 và Sự kiện Cloud Mastery**
 
 ## **1. Mục tiêu tuần**
 
@@ -22,7 +22,7 @@ pre: " <b> 1.9. </b> "
 | **Thứ 2** | • Rà soát bảo mật các policy IAM theo nguyên tắc quyền tối thiểu, kiểm tra claim Cognito JWT cùng phân quyền 4 nhóm (`Admins`, `FinanceAdmins`, `Partners`, `Owners`) và điều kiện quyền sở hữu trên DynamoDB | 09/11/2026 | 09/11/2026 | [Tài liệu AWS IAM](https://docs.aws.amazon.com/iam/), [Tài liệu Amazon Cognito](https://docs.aws.amazon.com/cognito/), [Tài liệu Amazon DynamoDB](https://docs.aws.amazon.com/dynamodb/) |
 | **Thứ 3** | • Kiểm tra cơ chế bắt buộc header bí mật `x-origin-verify` từ CloudFront tới API Gateway (chặn truy cập trực tiếp bỏ qua CloudFront) và rà soát CloudFront WAF web ACL duy nhất (3 bộ luật AWS managed + 2 giới hạn tốc độ theo IP) | 10/11/2026 | 10/11/2026 | [Tài liệu Amazon CloudFront](https://docs.aws.amazon.com/cloudfront/), [Tài liệu AWS WAF](https://docs.aws.amazon.com/waf/), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`infra/waf.tf`) |
 | **Thứ 4** | • Triển khai các bản vá gia cố bảo mật (siết kiểm tra quyền sở hữu/vai trò, chuẩn hóa thông báo lỗi an toàn, siết kiểm tra dữ liệu đầu vào); chạy lại `smoke-aws.py` xác nhận không phát sinh lỗi hồi quy | 11/11/2026 | 11/11/2026 | [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`smoke-aws.py`) |
-| **Thứ 5** | • Rà soát chi phí từng dịch vụ trên AWS Cost Explorer đối chiếu với số dư credit AWS và xác nhận stack 12 dịch vụ (+ IAM) duy trì ở mức ~$11.70/tháng ($10.00 CloudFront WAF + ~$1.70 theo mức sử dụng) | 12/11/2026 | 12/11/2026 | [AWS Billing & Cost Explorer](https://docs.aws.amazon.com/cost-management/) |
+| **Thứ 5** | • Rà soát chi phí từng dịch vụ trên AWS Cost Explorer đối chiếu với số dư credit AWS và xác nhận stack 12 dịch vụ (+ IAM) duy trì ở mức ~$11.70/tháng ($10.00 CloudFront WAF + ~$1.70 theo mức sử dụng) | 12/11/2026 | 12/11/2026 | [AWS Billing & Cost Explorer](https://docs.aws.amazon.com/cost-management/latest/userguide/) |
 | **Thứ 6** | • Hoàn thiện và **nộp Đề xuất (Phần 2)**: cập nhật kiến trúc 12 dịch vụ AWS quản lý (+ IAM), bảng chi phí thực tế từ Cost Explorer và kết quả gia cố bảo mật | 13/11/2026 | 13/11/2026 | [Đề xuất](../../2-proposal/) |
 | **Thứ 7** | • Tham dự [Sự kiện 6: Cloud Mastery – Buổi chia sẻ về Cloud cho sinh viên](../../4-eventparticipated/4.6-event6/) (buổi sáng, Văn phòng AWS Việt Nam). Hỏi đáp mở kéo dài với sinh viên về định hướng và chuyên môn Cloud, sau đó chơi Quiz.com trực tiếp | 14/11/2026 | 14/11/2026 | [Sự kiện 6](../../4-eventparticipated/4.6-event6/) |
 

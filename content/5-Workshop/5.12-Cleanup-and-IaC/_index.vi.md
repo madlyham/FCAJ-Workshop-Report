@@ -19,14 +19,14 @@ Xóa sạch mọi tài nguyên `reloop2` đã tạo ở các Học phần **5.3�
 3. **Giám sát & Cảnh báo (`ap-southeast-1`):**
    - Xóa cảnh báo CloudWatch **`reloop2-lambda-errors`**.
    - Xóa chủ đề SNS **`reloop2-alerts`** (cùng các đăng ký đã xác nhận nếu có).
-   - Xóa các Log Group **`/aws/lambda/reloop2-api`** và **`/aws/lambda/reloop2-post-confirmation`**.
 4. **Xử lý AI (`ap-southeast-1`):** Mở **Amazon Bedrock -> Guardrails** -> xóa **`reloop2-ai-guardrail`** (xóa cả `DRAFT` và Version `1`).
 5. **API Backend (`ap-southeast-1`):** Xóa HTTP API Gateway **`reloop2-api`**.
 6. **Đăng ký & Đăng nhập (`ap-southeast-1`):** Mở **Cognito -> `reloop2-user-pool`**:
    - Vào **Branding -> Domain**, xóa miền `reloop2-auth` (hoặc tiền tố kèm hậu tố của bạn).
    - Vào **Overview -> Delete user pool**, tắt **Deletion protection** rồi xóa `reloop2-user-pool`.
-7. **Lambda & IAM Roles:**
+7. **Lambda, Log Groups & IAM Roles:**
    - Xóa hai hàm Lambda **`reloop2-api`** và **`reloop2-post-confirmation`** (`ap-southeast-1`).
+   - Xóa các CloudWatch Log Group **`/aws/lambda/reloop2-api`** và **`/aws/lambda/reloop2-post-confirmation`** (`ap-southeast-1`) *sau khi* xóa cả hai hàm Lambda để các yêu cầu muộn không tạo lại log group.
    - Mở **IAM -> Roles** -> xóa **`reloop2-api-lambda-role`** và **`reloop2-post-confirmation-role`** (inline policy đi kèm sẽ tự xóa).
 8. **Lưu trữ dữ liệu (`ap-southeast-1`):**
    - Xóa bảng DynamoDB **`reloop2-core-table`**.
@@ -44,18 +44,22 @@ Xóa sạch mọi tài nguyên `reloop2` đã tạo ở các Học phần **5.3�
 
 ### Phần B — Xác minh sạch 100% tài nguyên `reloop2` bằng AWS CLI
 
-Chạy loạt lệnh chỉ đọc sau trong terminal và xác nhận tất cả đều trả về `[]`:
+Chạy loạt lệnh chỉ đọc sau trong terminal và xác nhận tất cả đều trả về `[]` (hoặc `null` nếu tài khoản không còn distribution, function hay OAC nào trên CloudFront):
 
 ```bash
 aws cloudfront list-distributions --query "DistributionList.Items[?contains(Comment || '', 'reloop2')].Id"
+aws cloudfront list-functions --query "FunctionList.Items[?contains(Name,'reloop2')].Name"
+aws cloudfront list-origin-access-controls --query "OriginAccessControlList.Items[?contains(Name,'reloop2')].Name"
 aws wafv2 list-web-acls --scope CLOUDFRONT --region us-east-1 --query "WebACLs[?contains(Name,'reloop2')].Name"
 aws s3api list-buckets --query "Buckets[?contains(Name,'reloop2')].Name"
 aws dynamodb list-tables --region ap-southeast-1 --query "TableNames[?contains(@,'reloop2')]"
 aws cognito-idp list-user-pools --max-results 60 --region ap-southeast-1 --query "UserPools[?contains(Name,'reloop2')].Name"
 aws apigatewayv2 get-apis --region ap-southeast-1 --query "Items[?contains(Name,'reloop2')].Name"
 aws lambda list-functions --region ap-southeast-1 --query "Functions[?contains(FunctionName,'reloop2')].FunctionName"
+aws iam list-roles --query "Roles[?contains(RoleName,'reloop2')].RoleName"
 aws bedrock list-guardrails --region ap-southeast-1 --query "guardrails[?contains(name,'reloop2')].name"
 aws events list-rules --region ap-southeast-1 --query "Rules[?contains(Name,'reloop2')].Name"
+aws logs describe-log-groups --region ap-southeast-1 --log-group-name-prefix /aws/lambda/reloop2 --query "logGroups[].logGroupName"
 aws cloudwatch describe-alarms --region ap-southeast-1 --query "MetricAlarms[?contains(AlarmName,'reloop2')].AlarmName"
 aws sns list-topics --region ap-southeast-1 --query "Topics[?contains(TopicArn,'reloop2')].TopicArn"
 ```
@@ -89,7 +93,7 @@ Sau khi `terraform apply` xong, quay về thư mục gốc kho mã nguồn (`cd 
 | 1 | **Tạo IAM Role bị từ chối (`AccessDenied`)** | Chính sách IAM của tài khoản nhóm bắt buộc mọi role ứng dụng mới tạo phải gắn permissions boundary. | Gắn permissions boundary bắt buộc (`TeamAppRoleBoundary`) cho cả `reloop2-api-lambda-role` và `reloop2-post-confirmation-role`. |
 | 2 | **Các tuyến API Gateway lỗi không khớp tiền tố `/api`** | CloudFront định tuyến `/api/*` tới API Gateway, trong khi backend đăng ký các tuyến không có tiền tố `/api` (ví dụ `/feed/public`). | Thêm hàm CloudFront Function `reloop2-api-prefix` trên behavior `/api/*` để cắt tiền tố `/api` ngay tại lớp biên trước khi chuyển tiếp tới API Gateway. |
 | 3 | **Gọi thẳng API Gateway bỏ qua CloudFront & WAF** | Điểm cuối `execute-api` mặc định vẫn truy cập công khai được nếu không khóa chặt nguồn gốc. | Cấu hình CloudFront gửi header bí mật `x-origin-verify` và kiểm tra trong `reloop2-api` bằng phép so sánh thời gian hằng `timingSafeEqual`, chặn gọi trực tiếp bằng mã `403 DIRECT_ACCESS_FORBIDDEN`. |
-| 4 | **Gọi Bedrock tại Singapore & prompt injection từ chữ trên ảnh** | Định tuyến model liên vùng và văn bản không đáng tin cậy in trên nhãn thiết bị gây rủi ro sẵn sàng và chèn lệnh AI. | Dùng `global.moonshotai.kimi-k3` qua Converse API tại `ap-southeast-1` và lọc chữ trích xuất từ Rekognition qua Amazon Bedrock Guardrail (`apac.guardrail.v1:0`) trước khi phân tích AI. |
+| 4 | **Gọi Bedrock tại Singapore & prompt injection từ chữ trên ảnh** | Kimi K3 không có model ID on-demand đơn vùng tại Singapore (`ap-southeast-1`), đồng thời văn bản không đáng tin cậy in trên nhãn thiết bị tiềm ẩn rủi ro chèn lệnh AI (prompt injection). | Sử dụng đúng cặp cross-region profile bắt buộc của AWS — `global.moonshotai.kimi-k3` qua Converse API và Amazon Bedrock Guardrail (`apac.guardrail.v1:0`) — ngay từ `ap-southeast-1` để gọi mô hình và lọc chữ trích xuất từ Rekognition trước khi phân tích AI. |
 | 5 | **26% lỗi `5xx` khi kiểm thử tải đột biến 80 request đồng thời** | Hạn mức thực thi đồng thời ban đầu của Lambda là `10`, gây quá tải trước khi lớp điều tiết lưu lượng kịp chặn. | Nâng hạn mức đồng thời Lambda lên `1.000`, cấu hình throttling API Gateway (`20 request/giây`, burst `50`) và gắn giới hạn tốc độ theo IP trên CloudFront WAF trả mã `429` gọn gàng — loại bỏ hoàn toàn lỗi `5xx` khi kiểm thử lại. |
 
 #### Định hướng mở rộng

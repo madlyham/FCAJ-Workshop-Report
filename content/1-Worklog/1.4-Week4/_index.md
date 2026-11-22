@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 1.4. </b> "
 ---
 
-# **Week 4 Worklog — ReLoop Architecture, Proposal Part 1 & Start of Development**
+## **Week 4 Worklog — ReLoop Architecture, Proposal Part 1 & Start of Development**
 
 ## **1. Weekly Objectives**
 
@@ -19,18 +19,18 @@ pre: " <b> 1.4. </b> "
 
 | Day | Task Description | Start Date | Completion Date | Reference Material |
 | :--- | :--- | :--- | :--- | :--- |
-| **Monday** | • Architecture review: single Lambda + HTTP API, adapters (`Table`, `ImageStore`, `Analyzer`, `AuthProvider`) so the same code can later run locally with in-memory fakes | 05/10/2026 | 05/10/2026 | [AWS Lambda Docs](https://docs.aws.amazon.com/lambda/), [Amazon API Gateway Docs](https://docs.aws.amazon.com/apigateway/) |
-| **Tuesday** | • Design all DynamoDB access patterns on paper: PK/SK and GSI1 key patterns (`USER#`, `LISTING#`, `QUOTE#`, `TXN#`…); rule: no table scans | 06/10/2026 | 06/10/2026 | [Amazon DynamoDB Docs](https://docs.aws.amazon.com/dynamodb/) |
-| **Wednesday** | • Cost and feasibility check: drop bank top-up/withdrawal in favor of payment at handover, choose `arm64` Lambda, On-Demand DynamoDB; draft the proposal | 07/10/2026 | 07/10/2026 | [AWS Pricing Calculator](https://calculator.aws/), [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) |
-| **Thursday** | • Finish and submit **Proposal Part 1** (problem, architecture, access patterns, cost estimate, timeline) | 08/10/2026 | 08/10/2026 | [Proposal](../../2-proposal/) |
-| **Friday** | • **ReLoop development starts:** write `backend/src/store/keys.ts` from the access-pattern sheet; create `reloop-core-table` (On-Demand, PITR) and the `reloop-device-images` bucket; configure the Cognito user pool with email verification, all 4 groups (`Admins`, `FinanceAdmins`, `Partners`, `Owners`), a Post-confirmation Lambda trigger writing `USER#sub` / `PROFILE`, and a JWT authorizer on private routes; scaffold the Vite + React `reloop-ui` app with the Cognito client SDK; test sign-up → verify email → sign-in | 09/10/2026 | 09/10/2026 | [Amazon Cognito Docs](https://docs.aws.amazon.com/cognito/), [Amazon S3 Docs](https://docs.aws.amazon.com/s3/), [ReLoop Repository](https://github.com/madlyham/ReLoop) |
+| **Monday** | • Completed architecture review: single Lambda + HTTP API, with adapters (`Table`, `ImageStore`, `Analyzer`, `AuthProvider`) so the same code could later run locally with in-memory fakes | 05/10/2026 | 05/10/2026 | [AWS Lambda Docs](https://docs.aws.amazon.com/lambda/), [Amazon API Gateway Docs](https://docs.aws.amazon.com/apigateway/) |
+| **Tuesday** | • Designed all DynamoDB access patterns on paper: PK/SK and GSI1 key patterns (`USER#`, `LISTING#`, `QUOTE#`, `TXN#`…), enforcing a zero table-scan rule | 06/10/2026 | 06/10/2026 | [Amazon DynamoDB Docs](https://docs.aws.amazon.com/dynamodb/) |
+| **Wednesday** | • Completed cost and feasibility check: dropped bank top-up/withdrawal in favor of payment at handover, chose `arm64` Lambda and On-Demand DynamoDB, and drafted the proposal | 07/10/2026 | 07/10/2026 | [AWS Pricing Calculator](https://calculator.aws/), [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) |
+| **Thursday** | • Finished and submitted **Proposal Part 1** (problem, architecture, access patterns, cost estimate, timeline) | 08/10/2026 | 08/10/2026 | [Proposal](../../2-proposal/) |
+| **Friday** | • **Started ReLoop development:** wrote `backend/src/store/keys.ts` from the access-pattern sheet; created `reloop-core-table` (On-Demand, PITR) and the `reloop-device-images` bucket; configured the Cognito user pool with email verification, all 4 groups (`Admins`, `FinanceAdmins`, `Partners`, `Owners`), a Post-confirmation Lambda trigger writing `USER#sub` / `PROFILE`, and an HTTP API JWT authorizer on private routes; scaffolded the Vite + React `reloop-ui` app with the Cognito client SDK and tested sign-up → verify email → sign-in | 09/10/2026 | 09/10/2026 | [Amazon Cognito Docs](https://docs.aws.amazon.com/cognito/), [Amazon S3 Docs](https://docs.aws.amazon.com/s3/), [ReLoop Repository](https://github.com/madlyham/ReLoop) |
 
 ## **3. Key Achievements & Outcomes**
 
 ### **Theoretical Foundation**
 
 * Learned how the adapter pattern keeps business logic independent of AWS, so tests run without an AWS bill.
-* Understood how a Cognito JWT carries the user ID and groups that API Gateway validates on every private route.
+* Understood the split between authentication and authorization: API Gateway HTTP API's JWT authorizer validates the Cognito token signature (via JWKS), issuer, audience, and expiry on every private route, while Lambda application code inspects `cognito:groups` claims (`Admins` / `FinanceAdmins`) and DynamoDB role records to enforce authorization.
 
 ### **Environment Setup & Configuration**
 

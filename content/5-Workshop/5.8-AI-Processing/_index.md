@@ -38,13 +38,14 @@ Stay in **Asia Pacific (Singapore) `ap-southeast-1`** (the same region as Lambda
    - **Name:** `reloop2-ai-guardrail`
    - **Description:** `ReLoop: screen device photos and text before AI analysis`
    - **Cross-region inference:** Enable and select **`APAC Guardrail v1:0`** (`apac.guardrail.v1:0`)
-   - **Blocked input message:** `Ảnh không phù hợp.`
+   - **Blocked input message:** `Ảnh không phù hợp.` *(shared Vietnamese blocked-input message shown in the photo-listing UI)*
    - **Blocked output message:** `Kết quả không phù hợp.`
    - **Tag:** `Project = reloop2`
 3. Under **Content filters**, select **`Standard`** tier and set **HIGH** (action `Block`) on all six categories:
    - **Violence**, **Hate**, **Sexual**, **Insults** (Input: Text + Image, Output: Text)
    - **Misconduct** (Input: Text, Output: Text)
    - **Prompt attack** (Input: Text `HIGH` / `Block`, Output: `None`)
+   - *(Both `TEXT` and `IMAGE` input modalities are enabled for reuse, while the Kimi K3 pipeline specifically screens Rekognition-extracted text via `ApplyGuardrail` with `source = INPUT`.)*
 4. Click **Create guardrail**, then click **Create version** (description `v1 for reloop2-api`) to publish immutable **Version `1`**. Note the **Guardrail ID** (`<guardrail-id>`).
 
 ![Bedrock Guardrail reloop2-ai-guardrail ready in ap-southeast-1 with APAC Guardrail v1:0](/images/5-Workshop/5.8/01-guardrail-overview.png)
@@ -77,5 +78,5 @@ Stay in **Asia Pacific (Singapore) `ap-southeast-1`** (the same region as Lambda
    Click **Save**.
 
 {{% notice tip %}}
-**All 10 numbered arrows (`1 → 10`) are now built.** Next, add the two operational dashed links starting with [Module 5.9 — Scheduled Sweeps: Amazon EventBridge](../5.9-eventbridge/).
+**All 10 numbered arrows (`1 → 10`) are now built.** Next, add the remaining operational links (EventBridge, CloudWatch, and SNS) starting with [Module 5.9 — Scheduled Sweeps: Amazon EventBridge](../5.9-eventbridge/).
 {{% /notice %}}

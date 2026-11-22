@@ -1,12 +1,12 @@
 ---
-title: "Event 6"
+title: "Event 6: Cloud Mastery Sharing Session"
 date: 2026-11-19
 weight: 6
 chapter: false
 pre: " <b> 4.6. </b> "
 ---
 
-# **Event 6: Cloud Mastery – Cloud Sharing Session for Students**
+## **Event 6: Cloud Mastery – Cloud Sharing Session for Students**
 
 **Date:** Saturday, November 14, 2026  
 **Time:** Morning (GMT+7)  

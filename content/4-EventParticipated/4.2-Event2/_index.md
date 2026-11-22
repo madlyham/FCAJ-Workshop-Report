@@ -1,12 +1,12 @@
 ---
-title: "Event 2"
+title: "Event 2: AWS Cloud & AI Day Watch Party"
 date: 2026-11-07
 weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-# **Event 2: AWS Cloud and AI Day Hanoi – Watch Party**
+## **Event 2: AWS Cloud and AI Day Hanoi – HCMC Watch Party**
 
 **Date:** Tuesday, September 29, 2026  
 **Time:** 08:00 AM – 05:00 PM (GMT+7)  
@@ -15,9 +15,9 @@ pre: " <b> 4.2. </b> "
 
 ### **Event Objectives**
 
-* Present the latest advancements in AWS Cloud infrastructure and Enterprise AI.  
-* Explore real-world enterprise modernization patterns using generative AI and Kubernetes.  
-* Connect cloud builders, solution architects, and technology leaders across Vietnam.
+* Watch the livestream of AWS Cloud and AI Day Hanoi together with the HCMC community at the AWS Vietnam office.  
+* Follow the keynote and sessions on AWS Cloud infrastructure, generative AI, and Kubernetes modernization.  
+* Discuss the sessions and connect with other cloud builders in Ho Chi Minh City.
 
 ### **Key Highlights**
 

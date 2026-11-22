@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 1.2. </b> "
 ---
 
-# **Nhật ký công việc Tuần 2 — Serverless cơ bản (S3, DynamoDB, Lambda, API Gateway) và Khởi động Buildrathon**
+## **Nhật ký công việc Tuần 2 — Serverless cơ bản (S3, DynamoDB, Lambda, API Gateway) và Khởi động Buildrathon**
 
 ## **1. Mục tiêu tuần**
 
@@ -22,7 +22,7 @@ pre: " <b> 1.2. </b> "
 | **Thứ 3** | • Presigned URL (hết hạn sau 300 giây) để trình duyệt tải lên/tải xuống trực tiếp mà không mở công khai bucket | 22/09/2026 | 22/09/2026 | [Tài liệu Amazon S3](https://docs.aws.amazon.com/s3/) |
 | **Thứ 4** | • Amazon DynamoDB: partition key / sort key (PK/SK), chế độ On-Demand, ý tưởng thiết kế một bảng | 23/09/2026 | 23/09/2026 | [Tài liệu Amazon DynamoDB](https://docs.aws.amazon.com/dynamodb/) |
 | **Thứ 5** | • AWS Lambda + API Gateway HTTP API: hàm đầu tiên, route, CORS, log trên CloudWatch | 24/09/2026 | 24/09/2026 | [Tài liệu AWS Lambda](https://docs.aws.amazon.com/lambda/), [Tài liệu Amazon API Gateway](https://docs.aws.amazon.com/apigateway/) |
-| **Thứ 6** | • Tìm hiểu AWS Billing, Cost Explorer và cách theo dõi số dư credit; thực hành cảnh báo AWS Budgets (50% / 80% / 100%) trong bài lab sandbox cá nhân Tuần 2 (không thuộc stack 12 dịch vụ của ReLoop) và ôn tập metric, alarm trên CloudWatch | 25/09/2026 | 25/09/2026 | [AWS Billing & Cost Explorer](https://docs.aws.amazon.com/cost-management/), [Tài liệu Amazon CloudWatch](https://docs.aws.amazon.com/cloudwatch/) |
+| **Thứ 6** | • Tìm hiểu AWS Billing, Cost Explorer và cách theo dõi số dư credit; thực hành cảnh báo AWS Budgets (50% / 80% / 100%) trong bài lab sandbox cá nhân Tuần 2 (không thuộc stack 12 dịch vụ của ReLoop) và ôn tập metric, alarm trên CloudWatch | 25/09/2026 | 25/09/2026 | [AWS Billing & Cost Explorer](https://docs.aws.amazon.com/cost-management/latest/userguide/), [Tài liệu Amazon CloudWatch](https://docs.aws.amazon.com/cloudwatch/) |
 | **Thứ 7** | • Tham gia [Sự kiện 1: Buildrathon – Khởi động: Kiến tạo tương lai cùng CMC Global](../../4-eventparticipated/4.1-event1/) (10:30 – 12:00 tại Bitexco Financial Tower). Khám phá Generative AI, quy trình Agentic AI và kiến trúc RAG. Nhóm chọn ReLoop làm đề tài đồ án tại đây; đặc tả và thiết kế ở Tuần 3–4, bắt đầu lập trình từ 09/10/2026. | 26/09/2026 | 26/09/2026 | [Sự kiện 1](../../4-eventparticipated/4.1-event1/), [Tài liệu Amazon Bedrock](https://docs.aws.amazon.com/bedrock/) |
 
 ## **3. Kết quả đạt được**

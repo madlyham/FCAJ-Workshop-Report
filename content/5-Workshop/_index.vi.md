@@ -6,7 +6,7 @@ chapter : false
 pre : " <b> 5. </b> "
 ---
 
-# Triển khai Sàn Đồ Điện Tử Cũ Serverless ReLoop trên AWS
+## Triển khai Sàn Đồ Điện Tử Cũ Serverless ReLoop trên AWS
 
 Chào mừng bạn đến với **ReLoop AWS Serverless Workshop**. Qua các học phần **5.1 đến 5.12**, bạn sẽ xây dựng và kiểm chứng trọn vẹn ứng dụng web serverless trên AWS theo đúng luồng yêu cầu của sơ đồ kiến trúc — từ **Mũi tên 1** ở lớp biên toàn cầu cho tới **Mũi tên 10** ở lớp xử lý AI, cùng lịch dọn tin định kỳ, giám sát cảnh báo, kiểm thử thực tế và dọn dẹp tài nguyên.
 
@@ -27,7 +27,7 @@ Hướng dẫn dùng tiền tố tài nguyên `reloop2` cùng các giá trị m�
 4. [5.4. Đăng ký & Đăng nhập](5.4-sign-up-and-sign-in/) — **Mũi tên 3** + Post-confirm (`Người dùng → Cognito → Lambda → tạo hồ sơ`)
 5. [5.5. Hệ thống API Backend](5.5-api-backend/) — **Mũi tên 4, 5** + xác thực JWT (`CloudFront /api/* → API Gateway → Lambda API`)
 6. [5.6. Lưu trữ dữ liệu: Amazon DynamoDB](5.6-dynamodb/) — **Mũi tên 6** (`đọc/ghi người dùng, tin đăng & hóa đơn`)
-7. [5.7. Lưu trữ ảnh: Amazon S3 Photos](5.7-s3-photos/) — **Mũi tên 7, 8** (`tạo URL ký sẵn & gắn thẻ` + `tải lên / xem ảnh`)
+7. [5.7. Lưu trữ ảnh: Amazon S3](5.7-s3-photos/) — **Mũi tên 7, 8** (`tạo URL ký sẵn & gắn thẻ` + `tải lên / xem ảnh`)
 8. [5.8. Xử lý AI: Rekognition & Bedrock](5.8-ai-processing/) — **Mũi tên 9, 10** (`kiểm duyệt ảnh` + `phân tích AI + Guardrail`)
 9. [5.9. Dọn tin định kỳ: Amazon EventBridge](5.9-eventbridge/) — `tự động đóng tin đăng quá hạn mỗi 15 phút`
 10. [5.10. Giám sát & Cảnh báo: CloudWatch & SNS](5.10-monitoring/) — `nhật ký & chỉ số → cảnh báo → email Admin`

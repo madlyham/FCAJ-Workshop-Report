@@ -42,7 +42,7 @@ Xác minh các yêu cầu chưa xác thực, truy vấn sai định dạng và l
   ```
 - **Đường dẫn không tồn tại/dữ liệu sai định dạng & bảo vệ giới hạn tốc độ ở biên:**
   - Đường dẫn API không tồn tại trả về `HTTP/2 404` và dữ liệu gửi lên sai định dạng trả về lỗi kiểm tra có cấu trúc `HTTP/2 400`, không phát sinh lỗi `5xx` chưa xử lý.
-  - Lưu lượng đột biến vượt **100 request/phút** từ một IP tới các API công khai sẽ kích hoạt AWS WAF (`reloop2-web`) tại CloudFront, trả về `HTTP/2 429` (`RATE_LIMITED`) kèm header `retry-after: 60` trước khi yêu cầu chạm tới API Gateway hay Lambda.
+  - Lưu lượng đột biến vượt **100 request/phút** từ một IP tới các API công khai sẽ kích hoạt AWS WAF (`reloop2-web`) tại CloudFront, trả về `HTTP/2 429` (`RATE_LIMITED`) kèm header `retry-after: 60` thông qua phản hồi tùy chỉnh đã cấu hình ở [Học phần 5.3](../5.3-global-edge/) (ghi đè mã chặn `403` mặc định của WAF) trước khi yêu cầu chạm tới API Gateway hay Lambda.
 
 ---
 

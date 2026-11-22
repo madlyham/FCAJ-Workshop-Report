@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 1.6. </b> "
 ---
 
-# **Nhật ký công việc Tuần 6 — Môi trường Dev bằng Terraform, luồng chợ đầy đủ trên AWS và Cloud & AI Meetup**
+## **Nhật ký công việc Tuần 6 — Môi trường Dev bằng Terraform, luồng chợ đầy đủ trên AWS và Cloud & AI Meetup**
 
 ## **1. Mục tiêu tuần**
 
@@ -18,7 +18,7 @@ pre: " <b> 1.6. </b> "
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Thứ 2** | • Xác nhận luồng chợ đầy đủ chạy trên AWS trước ngày 19/10/2026 (đăng tin → ghép → báo giá → ra giá trong chat → giao dịch → đánh giá); lưu Terraform state trong bucket S3 có versioning | 19/10/2026 | 19/10/2026 | [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs), [Tài liệu Amazon S3](https://docs.aws.amazon.com/s3/) |
+| **Thứ 2** | • Xác nhận luồng chợ đầy đủ bản đồng bộ ban đầu chạy trực tiếp trên AWS trước ngày 19/10/2026 (đăng tin → ghép chi nhánh ban đầu → báo giá → ra giá trong chat → giao dịch → đánh giá; phần ghép chi nhánh sau đó được tái cấu trúc thành tác vụ chạy nền bất đồng bộ dùng geohash + Haversine ở Tuần 8); lưu Terraform state trong bucket S3 có versioning | 19/10/2026 | 19/10/2026 | [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs), [Tài liệu Amazon S3](https://docs.aws.amazon.com/s3/) |
 | **Thứ 3** | • Dựng lại stack dev bằng Terraform: `reloop-dev-user-pool`, `reloop-dev-api`, CloudFront với Origin Access Control (OAC) cho bucket web | 20/10/2026 | 20/10/2026 | [Tài liệu Amazon CloudFront](https://docs.aws.amazon.com/cloudfront/), [Repository ReLoop](https://github.com/madlyham/ReLoop) (`infra/*.tf`) |
 | **Thứ 4** | • Cấu hình rule Amazon EventBridge chạy định kỳ mỗi 15 phút để đóng tin hết hạn (quá cửa sổ 7 ngày) | 21/10/2026 | 21/10/2026 | [Tài liệu Amazon EventBridge](https://docs.aws.amazon.com/eventbridge/) |
 | **Thứ 5** | • Triển khai và chạy `smoke-aws.py` trên stack dev thật: đạt 25/25 bước kiểm tra | 22/10/2026 | 22/10/2026 | [Repository ReLoop](https://github.com/madlyham/ReLoop) (`smoke-aws.py`) |

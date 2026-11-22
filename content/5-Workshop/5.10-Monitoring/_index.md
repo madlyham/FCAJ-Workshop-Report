@@ -6,7 +6,7 @@ chapter : false
 pre : " <b> 5.10. </b> "
 ---
 
-Complete the pink **Monitoring & alerts** box at the bottom of the diagram: configure 7-day log retention on `/aws/lambda/reloop2-api`, create an **Amazon SNS** email topic for admin alerts, and connect a **CloudWatch metric alarm** (`reloop2-lambda-errors`) that fires whenever `reloop2-api` encounters errors.
+Complete the pink **Monitoring & alerts** box at the bottom of the diagram: configure 7-day log retention on `/aws/lambda/reloop2-api`, create an **Amazon SNS** email topic for admin alerts, and connect a **CloudWatch metric alarm** (`reloop2-lambda-errors`) that fires when `reloop2-api` hits 3 or more errors within 5 minutes.
 
 **Graph arrows covered in this step:**
 - **Supporting link:** `AWS Lambda (API) → Amazon CloudWatch` (`logs & metrics`)

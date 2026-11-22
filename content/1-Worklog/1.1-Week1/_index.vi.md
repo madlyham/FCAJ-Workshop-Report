@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 1.1. </b> "
 ---
 
-# **Nhật ký công việc Tuần 1 — Nền tảng AWS, Console, CLI, EC2, IAM và VPC**
+## **Nhật ký công việc Tuần 1 — Nền tảng AWS, Console, CLI, EC2, IAM và VPC**
 
 ## **1. Mục tiêu tuần**
 
@@ -18,9 +18,9 @@ pre: " <b> 1.1. </b> "
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Thứ 2** | • Nhập môn chương trình First Cloud Journey; làm quen AWS Console, region, Availability Zone và giới hạn Free Tier | 14/09/2026 | 14/09/2026 | [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) |
+| **Thứ 2** | • Nhập môn chương trình First Cloud AI Journey; làm quen AWS Console, region, Availability Zone và giới hạn Free Tier | 14/09/2026 | 14/09/2026 | [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) |
 | **Thứ 3** | • Cài đặt và cấu hình AWS CLI v2 (profile, region mặc định `ap-southeast-1`); chạy các lệnh chỉ đọc đầu tiên | 15/09/2026 | 15/09/2026 | [Tài liệu AWS CLI](https://docs.aws.amazon.com/cli/) |
-| **Thứ 4** | • Thực hành: tạo EC2, gắn ổ EBS, gán Elastic IP, sau đó dừng/xóa để tránh phát sinh phí | 16/09/2026 | 16/09/2026 | [Tài liệu Amazon EC2](https://docs.aws.amazon.com/ec2/) |
+| **Thứ 4** | • Thực hành: tạo EC2, gắn thêm ổ EBS ngoài ổ gốc và gán Elastic IP; sau khi xóa (terminate) EC2, chủ động giải phóng (release) Elastic IP đã cấp phát và xóa ổ EBS phụ (`DeleteOnTermination = false` theo mặc định), vì chỉ dừng hoặc xóa EC2 không tự giải phóng Elastic IP và các ổ EBS phụ vẫn tiếp tục tính phí | 16/09/2026 | 16/09/2026 | [Tài liệu Amazon EC2](https://docs.aws.amazon.com/ec2/) |
 | **Thứ 5** | • IAM cơ bản: user, group, role, policy JSON; tạo IAM admin có MFA và cất giữ tài khoản root | 17/09/2026 | 17/09/2026 | [Tài liệu AWS IAM](https://docs.aws.amazon.com/iam/) |
 | **Thứ 6** | • VPC cơ bản: dựng VPC tùy chỉnh (`10.0.0.0/16`) với subnet public/private, Internet Gateway, route table, so sánh Security Group và NACL | 18/09/2026 | 18/09/2026 | [Tài liệu AWS VPC](https://docs.aws.amazon.com/vpc/) |
 
@@ -40,6 +40,6 @@ pre: " <b> 1.1. </b> "
 
 ### **Kỹ năng thực hành & Vận hành**
 
-* Tạo, kết nối và dọn dẹp tài nguyên EC2 mà không để sót tài nguyên phát sinh phí.
+* Tạo, kết nối và dọn dẹp tài nguyên EC2 (bao gồm giải phóng Elastic IP và xóa ổ EBS phụ) mà không để sót tài nguyên phát sinh phí.
 * Viết và kiểm thử policy IAM JSON chỉ cho phép đúng các thao tác đọc/ghi cần thiết.
 * Kiểm tra cô lập mạng: subnet public ra Internet qua IGW, subnet private không nhận kết nối từ ngoài vào.

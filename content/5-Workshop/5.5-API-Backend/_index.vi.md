@@ -50,7 +50,7 @@ Bây giờ bạn xây dựng khối màu cam **API backend** trên sơ đồ: **
          "Action": ["bedrock:InvokeModel"],
          "Resource": [
            "arn:aws:bedrock:*:123456789012:inference-profile/global.moonshotai.kimi-k3",
-           "arn:aws:bedrock:*::foundation-model/*"
+           "arn:aws:bedrock:*::foundation-model/moonshotai.kimi-k3*"
          ]
        },
        {
@@ -59,7 +59,7 @@ Bây giờ bạn xây dựng khối màu cam **API backend** trên sơ đồ: **
          "Action": ["bedrock:ApplyGuardrail"],
          "Resource": [
            "arn:aws:bedrock:ap-southeast-1:123456789012:guardrail/*",
-           "arn:aws:bedrock:*:123456789012:guardrail-profile/*"
+           "arn:aws:bedrock:*:123456789012:guardrail-profile/apac.guardrail.v1:0"
          ]
        },
        {
@@ -83,12 +83,13 @@ Bây giờ bạn xây dựng khối màu cam **API backend** trên sơ đồ: **
      ]
    }
    ```
+   *(Lưu ý: `SelfInvoke` cho phép `reloop2-api` tự gọi bất đồng bộ cho các tác vụ phân tích AI Bedrock & ghép đối tác ~35 giây, còn các API kiểm duyệt/đọc chữ của Rekognition bắt buộc dùng `"Resource": "*"` theo quy định AWS IAM.)*
 3. **Tạo hàm Lambda:** Mở **AWS Lambda -> Create function** tại **`ap-southeast-1`**:
    - **Function name:** `reloop2-api`
    - **Runtime:** `Node.js 22.x` · **Architecture:** `arm64`
    - **Execution role:** `reloop2-api-lambda-role`
    - Tải lên tệp [`reloop2-api.zip`](https://github.com/madlyham/ReLoop/releases/download/v1.0.0/reloop2-api.zip) (cũng có sẵn tại `ReLoop/zips/reloop2-api.zip` trong [github.com/madlyham/ReLoop](https://github.com/madlyham/ReLoop); handler `index.handler`).
-   - Vào **Configuration -> General configuration**, đặt **Memory:** `512 MB`, **Timeout:** `3 min` (`180s`).
+   - Vào **Configuration -> General configuration**, đặt **Memory:** `512 MB`, **Timeout:** `3 min` (`180s` — đủ cho tác vụ phân tích AI Bedrock bất đồng bộ ~35 giây và lịch quét EventBridge, trong khi giới hạn HTTP đồng bộ của API Gateway là `30s`).
 
 ![Lambda reloop2-api chạy Node.js 22 ARM64 với 512 MB và timeout 3 phút](/images/5-Workshop/5.5/01-api-lambda-config.png)
 
@@ -118,7 +119,7 @@ Bây giờ bạn xây dựng khối màu cam **API backend** trên sơ đồ: **
    - **Integration:** Lambda -> `reloop2-api` (Payload format `2.0`)
    - **Routes:**
      - `ANY /{proxy+}` (bảo vệ bằng Cognito JWT)
-     - Các tuyến công khai (`Authorization = None`): `GET /feed/public`, `GET /fees`, `POST /auth/session`, `POST /auth/refresh`, `POST /auth/logout`, `OPTIONS /{proxy+}`
+     - Các tuyến công khai (`Authorization = None`): `GET /feed/public`, `GET /fees`, `POST /auth/session`, `POST /auth/refresh`, `POST /auth/logout`, `OPTIONS /{proxy+}` (bắt buộc để các yêu cầu CORS preflight đi qua mà không bị bộ xác thực JWT trên `ANY /{proxy+}` chặn)
    - **Stage:** `$default` có bật **Auto-deploy**.
 
 ![Các tuyến của HTTP API Gateway reloop2-api trỏ tới Lambda](/images/5-Workshop/5.5/03-apigw-routes.png)
@@ -133,7 +134,7 @@ Bây giờ bạn xây dựng khối màu cam **API backend** trên sơ đồ: **
 ![Bộ xác thực JWT của API Gateway kiểm tra Cognito JWKS trên tuyến ANY /{proxy+}](/images/5-Workshop/5.5/04-apigw-jwt-authorizer.png)
 
 3. Vào **Develop -> CORS**, nhập trực tiếp tên miền CloudFront từ Học phần 5.3 (không cần quay lại sửa sau):
-   - **Access-Control-Allow-Origin:** `https://<dist-domain>.cloudfront.net`, `http://localhost:5173`
+   - **Access-Control-Allow-Origin:** `https://<dist-domain>.cloudfront.net`, `http://localhost:5173` *(xóa `http://localhost:5173` khi triển khai môi trường production)*
    - **Access-Control-Allow-Headers:** `authorization`, `idempotency-key`, `content-type`
    - **Access-Control-Allow-Methods:** `*` · **Max age:** `3600`
 4. Vào **Protect -> Throttling**, chỉnh stage `$default` với **Rate limit:** `20` req/s, **Burst limit:** `50`.

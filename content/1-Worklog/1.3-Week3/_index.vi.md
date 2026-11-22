@@ -6,23 +6,23 @@ chapter: false
 pre: " <b> 1.3. </b> "
 ---
 
-# **Nhật ký công việc Tuần 3 — Đặc tả ReLoop, 45 quyết định nghiệp vụ, Watch Party AI Day và Tọa đàm TS. Werner Vogels**
+## **Nhật ký công việc Tuần 3 — Đặc tả ReLoop, 45 quyết định nghiệp vụ, Watch Party AI Day và Tọa đàm TS. Werner Vogels**
 
 ## **1. Mục tiêu tuần**
 
 * Chuyển bản đặc tả ReLoop v1.0 thành các quyết định nghiệp vụ rõ ràng, có văn bản.
-* Thống nhất cách làm việc của nhóm (vai trò, quy tắc triển khai, quyền truy cập AWS) và chuẩn bị repository trống + CI cho giai đoạn phát triển ở Tuần 4.
+* Thống nhất cách làm việc của nhóm (vai trò, quy ước triển khai ban đầu, quyền truy cập AWS) và chuẩn bị repository trống + CI cho giai đoạn phát triển ở Tuần 4.
 * Tham dự Sự kiện 2 (Watch Party AWS Cloud and AI Day Hanoi) và Sự kiện 3 (Tọa đàm cùng Tiến sĩ Werner Vogels).
 
 ## **2. Lịch trình thực hiện**
 
 | Ngày | Mô tả công việc | Ngày bắt đầu | Ngày hoàn thành | Tài liệu tham khảo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Thứ 2** | • Đọc trọn bản đặc tả v1.0 (1.189 đoạn); liệt kê 58 điểm còn thiếu trong đặc tả và câu hỏi mở | 28/09/2026 | 28/09/2026 | [Repository ReLoop](https://github.com/madlyham/ReLoop), [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) |
-| **Thứ 3** | • Tham dự [Sự kiện 2: AWS Cloud and AI Day Hanoi – Sự kiện Watch Party TP.HCM](../../4-eventparticipated/4.2-event2/) (08:00 – 17:00 tại Văn phòng AWS Việt Nam, Bitexco Tầng 26). Tìm hiểu sâu về AI Agent doanh nghiệp, kỹ nghệ nền tảng và tối ưu chi phí FinOps. | 29/09/2026 | 29/09/2026 | [Sự kiện 2](../../4-eventparticipated/4.2-event2/), [AWS Billing & Cost Explorer](https://docs.aws.amazon.com/cost-management/) |
+| **Thứ 2** | • Phân chia các phần của bản đặc tả sản phẩm v1.0 có sẵn (1.189 đoạn) do Product Owner cung cấp từ buổi khởi động dự án giữa các thành viên để rà soát trọn vẹn và ghi nhận 58 điểm còn thiếu cùng câu hỏi mở | 28/09/2026 | 28/09/2026 | [Repository ReLoop](https://github.com/madlyham/ReLoop), [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) |
+| **Thứ 3** | • Tham dự [Sự kiện 2: AWS Cloud and AI Day Hanoi – Sự kiện Watch Party TP.HCM](../../4-eventparticipated/4.2-event2/) (08:00 – 17:00 tại Văn phòng AWS Việt Nam, Bitexco Tầng 26). Tìm hiểu sâu về AI Agent doanh nghiệp, kỹ nghệ nền tảng và tối ưu chi phí FinOps. | 29/09/2026 | 29/09/2026 | [Sự kiện 2](../../4-eventparticipated/4.2-event2/), [AWS Billing & Cost Explorer](https://docs.aws.amazon.com/cost-management/latest/userguide/) |
 | **Thứ 4** | • Xác định vai trò người dùng (Khách, Đối tác cấp 1, Đối tác cấp 2, Admin, Admin tài chính) và cùng nhóm xử lý các điểm còn thiếu trong đặc tả | 30/09/2026 | 30/09/2026 | [Tài liệu Amazon Cognito](https://docs.aws.amazon.com/cognito/), [Repository ReLoop](https://github.com/madlyham/ReLoop) |
 | **Thứ 5** | • Viết 45 quyết định nghiệp vụ (QĐ-01 → QĐ-45); tạo Git repository trống và mẫu CI GitHub Actions (typecheck + test cho mỗi pull request), sẵn sàng cho giai đoạn phát triển | 01/10/2026 | 01/10/2026 | [Tài liệu GitHub Actions](https://docs.github.com/actions), [Repository ReLoop](https://github.com/madlyham/ReLoop) |
-| **Thứ 6** | • Tham dự [Sự kiện 3: Trò chuyện thân mật cùng TS. Werner Vogels](../../4-eventparticipated/4.3-event3/) (10:30 – 12:00 tại Bitexco Financial Tower; Keynote bởi CTO Amazon). Thống nhất phân công 5 người (vai trò của tôi: Team Lead — đồng thời phụ trách backend AI, hạ tầng Terraform và tài liệu kỹ thuật) và quy tắc triển khai: một luồng triển khai duy nhất, mỗi thành viên một IAM user. | 02/10/2026 | 02/10/2026 | [Sự kiện 3](../../4-eventparticipated/4.3-event3/), [Tài liệu AWS IAM](https://docs.aws.amazon.com/iam/) |
+| **Thứ 6** | • Tham dự [Sự kiện 3: Trò chuyện thân mật cùng TS. Werner Vogels](../../4-eventparticipated/4.3-event3/) (10:30 – 12:00 tại Bitexco Financial Tower; tọa đàm cùng TS. Werner Vogels, CTO Amazon). Thống nhất phân công 5 người (vai trò của tôi: Team Lead — đồng thời phụ trách backend AI, hạ tầng Terraform và tài liệu kỹ thuật) và soạn quy ước triển khai ban đầu (một luồng triển khai chung và mỗi thành viên một IAM user) để áp dụng chặt chẽ hơn khi CI hoàn thiện. | 02/10/2026 | 02/10/2026 | [Sự kiện 3](../../4-eventparticipated/4.3-event3/), [Tài liệu AWS IAM](https://docs.aws.amazon.com/iam/) |
 
 ## **3. Kết quả đạt được**
 
@@ -40,4 +40,4 @@ pre: " <b> 1.3. </b> "
 ### **Kỹ năng thực hành & Vận hành**
 
 * Cùng nhóm rà soát đặc tả và biến câu hỏi mở thành quyết định trong một tuần.
-* Tham dự trọn ngày Watch Party AI Day và buổi keynote của Tiến sĩ Werner Vogels tại Bitexco Financial Tower.
+* Tham dự trọn ngày Watch Party AI Day và buổi tọa đàm cùng Tiến sĩ Werner Vogels tại Bitexco Financial Tower.

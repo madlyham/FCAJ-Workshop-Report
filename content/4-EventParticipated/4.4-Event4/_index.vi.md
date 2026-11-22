@@ -1,12 +1,12 @@
 ---
-title: "Sự kiện 4"
+title: "Sự kiện 4: Hội thảo Cloud & AI Infrastructure"
 date: 2026-11-07
 weight: 4
 chapter: false
 pre: " <b> 4.4. </b> "
 ---
 
-# **Sự kiện 4: Hội thảo chuyên sâu về Hạ tầng Điện toán đám mây & AI (Cloud & AI Infrastructure Meetup)**
+## **Sự kiện 4: Hội thảo chuyên sâu về Hạ tầng Điện toán đám mây & AI (Cloud & AI Infrastructure Meetup)**
 
 **Ngày:** Thứ Bảy, ngày 24 tháng 10 năm 2026  
 **Thời gian:** 10:30 – 12:00 (GMT+7)  

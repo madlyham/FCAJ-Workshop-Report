@@ -38,7 +38,7 @@ Only **AWS WAF (`reloop2-web`)** for Amazon CloudFront uses the **Global (`us-ea
 
 ### Step 2 — Verify Amazon Bedrock Access (`Kimi K3`) in Singapore
 
-ReLoop invokes **`global.moonshotai.kimi-k3`** using Amazon Bedrock's **Global cross-region inference profile** directly from **`ap-southeast-1`**. Stay in **Asia Pacific (Singapore) `ap-southeast-1`** — do not switch to `us-east-1`.
+ReLoop invokes **`global.moonshotai.kimi-k3`** using Amazon Bedrock's **Global cross-region inference profile** directly from **`ap-southeast-1`**. Stay in **Asia Pacific (Singapore) `ap-southeast-1`** — do not switch to `us-east-1`. *(Note: while Bedrock is called from `ap-southeast-1`, the `global.moonshotai.kimi-k3` Global cross-region inference profile may route inference outside Singapore; if a newer model revision appears in the Bedrock Console, copy its exact inference profile ID from the Console.)*
 
 1. Open **Amazon Bedrock -> Test -> Playground** (confirm the top-right region still reads **Asia Pacific (Singapore)**).
 2. Click **Select model** -> **Moonshot AI** -> **Kimi K3** -> select the **Cross-region** profile **`Global Moonshot AI Kimi K3`** -> click **Apply**.

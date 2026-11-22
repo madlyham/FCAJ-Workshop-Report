@@ -42,7 +42,7 @@ Verify unauthorized requests, invalid calls, and burst traffic fail cleanly at t
   ```
 - **Malformed/unknown routes & edge rate-limit protection:**
   - Unknown API paths return `HTTP/2 404` and malformed payloads return structured `HTTP/2 400` validation errors rather than unhandled `5xx` failures.
-  - Sustaining bursts above **100 req/min** per IP on public API endpoints triggers AWS WAF (`reloop2-web`) at CloudFront, returning `HTTP/2 429` (`RATE_LIMITED`) with a `retry-after: 60` header before requests reach API Gateway or Lambda.
+  - Sustaining bursts above **100 req/min** per IP on public API endpoints triggers AWS WAF (`reloop2-web`) at CloudFront, returning `HTTP/2 429` (`RATE_LIMITED`) with a `retry-after: 60` header via the custom response configured in [Module 5.3](../5.3-global-edge/) (overriding WAF's default `403` block response) before requests reach API Gateway or Lambda.
 
 ---
 

@@ -25,7 +25,7 @@ Although the diagram labels this bucket **Amazon S3 (website)** because it holds
 2. Configure:
    - **Bucket name:** `reloop2-web-<suffix>` (for example, `reloop2-web-7k3q`)
    - **Block all public access:** **Enabled** (all 4 boxes checked)
-   - **Default encryption:** Server-side encryption with Amazon S3 managed keys (**SSE-S3**), Bucket Key **Enable**
+   - **Default encryption:** Server-side encryption with Amazon S3 managed keys (**SSE-S3**)
    - **Tag:** `Project = reloop2`
 3. Click **Create bucket**. (You will upload the final frontend bundle once Cognito IDs are created in Module 5.4.)
 

@@ -6,7 +6,7 @@ chapter : false
 pre : " <b> 5.9. </b> "
 ---
 
-Add the scheduled background arrow on the diagram: **Amazon EventBridge** wakes up `reloop2-api` every 15 minutes to query `TIMER#` partitions in DynamoDB and automatically expire open listings past their 7-day window.
+Add the scheduled background arrow on the diagram: **Amazon EventBridge** wakes up `reloop2-api` every 15 minutes to query `TIMER#` partitions in DynamoDB and automatically expire open listings past their 7-day window. Alongside expiring open listings past 7 days, the same 15-minute sweep handler also runs periodic maintenance checks including monthly fee invoice runs (`SYSTEM / BILLINGRUN#<YYYY-MM>`).
 
 **Graph arrow covered in this step:**
 - **Supporting link:** `Amazon EventBridge → AWS Lambda (API)` (`expire listings every 15 min`)

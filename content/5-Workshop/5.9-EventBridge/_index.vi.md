@@ -6,7 +6,7 @@ chapter : false
 pre : " <b> 5.9. </b> "
 ---
 
-Bổ sung mũi tên chạy nền định kỳ trên sơ đồ: **Amazon EventBridge** đánh thức `reloop2-api` mỗi 15 phút để truy vấn các phân vùng `TIMER#` trong DynamoDB và tự động đóng (chuyển sang trạng thái hết hạn) những tin đăng đang mở đã quá 7 ngày.
+Bổ sung mũi tên chạy nền định kỳ trên sơ đồ: **Amazon EventBridge** đánh thức `reloop2-api` mỗi 15 phút để truy vấn các phân vùng `TIMER#` trong DynamoDB và tự động đóng (chuyển sang trạng thái hết hạn) những tin đăng đang mở đã quá 7 ngày. Song song với việc đóng tin đăng quá hạn 7 ngày, cùng hàm quét định kỳ 15 phút này còn chạy các kiểm tra bảo trì định kỳ bao gồm đợt tạo hóa đơn phí hàng tháng (`SYSTEM / BILLINGRUN#<YYYY-MM>`).
 
 **Mũi tên trên sơ đồ thuộc bước này:**
 - **Liên kết phụ:** `Amazon EventBridge → AWS Lambda (API)` (`expire listings every 15 min`)

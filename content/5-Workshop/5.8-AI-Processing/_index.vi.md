@@ -38,13 +38,14 @@ Giữ nguyên vùng **Asia Pacific (Singapore) `ap-southeast-1`** (cùng vùng v
    - **Name:** `reloop2-ai-guardrail`
    - **Description:** `ReLoop: screen device photos and text before AI analysis`
    - **Cross-region inference:** Bật và chọn **`APAC Guardrail v1:0`** (`apac.guardrail.v1:0`)
-   - **Blocked input message:** `Ảnh không phù hợp.`
+   - **Blocked input message:** `Ảnh không phù hợp.` *(thông báo chặn đầu vào tiếng Việt dùng chung hiển thị trên giao diện đăng ảnh)*
    - **Blocked output message:** `Kết quả không phù hợp.`
    - **Tag:** `Project = reloop2`
 3. Ở mục **Content filters**, chọn bậc **`Standard`** và đặt mức **HIGH** (`Block`) cho cả 6 nhóm:
    - **Violence**, **Hate**, **Sexual**, **Insults** (Đầu vào: Text + Image, Đầu ra: Text)
    - **Misconduct** (Đầu vào: Text, Đầu ra: Text)
    - **Prompt attack** (Đầu vào: Text `HIGH` / `Block`, Đầu ra: `None`)
+   - *(Cả hai phương thức đầu vào `TEXT` và `IMAGE` đều được bật để có thể tái sử dụng, trong khi luồng Kimi K3 kiểm duyệt cụ thể phần chữ trích xuất từ Rekognition qua `ApplyGuardrail` với `source = INPUT`.)*
 4. Nhấn **Create guardrail**, sau đó nhấn **Create version** (mô tả `v1 for reloop2-api`) để phát hành **Version `1`** cố định. Ghi lại **Guardrail ID** (`<guardrail-id>`).
 
 ![Bedrock Guardrail reloop2-ai-guardrail sẵn sàng tại ap-southeast-1 với APAC Guardrail v1:0](/images/5-Workshop/5.8/01-guardrail-overview.png)
@@ -77,5 +78,5 @@ Giữ nguyên vùng **Asia Pacific (Singapore) `ap-southeast-1`** (cùng vùng v
    Nhấn **Save**.
 
 {{% notice tip %}}
-**Toàn bộ 10 mũi tên đánh số (`1 → 10`) đã hoàn tất.** Tiếp theo, dựng 2 đường vận hành nền bắt đầu từ [Học phần 5.9 — Dọn tin định kỳ: Amazon EventBridge](../5.9-eventbridge/).
+**Toàn bộ 10 mũi tên đánh số (`1 → 10`) đã hoàn tất.** Tiếp theo, dựng các liên kết vận hành còn lại (EventBridge, CloudWatch và SNS) bắt đầu từ [Học phần 5.9 — Dọn tin định kỳ: Amazon EventBridge](../5.9-eventbridge/).
 {{% /notice %}}

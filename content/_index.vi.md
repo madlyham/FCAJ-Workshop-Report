@@ -32,7 +32,7 @@ chapter: false
 ## Nội dung báo cáo
 
 1.  [Nhật ký công việc](1-Worklog/)
-2.  [Proposal](2-Proposal/)
+2.  [Đề xuất (Proposal)](2-Proposal/)
 3.  [Các bài blog đã đăng](3-BlogsPosted/)
 4.  [Các sự kiện đã tham gia](4-EventParticipated/)
 5.  [Workshop](5-Workshop/)

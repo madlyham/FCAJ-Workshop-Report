@@ -1,12 +1,12 @@
 ---
-title: "Event 4"
+title: "Event 4: Cloud & AI Infrastructure Meetup"
 date: 2026-11-07
 weight: 4
 chapter: false
 pre: " <b> 4.4. </b> "
 ---
 
-# **Event 4: Cloud & AI Infrastructure Meetup**
+## **Event 4: Cloud & AI Infrastructure Meetup**
 
 **Date:** Saturday, October 24, 2026  
 **Time:** 10:30 AM – 12:00 PM (GMT+7)  

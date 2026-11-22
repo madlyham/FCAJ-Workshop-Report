@@ -1,12 +1,12 @@
 ---
-title: "Sự kiện 1"
+title: "Sự kiện 1: Khai mạc & AWS AI/GenAI"
 date: 2026-11-07
 weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
 ---
 
-# **Sự kiện 1: Buildrathon – Khởi động: Kiến tạo tương lai cùng CMC Global**
+## **Sự kiện 1: Buildrathon – Khởi động: Kiến tạo tương lai cùng CMC Global**
 
 **Ngày:** Thứ Bảy, ngày 26 tháng 09 năm 2026  
 **Thời gian:** 10:30 – 12:00 (GMT+7)  
@@ -23,7 +23,7 @@ pre: " <b> 4.1. </b> "
 
 ### **Diễn giả**
 
-Chương trình có sự góp mặt của các chuyên gia công nghệ và kỹ sư giàu kinh nghiệm từ AWS và CMC Global chia sẻ kinh nghiệm thực tế về điện toán đám mây, trí tuệ nhân tạo và phát triển sự nghiệp.
+Do đội ngũ AWS Việt Nam và CMC Global dẫn dắt, chia sẻ kinh nghiệm về điện toán đám mây, AI và phát triển sự nghiệp.
 
 ### **Nội dung nổi bật**
 

@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 4. </b> "
 ---
 
-Trong suốt 12 tuần thực tập, tôi đã tích cực tham gia 6 sự kiện công nghệ quy mô lớn, tọa đàm lãnh đạo, hội thảo chuyên sâu và hoạt động cộng đồng do AWS Việt Nam cùng các đối tác tổ chức.
+Trong thời gian thực tập, tôi đã tham gia 6 sự kiện cộng đồng, hội thảo kỹ thuật và hoạt động tình nguyện tại AWS Việt Nam.
 
 ### Danh sách các sự kiện đã tham gia
 
@@ -22,7 +22,7 @@ Trong suốt 12 tuần thực tập, tôi đã tích cực tham gia 6 sự kiệ
 4. **[Sự kiện 4: Hội thảo chuyên sâu về Hạ tầng Điện toán đám mây & AI](4.4-event4/)**  
    *24/10/2026 | Văn phòng AWS Việt Nam, Tầng 26 Bitexco | Vai trò: Người tham dự*
 
-5. **[Sự kiện 5: Gấu bông thông minh cho trẻ em – Hoạt động vì cộng đồng phối hợp cùng Operation Smile Vietnam](4.5-event5/)**  
+5. **[Sự kiện 5: Bộ quà gấu bông cho trẻ em – Tình nguyện cùng Operation Smile Vietnam](4.5-event5/)**  
    *26/10/2026 | Văn phòng AWS Việt Nam, Tầng 36 Bitexco | Vai trò: Người tham gia (Hoạt động xã hội)*
 
 6. **[Sự kiện 6: Cloud Mastery – Buổi chia sẻ về Cloud cho sinh viên](4.6-event6/)**  

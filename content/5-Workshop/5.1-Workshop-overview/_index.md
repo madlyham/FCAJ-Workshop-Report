@@ -21,7 +21,7 @@ Every section in this workshop maps directly to the numbered arrows and supporti
 | **1** | **Users → CloudFront** (`HTTPS (TLS)`) | Browsers connect over HTTPS to CloudFront. **AWS WAF (`reloop2-web`)** sits attached as an `associated web ACL` to filter bad IPs, common web exploits, and abusive request rates. | [5.3](../5.3-global-edge/) |
 | **2** | **CloudFront → S3 (website)** (`static files (OAC)`) | CloudFront fetches the private React SPA files from `reloop2-web-<suffix>` using Origin Access Control (OAC) while rewriting SPA routes inside CloudFront. | [5.3](../5.3-global-edge/) |
 | **3** | **Users → Cognito** (`sign up / sign in`) | Users register and sign in against **Amazon Cognito** (`reloop2-user-pool`). On confirmation, Cognito fires the `post-confirmation trigger` to **AWS Lambda (Post-confirm)**, which writes the initial `Owner` profile to DynamoDB (`create profile`). | [5.4](../5.4-sign-up-and-sign-in/) |
-| **4** | **CloudFront → API Gateway** (`/api/* + x-origin-verify`) | Requests to `/api/*` strip the `/api` prefix at CloudFront and forward to **Amazon API Gateway** with a shared secret header `x-origin-verify` so direct bypasses are blocked. | [5.5](../5.5-api-backend/) |
+| **4** | **CloudFront → API Gateway** (`/api/* + x-origin-verify`) | Requests to `/api/*` strip the `/api` prefix at CloudFront and forward to **Amazon API Gateway** with a shared secret header `x-origin-verify` (validated inside `reloop2-api`) so direct bypasses are blocked. | [5.5](../5.5-api-backend/) |
 | **5** | **API Gateway → Lambda (API)** (`invoke`) | API Gateway checks protected routes against Cognito (`verify JWT (JWKS)`), then invokes **AWS Lambda (`reloop2-api`)** running Node.js 22 on ARM64. | [5.5](../5.5-api-backend/) |
 | **6** | **Lambda (API) ↔ DynamoDB** (`read/write users, listings & invoices`) | Lambda reads and writes users, partner profiles, device listings, expiration timers, and monthly fee invoices in one on-demand table (`reloop2-core-table`). | [5.6](../5.6-dynamodb/) |
 | **7** | **Lambda (API) ↔ S3 (photos)** (`presign & tag`) | When a seller attaches a device photo, Lambda generates a short-lived presigned upload URL and tags pending objects inside `reloop2-images-<suffix>`. | [5.7](../5.7-s3-photos/) |
@@ -38,7 +38,7 @@ Every section in this workshop maps directly to the numbered arrows and supporti
 
 | Chosen AWS Services | Instead Of | Why Chosen (Cost · Scalability · Availability) |
 | --- | --- | --- |
-| **API Gateway (HTTP API) + Lambda (`arm64`)** | EC2 / ECS | `$0` when idle, auto-scales to 1,000 concurrency, Multi-AZ HA built in, Graviton `arm64` saves ~20% compute cost. |
+| **API Gateway (HTTP API) + Lambda (`arm64`)** | EC2 / ECS | `$0` when idle, auto-scales up to AWS's standard default `1,000` Lambda concurrency (new accounts often start at `10`; API Gateway caps HTTP throughput at `20 req/s`, burst `50`), Multi-AZ HA built in, Graviton `arm64` saves ~20% compute cost. |
 | **DynamoDB On-Demand (Single-Table)** | Amazon RDS | Zero 24/7 server bill (~$0.10/month at workshop/dev scale), built-in Multi-AZ replication, native PITR & TTL. |
 | **S3 + CloudFront (OAC) + Presigned URLs** | Proxying files through backend | 11 nines (`99.999999999%`) durability, keeps uploads off Lambda, CloudFront Free Tier (1 TB/month), private buckets only. |
 | **Cognito + Rekognition + Bedrock (Kimi K3 & Guardrail)** | Self-built Auth / self-hosted GPU models | Fully managed serverless pay-per-use (10,000 free MAU; zero idle GPU cost) with built-in content moderation & Guardrail safety. |
@@ -47,12 +47,12 @@ Every section in this workshop maps directly to the numbered arrows and supporti
 
 | Pillar | How ReLoop Implements It |
 | --- | --- |
-| **Operational Excellence** | Modular Terraform IaC ([`madlyham/ReLoop/terraform/`](https://github.com/madlyham/ReLoop/tree/main/terraform)), single CI-verified deployment flow, structured JSON CloudWatch Logs (7-day retention), and Lambda Errors alarm → SNS Admin email alerts. |
+| **Operational Excellence** | Reproducible modular Terraform IaC ([`madlyham/ReLoop/terraform/`](https://github.com/madlyham/ReLoop/tree/main/terraform)), structured JSON CloudWatch Logs (7-day retention), and Lambda Errors alarm → SNS Admin email alerts. |
 | **Security** | CloudFront-attached AWS WAF (3 managed rule groups + 2 per-IP rate limits), private S3 buckets (Block Public Access + OAC + short-lived presigned URLs), `x-origin-verify` secret header blocking direct API Gateway calls, Cognito JWT (`JWKS`) on `ANY /{proxy+}`, separate least-privilege IAM roles, Rekognition + Bedrock Guardrail screening, and zero hardcoded secrets in Git. |
-| **Reliability** | Multi-AZ managed serverless stack (CloudFront, API Gateway, Lambda concurrency 1,000, DynamoDB on-demand with 35-day PITR), S3 11-nines (`99.999999999%`) durability, conditional DynamoDB writes & `Idempotency-Key`, EventBridge 15-minute expiry sweeps, and graceful degradation when Bedrock is unavailable (manual form entry still works). |
-| **Performance Efficiency** | CloudFront edge caching for SPA assets, ARM64 (Graviton) Node.js 22 Lambda (144 ms avg duration), single-table DynamoDB with `GSI1` & time-bucketed queries (zero table scans), direct browser-to-S3 presigned POST/GET keeping binary uploads off Lambda, and async self-invoke for ~35 s AI analysis. |
+| **Reliability** | Global CloudFront edge + Multi-AZ regional serverless stack (API Gateway capped at `20 req/s` / burst `50`, Lambda using AWS's standard default `1,000` concurrency — new accounts often start at `10`, DynamoDB on-demand with 35-day PITR), S3 11-nines (`99.999999999%`) durability, conditional DynamoDB writes & `Idempotency-Key`, EventBridge 15-minute expiry sweeps, and graceful degradation when Bedrock is unavailable (manual form entry still works). |
+| **Performance Efficiency** | CloudFront edge caching for SPA assets, ARM64 (Graviton) Node.js 22 Lambda (`144 ms` observed dev CloudWatch average), single-table DynamoDB with `GSI1` & time-bucketed queries (zero table scans), direct browser-to-S3 presigned POST/GET keeping binary uploads off Lambda, and async self-invoke for ~35 s AI analysis. |
 | **Cost Optimization** | Serverless pay-per-use staying mostly in Free Tier (`$11.70/month` total including `$10.00` CloudFront WAF; `$1.70/month` without WAF; `< $1.00` same-day workshop run), ARM64 Graviton ~20% compute savings, S3 1-day pending / 90-day retention lifecycle, 7-day CloudWatch retention, 20/user/day AI cap, and documented reverse-order cleanup. |
-| **Sustainability** *(Checklist note)* | Serverless scale-to-zero compute eliminates idle 24/7 servers; ARM64 Graviton processors improve performance-per-watt; S3 lifecycle rules and 7-day log retention minimize unneeded storage. |
+| **Sustainability** | Serverless scale-to-zero compute eliminates idle 24/7 servers; ARM64 Graviton processors improve performance-per-watt; S3 lifecycle rules and 7-day log retention minimize unneeded storage. |
 
 ### Security Highlights
 
@@ -66,7 +66,7 @@ Every section in this workshop maps directly to the numbered arrows and supporti
 
 ### Workshop Cost Estimate
 
-Completing Modules **5.2–5.11** and tearing down in Module **5.12** the same day stays under **$1.00 USD**:
+Completing Modules **5.2–5.11** and tearing down in Module **5.12** the same day stays under **1.00 USD**:
 
 | Service | Workshop Usage | Estimated Same-Day Cost |
 | --- | --- | --- |
@@ -77,7 +77,7 @@ Completing Modules **5.2–5.11** and tearing down in Module **5.12** the same d
 | **Amazon DynamoDB** | On-demand reads/writes (<5 MB, PITR) | ~$0.01 |
 | **Rekognition & Bedrock** | Test moderation + Guardrail + Kimi K3 calls | ~$0.05–$0.25 |
 | **EventBridge, CloudWatch & SNS** | 1 rule, 2 log groups, 1 metric alarm, 1 SNS topic | $0.00 (Free Tier) |
-| **Total (built & cleaned up same day)** | Full E2E run + Module 5.12 cleanup | **< $1.00 USD** |
+| **Total (built & cleaned up same day)** | Full E2E run + Module 5.12 cleanup | **< 1.00 USD** |
 
 You can reproduce ongoing estimates in the **[AWS Pricing Calculator](https://calculator.aws/)** or inspect the full monthly line-by-line breakdown in **[reloop-cost-estimate.csv](/files/2-proposal/reloop-cost-estimate.csv)** (**11.70 USD/month** ongoing with CloudFront WAF / **1.70 USD/month** without WAF; **< 1.00 USD** for a same-day workshop run).
 
