@@ -1,0 +1,14 @@
+service,usd_per_month,free_tier,assumption,source
+AWS WAF - CloudFront web ACL,10.00,no,"1 web ACL (5 USD) + 5 rules (1 USD each) + 0.60 USD per 1M requests (~0.03M requests/month)",AWS Pricing ap-southeast-1 / Global-WebACLV2 + Global-RuleV2
+Amazon Bedrock (Kimi K3 + Guardrail),1.00,no,"AI photo analysis + Guardrail text screening at observed monthly level; capped at 20 analyses/user/day",Cost Explorer October 2026: 0.87 USD
+Amazon Rekognition,0.30,no,"Image moderation + text detection on every uploaded photo (~70-100 photos/month)",Cost Explorer October 2026: 0.15 USD; 01-08/11: 0.10 USD
+Amazon DynamoDB (on-demand),0.10,partly,"~5,600 items / 2.4 MB; PITR on; ~31k API calls/month",Cost Explorer October 2026: 0.03 USD
+Amazon API Gateway (HTTP API),0.10,no,"~31,000 requests/month",Cost Explorer October 2026: 0.01 USD; 01-08/11: 0.02 USD
+Amazon S3 (website + photos),0.05,partly,"Private static web bundle (~1 MB) + device photos (~2.4 MB) with 1-day unattached / 90-day lifecycle",Cost Explorer October 2026: 0.01 USD
+Miscellaneous (data transfer / small items),0.15,no,"Buffer for minor transfer and usage line items",Cost Explorer October 2026
+AWS Lambda (API + Post-confirm),0.00,yes,"~31,000 invocations x 144 ms avg = ~2,250 GB-s/month (Always Free: 1M requests + 400,000 GB-s)",CloudWatch observed baseline
+Amazon CloudFront,0.00,yes,"Well below Always Free 1 TB transfer + 10M requests per month",CloudWatch observed baseline
+Amazon Cognito,0.00,yes,"14 registered users (Free Tier up to 10,000 MAU)",Cognito user pool baseline
+Amazon CloudWatch + SNS + EventBridge,0.00,yes,"7-day log retention, 1 Lambda error alarm, SNS email alerts, 1 15-minute schedule (Free Tier)",AWS Free Tier
+TOTAL PER MONTH,11.70,,,
+TOTAL 12 MONTHS,140.40,,,
