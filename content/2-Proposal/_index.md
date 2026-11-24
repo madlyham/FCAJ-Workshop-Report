@@ -65,7 +65,7 @@ Compared with general classifieds, ReLoop adds AI-filled listings, service-area 
 ### 3. Solution Architecture
 ReLoop runs on a fully serverless architecture in **Asia Pacific (Singapore) `ap-southeast-1`**, protected globally at the edge by Amazon CloudFront and AWS WAF.
 
-![ReLoop Serverless Architecture on AWS](/images/5-Workshop/5.1/overview.png)
+![ReLoop Serverless Architecture on AWS](/images/2-Proposal/architecture.png)
 
 #### End-to-End Request Flow (Arrows 1 → 10)
 1. **Users → CloudFront (`HTTPS (TLS)`):** browsers connect over HTTPS to CloudFront. **AWS WAF** is attached as a web ACL to block malicious IPs, common exploits, and abusive request rates.

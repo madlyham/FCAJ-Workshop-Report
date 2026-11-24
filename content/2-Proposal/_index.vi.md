@@ -65,7 +65,7 @@ So với trang rao vặt tổng hợp, ReLoop bổ sung: AI tự điền tin, gh
 ### 3. Kiến trúc giải pháp
 ReLoop chạy trên kiến trúc hoàn toàn serverless tại **Asia Pacific (Singapore) `ap-southeast-1`**, được bảo vệ và phân phối toàn cầu ở lớp biên bằng Amazon CloudFront và AWS WAF.
 
-![Kiến trúc serverless của ReLoop trên AWS](/images/5-Workshop/5.1/overview.png)
+![Kiến trúc serverless của ReLoop trên AWS](/images/2-Proposal/architecture.png)
 
 #### Luồng xử lý đầu cuối (Mũi tên 1 → 10)
 1. **Users → CloudFront (`HTTPS (TLS)`):** trình duyệt kết nối HTTPS tới CloudFront. **AWS WAF** gắn trực tiếp lên CloudFront (web ACL) để chặn IP độc hại, lỗ hổng web phổ biến và tốc độ truy cập bất thường.
